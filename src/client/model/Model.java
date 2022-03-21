@@ -4,4 +4,6 @@ import shared.util.PropertyChangeSubject;
 
 public interface Model extends PropertyChangeSubject {
 	void sendMessage(String content);
+
+	void suddenChange();
 }
