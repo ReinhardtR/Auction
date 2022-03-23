@@ -13,11 +13,13 @@ public class SocketHandler implements Runnable {
 
 	private final Chat chat;
 	private final Socket socket;
+	private final Pool pool;
 	private ObjectOutputStream outToClient;
 	private ObjectInputStream inFromClient;
 
-	public SocketHandler(Socket socket, Chat chat) {
+	public SocketHandler(Socket socket, Pool pool, Chat chat) {
 		this.socket = socket;
+		this.pool = pool;
 		this.chat = chat;
 
 		try {
@@ -31,26 +33,20 @@ public class SocketHandler implements Runnable {
 	@Override
 	public void run() {
 		try {
-			Request request = (Request) inFromClient.readObject();
+			while (true) {
+				Request request = (Request) inFromClient.readObject();
 
-			switch (request.getType()) {
-				case "LISTENER":
-					chat.addListener("NEW_MESSAGE", this::sendMessage);
-					break;
-				case "NEW_MESSAGE":
-					System.out.println("Message Received");
-					chat.sendMessage((String) request.getArg());
-					break;
-				default:
-					System.out.println("Invalid request type.");
-					break;
+				if (request.getType().equals("NEW_MESSAGE")) {
+
+					pool.broadcast();
+				}
 			}
 		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
 
-	private void sendMessage(Message message) {
+	public void sendMessage(Message message) {
 		try {
 			outToClient.writeObject(message);
 		} catch (IOException e) {

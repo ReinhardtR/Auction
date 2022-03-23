@@ -5,14 +5,14 @@ import server.model.Chat;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
 
 public class SocketServer {
 
 	private final Chat chat;
+	private final Pool pool;
 
-	public SocketServer(Chat chat) {
+	public SocketServer(Chat chat, Pool pool) {
+		this.pool = pool;
 		this.chat = chat;
 	}
 
@@ -20,16 +20,14 @@ public class SocketServer {
 		System.out.println("Starting server...");
 		try {
 			ServerSocket welcomeSocket = new ServerSocket(2910);
-			List<SocketHandler> handlers = new ArrayList<>();
 
 			while (true) {
 				Socket socket = welcomeSocket.accept();
-				SocketHandler handler = new SocketHandler(socket, chat);
-				handlers.add(handler);
 
-				System.out.println("handlers:" + handlers.size());
+				SocketHandler client = new SocketHandler(socket, pool, chat);
+				pool.addConnection(client);
 
-				new Thread(handler).start();
+				new Thread(client).start();
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

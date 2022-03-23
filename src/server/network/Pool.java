@@ -1,5 +1,8 @@
 package server.network;
 
+import shared.transferobjects.Message;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +19,7 @@ public class Pool {
 
 	public void broadcast(String msg) {
 		for (SocketHandler socketHandler : connections) {
-			socketHandler.sendMessage(msg);
+			socketHandler.sendMessage(new Message(msg, LocalDateTime.now()));
 		}
 	}
 }

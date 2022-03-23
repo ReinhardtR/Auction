@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class Message implements Serializable {
-	private LocalDateTime dateTime;
-	private String content;
+	private final LocalDateTime dateTime;
+	private final String content;
 
 	public Message(String content, LocalDateTime dateTime) {
 		this.dateTime = dateTime;
