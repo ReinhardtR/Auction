@@ -1,11 +1,10 @@
 package client.core;
 
-import client.model.ChatManager;
-import client.model.ChatModel;
+import client.model.AuctionModel;
 
 public class ModelFactory {
 	private static final ModelFactory instance = new ModelFactory();
-	private ChatModel model;
+	private AuctionModel auctionModel;
 
 	private ModelFactory() {
 	}
@@ -13,13 +12,12 @@ public class ModelFactory {
 	public static ModelFactory getInstance() {
 		return instance;
 	}
-
-
-	public ChatModel getModel() {
-		if (model == null) {
-			model = new ChatManager(ClientFactory.getInstance().getClient());
+	
+	public AuctionModel getAuctionModel() {
+		if (auctionModel == null) {
+			auctionModel = new AuctionModel(ClientFactory.getInstance().getClient());
 		}
 
-		return model;
+		return auctionModel;
 	}
 }

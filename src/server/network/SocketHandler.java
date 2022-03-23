@@ -1,7 +1,8 @@
 package server.network;
 
-import server.model.Chat;
-import shared.transferobjects.Message;
+import server.model.auction.Auction;
+import server.model.auction.AuctionHouse;
+import shared.transferobjects.AuctionBid;
 import shared.transferobjects.Request;
 
 import java.io.IOException;
@@ -11,16 +12,16 @@ import java.net.Socket;
 
 public class SocketHandler implements Runnable {
 
-	private final Chat chat;
+	private final AuctionHouse auctionHouse;
 	private final Socket socket;
 	private final Pool pool;
 	private ObjectOutputStream outToClient;
 	private ObjectInputStream inFromClient;
 
-	public SocketHandler(Socket socket, Pool pool, Chat chat) {
+	public SocketHandler(Socket socket, Pool pool, AuctionHouse auctionHouse) {
 		this.socket = socket;
 		this.pool = pool;
-		this.chat = chat;
+		this.auctionHouse = auctionHouse;
 
 		try {
 			inFromClient = new ObjectInputStream(socket.getInputStream());
@@ -35,20 +36,35 @@ public class SocketHandler implements Runnable {
 		try {
 			while (true) {
 				Request request = (Request) inFromClient.readObject();
+				System.out.println("RECEIVED REQUEST");
 
-				if (request.getType().equals("NEW_MESSAGE")) {
-					Message message = (Message) request.getArg();
-					pool.broadcast(message);
+				if (request.getType().equals("NEW_AUCTION_BID")) {
+					AuctionBid auctionBid = (AuctionBid) request.getArg();
+					Auction auction = auctionHouse.getAuction(auctionBid.getItemId());
+
+					try {
+						auction.setBid(auctionBid);
+						Request response = new Request("NEW_AUCTION_BID", auctionBid);
+						pool.broadcast(response);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 				}
+
+//				if (request.getType().equals("NEW_MESSAGE")) {
+//					Message message = (Message) request.getArg();
+//					pool.broadcast(message);
+//					System.out.println(message.getContent());
+//				}
 			}
-		} catch (IOException | ClassNotFoundException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void sendMessage(Message message) {
+	public void sendRequest(Request request) {
 		try {
-			outToClient.writeObject(message);
+			outToClient.writeObject(request);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

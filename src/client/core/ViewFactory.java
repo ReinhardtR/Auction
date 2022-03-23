@@ -14,12 +14,10 @@ public class ViewFactory {
 	private static final Map<String, Scene> scenes = new HashMap<>();
 	private static Stage stage;
 
-
 	public static void init(Stage theStage) {
 		stage = theStage;
 		createScene("Auction");
 		createScene("Login");
-		createScene("Chat");
 	}
 
 	private static void createScene(String sceneName) {

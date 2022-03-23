@@ -1,12 +1,11 @@
 package client.core;
 
-import client.network.Client;
 import client.network.SocketClient;
 
 // Singleton pattern
 public class ClientFactory {
 	private static final ClientFactory instance = new ClientFactory();
-	private Client client;
+	private SocketClient client;
 
 	private ClientFactory() {
 	}
@@ -15,7 +14,7 @@ public class ClientFactory {
 		return instance;
 	}
 
-	public Client getClient() {
+	public SocketClient getClient() {
 		if (client == null) {
 			client = new SocketClient();
 		}
