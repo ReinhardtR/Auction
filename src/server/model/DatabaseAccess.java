@@ -1,6 +1,6 @@
 package server.model;
 
-import shared.transferobjects.Item;
+import shared.transferobjects.AuctionItem;
 
 import java.sql.*;
 
@@ -24,7 +24,7 @@ public class DatabaseAccess implements DatabaseIO {
 	public static void main(String[] args) {
 		DatabaseAccess d = new DatabaseAccess();
 
-		d.addItemToAuction(new Item("test2","test2Desc","Lang,Tismand,Stor,Lang,Sort",4200));
+		d.addItemToAuction(new AuctionItem("test2","test2Desc","Lang,Tismand,Stor,Lang,Sort",4200));
 		// Ovenstående metode skal kaldes når et item skal til salg og oprettes på databasen.
 	}
 
@@ -57,7 +57,7 @@ public class DatabaseAccess implements DatabaseIO {
 		}
 	}
 	@Override
-	public void addItemToAuction(Item item) {
+	public void addItemToAuction(AuctionItem item) {
 		createConnection();
 
 		try {
@@ -82,7 +82,7 @@ public class DatabaseAccess implements DatabaseIO {
 	}
 
 	@Override
-	public void removeItemFromServer(Item item) {
+	public void removeItemFromServer(AuctionItem item) {
 		createConnection();
 
 		//Insert here
