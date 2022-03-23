@@ -6,7 +6,6 @@ import client.network.SocketClient;
 // Singleton pattern
 public class ClientFactory {
 	private static final ClientFactory instance = new ClientFactory();
-	private String yo;
 	private Client client;
 
 	private ClientFactory() {
