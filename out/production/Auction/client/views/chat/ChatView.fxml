@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/11.0.1" fx:controller="client.views.chat.ChatViewController">
+    <TextArea fx:id="chatArea" layoutX="21.0" layoutY="44.0" prefHeight="303.0" prefWidth="254.0"/>
+    <TextField fx:id="messageInput" layoutX="74.0" layoutY="361.0"/>
+    <Button layoutX="232.0" layoutY="361.0" mnemonicParsing="false" onAction="#sendMessage" text="Send"/>
+    <TextField fx:id="response" editable="false" layoutX="420.0" layoutY="361.0"/>
+    <Label layoutX="21.0" layoutY="365.0" text="Message:"/>
+    <Label layoutX="447.0" layoutY="339.0" text="Respons message"/>
+    <Label layoutX="34.0" layoutY="27.0" text="Chat history (not yet implemented!)"/>
+</AnchorPane>

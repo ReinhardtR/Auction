@@ -1,11 +1,11 @@
 package client.views.auction;
 
-import client.model.Model;
+import client.model.ChatModel;
 
 public class AuctionViewModel {
-	private Model model;
+	private ChatModel chatModel;
 
-	public AuctionViewModel(Model model) {
-		this.model = model;
+	public AuctionViewModel(ChatModel chatModel) {
+		this.chatModel = chatModel;
 	}
 }

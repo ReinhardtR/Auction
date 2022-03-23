@@ -18,36 +18,18 @@ public class ViewFactory {
 		stage = theStage;
 		createScene("Auction");
 		createScene("Login");
+		createScene("Chat");
 	}
 
 	private static void createScene(String sceneName) {
-		Scene scene = null;
-
-		if (sceneName.equals("Auction")) {
-			try {
-				System.out.println("Create Auction Scene");
-
-				Parent root = loadFXML("../views/auction/AuctionView.fxml");
-				scene = new Scene(root);
-
-				stage.setTitle("Auction");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		} else if (sceneName.equals("Login")) {
-			try {
-				System.out.println("Create Login Scene");
-
-				Parent root = loadFXML("../views/login/LoginView.fxml");
-				scene = new Scene(root);
-
-				stage.setTitle("Login");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		try {
+			System.out.println("Create " + sceneName + " Scene");
+			Parent root = loadFXML("../views/" + sceneName.toLowerCase() + "/" + sceneName + "View.fxml");
+			Scene scene = new Scene(root);
+			scenes.put(sceneName, scene);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-
-		scenes.put(sceneName, scene);
 	}
 
 	private static Parent loadFXML(String path) throws IOException {

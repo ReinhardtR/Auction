@@ -9,31 +9,34 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class SocketClient implements Client {
+public class SocketClient implements Client, Runnable {
 
 	private final PropertyChangeSupport support;
+	private ObjectOutputStream outToServer;
+	private ObjectInputStream inFromServer;
+
+	// TODO(): Two approaches to listening to server changes.
+	//  Problem: not being broadcasted a message you sent yourself.
+	//  Solution: Open new socket that is not listening.
 
 	public SocketClient() {
 		support = new PropertyChangeSupport(this);
-	}
 
-	public void startClient() {
 		try {
 			Socket socket = new Socket("localhost", 2910);
-			ObjectOutputStream outToServer = new ObjectOutputStream(socket.getOutputStream());
-			ObjectInputStream inFromServer = new ObjectInputStream(socket.getInputStream());
+			outToServer = new ObjectOutputStream(socket.getOutputStream());
+			inFromServer = new ObjectInputStream(socket.getInputStream());
 
-			Thread thread = new Thread(() -> listenToServer(outToServer, inFromServer));
-			thread.start();
-
+			new Thread(this).start();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	private void listenToServer(ObjectOutputStream outToServer, ObjectInputStream inFromServer) {
+	@Override
+	public void run() {
 		try {
-			outToServer.writeObject(new Request("Listener", null));
+			outToServer.writeObject(new Request("LISTENER", null));
 			while (true) {
 				Request request = (Request) inFromServer.readObject();
 				support.firePropertyChange(request.getType(), null, request.getArg());
@@ -46,18 +49,10 @@ public class SocketClient implements Client {
 	@Override
 	public void sendMessage(String content) {
 		try {
-			Request response = request(content, "NEW_MESSAGE");
-		} catch (IOException | ClassNotFoundException e) {
+			outToServer.writeObject(new Request(content, "NEW_MESSAGE"));
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	private Request request(String arg, String type) throws IOException, ClassNotFoundException {
-		Socket socket = new Socket("localhost", 2910);
-		ObjectOutputStream outToServer = new ObjectOutputStream(socket.getOutputStream());
-		ObjectInputStream inFromServer = new ObjectInputStream(socket.getInputStream());
-		outToServer.writeObject(new Request(type, arg));
-		return (Request) inFromServer.readObject();
 	}
 
 	@Override

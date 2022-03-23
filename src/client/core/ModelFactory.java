@@ -1,10 +1,11 @@
 package client.core;
 
-import client.model.ModelManager;
+import client.model.ChatManager;
+import client.model.ChatModel;
 
 public class ModelFactory {
 	private static final ModelFactory instance = new ModelFactory();
-	private ModelManager model;
+	private ChatModel model;
 
 	private ModelFactory() {
 	}
@@ -14,9 +15,9 @@ public class ModelFactory {
 	}
 
 
-	public ModelManager getModel() {
+	public ChatModel getModel() {
 		if (model == null) {
-			model = new ModelManager(ClientFactory.getInstance().getClient());
+			model = new ChatManager(ClientFactory.getInstance().getClient());
 		}
 
 		return model;

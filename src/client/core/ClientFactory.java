@@ -7,7 +7,6 @@ import client.network.SocketClient;
 public class ClientFactory {
 
 	private static final ClientFactory instance = new ClientFactory();
-
 	private Client client;
 
 	private ClientFactory() {
@@ -21,6 +20,7 @@ public class ClientFactory {
 		if (client == null) {
 			client = new SocketClient();
 		}
+
 		return client;
 	}
 }

@@ -7,7 +7,6 @@ public class ViewHandler {
 
 	private static final ViewHandler instance = new ViewHandler();
 	private Stage stage;
-	private Stage loginStage;
 
 	private ViewHandler() {
 	}
@@ -18,16 +17,20 @@ public class ViewHandler {
 
 	public void start() {
 		stage = new Stage();
-		loginStage = new Stage();
+		ViewFactory.init(stage);
+		openChatView();
+	}
 
-		openLoginView();
-		openAuctionView();
+	public void openChatView() {
+		Scene chatScene = ViewFactory.getScene("Chat");
+		stage.setScene(chatScene);
+		stage.show();
 	}
 
 	public void openLoginView() {
 		Scene loginScene = ViewFactory.getScene("Login");
-		loginStage.setScene(loginScene);
-		loginStage.show();
+		stage.setScene(loginScene);
+		stage.show();
 	}
 
 	public void openAuctionView() {

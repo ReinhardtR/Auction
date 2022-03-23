@@ -1,13 +1,13 @@
 package client.views.login;
 
-import client.model.Model;
+import client.model.ChatModel;
 import javafx.beans.property.StringProperty;
 
 public class LoginViewModel {
-	private final Model model;
+	private final ChatModel chatModel;
 	private StringProperty username;
 
-	public LoginViewModel(Model model) {
-		this.model = model;
+	public LoginViewModel(ChatModel chatModel) {
+		this.chatModel = chatModel;
 	}
 }

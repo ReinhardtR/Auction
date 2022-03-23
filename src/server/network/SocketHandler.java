@@ -1,9 +1,9 @@
 package server.network;
 
 import server.model.Chat;
+import shared.transferobjects.Message;
 import shared.transferobjects.Request;
 
-import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -16,7 +16,6 @@ public class SocketHandler implements Runnable {
 	private ObjectOutputStream outToClient;
 	private ObjectInputStream inFromClient;
 
-	// pass model here (e.g: TextManager)
 	public SocketHandler(Socket socket, Chat chat) {
 		this.socket = socket;
 		this.chat = chat;
@@ -36,9 +35,10 @@ public class SocketHandler implements Runnable {
 
 			switch (request.getType()) {
 				case "LISTENER":
-					chat.addListener("NEW_MESSAGE", this::onNewMessage);
+					chat.addListener("NEW_MESSAGE", this::sendMessage);
 					break;
 				case "NEW_MESSAGE":
+					System.out.println("Message Received");
 					chat.sendMessage((String) request.getArg());
 					break;
 				default:
@@ -50,10 +50,9 @@ public class SocketHandler implements Runnable {
 		}
 	}
 
-	private void onNewMessage(PropertyChangeEvent event) {
+	private void sendMessage(Message message) {
 		try {
-			Request request = new Request(event.getPropertyName(), event.getNewValue());
-			outToClient.writeObject(request);
+			outToClient.writeObject(message);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

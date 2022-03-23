@@ -7,9 +7,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Polyline?>
 <?import javafx.scene.text.Font?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity"
             prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17"
-            fx:controller="client.views.auction.AuctionController">
+            fx:controller="client.views.auction.AuctionViewController">
     <children>
         <Label layoutX="173.0" layoutY="274.0" text="Highest bid:"/>
         <TextField editable="false" layoutX="245.0" layoutY="270.0"/>

@@ -1,31 +1,31 @@
 package client.model;
 
 import client.network.Client;
+import shared.transferobjects.Message;
+import shared.util.PropertyChangeSubject;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class ModelManager implements Model {
+public class ChatManager implements ChatModel, PropertyChangeSubject {
+	private Client client;
+	private PropertyChangeSupport support;
 
-	private final PropertyChangeSupport support;
-	private final Client client;
-
-	public ModelManager(Client client) {
+	public ChatManager(Client client) {
 		support = new PropertyChangeSupport(this);
 
 		this.client = client;
-		client.startClient();
-		client.addListener("NEW_MESSAGE", this::onNewMessage);
+		client.addListener("MessageReceived", this::messageReceived);
 	}
 
-	private void onNewMessage(PropertyChangeEvent event) {
-		support.firePropertyChange(event);
+	public void sendMessage(String message) {
+		client.sendMessage(message);
 	}
 
-	@Override
-	public void sendMessage(String content) {
-		client.sendMessage(content);
+	public void messageReceived(PropertyChangeEvent event) {
+		Message message = (Message) event.getNewValue();
+		support.firePropertyChange("MessageReceived", null, message);
 	}
 
 	@Override
