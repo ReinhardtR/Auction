@@ -2,12 +2,10 @@ package server.model;
 
 import shared.transferobjects.Item;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class DatabaseAccess implements DatabaseIO {
+
 	/* Table omkring items på database hedder: AuctionItems.
 
 	Kolonner på table (For Auction Item):
@@ -19,13 +17,15 @@ public class DatabaseAccess implements DatabaseIO {
 	- CurrentHighestBidder
 	 */
 
-
+	private int itemID = 0;
 	private Connection c = null;
-	private Statement stmt = null;
+	private PreparedStatement pstmt = null;
 
 	public static void main(String[] args) {
 		DatabaseAccess d = new DatabaseAccess();
-		d.addItemToAuction(new Item());
+
+		d.addItemToAuction(new Item("test2","test2Desc","Lang,Tismand,Stor,Lang,Sort",4200));
+		// Ovenstående metode skal kaldes når et item skal til salg og oprettes på databasen.
 	}
 
 	// TODO: 23/03/2022 Der KAN ske en fejl her hvis flere clienter laver en connection uden det bliver closed.
@@ -50,7 +50,7 @@ public class DatabaseAccess implements DatabaseIO {
 	private void closeConnection() {
 
 		try {
-			stmt.close();
+			pstmt.close();
 			c.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -61,9 +61,18 @@ public class DatabaseAccess implements DatabaseIO {
 		createConnection();
 
 		try {
-			stmt = c.createStatement();
-			String sql = "insert into \"AuctionData\".auctionitems(itemid,title,description,tags,currentprice,currenthighestbidder)" + "values(12345678,titleTest,Dette er en deskription, Tismand og tiskon, 69420,homy)";
-			stmt.executeUpdate(sql);
+			String sql = "INSERT INTO \"AuctionData\".auctionitems(itemid,title,description,tags,currentprice,currenthighestbidder)" + "VALUES(?,?,?,?,?,?)";
+
+			pstmt = c.prepareStatement(sql);
+
+			pstmt.setString(1,"" + itemIDIncrementer());
+			pstmt.setString(2,item.getTitle());
+			pstmt.setString(3,item.getDescription());
+			pstmt.setString(4,item.getTags());
+			pstmt.setDouble(5,item.getStarterPrice()); //Starter pris for item
+			pstmt.setString(6,"reinhardt"); //Person som har sat salget op.
+
+			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -79,6 +88,12 @@ public class DatabaseAccess implements DatabaseIO {
 		//Insert here
 
 		closeConnection();
+	}
+
+	private int itemIDIncrementer()
+	{
+		itemID++;
+		return itemID;
 	}
 
 

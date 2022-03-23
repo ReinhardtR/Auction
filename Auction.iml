@@ -10,5 +10,6 @@
     <orderEntry type="library" name="bin" level="project" />
     <orderEntry type="library" name="JavaFX" level="project" />
     <orderEntry type="library" name="lib" level="project" />
+    <orderEntry type="library" name="postgresql-42.3.3" level="project" />
   </component>
 </module>
