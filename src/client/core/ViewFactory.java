@@ -23,7 +23,8 @@ public class ViewFactory {
 	private static void createScene(String sceneName) {
 		try {
 			System.out.println("Create " + sceneName + " Scene");
-			Parent root = loadFXML("../views/" + sceneName.toLowerCase() + "/" + sceneName + "View.fxml");
+			String path = "../views/" + sceneName.toLowerCase() + "/" + sceneName + "View.fxml";
+			Parent root = loadFXML(path);
 			Scene scene = new Scene(root);
 			scenes.put(sceneName, scene);
 		} catch (IOException e) {
