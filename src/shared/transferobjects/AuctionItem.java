@@ -1,6 +1,6 @@
 package shared.transferobjects;
 
-public class Item {
+public class AuctionItem {
 
 	private String title;
 	private String description;
@@ -8,7 +8,7 @@ public class Item {
 	private String itemId;
 	private double starterPrice;
 
-	public Item(String title, String description, String tags, double starterPrice)
+	public AuctionItem(String title, String description, String tags, double starterPrice)
 	{
 		this.title = title;
 		this.description = description;
