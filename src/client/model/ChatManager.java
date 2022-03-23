@@ -9,8 +9,8 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class ChatManager implements ChatModel, PropertyChangeSubject {
-	private Client client;
-	private PropertyChangeSupport support;
+	private final Client client;
+	private final PropertyChangeSupport support;
 
 	public ChatManager(Client client) {
 		support = new PropertyChangeSupport(this);

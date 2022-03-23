@@ -1,5 +1,7 @@
 package server.network;
 
+import shared.transferobjects.Message;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +16,9 @@ public class Pool {
 		connections.add(socketHandler);
 	}
 
-	public void broadcast(String msg) {
+	public void broadcast(Message message) {
 		for (SocketHandler socketHandler : connections) {
-			socketHandler.sendMessage(msg);
+			socketHandler.sendMessage(message);
 		}
 	}
 }
