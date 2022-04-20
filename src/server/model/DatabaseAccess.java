@@ -30,9 +30,6 @@ public class DatabaseAccess implements DatabaseIO {
 
 
 
-			Thread.sleep(10000);
-
-		d.searchAuctionItemsFromKeyword("test");
 	}
 
 	// TODO: 23/03/2022 Der KAN ske en fejl her hvis flere clienter laver en connection uden det bliver closed.
@@ -95,7 +92,7 @@ public class DatabaseAccess implements DatabaseIO {
 	public void removeItemFromServer(AuctionItem item) throws SQLException {
 		createConnection();
 
-		String sql = "DELETE FROM \"public\".auctionitems WHERE title='"+item.getItemId()+"'";
+		String sql = "DELETE FROM \"public\".auctionitems WHERE title='"+item.getTitle()+"'";
 		c.prepareStatement(sql).executeUpdate();
 
 		closeConnection();
@@ -129,8 +126,20 @@ public class DatabaseAccess implements DatabaseIO {
 
 	}
 
-
 	private void itemIDIncrementer()
+	public void updateHighestBidder(AuctionItem item) throws SQLException {
+		createConnection();
+
+		String currenthighestbidder = "UPDATE \"public\".auctionitems SET currenthighestbidder ='xxMilosLongSchlongxx'";
+		c.prepareStatement(currenthighestbidder).executeUpdate();
+		String currentprice = "UPDATE \"public\".auctionitems SET currentprice ='6969.69'";
+		c.prepareStatement(currentprice).executeUpdate();
+
+
+		closeConnection();
+	}
+
+	private int itemIDIncrementer()
 	{
 		itemID++;
 	}

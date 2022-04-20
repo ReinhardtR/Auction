@@ -1,6 +1,8 @@
 package client.network;
 
+import shared.transferobjects.AuctionBid;
 import shared.transferobjects.Request;
+import shared.utils.PropertyChangeSubject;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -9,7 +11,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class SocketClient implements Client, Runnable {
+public class SocketClient implements PropertyChangeSubject, Runnable {
 
 	private final PropertyChangeSupport support;
 	private ObjectOutputStream outToServer;
@@ -36,20 +38,23 @@ public class SocketClient implements Client, Runnable {
 	@Override
 	public void run() {
 		try {
-			outToServer.writeObject(new Request("LISTENER", null));
 			while (true) {
 				Request request = (Request) inFromServer.readObject();
-				support.firePropertyChange(request.getType(), null, request.getArg());
+
+				if (request.getType().equals("NEW_AUCTION_BID")) {
+					AuctionBid auctionBid = (AuctionBid) request.getArg();
+					support.firePropertyChange(request.getType(), null, auctionBid);
+				}
 			}
 		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
 
-	@Override
-	public void sendMessage(String content) {
+	public void sendAuctionBid(AuctionBid auctionBid) {
 		try {
-			outToServer.writeObject(new Request(content, "NEW_MESSAGE"));
+			System.out.println("SENDING TO SERVER");
+			outToServer.writeObject(new Request("NEW_AUCTION_BID", auctionBid));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

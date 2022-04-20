@@ -18,13 +18,7 @@ public class ViewHandler {
 	public void start() {
 		stage = new Stage();
 		ViewFactory.init(stage);
-		openChatView();
-	}
-
-	public void openChatView() {
-		Scene chatScene = ViewFactory.getScene("Chat");
-		stage.setScene(chatScene);
-		stage.show();
+		openAuctionView();
 	}
 
 	public void openLoginView() {

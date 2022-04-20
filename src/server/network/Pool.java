@@ -1,6 +1,6 @@
 package server.network;
 
-import shared.transferobjects.Message;
+import shared.transferobjects.Request;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +16,9 @@ public class Pool {
 		connections.add(socketHandler);
 	}
 
-	public void broadcast(Message message) {
+	public void broadcast(Request request) {
 		for (SocketHandler socketHandler : connections) {
-			socketHandler.sendMessage(message);
+			socketHandler.sendRequest(request);
 		}
 	}
 }
