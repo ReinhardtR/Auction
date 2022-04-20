@@ -1,11 +1,11 @@
 package server.model;
 
-import shared.transferobjects.Item;
+import shared.transferobjects.AuctionItem;
 
 public interface DatabaseIO {
 
-	void addItemToAuction(Item item); //Indholder - Titel, - Beskrivelse, - Tags, - "Pris".
-	void removeItemFromServer(Item item);
+	void addItemToAuction(AuctionItem item); //Indholder - Titel, - Beskrivelse, - Tags, - "Pris".
+	void removeItemFromServer(AuctionItem item);
 
 
 }

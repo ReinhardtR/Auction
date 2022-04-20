@@ -2,7 +2,7 @@ package client.model;
 
 import client.network.SocketClient;
 import shared.transferobjects.AuctionBid;
-import shared.util.PropertyChangeSubject;
+import shared.utils.PropertyChangeSubject;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
