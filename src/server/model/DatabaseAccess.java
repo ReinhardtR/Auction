@@ -126,7 +126,7 @@ public class DatabaseAccess implements DatabaseIO {
 
 	}
 
-	private void itemIDIncrementer()
+
 	public void updateHighestBidder(AuctionItem item) throws SQLException {
 		createConnection();
 
@@ -139,7 +139,7 @@ public class DatabaseAccess implements DatabaseIO {
 		closeConnection();
 	}
 
-	private int itemIDIncrementer()
+	private void itemIDIncrementer()
 	{
 		itemID++;
 	}
