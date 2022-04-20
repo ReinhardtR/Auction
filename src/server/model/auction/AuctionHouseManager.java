@@ -1,11 +1,21 @@
 package server.model.auction;
 
+import shared.network.Auction;
+import shared.network.server.AuctionHouse;
+
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 
-public class AuctionHouse {
+public class AuctionHouseManager implements AuctionHouse {
 	HashMap<String, Auction> auctions;
 
-	public AuctionHouse() {
+	public AuctionHouseManager() {
+		try {
+			UnicastRemoteObject.exportObject(this, 0);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 		auctions = new HashMap<>();
 	}
 
@@ -25,6 +35,10 @@ public class AuctionHouse {
 	}
 
 	public void addAuction(Auction auction) {
-		auctions.put(auction.getItem().getId(), auction);
+		try {
+			auctions.put(auction.getItem().getId(), auction);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 	}
 }

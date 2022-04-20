@@ -1,6 +1,6 @@
 package client.model;
 
-import client.network.SocketClient;
+import client.network.MainClientHandler;
 import shared.transferobjects.AuctionBid;
 import shared.utils.PropertyChangeSubject;
 
@@ -9,10 +9,10 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class AuctionModel implements PropertyChangeSubject {
-	private final SocketClient client;
+	private final MainClientHandler client;
 	private final PropertyChangeSupport support;
 
-	public AuctionModel(SocketClient client) {
+	public AuctionModel(MainClientHandler client) {
 		support = new PropertyChangeSupport(this);
 
 		this.client = client;
@@ -20,7 +20,7 @@ public class AuctionModel implements PropertyChangeSubject {
 	}
 
 	public void makeNewBid(AuctionBid auctionBid) {
-		client.sendAuctionBid(auctionBid);
+		client.makeNewBid(auctionBid);
 	}
 
 	public void onNewAuctionBid(PropertyChangeEvent event) {
