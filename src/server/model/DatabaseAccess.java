@@ -21,23 +21,27 @@ public class DatabaseAccess implements DatabaseIO {
 	private Connection c = null;
 	private PreparedStatement pstmt = null;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException, SQLException {
 		DatabaseAccess d = new DatabaseAccess();
-
-		d.addItemToAuction(new AuctionItem("test2","test2Desc","Lang,Tismand,Stor,Lang,Sort",4200));
+		AuctionItem auctionItem = new AuctionItem("test2","test2Desc","Lang,Tismand,Stor,Lang,Sort",4200);
+		d.addItemToAuction(auctionItem);
 		// Ovenstående metode skal kaldes når et item skal til salg og oprettes på databasen.
+
+
+
+			Thread.sleep(10000);
+
+		d.removeItemFromServer(auctionItem);
 	}
 
 	// TODO: 23/03/2022 Der KAN ske en fejl her hvis flere clienter laver en connection uden det bliver closed.
 	private void createConnection() {
 		try {
 			Class.forName("org.postgresql.Driver");
-			System.out.println("Hellooooo");
 			c = DriverManager
-							.getConnection("jdbc:postgresql://localhost:5432/postgres",
-											"postgres", "6456");
+							.getConnection("jdbc:postgresql://hattie.db.elephantsql.com:5432/isgypvka",
+											"isgypvka", "1234");
 
-			System.out.println("Database connection is up");
 
 
 
@@ -61,7 +65,8 @@ public class DatabaseAccess implements DatabaseIO {
 		createConnection();
 
 		try {
-			String sql = "INSERT INTO \"AuctionData\".auctionitems(itemid,title,description,tags,currentprice,currenthighestbidder)" + "VALUES(?,?,?,?,?,?)";
+
+			String sql = "INSERT INTO \"public\".auctionitems(itemid,title,description,tags,currentprice,currenthighestbidder)" + "VALUES(?,?,?,?,?,?)";
 
 			pstmt = c.prepareStatement(sql);
 
@@ -82,10 +87,11 @@ public class DatabaseAccess implements DatabaseIO {
 	}
 
 	@Override
-	public void removeItemFromServer(AuctionItem item) {
+	public void removeItemFromServer(AuctionItem item) throws SQLException {
 		createConnection();
 
-		//Insert here
+		String sql = "DELETE FROM \"public\".auctionitems WHERE title='"+item.getItemId()+"'";
+		c.prepareStatement(sql).executeUpdate();
 
 		closeConnection();
 	}
