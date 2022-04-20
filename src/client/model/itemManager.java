@@ -16,6 +16,6 @@ public class itemManager {
 	//Constructor?
 	//Metode til at indlæse fra database?
 
-	
+
 
 }
