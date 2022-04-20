@@ -8,6 +8,7 @@ public interface DatabaseIO {
 
 	void addItemToAuction(AuctionItem item); //Indholder - Titel, - Beskrivelse, - Tags, - "Pris".
 	void removeItemFromServer(AuctionItem item) throws SQLException;
+	void updateHighestBidder(AuctionItem item) throws SQLException;
 
 
 }
