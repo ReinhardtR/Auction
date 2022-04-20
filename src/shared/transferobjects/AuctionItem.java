@@ -6,14 +6,15 @@ public class AuctionItem {
 	private String description;
 	private String tags;
 	private String itemId;
-	private double starterPrice;
+	private double price;
+
 
 	public AuctionItem(String title, String description, String tags, double starterPrice)
 	{
 		this.title = title;
 		this.description = description;
 		this.tags = tags;
-		this.starterPrice = starterPrice;
+		this.price = starterPrice;
 	}
 
 	public String getTitle() {
@@ -32,7 +33,9 @@ public class AuctionItem {
 		return itemId;
 	}
 
-	public Double getStarterPrice() {
-		return starterPrice;
+	public Double getPrice() {
+		return price;
 	}
+
+
 }

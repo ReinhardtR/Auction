@@ -3,6 +3,7 @@ package server.model;
 import shared.transferobjects.AuctionItem;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public interface DatabaseIO {
 
@@ -10,5 +11,6 @@ public interface DatabaseIO {
 	void removeItemFromServer(AuctionItem item) throws SQLException;
 	void updateHighestBidder(AuctionItem item) throws SQLException;
 
+	ArrayList<AuctionItem> searchAuctionItemsFromKeyword(String keyword) throws SQLException;
 
 }

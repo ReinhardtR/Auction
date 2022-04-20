@@ -3,6 +3,7 @@ package server.model;
 import shared.transferobjects.AuctionItem;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DatabaseAccess implements DatabaseIO {
 
@@ -17,7 +18,7 @@ public class DatabaseAccess implements DatabaseIO {
 	- CurrentHighestBidder
 	 */
 
-	private int itemID = 0;
+	private int itemID = 1;
 	private Connection c = null;
 	private PreparedStatement pstmt = null;
 
@@ -29,9 +30,6 @@ public class DatabaseAccess implements DatabaseIO {
 
 
 
-		Thread.sleep(5000);
-
-		d.updateHighestBidder(auctionItem);
 	}
 
 	// TODO: 23/03/2022 Der KAN ske en fejl her hvis flere clienter laver en connection uden det bliver closed.
@@ -70,11 +68,11 @@ public class DatabaseAccess implements DatabaseIO {
 
 			pstmt = c.prepareStatement(sql);
 
-			pstmt.setString(1,"" + itemIDIncrementer());
+			pstmt.setString(1,"" + getItemID());
 			pstmt.setString(2,item.getTitle());
 			pstmt.setString(3,item.getDescription());
 			pstmt.setString(4,item.getTags());
-			pstmt.setDouble(5,item.getStarterPrice()); //Starter pris for item
+			pstmt.setDouble(5,item.getPrice()); //Starter pris for item
 			pstmt.setString(6,"reinhardt"); //Person som har sat salget op.
 
 			pstmt.executeUpdate();
@@ -82,8 +80,12 @@ public class DatabaseAccess implements DatabaseIO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+		itemIDIncrementer();
 		closeConnection();
+	}
+
+	private int getItemID() {
+	return itemID;
 	}
 
 	@Override
@@ -97,6 +99,34 @@ public class DatabaseAccess implements DatabaseIO {
 	}
 
 	@Override
+	public ArrayList<AuctionItem> searchAuctionItemsFromKeyword(String keyword) throws SQLException {
+
+		createConnection();
+		ArrayList<AuctionItem> listOfItems = new ArrayList<>();
+		Statement stmnt = c.createStatement();
+
+
+		ResultSet resultSet = stmnt.executeQuery("SELECT * FROM \"public\".auctionitems WHERE title like '%" + keyword + "%'");
+
+		while(resultSet.next())
+		{
+			String title = resultSet.getString("title");
+			String description = resultSet.getString("description");
+			String tags = resultSet.getString("tags");
+			double currentPrice = resultSet.getDouble("currentprice");
+			System.out.println("IN A LOOOOOOP");
+			listOfItems.add(new AuctionItem(title,description,tags,currentPrice));
+		}
+		System.out.println("out of loop");
+		System.out.println(listOfItems.toString());
+
+		closeConnection();
+		
+		return listOfItems;
+
+	}
+
+	private void itemIDIncrementer()
 	public void updateHighestBidder(AuctionItem item) throws SQLException {
 		createConnection();
 
@@ -112,7 +142,6 @@ public class DatabaseAccess implements DatabaseIO {
 	private int itemIDIncrementer()
 	{
 		itemID++;
-		return itemID;
 	}
 
 
