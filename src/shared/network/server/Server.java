@@ -7,7 +7,7 @@ import java.rmi.RemoteException;
 
 public interface Server extends Remote {
 
-	AuctionHouse getActionHouse() throws RemoteException;
+	IAuctionHouse getActionHouse() throws RemoteException;
 
 	void registerAsClient(Client client) throws RemoteException;
 }

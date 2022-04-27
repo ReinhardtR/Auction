@@ -1,21 +1,24 @@
 package server.network;
 
-import server.model.auction.AuctionHouseManager;
+import server.model.auction.Auction;
+import server.model.auction.AuctionHouse;
 import server.model.auction.AuctionManager;
 import server.model.auction.Item;
-import shared.network.Auction;
 import shared.network.client.Client;
-import shared.network.server.AuctionHouse;
+import shared.network.server.IAuctionHouse;
+import shared.network.server.IAuctionManager;
 import shared.network.server.Server;
+import shared.transferobjects.AuctionBid;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainServerHandler implements Server {
 
-	AuctionHouseManager auctionHouse;
+	AuctionHouse auctionHouse;
 
 	List<Client> clients;
 
@@ -26,13 +29,16 @@ public class MainServerHandler implements Server {
 			e.printStackTrace();
 		}
 		clients = new ArrayList<>();
-		Auction auction = new AuctionManager(new Item("123"));
-		auctionHouse = new AuctionHouseManager();
+
+		Auction auctionModel = new Auction(new Item("123"), new AuctionBid("123", "Jens", 0, LocalDateTime.now()));
+		IAuctionManager auction = new AuctionManager(auctionModel);
+
+		auctionHouse = new AuctionHouse();
 		auctionHouse.addAuction(auction);
 	}
 
 	@Override
-	public AuctionHouse getActionHouse() throws RemoteException {
+	public IAuctionHouse getActionHouse() throws RemoteException {
 		return auctionHouse;
 	}
 

@@ -23,9 +23,17 @@ public class ViewModelFactory {
 		return loginViewModel;
 	}
 
+//	public AuctionViewModel getAuctionViewModel() {
+//		if (auctionViewModel == null) {
+//			auctionViewModel = new AuctionViewModel(ModelFactory.getInstance().getAuctionHouseModel());
+//		}
+//
+//		return auctionViewModel;
+//	}
+
 	public AuctionViewModel getAuctionViewModel() {
 		if (auctionViewModel == null) {
-			auctionViewModel = new AuctionViewModel(ModelFactory.getInstance().getAuctionModel());
+			auctionViewModel = new AuctionViewModel(ModelFactory.getInstance().getAuctionModelTest());
 		}
 
 		return auctionViewModel;
