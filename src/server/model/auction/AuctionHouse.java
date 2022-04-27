@@ -1,30 +1,57 @@
 package server.model.auction;
 
-import java.util.HashMap;
+import shared.network.client.AuctionData;
+import shared.network.server.IAuctionHouse;
+import shared.network.server.IAuctionManager;
 
-public class AuctionHouse {
-	HashMap<String, Auction> auctions;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+public class AuctionHouse implements IAuctionHouse {
+	HashMap<String, IAuctionManager> auctionManagers;
 
 	public AuctionHouse() {
-		auctions = new HashMap<>();
-	}
-
-	public Auction getAuction(String itemId) throws Exception {
-		System.out.println(itemId);
-		Auction auction = auctions.get(itemId);
-
-		if (auction == null) {
-			throw new Exception("Couldn't find an Auction with the given item id");
+		try {
+			UnicastRemoteObject.exportObject(this, 0);
+		} catch (RemoteException e) {
+			e.printStackTrace();
 		}
 
-		return auction;
+		auctionManagers = new HashMap<>();
 	}
 
-	public HashMap<String, Auction> getAuctions() {
+	@Override
+	public IAuctionManager getAuctionManager(String itemId) throws RemoteException, Exception {
+		return auctionManagers.get(itemId);
+	}
+
+	public List<AuctionData> getAuctions() {
+		List<AuctionData> auctions = new ArrayList<>();
+
+		auctionManagers.forEach((itemId, auctionManager) -> {
+			try {
+				auctions.add(auctionManager.getAuction());
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+		});
+
 		return auctions;
 	}
 
-	public void addAuction(Auction auction) {
-		auctions.put(auction.getItem().getId(), auction);
+	@Override
+	public HashMap<String, IAuctionManager> getAuctionManagers() throws RemoteException {
+		return null;
+	}
+
+	public void addAuction(IAuctionManager auctionManager) {
+		try {
+			auctionManagers.put(auctionManager.getAuction().getItem().getId(), auctionManager);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 	}
 }

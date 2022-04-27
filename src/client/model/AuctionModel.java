@@ -1,41 +1,48 @@
 package client.model;
 
-import client.network.SocketClient;
+import client.network.MainClientHandler;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import shared.network.client.AuctionData;
 import shared.transferobjects.AuctionBid;
-import shared.utils.PropertyChangeSubject;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
+import java.rmi.RemoteException;
 
-public class AuctionModel implements PropertyChangeSubject {
-	private final SocketClient client;
-	private final PropertyChangeSupport support;
+public class AuctionModel {
+	private final MainClientHandler client;
+	private final AuctionData auctionData;
+	private final ObjectProperty<AuctionBid> bidProperty;
 
-	public AuctionModel(SocketClient client) {
-		support = new PropertyChangeSupport(this);
+	public AuctionModel(MainClientHandler client, AuctionData auctionData) {
+		this.auctionData = auctionData;
 
 		this.client = client;
-		client.addListener("NEW_AUCTION_BID", this::onNewAuctionBid);
+		String propertyName = "NEW_BID:" + auctionData.getItem().getId();
+		this.client.addListener(propertyName, this::onNewBid);
+
+		bidProperty = new SimpleObjectProperty<>(auctionData.getBid());
+
+		try {
+			client.watchAuction(auctionData.getItem().getId());
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void makeNewBid(AuctionBid auctionBid) {
-		client.sendAuctionBid(auctionBid);
+		client.makeNewBid(auctionBid);
 	}
 
-	public void onNewAuctionBid(PropertyChangeEvent event) {
-		AuctionBid auctionBid = (AuctionBid) event.getNewValue();
+	private void onNewBid(PropertyChangeEvent event) {
+		System.out.println("NEW BID ON MODEL");
+		AuctionBid bid = (AuctionBid) event.getNewValue();
 
-		support.firePropertyChange("NEW_AUCTION_BID", null, auctionBid);
+		bidProperty.setValue(bid);
+		System.out.println(bid.getAmount() + " " + bidProperty.getValue().getAmount());
 	}
 
-	@Override
-	public void addListener(String eventName, PropertyChangeListener listener) {
-		support.addPropertyChangeListener(eventName, listener);
-	}
-
-	@Override
-	public void removeListener(String eventName, PropertyChangeListener listener) {
-		support.removePropertyChangeListener(eventName, listener);
+	public ObjectProperty<AuctionBid> bidProperty() {
+		return bidProperty;
 	}
 }

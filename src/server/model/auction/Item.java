@@ -1,6 +1,8 @@
 package server.model.auction;
 
-public class Item {
+import java.io.Serializable;
+
+public class Item implements Serializable {
 	private final String id;
 
 	public Item(String id) {
