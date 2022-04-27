@@ -96,6 +96,7 @@ public class DatabaseAccess implements DatabaseIO {
 	public ArrayList<AuctionItem> searchAuctionItemsFromKeyword(String keyword, String relation) throws SQLException {
 
 		createConnection();
+
 		ArrayList<AuctionItem> listOfItems = new ArrayList<>();
 		Statement stmnt = c.createStatement();
 
