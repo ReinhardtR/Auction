@@ -5,7 +5,7 @@ public class AuctionItem {
 	private String title;
 	private String description;
 	private String tags;
-	private String itemId;
+	private int itemId;
 	private double price;
 
 
@@ -29,7 +29,7 @@ public class AuctionItem {
 		return tags;
 	}
 
-	public String getItemId() {
+	public int getItemId() {
 		return itemId;
 	}
 
@@ -37,5 +37,7 @@ public class AuctionItem {
 		return price;
 	}
 
-
+	public void setItemId(int itemId) {
+		this.itemId = itemId;
+	}
 }

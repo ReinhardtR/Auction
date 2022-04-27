@@ -17,14 +17,8 @@ public class DatabaseAccess implements DatabaseIO {
 	- Currentprice
 	- CurrentHighestBidder
 	 */
-
-	private int itemID;
 	private Connection c = null;
 	private PreparedStatement pstmt = null;
-
-	public DatabaseAccess() throws SQLException {
-		//getLatestId(relation);
-	}
 
 	private void createConnection() {
 		try {
@@ -57,33 +51,27 @@ public class DatabaseAccess implements DatabaseIO {
 
 		try {
 
-			String sql = "INSERT INTO \"public\"." + relation + "(itemid,title,description,tags,currentprice,currenthighestbidder)" + "VALUES(?,?,?,?,?,?)";
+			String sql = "INSERT INTO \"public\"." + relation + "(title,description,tags,currentprice,currenthighestbidder)" + "VALUES(?,?,?,?,?)";
 
 			pstmt = c.prepareStatement(sql);
 
-			pstmt.setString(1,"" + getItemID());
-			pstmt.setString(2,item.getTitle());
-			pstmt.setString(3,item.getDescription());
-			pstmt.setString(4,item.getTags());
-			pstmt.setDouble(5,item.getPrice()); //Starter pris for item
-			pstmt.setString(6,"reinhardt"); //Person som har sat salget op.
+			pstmt.setString(1,item.getTitle());
+			pstmt.setString(2,item.getDescription());
+			pstmt.setString(3,item.getTags());
+			pstmt.setDouble(4,item.getPrice()); //Starter pris for item
+			pstmt.setString(5,"reinhardt"); //Person som har sat salget op.
 
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		itemIDIncrementer();
 		closeConnection();
 
 	}
 
-	private int getItemID() {
-	return itemID;
-	}
-
 	@Override
-	public void removeItemFromServer(AuctionItem item) throws SQLException {
+	public void removeItemFromServer(String relation , AuctionItem item) throws SQLException {
 		createConnection();
 
 		String sql = "DELETE FROM \"public\".auctionitems WHERE title='"+item.getTitle()+"'";
@@ -105,11 +93,15 @@ public class DatabaseAccess implements DatabaseIO {
 
 		while(resultSet.next())
 		{
+			int itemId = resultSet.getInt("itemid");
 			String title = resultSet.getString("title");
 			String description = resultSet.getString("description");
 			String tags = resultSet.getString("tags");
 			double currentPrice = resultSet.getDouble("currentprice");
-			listOfItems.add(new AuctionItem(title,description,tags,currentPrice));
+
+			AuctionItem auctionItem = new AuctionItem(title,description,tags,currentPrice);
+			auctionItem.setItemId(itemId);
+			listOfItems.add(auctionItem);
 		}
 
 		closeConnection();
@@ -163,14 +155,5 @@ public class DatabaseAccess implements DatabaseIO {
 		closeConnection();
 
 		return latestIncrement;
-	}
-
-	private void itemIDIncrementer()
-	{
-		itemID++;
-	}
-
-	public void setItemID(int itemID) {
-		this.itemID = itemID;
 	}
 }
