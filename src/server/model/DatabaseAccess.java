@@ -18,27 +18,20 @@ public class DatabaseAccess implements DatabaseIO {
 	- CurrentHighestBidder
 	 */
 
-	private int itemID = 1;
+	private int itemID;
 	private Connection c = null;
 	private PreparedStatement pstmt = null;
 
-	public static void main(String[] args) throws InterruptedException, SQLException {
-		DatabaseAccess d = new DatabaseAccess();
-		AuctionItem auctionItem = new AuctionItem("test2","test2Desc","Lang,Tismand,Stor,Lang,Sort",4200);
-		d.addItemToAuction(auctionItem);
-		// Ovenstående metode skal kaldes når et item skal til salg og oprettes på databasen.
-
-
-
+	public DatabaseAccess() throws SQLException {
+		//getLatestId(relation);
 	}
 
-	// TODO: 23/03/2022 Der KAN ske en fejl her hvis flere clienter laver en connection uden det bliver closed.
 	private void createConnection() {
 		try {
 			Class.forName("org.postgresql.Driver");
 			c = DriverManager
 							.getConnection("jdbc:postgresql://hattie.db.elephantsql.com:5432/isgypvka",
-											"isgypvka", "1234");
+											"isgypvka", "UkY3C9sbYugpjto58d8FAk9M54JiLanr");
 
 
 
@@ -59,12 +52,12 @@ public class DatabaseAccess implements DatabaseIO {
 		}
 	}
 	@Override
-	public void addItemToAuction(AuctionItem item) {
+	public void addItemToAuction(String relation, AuctionItem item) {
 		createConnection();
 
 		try {
 
-			String sql = "INSERT INTO \"public\".auctionitems(itemid,title,description,tags,currentprice,currenthighestbidder)" + "VALUES(?,?,?,?,?,?)";
+			String sql = "INSERT INTO \"public\"." + relation + "(itemid,title,description,tags,currentprice,currenthighestbidder)" + "VALUES(?,?,?,?,?,?)";
 
 			pstmt = c.prepareStatement(sql);
 
@@ -82,6 +75,7 @@ public class DatabaseAccess implements DatabaseIO {
 		}
 		itemIDIncrementer();
 		closeConnection();
+
 	}
 
 	private int getItemID() {
@@ -93,20 +87,20 @@ public class DatabaseAccess implements DatabaseIO {
 		createConnection();
 
 		String sql = "DELETE FROM \"public\".auctionitems WHERE title='"+item.getTitle()+"'";
-		c.prepareStatement(sql).executeUpdate();
-
+		int homie = c.prepareStatement(sql).executeUpdate();
+		System.out.println(homie);
 		closeConnection();
 	}
 
 	@Override
-	public ArrayList<AuctionItem> searchAuctionItemsFromKeyword(String keyword) throws SQLException {
+	public ArrayList<AuctionItem> searchAuctionItemsFromKeyword(String keyword, String relation) throws SQLException {
 
 		createConnection();
 		ArrayList<AuctionItem> listOfItems = new ArrayList<>();
 		Statement stmnt = c.createStatement();
 
 
-		ResultSet resultSet = stmnt.executeQuery("SELECT * FROM \"public\".auctionitems WHERE title like '%" + keyword + "%'");
+		ResultSet resultSet = stmnt.executeQuery("SELECT * FROM \"public\"."+relation+" WHERE title like '%" + keyword + "%'");
 
 		while(resultSet.next())
 		{
@@ -114,14 +108,11 @@ public class DatabaseAccess implements DatabaseIO {
 			String description = resultSet.getString("description");
 			String tags = resultSet.getString("tags");
 			double currentPrice = resultSet.getDouble("currentprice");
-			System.out.println("IN A LOOOOOOP");
 			listOfItems.add(new AuctionItem(title,description,tags,currentPrice));
 		}
-		System.out.println("out of loop");
-		System.out.println(listOfItems.toString());
 
 		closeConnection();
-		
+
 		return listOfItems;
 
 	}
@@ -139,14 +130,46 @@ public class DatabaseAccess implements DatabaseIO {
 		closeConnection();
 	}
 
+	public void clearTable(String relation) throws SQLException {
+		createConnection();
+
+
+		String sql = "TRUNCATE TABLE \"public\"." + relation;
+
+		c.prepareStatement(sql).executeUpdate();
+
+
+		closeConnection();
+	}
+
+	@Override
+	public int getLatestId(String relation) throws SQLException {
+		createConnection();
+		Statement stmnt = c.createStatement();
+		ResultSet resultSet = stmnt.executeQuery("SELECT * FROM \"public\"."+relation);
+
+		int latestIncrement;
+
+		if(resultSet.next())
+		{
+			latestIncrement = resultSet.getInt("latestItemId");
+		}
+		else
+		{
+			throw new SQLException("Latest itemId does not exist");
+		}
+
+		closeConnection();
+
+		return latestIncrement;
+	}
+
 	private void itemIDIncrementer()
 	{
 		itemID++;
 	}
 
-
-
-
-
-
+	public void setItemID(int itemID) {
+		this.itemID = itemID;
+	}
 }
