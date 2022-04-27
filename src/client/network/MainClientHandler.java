@@ -32,7 +32,7 @@ public class MainClientHandler implements Client, Auction, PropertyChangeSubject
 
 	public void makeNewBid(AuctionBid auctionBid) {
 		try {
-			server.getActionHouse().getAuction("123").newActionBid(auctionBid);
+			server.getActionHouse().getAuction("123").newAuctionBid(auctionBid);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -40,7 +40,7 @@ public class MainClientHandler implements Client, Auction, PropertyChangeSubject
 
 
 	@Override
-	public void newActionBid(AuctionBid auctionBid) throws RemoteException {
+	public void newAuctionBid(AuctionBid auctionBid) throws RemoteException {
 		support.firePropertyChange("NEW_AUCTION_BID", null, auctionBid);
 	}
 

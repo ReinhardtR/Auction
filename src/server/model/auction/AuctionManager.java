@@ -25,10 +25,10 @@ public class AuctionManager implements Auction {
 	}
 
 	@Override
-	public void newActionBid(AuctionBid auctionBid) throws RemoteException {
+	public void newAuctionBid(AuctionBid auctionBid) throws RemoteException {
 		if (!this.bid.isHigher(auctionBid)) {
 			this.bid = auctionBid;
-			broadCastOffer();
+			broadcastOffer();
 			return;
 		}
 		try {
@@ -46,10 +46,10 @@ public class AuctionManager implements Auction {
 		}
 	}
 
-	private void broadCastOffer() {
+	private void broadcastOffer() {
 		for (Auction bidder : bidders) {
 			try {
-				bidder.newActionBid(this.bid);
+				bidder.newAuctionBid(this.bid);
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}

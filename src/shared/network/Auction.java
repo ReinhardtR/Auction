@@ -8,7 +8,7 @@ import java.rmi.RemoteException;
 
 public interface Auction extends Remote {
 
-	void newActionBid(AuctionBid auctionBid) throws RemoteException;
+	void newAuctionBid(AuctionBid auctionBid) throws RemoteException;
 
 	void joinAuction(Auction listener) throws RemoteException;
 
