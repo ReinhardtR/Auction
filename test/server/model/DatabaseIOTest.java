@@ -90,9 +90,6 @@ class DatabaseIOTest {
 	}
 
 
-
-
-
 	@AfterEach
 	public void clearTable(){
 		try {
