@@ -1,4 +1,4 @@
-package server.model;
+package database;
 
 import shared.transferobjects.AuctionItem;
 

@@ -1,12 +1,13 @@
 package server.model;
 
+import database.DatabaseAccess;
+import database.DatabaseIO;
 import org.junit.jupiter.api.*;
 import shared.transferobjects.AuctionItem;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
