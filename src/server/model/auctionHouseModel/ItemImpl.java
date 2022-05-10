@@ -8,9 +8,11 @@ import java.rmi.server.UnicastRemoteObject;
 
 public class ItemImpl extends UnicastRemoteObject implements Item {
 	private final String itemID;
+	private final SaleStrategy strategy;
 
-	public ItemImpl(String itemID) throws RemoteException {
+	public ItemImpl(String itemID, SaleStrategy strategy) throws RemoteException {
 		this.itemID = itemID;
+		this.strategy = strategy;
 	}
 
 	@Override
@@ -19,8 +21,14 @@ public class ItemImpl extends UnicastRemoteObject implements Item {
 	}
 
 	@Override
+	public int getOfferAmount() throws RemoteException {
+		return strategy.getOfferAmount();
+	}
+
+	@Override
 	public void userSaleStrategy(int amount, String username) throws RemoteException {
 		try {
+			strategy.offer(amount, username);
 			UpdateBroadcasterImpl.getInstance(itemID).broadcast();
 		} catch (RemoteException e) {
 			e.printStackTrace();

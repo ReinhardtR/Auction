@@ -39,6 +39,17 @@ public class ObservableItem implements Item, PropertyChangeListener, PropertyCha
 	}
 
 	@Override
+	public int getOfferAmount() {
+		try {
+			return item.getOfferAmount();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+
+		return -1;
+	}
+
+	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		support.firePropertyChange(itemID, null, null);
 	}

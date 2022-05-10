@@ -42,6 +42,7 @@ public class UpdateBroadcasterImpl extends UnicastRemoteObject implements Update
 	}
 
 	public void broadcast() {
+		System.out.println("BROADCAST");
 		listeners.forEach((listener) -> {
 			try {
 				listener.onNewBid(itemID);
