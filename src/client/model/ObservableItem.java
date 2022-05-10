@@ -1,7 +1,8 @@
 package client.model;
 
 import client.network.LocalClient;
-import server.model.auctionHouseModel.Item;
+
+import shared.network.model.Item;
 import shared.utils.PropertyChangeSubject;
 
 import java.beans.PropertyChangeEvent;
@@ -23,12 +24,10 @@ public class ObservableItem implements Item, PropertyChangeListener, PropertyCha
 		client.addListener(itemID, this);
 	}
 
-
 	@Override
 	public String getItemID() {
 		return itemID;
 	}
-
 
 	@Override
 	public void userSaleStrategy(int amount, String username) {
