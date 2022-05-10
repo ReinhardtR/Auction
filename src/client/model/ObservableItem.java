@@ -1,6 +1,8 @@
 package client.model;
 
 import client.network.LocalClient;
+import server.model.auctionHouseModel.ItemImpl;
+import server.model.auctionHouseModel.broadcaster.UpdateBroadcasterImpl;
 import shared.network.model.Item;
 import shared.utils.PropertyChangeSubject;
 
@@ -18,6 +20,7 @@ public class ObservableItem implements Item, PropertyChangeListener, PropertyCha
 		support = new PropertyChangeSupport(this);
 		this.item = item;
 
+
 		// Cache itemID
 		itemID = item.getItemID();
 
@@ -30,9 +33,11 @@ public class ObservableItem implements Item, PropertyChangeListener, PropertyCha
 	}
 
 	@Override
-	public void userSaleStrategy(int amount, String username) {
+	public void userSaleStrategy(String itemID, int amount, String username) {
 		try {
-			item.userSaleStrategy(amount, username);
+			System.out.println("Kalder strategy fra mig the proxy til mit item på serverside");
+			item.userSaleStrategy(itemID,amount, username);
+			UpdateBroadcasterImpl.getBroadcasterInstance(itemID).broadcast(this);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
@@ -49,10 +54,16 @@ public class ObservableItem implements Item, PropertyChangeListener, PropertyCha
 		return -1;
 	}
 
+
+
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		System.out.println("MODEL FIRE");
-		support.firePropertyChange(itemID, null, null);
+		try {
+			support.firePropertyChange(itemID, null, item.getOfferAmount());
+		} catch (RemoteException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@Override

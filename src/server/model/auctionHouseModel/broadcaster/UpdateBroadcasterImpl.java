@@ -1,5 +1,6 @@
-package server.model;
+package server.model.auctionHouseModel.broadcaster;
 
+import client.model.ObservableItem;
 import shared.network.client.SharedClient;
 
 import java.rmi.RemoteException;
@@ -13,7 +14,6 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class UpdateBroadcasterImpl extends UnicastRemoteObject implements UpdateBroadcaster {
 	private static final Map<String, UpdateBroadcasterImpl> instances = new HashMap<>();
-	private static final Lock lock = new ReentrantLock();
 	private final List<SharedClient> listeners;
 	private final String itemID;
 
@@ -22,29 +22,30 @@ public class UpdateBroadcasterImpl extends UnicastRemoteObject implements Update
 		this.itemID = itemID;
 	}
 
-	public static UpdateBroadcasterImpl getInstance(String itemID) throws RemoteException {
+	public static UpdateBroadcasterImpl getBroadcasterInstance(String itemID) throws RemoteException {
 		UpdateBroadcasterImpl broadcaster = instances.get(itemID);
-
-		if (broadcaster == null) {
-			synchronized (lock) {
-				if (broadcaster == null) {
-					try {
-						broadcaster = new UpdateBroadcasterImpl(itemID);
-						instances.put(itemID, broadcaster);
-					} catch (RemoteException e) {
-						e.printStackTrace();
-					}
+		if(broadcaster == null)
+		{
+			synchronized (instances)
+			{
+				broadcaster = instances.get(itemID);
+				if(broadcaster == null)
+				{
+					System.out.println("NEW BROADCASTER WITH KEY: " + itemID);
+					broadcaster = new UpdateBroadcasterImpl(itemID);
+					instances.put(itemID, broadcaster);
 				}
 			}
 		}
-
 		return broadcaster;
 	}
 
-	public void broadcast() {
+	public void broadcast(ObservableItem item) {
 		System.out.println("BROADCAST");
+		System.out.println(listeners.size());
 		listeners.forEach((listener) -> {
 			try {
+				System.out.println("AM BROADCASTING");
 				listener.onNewBid(itemID);
 			} catch (RemoteException e) {
 				e.printStackTrace();
@@ -54,7 +55,9 @@ public class UpdateBroadcasterImpl extends UnicastRemoteObject implements Update
 
 	@Override
 	public void addListener(SharedClient client) throws RemoteException {
+		System.out.println("LISTENER BEING ADDED");
 		listeners.add(client);
+		System.out.println(listeners.size());
 	}
 
 	@Override

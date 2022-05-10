@@ -1,4 +1,4 @@
-package server.model;
+package server.model.auctionHouseModel.broadcaster;
 
 import shared.network.client.SharedClient;
 

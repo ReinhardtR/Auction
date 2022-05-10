@@ -1,7 +1,7 @@
-package server.model.auctionHouseModel;
+package server.model.auctionHouseModel.SaleStrategy;
 
 public class AuctionStrategy implements SaleStrategy {
-	private int currentBid;
+	private int currentBid = 0;
 	private String currentBidder;
 	private String auctionEndDate;
 

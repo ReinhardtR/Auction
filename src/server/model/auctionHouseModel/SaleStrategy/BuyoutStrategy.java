@@ -1,4 +1,4 @@
-package server.model.auctionHouseModel;
+package server.model.auctionHouseModel.SaleStrategy;
 
 public class BuyoutStrategy implements SaleStrategy {
 
