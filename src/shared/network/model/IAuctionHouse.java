@@ -1,11 +1,8 @@
-package shared.network.server;
-
-import shared.network.client.AuctionData;
+package shared.network.model;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.HashMap;
-import java.util.List;
 
 public interface IAuctionHouse extends Remote {
 
