@@ -1,8 +1,7 @@
 package server.model.auction;
 
-import shared.network.client.AuctionData;
-import shared.network.server.IAuctionHouse;
-import shared.network.server.IAuctionManager;
+import shared.network.model.IAuctionHouse;
+import shared.network.model.IAuctionManager;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -10,16 +9,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class AuctionHouse implements IAuctionHouse {
+public class AuctionHouse extends UnicastRemoteObject implements IAuctionHouse {
 	HashMap<String, IAuctionManager> auctionManagers;
 
-	public AuctionHouse() {
-		try {
-			UnicastRemoteObject.exportObject(this, 0);
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
-
+	public AuctionHouse() throws RemoteException {
 		auctionManagers = new HashMap<>();
 	}
 

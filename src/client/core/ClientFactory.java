@@ -1,7 +1,5 @@
 package client.core;
 
-import client.network.MainClientHandler;
-
 // Singleton pattern
 public class ClientFactory {
 	private static final ClientFactory instance = new ClientFactory();

@@ -1,6 +1,5 @@
 package client.views.auction;
 
-import client.model.AuctionModel;
 import javafx.beans.property.ObjectProperty;
 import shared.transferobjects.AuctionBid;
 

@@ -1,8 +1,6 @@
 package server.model.auction;
 
-import shared.network.client.AuctionData;
-import shared.network.client.Client;
-import shared.network.server.IAuctionManager;
+import shared.network.model.IAuctionManager;
 import shared.transferobjects.AuctionBid;
 
 import java.rmi.RemoteException;

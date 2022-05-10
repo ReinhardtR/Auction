@@ -1,9 +1,5 @@
 package client.core;
 
-import client.model.AuctionHouseModel;
-import client.model.AuctionModel;
-import client.network.MainClientHandler;
-
 import java.rmi.RemoteException;
 
 public class ModelFactory {

@@ -1,7 +1,5 @@
-package shared.network.server;
+package shared.network.model;
 
-import shared.network.client.AuctionData;
-import shared.network.client.Client;
 import shared.transferobjects.AuctionBid;
 
 import java.rmi.Remote;

@@ -4,9 +4,8 @@ import server.model.auction.Auction;
 import server.model.auction.AuctionHouse;
 import server.model.auction.AuctionManager;
 import server.model.auction.Item;
-import shared.network.client.Client;
-import shared.network.server.IAuctionHouse;
-import shared.network.server.IAuctionManager;
+import shared.network.model.IAuctionHouse;
+import shared.network.model.IAuctionManager;
 import shared.network.server.Server;
 import shared.transferobjects.AuctionBid;
 

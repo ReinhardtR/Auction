@@ -1,6 +1,5 @@
 package server.model.auction;
 
-import shared.network.client.AuctionData;
 import shared.transferobjects.AuctionBid;
 
 public class Auction implements AuctionData {
