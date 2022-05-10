@@ -1,12 +1,9 @@
 package server.model;
 
 public class ItemProxy implements Item {
-
-
 	private ItemImpl item;
 
-	public ItemProxy(ItemImpl item)
-	{
+	public ItemProxy(ItemImpl item) {
 		this.item = item;
 	}
 
