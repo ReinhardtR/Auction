@@ -1,7 +1,5 @@
 package shared.network.server;
 
-import shared.network.model.IAuctionHouse;
-
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
