@@ -36,4 +36,9 @@ public class ClientImpl extends UnicastRemoteObject implements SharedClient, Loc
 	public void removeListener(String eventName, PropertyChangeListener listener) {
 		support.addPropertyChangeListener(eventName, listener);
 	}
+
+	@Override
+	public void getItemToClient(String itemID) throws RemoteException {
+
+	}
 }

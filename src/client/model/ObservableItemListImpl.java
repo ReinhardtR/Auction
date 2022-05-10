@@ -1,21 +1,28 @@
 package client.model;
 
+import client.network.LocalClient;
 import shared.network.model.Item;
 
 import java.util.HashMap;
-import java.util.List;
 
 public class ObservableItemListImpl implements ObservableItemList {
 
 
-	private HashMap<String, Item> itemsForClient = new HashMap<>();
+	private final LocalClient client;
+	private final HashMap<String, Item> itemsForClient = new HashMap<>();
 
+
+	public ObservableItemListImpl(LocalClient client) {
+		this.client = client;
+	}
 
 	@Override
 	public Item getItemForAuction(String itemId) {
-		if (itemsForClient.containsKey(itemId))
-		{
+		if (itemsForClient.containsKey(itemId)) {
+
 			return itemsForClient.get(itemId);
+		} else {
+			client
 		}
 	}
 }

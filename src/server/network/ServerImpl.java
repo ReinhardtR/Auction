@@ -12,7 +12,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 	private final Item item;
 
 	public ServerImpl() throws RemoteException {
-		this.item = new ItemImpl("2");
+		this.item = new ItemImpl("123");
 	}
 
 	@Override
