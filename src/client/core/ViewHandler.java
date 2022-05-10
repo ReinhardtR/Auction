@@ -4,7 +4,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class ViewHandler {
-
 	private static final ViewHandler instance = new ViewHandler();
 	private Stage stage;
 
@@ -19,12 +18,6 @@ public class ViewHandler {
 		stage = new Stage();
 		ViewFactory.init(stage);
 		openAuctionView();
-	}
-
-	public void openLoginView() {
-		Scene loginScene = ViewFactory.getScene("Login");
-		stage.setScene(loginScene);
-		stage.show();
 	}
 
 	public void openAuctionView() {
