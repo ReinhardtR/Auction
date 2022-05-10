@@ -1,6 +1,9 @@
 package server.model.auctionHouseModel;
 
+import server.model.UpdateBroadcasterImpl;
 import shared.network.model.Item;
+
+import java.rmi.RemoteException;
 
 public class ItemImpl implements Item {
 	private final String itemID;
@@ -16,6 +19,12 @@ public class ItemImpl implements Item {
 
 	@Override
 	public void userSaleStrategy(int amount, String username) {
+		try {
+			UpdateBroadcasterImpl.getInstance(itemID).broadcast();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+
 		System.out.println("STRATEGY TRIGGERED");
 	}
 }
