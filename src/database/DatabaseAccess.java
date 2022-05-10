@@ -1,6 +1,5 @@
 package database;
 
-import shared.transferobjects.AuctionItem;
 
 import java.sql.*;
 import java.util.ArrayList;
