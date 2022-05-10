@@ -1,7 +1,7 @@
 package server.model.auction;
 
-import shared.client.SharedClient;
-import shared.model.Auctioneer;
+import shared.network.client.SharedClient;
+import shared.network.model.Auctioneer;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
