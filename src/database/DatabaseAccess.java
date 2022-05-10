@@ -1,9 +1,6 @@
 package database;
 
 
-import java.sql.*;
-import java.util.ArrayList;
-
 public class DatabaseAccess implements DatabaseIO {
 
 	/* Table omkring items på database hedder: AuctionItems.
@@ -16,6 +13,8 @@ public class DatabaseAccess implements DatabaseIO {
 	- Currentprice
 	- CurrentHighestBidder
 	 */
+
+	/*
 	private Connection c = null;
 	private PreparedStatement pstmt = null;
 
@@ -154,5 +153,8 @@ public class DatabaseAccess implements DatabaseIO {
 		closeConnection();
 
 		return latestIncrement;
+
 	}
+	
+	 */
 }

@@ -48,8 +48,4 @@ public class ClientImpl extends UnicastRemoteObject implements SharedClient, Loc
 		support.addPropertyChangeListener(eventName, listener);
 	}
 
-	@Override
-	public void getItemToClient(String itemID) throws RemoteException {
-
-	}
 }

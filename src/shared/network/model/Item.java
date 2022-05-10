@@ -1,7 +1,10 @@
 package shared.network.model;
 
-public interface Item {
-	String getItemID();
+import java.rmi.Remote;
+import java.rmi.RemoteException;
 
-	void userSaleStrategy(int amount, String username);
+public interface Item extends Remote {
+	String getItemID() throws RemoteException;
+
+	void userSaleStrategy(int amount, String username) throws RemoteException;
 }
