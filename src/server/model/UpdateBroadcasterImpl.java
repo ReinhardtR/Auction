@@ -1,24 +1,47 @@
 package server.model;
 
 import shared.network.client.SharedClient;
-import shared.network.model.UpdateBroadcaster;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class UpdateBroadcasterImpl extends UnicastRemoteObject implements UpdateBroadcaster {
-	private final String itemID;
+	private static final Map<String, UpdateBroadcasterImpl> instances = new HashMap<>();
+	private static final Lock lock = new ReentrantLock();
 	private final List<SharedClient> listeners;
+	private final String itemID;
 
-	public UpdateBroadcasterImpl(String itemID) throws RemoteException {
-		this.itemID = itemID;
+	private UpdateBroadcasterImpl(String itemID) throws RemoteException {
 		listeners = new ArrayList<>();
+		this.itemID = itemID;
 	}
 
-	@Override
-	protected void broadcast() {
+	public static UpdateBroadcasterImpl getInstance(String itemID) throws RemoteException {
+		UpdateBroadcasterImpl broadcaster = instances.get(itemID);
+
+		if (broadcaster == null) {
+			synchronized (lock) {
+				if (broadcaster == null) {
+					try {
+						broadcaster = new UpdateBroadcasterImpl(itemID);
+						instances.put(itemID, broadcaster);
+					} catch (RemoteException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+
+		return broadcaster;
+	}
+
+	public void broadcast() {
 		listeners.forEach((listener) -> {
 			try {
 				listener.onNewBid(itemID);

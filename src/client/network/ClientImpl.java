@@ -1,6 +1,9 @@
 package client.network;
 
+import server.model.UpdateBroadcaster;
+import server.model.UpdateBroadcasterImpl;
 import shared.network.client.SharedClient;
+import shared.network.model.Item;
 import shared.network.server.Server;
 
 import java.beans.PropertyChangeListener;
@@ -24,7 +27,15 @@ public class ClientImpl extends UnicastRemoteObject implements SharedClient, Loc
 
 	@Override
 	public void onNewBid(String itemID) throws RemoteException {
+		support.firePropertyChange(itemID, null, null);
+	}
 
+	@Override
+	public Item getItem(String itemID) throws RemoteException {
+		UpdateBroadcaster broadcaster = UpdateBroadcasterImpl.getInstance(itemID);
+		broadcaster.addListener(this);
+
+		return server.getItem(itemID);
 	}
 
 	@Override
