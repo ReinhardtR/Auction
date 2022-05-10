@@ -1,5 +1,6 @@
 package server.model;
 
+import server.model.auction.Item;
 import shared.transferobjects.AuctionItem;
 
 import java.sql.*;
@@ -45,6 +46,8 @@ public class DatabaseAccess implements DatabaseIO {
 			e.printStackTrace();
 		}
 	}
+
+	/*
 	@Override
 	public void addItemToAuction(String relation, AuctionItem item) {
 		createConnection();
@@ -110,7 +113,6 @@ public class DatabaseAccess implements DatabaseIO {
 
 	}
 
-
 	public void updateHighestBidder(AuctionItem item) throws SQLException {
 		createConnection();
 
@@ -156,4 +158,70 @@ public class DatabaseAccess implements DatabaseIO {
 
 		return latestIncrement;
 	}
+
+*/
+	@Override
+	public Item getItem(int itemID) {
+		createConnection();
+		ResultSet resultSet = null;
+		try {		
+			String sql = "SELECT * FROM \"public\".Item WHERE itemID = " + itemID;
+
+			pstmt = c.prepareStatement(sql);
+			
+			resultSet = pstmt.executeQuery();
+
+
+		}
+		
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		try {
+			resultSet.next();
+			if (resultSet.getString("saleStrategy").equalsIgnoreCase("auction"))
+			{
+				
+			}
+			else if (resultSet.getString("saleStrategy").equalsIgnoreCase("buyout"))
+			{
+
+			}
+			else
+			{
+				//intet
+			}
+
+
+
+			closeConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public void itemBought(int itemID) {
+
+	}
+
+	@Override
+	public void updateItemOffer(Item item) {
+
+	}
+
+	public static void main(String[] args) {
+
+		DatabaseAccess  databaseAccess = new DatabaseAccess();
+
+		databaseAccess.getItem(1);
+		databaseAccess.getItem(2);
+
+	}
+
+
 }
+
+

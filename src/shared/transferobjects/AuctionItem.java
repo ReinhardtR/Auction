@@ -16,7 +16,11 @@ public class AuctionItem {
 		this.tags = tags;
 		this.price = starterPrice;
 	}
+	public int getItemId() {
+		return itemId;
+	}
 
+	/*
 	public String getTitle() {
 		return title;
 	}
@@ -29,9 +33,6 @@ public class AuctionItem {
 		return tags;
 	}
 
-	public int getItemId() {
-		return itemId;
-	}
 
 	public Double getPrice() {
 		return price;
@@ -40,4 +41,6 @@ public class AuctionItem {
 	public void setItemId(int itemId) {
 		this.itemId = itemId;
 	}
+
+	 */
 }
