@@ -1,11 +1,13 @@
 package client.core;
 
+import client.model.ObservableItem;
+import client.network.LocalClient;
+
 import java.rmi.RemoteException;
 
 public class ModelFactory {
 	private static final ModelFactory instance = new ModelFactory();
-	private AuctionHouseModel auctionHouseModel;
-	private AuctionModel auctionModel;
+	private ObservableItem auctionModel;
 
 	private ModelFactory() {
 	}
@@ -14,23 +16,10 @@ public class ModelFactory {
 		return instance;
 	}
 
-	public AuctionHouseModel getAuctionHouseModel() {
-		if (auctionHouseModel == null) {
-			auctionHouseModel = new AuctionHouseModel(ClientFactory.getInstance().getClient());
-		}
-
-		return auctionHouseModel;
-	}
-
-	public AuctionModel getAuctionModelTest() {
+	public ObservableItem getAuctionModelTest() {
 		if (auctionModel == null) {
-			MainClientHandler client = ClientFactory.getInstance().getClient();
-
-			try {
-				auctionModel = new AuctionModel(client, client.getAuctions().get(0));
-			} catch (RemoteException e) {
-				e.printStackTrace();
-			}
+			LocalClient client = ClientFactory.getInstance().getClient();
+				auctionModel = new ObservableItem(client, null);
 		}
 
 		return auctionModel;
