@@ -1,4 +1,4 @@
-package server.model;
+package server.model.auctionHouseModel;
 
 public class ItemProxy implements Item {
 	private ItemImpl item;
