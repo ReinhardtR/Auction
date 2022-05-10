@@ -51,6 +51,7 @@ public class ObservableItem implements Item, PropertyChangeListener, PropertyCha
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
+		System.out.println("MODEL FIRE");
 		support.firePropertyChange(itemID, null, null);
 	}
 
