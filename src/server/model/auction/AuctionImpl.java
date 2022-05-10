@@ -1,4 +1,6 @@
-package server.model.auctionHouseModel;
+package server.model.auction;
+
+import server.model.auctionHouseModel.SaleStrategy;
 
 public class AuctionImpl implements SaleStrategy {
 

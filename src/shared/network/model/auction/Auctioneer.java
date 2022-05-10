@@ -1,4 +1,4 @@
-package shared.network.model;
+package shared.network.model.auction;
 
 
 import shared.network.client.SharedClient;
