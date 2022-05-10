@@ -1,13 +1,12 @@
 package client.core;
 
 import client.model.ObservableItem;
+import client.model.ObservableItemListImpl;
 import client.network.LocalClient;
-
-import java.rmi.RemoteException;
 
 public class ModelFactory {
 	private static final ModelFactory instance = new ModelFactory();
-	private ObservableItem auctionModel;
+	private ObservableItemListImpl itemList;
 
 	private ModelFactory() {
 	}
@@ -16,12 +15,13 @@ public class ModelFactory {
 		return instance;
 	}
 
-	public ObservableItem getAuctionModelTest() {
-		if (auctionModel == null) {
+
+	public ObservableItemListImpl getAuctionModelTest() {
+		if (itemList == null) {
 			LocalClient client = ClientFactory.getInstance().getClient();
-				auctionModel = new ObservableItem(client, null);
+				itemList = new ObservableItemListImpl();
 		}
 
-		return auctionModel;
+		return itemList;
 	}
 }
