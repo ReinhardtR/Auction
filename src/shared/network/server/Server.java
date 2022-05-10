@@ -1,11 +1,10 @@
 package shared.network.server;
 
+import server.model.auctionHouseModel.Item;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface Server extends Remote {
-
-	IAuctionHouse getActionHouse() throws RemoteException;
-
-	void registerAsClient(Client client) throws RemoteException;
+	Item getItem(String itemID) throws RemoteException;
 }

@@ -1,6 +1,6 @@
 package server.model.auctionHouseModel;
 
-public class Auction implements SaleStrategy {
+public class AuctionImpl implements SaleStrategy {
 
 	private int currentBid;
 	private String currentBidder;
