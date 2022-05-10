@@ -74,7 +74,7 @@ public class DatabaseAccess implements DatabaseIO {
 	public void removeItemFromServer(String relation , AuctionItem item) throws SQLException {
 		createConnection();
 
-		String sql = "DELETE FROM \"public\".auctionitems WHERE title='"+item.getTitle()+"'";
+		String sql = "DELETE FROM \"public\".auctionitems WHERE title='"+item.getTitle()+"'"; //Kan snildt ændres
 		int homie = c.prepareStatement(sql).executeUpdate();
 		System.out.println(homie);
 		closeConnection();
@@ -116,7 +116,7 @@ public class DatabaseAccess implements DatabaseIO {
 
 		String currenthighestbidder = "UPDATE \"public\".auctionitems SET currenthighestbidder ='xxMilosLongSchlongxx'";
 		c.prepareStatement(currenthighestbidder).executeUpdate();
-		String currentprice = "UPDATE \"public\".auctionitems SET currentprice ='6969.69'";
+		String currentprice = "UPDATE \"public\".auctionitems SET currentprice ='6969.69'"; //Ændres til item price.
 		c.prepareStatement(currentprice).executeUpdate();
 
 
