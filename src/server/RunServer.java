@@ -1,6 +1,7 @@
 package server;
 
-import server.network.MainServerHandler;
+
+import server.network.ServerImpl;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
@@ -11,7 +12,7 @@ public class RunServer {
 	public static void main(String[] args) throws RemoteException {
 		Registry registry = LocateRegistry.createRegistry(1099);
 
-		MainServerHandler server = new MainServerHandler();
+		ServerImpl server = new ServerImpl();
 
 		try {
 			registry.bind("Server", server);

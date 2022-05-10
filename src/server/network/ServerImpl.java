@@ -11,8 +11,8 @@ import java.rmi.server.UnicastRemoteObject;
 public class ServerImpl extends UnicastRemoteObject implements Server {
 	private final Item item;
 
-	protected ServerImpl() throws RemoteException {
-		this.item = new ItemImpl("123");
+	public ServerImpl() throws RemoteException {
+		this.item = new ItemImpl();
 	}
 
 	@Override
