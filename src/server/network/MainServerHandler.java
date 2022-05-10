@@ -8,7 +8,7 @@ import shared.network.server.Server;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-public class MainServerHandler extends UnicastRemoteObject implements Server {
+public class ServerImpl extends UnicastRemoteObject implements Server {
 	private final Item item;
 
 	protected ServerImpl() throws RemoteException {
