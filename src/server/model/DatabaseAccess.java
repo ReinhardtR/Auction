@@ -182,7 +182,7 @@ public class DatabaseAccess implements DatabaseIO {
 			resultSet.next();
 			if (resultSet.getString("saleStrategy").equalsIgnoreCase("auction"))
 			{
-				
+
 			}
 			else if (resultSet.getString("saleStrategy").equalsIgnoreCase("buyout"))
 			{
