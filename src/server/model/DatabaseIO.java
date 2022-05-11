@@ -1,6 +1,8 @@
 package server.model;
 
 import server.model.auction.Item;
+import server.model.temps.TempBuyout;
+import server.model.temps.TempItem;
 import shared.transferobjects.AuctionItem;
 
 import java.sql.SQLException;
@@ -25,9 +27,9 @@ public interface DatabaseIO {
  */
 	 Item getItem(int itemID);
 
-	 void itemBought(int itemID);
+	 void buyoutItemBought(TempItem itemID);
 
-	 void updateItemOffer(Item item);
+	 void updateItemOffer(TempItem item);
 
 
 }
