@@ -1,5 +1,6 @@
 package client.views.auction;
 
+import client.model.ItemCalculations;
 import client.model.ObservableItem;
 import client.model.ObservableItemListImpl;
 import javafx.application.Platform;
@@ -30,7 +31,10 @@ public class AuctionViewModel implements PropertyChangeListener {
 
 	public void bidOnItem(int offer) {
 		System.out.println("BID VIEW MODEL: " + offer);
-		item.userSaleStrategy(offer, "Reinhardt");
+		if (ItemCalculations.calculateNewOffer(item, offer)) {
+			System.out.printf("offer is higher");
+			item.userSaleStrategy(offer, "Reinhardt");
+		}
 	}
 
 	public StringProperty propertyItemLabel() {

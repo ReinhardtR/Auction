@@ -49,6 +49,7 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 		return -1;
 	}
 
+
 	public void propertyChange(PropertyChangeEvent event) {
 		support.firePropertyChange(itemID, null, null);
 	}
