@@ -1,9 +1,9 @@
 package server.network;
 
 
-import server.model.auctionHouseModel.Cart;
-import server.model.auctionHouseModel.SaleStrategy.AuctionStrategy;
-import server.model.auctionHouseModel.ItemImpl;
+import server.model.item.Cart;
+import server.model.item.ItemImpl;
+import server.model.item.SaleStrategy.AuctionStrategy;
 import shared.network.model.Item;
 import shared.network.server.Server;
 

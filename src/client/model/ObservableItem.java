@@ -1,8 +1,7 @@
 package client.model;
 
 import client.network.LocalClient;
-import server.model.auctionHouseModel.ItemImpl;
-import server.model.auctionHouseModel.broadcaster.UpdateBroadcasterImpl;
+import server.model.broadcaster.UpdateBroadcasterImpl;
 import shared.network.model.Item;
 import shared.utils.PropertyChangeSubject;
 
@@ -36,7 +35,7 @@ public class ObservableItem implements Item, PropertyChangeListener, PropertyCha
 	public void userSaleStrategy(String itemID, int amount, String username) {
 		try {
 			System.out.println("Kalder strategy fra mig the proxy til mit item på serverside");
-			item.userSaleStrategy(itemID,amount, username);
+			item.userSaleStrategy(itemID, amount, username);
 			UpdateBroadcasterImpl.getBroadcasterInstance(itemID).broadcast(this);
 		} catch (RemoteException e) {
 			e.printStackTrace();
@@ -53,7 +52,6 @@ public class ObservableItem implements Item, PropertyChangeListener, PropertyCha
 
 		return -1;
 	}
-
 
 
 	@Override

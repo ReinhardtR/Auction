@@ -1,4 +1,4 @@
-package server.model.auctionHouseModel.broadcaster;
+package server.model.broadcaster;
 
 import client.model.ObservableItem;
 import shared.network.client.SharedClient;
@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class UpdateBroadcasterImpl extends UnicastRemoteObject implements UpdateBroadcaster {
 	private static final Map<String, UpdateBroadcasterImpl> instances = new HashMap<>();
@@ -24,13 +22,10 @@ public class UpdateBroadcasterImpl extends UnicastRemoteObject implements Update
 
 	public static UpdateBroadcasterImpl getBroadcasterInstance(String itemID) throws RemoteException {
 		UpdateBroadcasterImpl broadcaster = instances.get(itemID);
-		if(broadcaster == null)
-		{
-			synchronized (instances)
-			{
+		if (broadcaster == null) {
+			synchronized (instances) {
 				broadcaster = instances.get(itemID);
-				if(broadcaster == null)
-				{
+				if (broadcaster == null) {
 					System.out.println("NEW BROADCASTER WITH KEY: " + itemID);
 					broadcaster = new UpdateBroadcasterImpl(itemID);
 					instances.put(itemID, broadcaster);

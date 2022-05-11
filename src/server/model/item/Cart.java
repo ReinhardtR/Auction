@@ -1,4 +1,4 @@
-package server.model.auctionHouseModel;
+package server.model.item;
 
 import database.DatabaseAccess;
 import database.DatabaseIO;

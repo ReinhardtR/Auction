@@ -1,13 +1,11 @@
 package client.views.auction;
 
-import client.model.ObservableItem;
 import client.model.ObservableItemList;
 import client.model.ObservableItemListImpl;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import server.model.auctionHouseModel.broadcaster.UpdateBroadcasterImpl;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -22,7 +20,7 @@ public class AuctionViewModel implements PropertyChangeListener {
 		itemText = new SimpleStringProperty();
 		currentHighestBid = new SimpleIntegerProperty();
 		this.observableItemList = observableItemList;
-		observableItemList.addListener("model",this);
+		observableItemList.addListener("model", this);
 
 
 	}
@@ -40,7 +38,7 @@ public class AuctionViewModel implements PropertyChangeListener {
 	public void bidOnItem(int offer) {
 		String user = "Reinhardt";
 		try {
-			observableItemList.getItemForAuction("123").userSaleStrategy("123",offer,"Reinhardt");
+			observableItemList.getItemForAuction("123").userSaleStrategy("123", offer, "Reinhardt");
 		} catch (RemoteException e) {
 			throw new RuntimeException(e);
 		}
@@ -57,6 +55,6 @@ public class AuctionViewModel implements PropertyChangeListener {
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		System.out.println("change!");
-		currentHighestBid.setValue((int)evt.getNewValue());
+		currentHighestBid.setValue((int) evt.getNewValue());
 	}
 }

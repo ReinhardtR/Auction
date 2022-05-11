@@ -1,7 +1,6 @@
-package server.model.auctionHouseModel;
+package server.model.item;
 
-import server.model.auctionHouseModel.broadcaster.UpdateBroadcasterImpl;
-import server.model.auctionHouseModel.SaleStrategy.SaleStrategy;
+import server.model.item.SaleStrategy.SaleStrategy;
 import shared.network.model.Item;
 import shared.utils.PropertyChangeSubject;
 
@@ -40,11 +39,11 @@ public class ItemImpl extends UnicastRemoteObject implements Item, PropertyChang
 
 	@Override
 	public void addListener(String eventName, PropertyChangeListener listener) {
-		support.addPropertyChangeListener(eventName,listener);
+		support.addPropertyChangeListener(eventName, listener);
 	}
 
 	@Override
 	public void removeListener(String eventName, PropertyChangeListener listener) {
-		support.removePropertyChangeListener(eventName,listener);
+		support.removePropertyChangeListener(eventName, listener);
 	}
 }

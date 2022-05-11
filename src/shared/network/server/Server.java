@@ -1,6 +1,5 @@
 package shared.network.server;
 
-import server.model.auctionHouseModel.ItemImpl;
 import shared.network.model.Item;
 
 import java.rmi.Remote;

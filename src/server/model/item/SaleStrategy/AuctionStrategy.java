@@ -1,4 +1,4 @@
-package server.model.auctionHouseModel.SaleStrategy;
+package server.model.item.SaleStrategy;
 
 public class AuctionStrategy implements SaleStrategy {
 	private int currentBid = 0;

@@ -1,4 +1,4 @@
-package server.model.auctionHouseModel.SaleStrategy;
+package server.model.item.SaleStrategy;
 
 public interface SaleStrategy {
 

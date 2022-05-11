@@ -1,13 +1,11 @@
 package client.network;
 
-import server.model.auctionHouseModel.ItemImpl;
-import server.model.auctionHouseModel.broadcaster.UpdateBroadcaster;
-import server.model.auctionHouseModel.broadcaster.UpdateBroadcasterImpl;
+import server.model.broadcaster.UpdateBroadcaster;
+import server.model.broadcaster.UpdateBroadcasterImpl;
 import shared.network.client.SharedClient;
 import shared.network.model.Item;
 import shared.network.server.Server;
 
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.rmi.NotBoundException;
