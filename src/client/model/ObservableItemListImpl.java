@@ -11,14 +11,16 @@ import java.beans.PropertyChangeSupport;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 
-public class ObservableItemListImpl implements ObservableItemList, PropertyChangeListener, PropertyChangeSubject {
+public class ObservableItemListImpl implements ObservableItemList {
+	private final LocalClient client;
+	private final HashMap<String, ObservableItem> itemsForClient = new HashMap<>();
 
+public class ObservableItemListImpl implements ObservableItemList, PropertyChangeListener, PropertyChangeSubject {
 
 	private final LocalClient client;
 	private final HashMap<String, ObservableItem> itemsForClient = new HashMap<>();
 
 	private final PropertyChangeSupport support;
-
 
 	public ObservableItemListImpl(LocalClient client) {
 		this.client = client;
