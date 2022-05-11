@@ -5,6 +5,7 @@ import shared.network.model.Item;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.time.temporal.Temporal;
 
 public class ItemProxy extends UnicastRemoteObject implements Item {
 	private final Item item;
@@ -16,6 +17,11 @@ public class ItemProxy extends UnicastRemoteObject implements Item {
 	@Override
 	public String getItemID() throws RemoteException {
 		return item.getItemID();
+	}
+
+	@Override
+	public Temporal getEndTimestamp() throws RemoteException {
+		return item.getEndTimestamp();
 	}
 
 	@Override

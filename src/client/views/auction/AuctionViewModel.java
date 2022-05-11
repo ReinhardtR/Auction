@@ -11,28 +11,33 @@ import javafx.beans.property.StringProperty;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.temporal.Temporal;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class AuctionViewModel implements PropertyChangeListener {
 	private final StringProperty itemText;
 	private final IntegerProperty currentHighestBid;
+	private final StringProperty timeLeft;
 	private final ObservableItem item;
 
 	public AuctionViewModel(ObservableItemListImpl observableItemList) {
 		itemText = new SimpleStringProperty();
 		currentHighestBid = new SimpleIntegerProperty();
+		timeLeft = new SimpleStringProperty();
 
 		item = observableItemList.getItem("123");
 		item.addListener(item.getItemID(), this);
-	}
 
-	public void findItem() {
-		itemText.setValue(item.getItemID());
+		runTimeSimulation(item.getEndDateTime());
 	}
 
 	public void bidOnItem(int offer) {
 		System.out.println("BID VIEW MODEL: " + offer);
-		if (!(ItemCalculations.isCurrentBidHigher(item, offer))) {
-			System.out.printf("offer is higher");
+		if (ItemCalculations.isNewBidHigher(offer, item)) {
+			System.out.println("offer is higher");
 			item.userSaleStrategy(offer, "Reinhardt");
 		}
 	}
@@ -45,11 +50,36 @@ public class AuctionViewModel implements PropertyChangeListener {
 		return currentHighestBid;
 	}
 
+	public StringProperty propertyTimeLeft() {
+		return timeLeft;
+	}
+
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
 		System.out.println("change!");
 		Platform.runLater(() -> {
 			currentHighestBid.setValue(item.getOfferAmount());
 		});
+	}
+
+	private void runTimeSimulation(Temporal endDateTime) {
+		Timer timer = new Timer();
+
+		timer.scheduleAtFixedRate(new TimerTask() {
+			@Override
+			public void run() {
+				Duration durationBetween = Duration.between(LocalDateTime.now(), endDateTime);
+				String formattedTime = String.format(
+								"%02d:%02d:%02d",
+								durationBetween.toHours(),
+								durationBetween.toMinutesPart(),
+								durationBetween.toSecondsPart()
+				);
+
+				Platform.runLater(() -> {
+					timeLeft.setValue(formattedTime);
+				});
+			}
+		}, 0, 1000);
 	}
 }

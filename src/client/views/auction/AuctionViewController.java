@@ -9,7 +9,6 @@ import javafx.scene.control.TextField;
 
 public class AuctionViewController implements ViewController {
 
-
 	@FXML
 	private Label timeLeftOnBid;
 
@@ -30,12 +29,7 @@ public class AuctionViewController implements ViewController {
 
 		itemLabel.textProperty().bind(this.auctionViewModel.propertyItemLabel());
 		currentBid.textProperty().bind(this.auctionViewModel.propertyCurrentBid().asString());
-
-	}
-
-	@FXML
-	private void findTheItem() {
-		auctionViewModel.findItem();
+		timeLeftOnBid.textProperty().bind(auctionViewModel.propertyTimeLeft());
 	}
 
 	@FXML

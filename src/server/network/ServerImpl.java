@@ -10,12 +10,15 @@ import shared.network.server.Server;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.time.LocalDateTime;
+import java.time.temporal.Temporal;
 
 public class ServerImpl extends UnicastRemoteObject implements Server {
 
 	public ServerImpl() throws RemoteException {
 		//Til random item
-		Cart.getInstance().setItem(new ItemImpl("123", new AuctionStrategy()));
+		Temporal endDateTime = LocalDateTime.of(2022, 5, 12, 11, 20);
+		Cart.getInstance().setItem(new ItemImpl("123", endDateTime, new AuctionStrategy()));
 	}
 
 	@Override
