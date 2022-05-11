@@ -35,8 +35,8 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="lib" level="project" />
     <orderEntry type="library" name="postgresql-42.3.3" level="project" />
     <orderEntry type="library" name="PostgreSQL" level="project" />
+    <orderEntry type="library" name="lib" level="project" />
   </component>
 </module>

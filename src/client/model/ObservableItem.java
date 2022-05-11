@@ -13,9 +13,11 @@ import java.rmi.RemoteException;
 public class ObservableItem implements Item, PropertyChangeListener, PropertyChangeSubject {
 	private final PropertyChangeSupport support;
 	private final Item item;
+	private final ItemCalculations itemCalculations;
 	private final String itemID;
 
 	public ObservableItem(LocalClient client, Item item) throws RemoteException {
+		itemCalculations = new ItemCalculations();
 		support = new PropertyChangeSupport(this);
 		this.item = item;
 

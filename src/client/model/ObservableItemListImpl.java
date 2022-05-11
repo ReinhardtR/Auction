@@ -14,11 +14,12 @@ public class ObservableItemListImpl implements ObservableItemList, PropertyChang
 
 	private final LocalClient client;
 	private final HashMap<String, ObservableItem> itemsForClient = new HashMap<>();
-
 	private final PropertyChangeSupport support;
+	private final ItemCalculations itemCalculations;
 
 	public ObservableItemListImpl(LocalClient client) {
 		this.client = client;
+		itemCalculations = new ItemCalculations();
 		support = new PropertyChangeSupport(this);
 	}
 
@@ -38,6 +39,11 @@ public class ObservableItemListImpl implements ObservableItemList, PropertyChang
 			}
 		}
 		return observableItem;
+	}
+
+	@Override
+	public ItemCalculations getCalculator() {
+		return itemCalculations;
 	}
 
 	@Override

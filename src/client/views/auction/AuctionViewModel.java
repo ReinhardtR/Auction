@@ -1,11 +1,13 @@
 package client.views.auction;
 
+import client.model.ObservableItem;
 import client.model.ObservableItemList;
 import client.model.ObservableItemListImpl;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import shared.network.model.Item;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -37,8 +39,13 @@ public class AuctionViewModel implements PropertyChangeListener {
 
 	public void bidOnItem(int offer) {
 		String user = "Reinhardt";
+		Item item = observableItemList.getItemForAuction("123");
 		try {
-			observableItemList.getItemForAuction("123").userSaleStrategy("123", offer, "Reinhardt");
+			if(observableItemList.getCalculator().calculateNewOffer(item,offer))
+			{
+				System.out.printf("Higher offer smile :)");
+				item.userSaleStrategy("123", offer, user);
+			}
 		} catch (RemoteException e) {
 			throw new RuntimeException(e);
 		}
