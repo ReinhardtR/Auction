@@ -12,6 +12,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.time.LocalDateTime;
 import java.time.temporal.Temporal;
+import java.util.ArrayList;
 
 public class ServerImpl extends UnicastRemoteObject implements Server {
 
@@ -23,6 +24,11 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 
 	@Override
 	public Item getItem(String itemID) throws RemoteException {
-		return new ItemProxy(Cart.getInstance().getItem(1));
+		return new ItemProxy(Cart.getInstance().getItem("123"));
+	}
+
+	@Override
+	public ArrayList<Item> getAllItemsInCart() throws RemoteException {
+		return Cart.getInstance().returnAllItemsInCart();
 	}
 }
