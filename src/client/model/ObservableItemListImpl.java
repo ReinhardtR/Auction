@@ -7,11 +7,8 @@ import java.rmi.RemoteException;
 import java.util.HashMap;
 
 public class ObservableItemListImpl implements ObservableItemList {
-
-
 	private final LocalClient client;
 	private final HashMap<String, ObservableItem> itemsForClient = new HashMap<>();
-
 
 	public ObservableItemListImpl(LocalClient client) {
 		this.client = client;
