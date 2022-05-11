@@ -35,9 +35,7 @@ public class AuctionViewModel implements PropertyChangeListener {
 	}
 
 	public void bidOnItem(int offer) {
-		System.out.println("BID VIEW MODEL: " + offer);
 		if (ItemCalculations.isNewBidHigher(offer, item)) {
-			System.out.println("offer is higher");
 			item.userSaleStrategy(offer, "Reinhardt");
 		}
 	}
@@ -69,6 +67,14 @@ public class AuctionViewModel implements PropertyChangeListener {
 			@Override
 			public void run() {
 				Duration durationBetween = Duration.between(LocalDateTime.now(), endDateTime);
+
+				if (durationBetween.isNegative()) {
+					Platform.runLater(() -> {
+						timeLeft.setValue("SOLD");
+					});
+					timer.cancel();
+				}
+
 				String formattedTime = String.format(
 								"%02d:%02d:%02d",
 								durationBetween.toHours(),
