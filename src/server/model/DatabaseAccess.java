@@ -1,10 +1,11 @@
 package server.model;
 
 import server.model.auction.Item;
-import shared.transferobjects.AuctionItem;
+import server.model.temps.TempAuction;
+import server.model.temps.TempBuyout;
+import server.model.temps.TempItem;
 
 import java.sql.*;
-import java.util.ArrayList;
 
 public class DatabaseAccess implements DatabaseIO {
 
@@ -21,6 +22,15 @@ public class DatabaseAccess implements DatabaseIO {
 	private Connection c = null;
 	private PreparedStatement pstmt = null;
 
+	public static void main(String[] args) {
+
+		DatabaseAccess databaseAccess = new DatabaseAccess();
+
+		databaseAccess.getItem(1);
+		//databaseAccess.getItem(2);
+
+	}
+
 	private void createConnection() {
 		try {
 			Class.forName("org.postgresql.Driver");
@@ -29,10 +39,9 @@ public class DatabaseAccess implements DatabaseIO {
 											"isgypvka", "UkY3C9sbYugpjto58d8FAk9M54JiLanr");
 
 
-
-
-		} catch ( Exception e ) {
-			System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+		} catch (Exception e) {
+			System.out.println("Ends here");
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
 	}
@@ -164,35 +173,47 @@ public class DatabaseAccess implements DatabaseIO {
 	public Item getItem(int itemID) {
 		createConnection();
 		ResultSet resultSet = null;
-		try {		
-			String sql = "SELECT * FROM \"public\".Item WHERE itemID = " + itemID;
+		String selecter = "SELECT itemID, saleStrategy FROM \"public\".Auction WHERE itemID = " + itemID;
+		String selecter2 = "SELECT itemID, saleStrategy FROM \"public\".Buyout WHERE itemID = " + itemID;
+		try {
+
+			String sql = selecter +
+							"UNION" +
+							selecter2;
 
 			pstmt = c.prepareStatement(sql);
-			
 			resultSet = pstmt.executeQuery();
 
-
-		}
-		
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
 		try {
+			assert resultSet != null;
 			resultSet.next();
-			if (resultSet.getString("saleStrategy").equalsIgnoreCase("auction"))
-			{
-
-			}
-			else if (resultSet.getString("saleStrategy").equalsIgnoreCase("buyout"))
-			{
-
-			}
-			else
-			{
+			if (resultSet.getString("saleStrategy").equalsIgnoreCase("auction")) {
+				String auctionItemGetterSQL = "SELECT * FROM \"public\".Auction " +
+								" WHERE itemID = " + itemID;
+				pstmt = c.prepareStatement(auctionItemGetterSQL);
+				ResultSet auctionResult = pstmt.executeQuery();
+				auctionResult.next();
+				TempItem auction = auctionTransport(auctionResult);
+				closeConnection();
+				System.out.println(auction);
+				return null;
+			} else if (resultSet.getString("saleStrategy").equalsIgnoreCase("buyout")) {
+				String buyoutItemGetterSQL = "SELECT * FROM \"public\".Buyout " +
+								" WHERE itemID = " + itemID;
+				pstmt = c.prepareStatement(buyoutItemGetterSQL);
+				ResultSet buyoutResult = pstmt.executeQuery();
+				buyoutResult.next();
+				TempItem buyout = buyoutTransport(buyoutResult);
+				closeConnection();
+				System.out.println(buyout);
+				return null;
+			} else {
 				//intet
 			}
-
 
 
 			closeConnection();
@@ -202,6 +223,25 @@ public class DatabaseAccess implements DatabaseIO {
 		return null;
 	}
 
+	private TempItem buyoutTransport(ResultSet buyoutResult) throws SQLException {
+		TempBuyout tempBuyout = new TempBuyout(Double.parseDouble(buyoutResult.getString("price")),
+						buyoutResult.getString("buyer"),
+						buyoutResult.getString("saleStrategy"));
+		TempItem tempItem = new TempItem(buyoutResult.getInt("itemID"), tempBuyout);
+		return tempItem;
+	}
+
+	private TempItem auctionTransport(ResultSet auctionResult) throws SQLException {
+		TempAuction tempAuction = new TempAuction(Double.parseDouble(auctionResult.getString("currentBid")),
+						auctionResult.getString("currentBidder"),
+						auctionResult.getDate("AuctionEndDate"),
+						auctionResult.getString("saleStrategy"));
+		TempItem tempItem = new TempItem(auctionResult.getInt("itemID"), tempAuction);
+		return tempItem;
+	}
+
+	;
+
 	@Override
 	public void itemBought(int itemID) {
 
@@ -209,15 +249,6 @@ public class DatabaseAccess implements DatabaseIO {
 
 	@Override
 	public void updateItemOffer(Item item) {
-
-	}
-
-	public static void main(String[] args) {
-
-		DatabaseAccess  databaseAccess = new DatabaseAccess();
-
-		databaseAccess.getItem(1);
-		databaseAccess.getItem(2);
 
 	}
 

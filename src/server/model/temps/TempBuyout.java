@@ -4,11 +4,13 @@ public class TempBuyout implements TempSaleStrategy {
 
 	private double price;
 	private String buyer;
+	private String saleStrategy;
 
 
-	public TempBuyout(double price, String buyer){
+	public TempBuyout(double price, String buyer, String saleStrategy) {
 		this.price = price;
 		this.buyer = buyer;
+		this.saleStrategy = saleStrategy;
 	}
 
 

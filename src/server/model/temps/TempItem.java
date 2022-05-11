@@ -6,8 +6,7 @@ public class TempItem {
 	private TempSaleStrategy tempSaleStrategy;
 
 
-	public TempItem(int id,TempSaleStrategy tempSaleStrategy)
-	{
+	public TempItem(int id, TempSaleStrategy tempSaleStrategy) {
 		this.id = id;
 		this.tempSaleStrategy = tempSaleStrategy;
 	}
@@ -19,5 +18,13 @@ public class TempItem {
 
 	public TempSaleStrategy getTempSaleStrategy() {
 		return tempSaleStrategy;
+	}
+
+	@Override
+	public String toString() {
+		return "TempItem{" +
+						"id=" + id +
+						", tempSaleStrategy=" + tempSaleStrategy +
+						'}';
 	}
 }

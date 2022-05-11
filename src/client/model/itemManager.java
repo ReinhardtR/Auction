@@ -11,11 +11,7 @@ public class itemManager {
 	ArrayList<BuyOutItem> buyOutItems;
 
 	//Være listener til database access, så hver gang den adder ny item så får hver client ny item?
-
 	//Hvornår skal den creates?
 	//Constructor?
 	//Metode til at indlæse fra database?
-
-
-
 }
