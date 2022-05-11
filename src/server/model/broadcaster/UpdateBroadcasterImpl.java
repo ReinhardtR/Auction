@@ -22,16 +22,20 @@ public class UpdateBroadcasterImpl extends UnicastRemoteObject implements Update
 
 	public static UpdateBroadcasterImpl getBroadcasterInstance(String itemID) throws RemoteException {
 		UpdateBroadcasterImpl broadcaster = instances.get(itemID);
+
 		if (broadcaster == null) {
 			synchronized (instances) {
 				broadcaster = instances.get(itemID);
+
 				if (broadcaster == null) {
 					System.out.println("NEW BROADCASTER WITH KEY: " + itemID);
+
 					broadcaster = new UpdateBroadcasterImpl(itemID);
 					instances.put(itemID, broadcaster);
 				}
 			}
 		}
+
 		return broadcaster;
 	}
 
