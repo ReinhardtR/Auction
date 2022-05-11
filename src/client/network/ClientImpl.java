@@ -1,11 +1,13 @@
 package client.network;
 
-import server.model.UpdateBroadcaster;
-import server.model.UpdateBroadcasterImpl;
+import server.model.auctionHouseModel.ItemImpl;
+import server.model.auctionHouseModel.broadcaster.UpdateBroadcaster;
+import server.model.auctionHouseModel.broadcaster.UpdateBroadcasterImpl;
 import shared.network.client.SharedClient;
 import shared.network.model.Item;
 import shared.network.server.Server;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.rmi.NotBoundException;
@@ -33,7 +35,7 @@ public class ClientImpl extends UnicastRemoteObject implements SharedClient, Loc
 
 	@Override
 	public Item getItem(String itemID) throws RemoteException {
-		UpdateBroadcaster broadcaster = UpdateBroadcasterImpl.getInstance(itemID);
+		UpdateBroadcaster broadcaster = UpdateBroadcasterImpl.getBroadcasterInstance(itemID);
 		broadcaster.addListener(this);
 
 		return server.getItem(itemID);
@@ -48,5 +50,4 @@ public class ClientImpl extends UnicastRemoteObject implements SharedClient, Loc
 	public void removeListener(String eventName, PropertyChangeListener listener) {
 		support.addPropertyChangeListener(eventName, listener);
 	}
-
 }

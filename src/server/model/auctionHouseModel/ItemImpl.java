@@ -1,16 +1,22 @@
 package server.model.auctionHouseModel;
 
-import server.model.UpdateBroadcasterImpl;
+import server.model.auctionHouseModel.broadcaster.UpdateBroadcasterImpl;
+import server.model.auctionHouseModel.SaleStrategy.SaleStrategy;
 import shared.network.model.Item;
+import shared.utils.PropertyChangeSubject;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-public class ItemImpl extends UnicastRemoteObject implements Item {
+public class ItemImpl extends UnicastRemoteObject implements Item, PropertyChangeSubject {
 	private final String itemID;
 	private final SaleStrategy strategy;
+	private final PropertyChangeSupport support;
 
 	public ItemImpl(String itemID, SaleStrategy strategy) throws RemoteException {
+		support = new PropertyChangeSupport(this);
 		this.itemID = itemID;
 		this.strategy = strategy;
 	}
@@ -26,14 +32,19 @@ public class ItemImpl extends UnicastRemoteObject implements Item {
 	}
 
 	@Override
-	public void userSaleStrategy(int amount, String username) throws RemoteException {
-		try {
-			strategy.offer(amount, username);
-			UpdateBroadcasterImpl.getInstance(itemID).broadcast();
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
+	public void userSaleStrategy(String itemID, int amount, String username) throws RemoteException {
+		System.out.println("KLAR TIL AT OPDATERER OG BROADCAST");
+		strategy.offer(amount, username);
 
-		System.out.println("STRATEGY TRIGGERED");
+	}
+
+	@Override
+	public void addListener(String eventName, PropertyChangeListener listener) {
+		support.addPropertyChangeListener(eventName,listener);
+	}
+
+	@Override
+	public void removeListener(String eventName, PropertyChangeListener listener) {
+		support.removePropertyChangeListener(eventName,listener);
 	}
 }

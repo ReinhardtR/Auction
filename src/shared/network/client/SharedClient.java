@@ -1,5 +1,7 @@
 package shared.network.client;
 
+import client.model.ObservableItem;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 

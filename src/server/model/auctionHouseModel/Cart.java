@@ -30,7 +30,7 @@ public class Cart {
 
 	//TODO SKAL IMPLEMENTERES
 	public Item getItem(int itemId) {
-		return null;
+		return item;
 	}
 
 	public void itemBought(Item item) {
@@ -43,5 +43,11 @@ public class Cart {
 		//DATABASE
 
 		//ITEM UPDATED
+	}
+
+
+	//TIL TEST AF KØB USECASE
+	public void setItem(Item item) {
+		this.item = item;
 	}
 }

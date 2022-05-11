@@ -1,35 +1,49 @@
 package client.views.auction;
 
 import client.model.ObservableItem;
+import client.model.ObservableItemList;
 import client.model.ObservableItemListImpl;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import server.model.auctionHouseModel.broadcaster.UpdateBroadcasterImpl;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.rmi.RemoteException;
 
 public class AuctionViewModel implements PropertyChangeListener {
-	private final ObservableItem item;
 	private final StringProperty itemText;
 	private final IntegerProperty currentHighestBid;
+	private final ObservableItemList observableItemList;
 
-	public AuctionViewModel(ObservableItemListImpl auctionModel) {
-		String itemID = "123";
-		this.item = auctionModel.getItemForAuction(itemID);
-
+	public AuctionViewModel(ObservableItemListImpl observableItemList) {
 		itemText = new SimpleStringProperty();
 		currentHighestBid = new SimpleIntegerProperty();
-		item.addListener(itemID, this);
+		this.observableItemList = observableItemList;
+		observableItemList.addListener("model",this);
+
+
 	}
 
 	public void findItem() {
-		itemText.setValue(item.getItemID());
+		String itemID = "123";
+
+		try {
+			itemText.setValue(observableItemList.getItemForAuction(itemID).getItemID());
+		} catch (RemoteException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public void bidOnItem(int offer) {
-		item.userSaleStrategy(offer, "John");
+		String user = "Reinhardt";
+		try {
+			observableItemList.getItemForAuction("123").userSaleStrategy("123",offer,"Reinhardt");
+		} catch (RemoteException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public StringProperty propertyItemLabel() {
@@ -43,6 +57,6 @@ public class AuctionViewModel implements PropertyChangeListener {
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		System.out.println("change!");
-		currentHighestBid.setValue(item.getOfferAmount());
+		currentHighestBid.setValue((int)evt.getNewValue());
 	}
 }
