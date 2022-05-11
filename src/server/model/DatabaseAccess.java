@@ -1,23 +1,22 @@
 package server.model;
 
 import server.model.auction.Item;
+import server.model.temps.TempAuction;
+import server.model.temps.TempItem;
 import shared.transferobjects.AuctionItem;
 
 import java.sql.*;
 import java.util.ArrayList;
 
+/*
+Der skal huskes at synchronize på metoderne så man ikke kommer til at lave fejl med flere brugere
+Herudover skal der laves nogle transaction så vores "flere metodet" metoder som henter fra databasen i flere omgange.
+ */
+
+
 public class DatabaseAccess implements DatabaseIO {
 
-	/* Table omkring items på database hedder: AuctionItems.
 
-	Kolonner på table (For Auction Item):
-	- Item ID PK
-	- Titel
-	- Beskrivelse
-	- Tags
-	- Currentprice
-	- CurrentHighestBidder
-	 */
 	private Connection c = null;
 	private PreparedStatement pstmt = null;
 
@@ -47,27 +46,49 @@ public class DatabaseAccess implements DatabaseIO {
 		}
 	}
 
-	/*
+/*
 	@Override
-	public void addItemToAuction(String relation, AuctionItem item) {
+	public void addItemToAuction(String relation, TempItem item) {
 		createConnection();
+		if (relation.equalsIgnoreCase("buyout"))
+		{
+			try {
+
+				String sql = "INSERT INTO \"public\"." + relation + "(itemID,price,buyer,salestrategy) + VALUES(?,?,?,?)";
+				pstmt = c.prepareStatement(sql);
+
+				pstmt.setString(1,"default");
+				pstmt.setString(2, String.valueOf(item.getTempSaleStrategy().getOffer()));
+				pstmt.setString(3,item.getTempSaleStrategy().getUsernameFromBuyer());
+				pstmt.setString(4,"BUYOUT");
+
+				pstmt.executeQuery();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		}
+		else if(relation.equalsIgnoreCase("auction"))
+		{
 
 		try {
 
-			String sql = "INSERT INTO \"public\"." + relation + "(title,description,tags,currentprice,currenthighestbidder)" + "VALUES(?,?,?,?,?)";
+			String sql = "INSERT INTO \"public\"." + relation + "(itemid,currentbid,currentbidder,auctionenddate,salestrategy)" + "VALUES(?,?,?,?,?)";
 
 			pstmt = c.prepareStatement(sql);
 
-			pstmt.setString(1,item.getTitle());
-			pstmt.setString(2,item.getDescription());
-			pstmt.setString(3,item.getTags());
-			pstmt.setDouble(4,item.getPrice()); //Starter pris for item
+			pstmt.setString(1,"default");
+			pstmt.setString(2, String.valueOf(item.getTempSaleStrategy().getOffer()));
+			pstmt.setString(3,item.getTempSaleStrategy().getUsernameFromBuyer());
+			pstmt.setDouble(4,(TempAuction) item.getTempSaleStrategy().getEndDate());
 			pstmt.setString(5,"reinhardt"); //Person som har sat salget op.
 
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}
 		}
 		closeConnection();
 
@@ -158,8 +179,8 @@ public class DatabaseAccess implements DatabaseIO {
 
 		return latestIncrement;
 	}
-
 */
+
 	@Override
 	public Item getItem(int itemID) {
 		createConnection();
@@ -182,10 +203,11 @@ public class DatabaseAccess implements DatabaseIO {
 			resultSet.next();
 			if (resultSet.getString("saleStrategy").equalsIgnoreCase("auction"))
 			{
-
+       //Hvis dataene modtaget er auction, laves der et auction item som gives til user
 			}
 			else if (resultSet.getString("saleStrategy").equalsIgnoreCase("buyout"))
 			{
+				//Hvis dataene modtaget er buyout, laves der et buyout item som gives til user
 
 			}
 			else
@@ -199,18 +221,61 @@ public class DatabaseAccess implements DatabaseIO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return null; //Returnere det item som blev returneret af databasen.
 	}
+
+
 
 	@Override
-	public void itemBought(int itemID) {
+	public void buyoutItemBought(TempItem item) {
+		createConnection();
 
+		String sql = "UPDATE \"public\".buyout SET buyer = " + item.getTempSaleStrategy().getUsernameFromBuyer() + "WHERE itemID = " + item.getId();
+
+		try {
+			pstmt = c.prepareStatement(sql);
+			pstmt.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		sql = "REMOVE FROM \"public\".buyout WHERE itemID = " + item; //Ændres når "køb" use casen er færdig
+
+		try {
+			pstmt = c.prepareStatement(sql);
+			pstmt.executeQuery();
+
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		closeConnection();
+
+		//The item has been "bought" (removed from the table)
+		//Efter item er blevet fjernet skal der muligvist kaldes en metode eller returneres noget som kan
+		// vise køberen at item'et er blevet købt.
 	}
+
 
 	@Override
-	public void updateItemOffer(Item item) {
+	public void updateItemOffer(TempItem item) {
+	createConnection();
 
+	String sql = "UPDATE \"public\".auction SET currentbid =" + item.getTempSaleStrategy().getOffer();
+
+		try {
+			pstmt = c.prepareStatement(sql);
+			pstmt.executeQuery();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		closeConnection();
 	}
+
+
+
 
 	public static void main(String[] args) {
 

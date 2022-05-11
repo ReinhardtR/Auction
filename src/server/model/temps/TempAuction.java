@@ -23,6 +23,22 @@ public class TempAuction implements TempSaleStrategy{
 		this.bidder = username;
 	}
 
+
+	@Override
+	public String getUsernameFromBuyer() {
+		return bidder;
+	}
+
+
+	@Override
+	public double getOffer() {
+		return bid;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
 	public String getCurrentBidder() {
 		return bidder;
 	}
