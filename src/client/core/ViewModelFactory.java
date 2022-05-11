@@ -1,10 +1,12 @@
 package client.core;
 
 import client.views.auction.AuctionViewModel;
+import client.views.auctionsListe.AuctionsListeViewModel;
 
 public class ViewModelFactory {
 	private static final ViewModelFactory instance = new ViewModelFactory();
 	private AuctionViewModel auctionViewModel;
+	private AuctionsListeViewModel auctionsListeViewModel;
 
 	private ViewModelFactory() {
 	}
@@ -27,5 +29,12 @@ public class ViewModelFactory {
 		}
 
 		return auctionViewModel;
+	}
+
+	public AuctionsListeViewModel getAuctionsListeViewModel() {
+		if (auctionsListeViewModel == null) {
+			auctionsListeViewModel = new AuctionsListeViewModel(ModelFactory.getInstance().getAuctionModelTest());
+		}
+		return auctionsListeViewModel;
 	}
 }

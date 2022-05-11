@@ -7,7 +7,9 @@ import shared.utils.PropertyChangeSubject;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ObservableItemListImpl implements ObservableItemList, PropertyChangeSubject {
 	private final PropertyChangeSupport support;
@@ -39,6 +41,23 @@ public class ObservableItemListImpl implements ObservableItemList, PropertyChang
 
 		return observableItem;
 	}
+
+	@Override
+	public List<ObservableItem> getAllItemsFromServer() {
+		List<ObservableItem> observableItems = new ArrayList<>();
+		try {
+			for (Item item : client.getAllItems()) {
+				ObservableItem observableItem = new ObservableItem(client, item);
+				observableItems.add(observableItem);
+				items.put(item.getItemID(), observableItem);
+				System.out.println(observableItem.getItemID());
+			}
+		} catch (RemoteException e) {
+			throw new RuntimeException(e);
+		}
+		return observableItems;
+	}
+
 
 	@Override
 	public void addListener(String eventName, PropertyChangeListener listener) {

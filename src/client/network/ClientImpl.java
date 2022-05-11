@@ -11,6 +11,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.List;
 
 public class ClientImpl extends UnicastRemoteObject implements SharedClient, LocalClient {
 	private final PropertyChangeSupport support;
@@ -36,6 +37,11 @@ public class ClientImpl extends UnicastRemoteObject implements SharedClient, Loc
 		item.getUpdateBroadcaster().registerClient(this);
 
 		return item;
+	}
+
+	@Override
+	public List<Item> getAllItems() throws RemoteException {
+		return server.getAllItemsInCart();
 	}
 
 	@Override
