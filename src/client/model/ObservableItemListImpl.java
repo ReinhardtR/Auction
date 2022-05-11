@@ -45,9 +45,11 @@ public class ObservableItemListImpl implements ObservableItemList, PropertyChang
 	@Override
 	public List<ObservableItem> getAllItemsFromServer() {
 		List<ObservableItem> observableItems = new ArrayList<>();
+
 		try {
 			for (Item item : client.getAllItems()) {
 				ObservableItem observableItem = new ObservableItem(client, item);
+
 				observableItems.add(observableItem);
 				items.put(item.getItemID(), observableItem);
 				System.out.println(observableItem.getItemID());
@@ -55,6 +57,7 @@ public class ObservableItemListImpl implements ObservableItemList, PropertyChang
 		} catch (RemoteException e) {
 			throw new RuntimeException(e);
 		}
+
 		return observableItems;
 	}
 

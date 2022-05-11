@@ -12,8 +12,7 @@ public class AuctionsListeViewModel {
 	public AuctionsListeViewModel(ObservableItemListImpl observableItemList) {
 		observableItemListImpl = observableItemList;
 	}
-
-
+	
 	public ObservableList<ObservableItem> getObservableItemList() {
 		return FXCollections.observableList(observableItemListImpl.getAllItemsFromServer());
 	}
