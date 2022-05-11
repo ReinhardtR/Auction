@@ -5,11 +5,12 @@ import client.core.ViewModelFactory;
 import client.model.ObservableItem;
 import client.views.ViewController;
 import javafx.application.Platform;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 
 public class AuctionsListeController implements ViewController {
 
@@ -32,12 +33,17 @@ public class AuctionsListeController implements ViewController {
 		Platform.runLater(() -> {
 			observableList = auctionsListeViewModel.getObservableItemList();
 			itemsTableView = new TableView<>();
-			itemsTableView.setItems(observableList);
 
 			TableColumn<ObservableItem, String> idCol = new TableColumn<>("ID");
-			idCol.setCellValueFactory(new PropertyValueFactory<>("ID"));
-			itemsTableView.getColumns().setAll(idCol);
-		});
+			idCol.setCellFactory(TextFieldTableCell.forTableColumn());
+			idCol.setCellValueFactory((item) -> {
+				System.out.println("CELL FACTORY");
+				return new ReadOnlyStringWrapper(item.getValue().getItemID());
+			});
 
+			itemsTableView.getColumns().setAll(idCol);
+
+			itemsTableView.setItems(observableList);
+		});
 	}
 }
