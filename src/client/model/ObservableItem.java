@@ -1,7 +1,6 @@
 package client.model;
 
 import client.network.LocalClient;
-import server.model.broadcaster.UpdateBroadcasterImpl;
 import shared.network.model.Item;
 import shared.utils.PropertyChangeSubject;
 
@@ -10,7 +9,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.rmi.RemoteException;
 
-public class ObservableItem implements Item, PropertyChangeListener, PropertyChangeSubject {
+public class ObservableItem implements PropertyChangeListener, PropertyChangeSubject {
 	private final PropertyChangeSupport support;
 	private final Item item;
 	private final String itemID;
@@ -19,30 +18,25 @@ public class ObservableItem implements Item, PropertyChangeListener, PropertyCha
 		support = new PropertyChangeSupport(this);
 		this.item = item;
 
-
 		// Cache itemID
 		itemID = item.getItemID();
 
 		client.addListener(itemID, this);
 	}
 
-	@Override
 	public String getItemID() {
 		return itemID;
 	}
 
-	@Override
-	public void userSaleStrategy(String itemID, int amount, String username) {
+	public void userSaleStrategy(int amount, String username) {
+		System.out.println("MODEL: " + amount);
 		try {
-			System.out.println("Kalder strategy fra mig the proxy til mit item på serverside");
-			item.userSaleStrategy(itemID, amount, username);
-			UpdateBroadcasterImpl.getBroadcasterInstance(itemID).broadcast(this);
+			item.userSaleStrategy(amount, username);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
 	}
 
-	@Override
 	public int getOfferAmount() {
 		try {
 			return item.getOfferAmount();
@@ -53,15 +47,8 @@ public class ObservableItem implements Item, PropertyChangeListener, PropertyCha
 		return -1;
 	}
 
-
-	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		System.out.println("MODEL FIRE");
-		try {
-			support.firePropertyChange(itemID, null, item.getOfferAmount());
-		} catch (RemoteException e) {
-			throw new RuntimeException(e);
-		}
+	public void propertyChange(PropertyChangeEvent event) {
+		support.firePropertyChange(itemID, null, null);
 	}
 
 	@Override
