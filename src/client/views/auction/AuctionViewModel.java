@@ -31,7 +31,7 @@ public class AuctionViewModel implements PropertyChangeListener {
 
 	public void bidOnItem(int offer) {
 		System.out.println("BID VIEW MODEL: " + offer);
-		if (ItemCalculations.calculateNewOffer(item, offer)) {
+		if (!(ItemCalculations.isCurrentBidHigher(item, offer))) {
 			System.out.printf("offer is higher");
 			item.userSaleStrategy(offer, "Reinhardt");
 		}
