@@ -3,6 +3,7 @@ package server.network;
 
 import server.model.item.Cart;
 import server.model.item.ItemImpl;
+import server.model.item.ItemProxy;
 import server.model.item.SaleStrategy.AuctionStrategy;
 import shared.network.model.Item;
 import shared.network.server.Server;
@@ -19,6 +20,6 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 
 	@Override
 	public Item getItem(String itemID) throws RemoteException {
-		return Cart.getInstance().getItem(1);
+		return new ItemProxy(Cart.getInstance().getItem(1));
 	}
 }

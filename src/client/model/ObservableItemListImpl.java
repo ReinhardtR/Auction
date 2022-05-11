@@ -4,51 +4,40 @@ import client.network.LocalClient;
 import shared.network.model.Item;
 import shared.utils.PropertyChangeSubject;
 
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 
-public class ObservableItemListImpl implements ObservableItemList, PropertyChangeListener, PropertyChangeSubject {
-
-	private final LocalClient client;
-	private final HashMap<String, ObservableItem> itemsForClient = new HashMap<>();
+public class ObservableItemListImpl implements ObservableItemList, PropertyChangeSubject {
 	private final PropertyChangeSupport support;
-	private final ItemCalculations itemCalculations;
+	private final HashMap<String, ObservableItem> items;
+	private final LocalClient client;
 
 	public ObservableItemListImpl(LocalClient client) {
-		this.client = client;
-		itemCalculations = new ItemCalculations();
 		support = new PropertyChangeSupport(this);
+		items = new HashMap<>();
+
+		this.client = client;
 	}
 
 	@Override
-	public ObservableItem getItemForAuction(String itemID) {
-		ObservableItem observableItem = itemsForClient.get(itemID);
+	public ObservableItem getItem(String itemID) {
+		ObservableItem observableItem = items.get(itemID);
 
 		if (observableItem == null) {
 			try {
 				Item item = client.getItem(itemID);
+
 				observableItem = new ObservableItem(client, item);
-				observableItem.addListener(itemID, this);
-				itemsForClient.put(itemID, observableItem);
-				System.out.println(itemID + " was put in");
+
+				items.put(itemID, observableItem);
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}
 		}
+
 		return observableItem;
-	}
-
-	@Override
-	public ItemCalculations getCalculator() {
-		return itemCalculations;
-	}
-
-	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		support.firePropertyChange("model", null, evt.getNewValue());
 	}
 
 	@Override

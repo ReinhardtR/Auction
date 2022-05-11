@@ -1,7 +1,5 @@
 package client.network;
 
-import server.model.broadcaster.UpdateBroadcaster;
-import server.model.broadcaster.UpdateBroadcasterImpl;
 import shared.network.client.SharedClient;
 import shared.network.model.Item;
 import shared.network.server.Server;
@@ -33,10 +31,11 @@ public class ClientImpl extends UnicastRemoteObject implements SharedClient, Loc
 
 	@Override
 	public Item getItem(String itemID) throws RemoteException {
-		UpdateBroadcaster broadcaster = UpdateBroadcasterImpl.getBroadcasterInstance(itemID);
-		broadcaster.addListener(this);
+		Item item = server.getItem(itemID);
 
-		return server.getItem(itemID);
+		item.getUpdateBroadcaster().registerClient(this);
+
+		return item;
 	}
 
 	@Override
