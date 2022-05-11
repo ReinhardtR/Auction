@@ -8,26 +8,31 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.rmi.RemoteException;
+import java.time.temporal.Temporal;
 
 public class ObservableItem implements PropertyChangeListener, PropertyChangeSubject {
 	private final PropertyChangeSupport support;
 	private final Item item;
-	private final ItemCalculations itemCalculations;
 	private final String itemID;
+	private final Temporal endDateTime;
 
 	public ObservableItem(LocalClient client, Item item) throws RemoteException {
-		itemCalculations = new ItemCalculations();
 		support = new PropertyChangeSupport(this);
 		this.item = item;
 
-		// Cache itemID
+		// Cache
 		itemID = item.getItemID();
+		endDateTime = item.getEndTimestamp();
 
 		client.addListener(itemID, this);
 	}
 
 	public String getItemID() {
 		return itemID;
+	}
+
+	public Temporal getEndDateTime() {
+		return endDateTime;
 	}
 
 	public void userSaleStrategy(int amount, String username) {
@@ -48,7 +53,6 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 
 		return -1;
 	}
-
 
 	public void propertyChange(PropertyChangeEvent event) {
 		support.firePropertyChange(itemID, null, null);
