@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18"
+            fx:controller="client.views.auctionsListe.AuctionsListeController">
+    <children>
+        <Label layoutX="203.0" layoutY="31.0" text="Auctions Liste">
+            <font>
+                <Font size="27.0"/>
+            </font>
+        </Label>
+        <TableView layoutX="36.0" layoutY="120.0" prefHeight="200.0" prefWidth="485.0">
+            <columns>
+                <TableColumn prefWidth="75.0" text="Item"/>
+                <TableColumn prefWidth="75.0" text="Price"/>
+            </columns>
+        </TableView>
+        <Button layoutX="255.0" layoutY="334.0" mnemonicParsing="false" text="Get That Item"/>
+    </children>
+</AnchorPane>
