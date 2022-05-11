@@ -3,34 +3,38 @@ package client.views.auctionsListe;
 import client.core.ViewHandler;
 import client.core.ViewModelFactory;
 import client.model.ObservableItem;
+import client.network.ClientImpl;
+import client.network.LocalClient;
 import client.views.ViewController;
+import client.views.auction.AuctionViewModel;
 import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import server.model.item.ItemImpl;
+import shared.network.model.Item;
 
 public class AuctionsListeController implements ViewController {
-
 	@FXML
-	public TableView<ObservableItem> itemsTableView;
+	private TableColumn<ObservableItem, String> ID;
+	@FXML
+	private TableView<ObservableItem> itemsTableView;
+	private ObservableList<ObservableItem> list;
+
+	private AuctionsListeViewModel auctionsListeViewModel;
 
 	public void init(ViewHandler viewHandler, ViewModelFactory viewModelFactory) {
-		tableSetUp(viewModelFactory.getAuctionsListeViewModel().getObservableItemList());
+		this.auctionsListeViewModel = viewModelFactory.getAuctionsListeViewModel();
+
+		ID.setCellValueFactory(new PropertyValueFactory<ObservableItem,String>("itemID"));
+		list = auctionsListeViewModel.getObservableItemList();
+		itemsTableView.setItems(list);
 	}
 
 	public void getNewAuctionView() {
 		ViewHandler.getInstance().openAuctionView();
-	}
-
-	private void tableSetUp(ObservableList<ObservableItem> observableList) {
-		System.out.println("Size: " + observableList.size());
-		itemsTableView = new TableView<>();
-
-		TableColumn<ObservableItem, String> idCol = new TableColumn<>("ID");
-		idCol.setCellValueFactory(item -> new ReadOnlyStringWrapper(item.getValue().getItemID()));
-
-		itemsTableView.getColumns().add(idCol);
-		itemsTableView.getItems().addAll(observableList);
 	}
 }
