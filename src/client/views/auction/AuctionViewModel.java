@@ -8,14 +8,13 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import shared.utils.TimedTask;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.Temporal;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class AuctionViewModel implements PropertyChangeListener {
 	private final StringProperty itemText;
@@ -61,31 +60,26 @@ public class AuctionViewModel implements PropertyChangeListener {
 	}
 
 	private void runTimeSimulation(Temporal endDateTime) {
-		Timer timer = new Timer();
+		TimedTask.runTask((timer) -> {
+			Duration durationBetween = Duration.between(LocalDateTime.now(), endDateTime);
 
-		timer.scheduleAtFixedRate(new TimerTask() {
-			@Override
-			public void run() {
-				Duration durationBetween = Duration.between(LocalDateTime.now(), endDateTime);
-
-				if (durationBetween.isNegative()) {
-					Platform.runLater(() -> {
-						timeLeft.setValue("SOLD");
-					});
-					timer.cancel();
-				}
-
-				String formattedTime = String.format(
-								"%02d:%02d:%02d",
-								durationBetween.toHours(),
-								durationBetween.toMinutesPart(),
-								durationBetween.toSecondsPart()
-				);
-
+			if (durationBetween.isNegative()) {
 				Platform.runLater(() -> {
-					timeLeft.setValue(formattedTime);
+					timeLeft.setValue("SOLD");
 				});
+				timer.cancel();
 			}
-		}, 0, 1000);
+
+			String formattedTime = String.format(
+							"%02d:%02d:%02d",
+							durationBetween.toHours(),
+							durationBetween.toMinutesPart(),
+							durationBetween.toSecondsPart()
+			);
+
+			Platform.runLater(() -> {
+				timeLeft.setValue(formattedTime);
+			});
+		}, 1000);
 	}
 }

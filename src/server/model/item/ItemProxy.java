@@ -7,6 +7,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.time.temporal.Temporal;
 
+// TODO: doesn't really do nothin'
 public class ItemProxy extends UnicastRemoteObject implements Item {
 	private final Item item;
 
@@ -33,6 +34,11 @@ public class ItemProxy extends UnicastRemoteObject implements Item {
 	@Override
 	public int getOfferAmount() throws RemoteException {
 		return item.getOfferAmount();
+	}
+
+	@Override
+	public void setAsSold() throws RemoteException {
+		item.setAsSold();
 	}
 
 	@Override

@@ -1,8 +1,12 @@
 package server.model.item.SaleStrategy;
 
+import shared.network.model.Item;
+
 public interface SaleStrategy {
 
-	void offer(int amount, String username);
+	void offer(Item item, int amount, String username);
+
+	String getBuyer();
 
 	int getOfferAmount();
 

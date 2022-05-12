@@ -1,14 +1,20 @@
 package server.model.item.SaleStrategy;
 
+import shared.network.model.Item;
+
 public class AuctionStrategy implements SaleStrategy {
 	private int currentBid = 0;
 	private String currentBidder;
-	private String auctionEndDate;
 
 	@Override
-	public void offer(int amount, String username) {
+	public void offer(Item item, int amount, String username) {
 		currentBid = amount;
 		currentBidder = username;
+	}
+
+	@Override
+	public String getBuyer() {
+		return currentBidder;
 	}
 
 	@Override

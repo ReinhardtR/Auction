@@ -14,6 +14,7 @@ public class ItemImpl extends UnicastRemoteObject implements Item {
 	private final String itemID;
 	private final SaleStrategy strategy;
 	private final Temporal endTimestamp;
+	private Boolean isSold;
 
 	public ItemImpl(String itemID, Temporal endTimestamp, SaleStrategy strategy) throws RemoteException {
 		broadcaster = new UpdateBroadcasterImpl(itemID);
@@ -21,6 +22,7 @@ public class ItemImpl extends UnicastRemoteObject implements Item {
 		this.itemID = itemID;
 		this.endTimestamp = endTimestamp;
 		this.strategy = strategy;
+		isSold = false; // take as parameter i guess
 	}
 
 	@Override
@@ -39,6 +41,11 @@ public class ItemImpl extends UnicastRemoteObject implements Item {
 	}
 
 	@Override
+	public void setAsSold() throws RemoteException {
+		isSold = true;
+	}
+
+	@Override
 	public UpdateBroadcaster getUpdateBroadcaster() throws RemoteException {
 		return broadcaster;
 	}
@@ -50,7 +57,7 @@ public class ItemImpl extends UnicastRemoteObject implements Item {
 
 	@Override
 	public void userSaleStrategy(int amount, String username) throws RemoteException {
-		strategy.offer(amount, username);
+		strategy.offer(this, amount, username);
 		broadcaster.broadcast();
 	}
 }
