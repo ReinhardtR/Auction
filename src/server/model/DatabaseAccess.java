@@ -190,6 +190,16 @@ public class DatabaseAccess implements DatabaseIO {
 			pstmt = c.prepareStatement(sql);
 			resultSet = pstmt.executeQuery();
 
+			System.out.println(resultSet.toString());
+			/*
+			while (resultSet.next()) {
+				int itemID = resultSet.getInt("itemID");
+				Timestamp endTime = resultSet.getTimestamp("AuctionEndDate");
+				new Thread((itemID, endTime)->{
+
+				}).start();
+			}
+			 */
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
