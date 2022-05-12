@@ -9,4 +9,8 @@ public class BuyoutViewModel {
 	public BuyoutViewModel(ObservableItemList itemList) {
 		item = itemList.getItem("456");
 	}
+
+	public void onBuy(int amount, String username) {
+		item.userSaleStrategy(amount, username);
+	}
 }

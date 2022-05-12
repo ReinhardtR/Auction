@@ -14,8 +14,8 @@ public class Cart {
 
 	private static final Lock lock = new ReentrantLock();
 	private static Cart instance;
+	private final HashMap<String, Item> items = new HashMap<>();
 	private DatabaseIO database;
-	private HashMap<String, Item> items = new HashMap<>();
 
 	private Cart() {
 		database = new DatabaseAccess();
