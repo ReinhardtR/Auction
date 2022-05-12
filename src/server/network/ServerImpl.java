@@ -26,7 +26,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 
 	@Override
 	public Item getItem(String itemID) throws RemoteException {
-		return new ItemProxy(Cart.getInstance().getItem("123"));
+		return new ItemProxy(Cart.getInstance().getItem(itemID));
 	}
 
 	@Override
