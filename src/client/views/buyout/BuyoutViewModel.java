@@ -22,6 +22,7 @@ public class BuyoutViewModel implements PropertyChangeListener {
 		itemNameProperty = new SimpleStringProperty();
 
 		itemNameProperty.setValue(item.getItemID());
+		priceProperty.setValue(item.getOfferAmount());
 	}
 
 	public void onBuy(int amount, String username) {

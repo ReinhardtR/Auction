@@ -9,6 +9,10 @@ public class BuyoutStrategy implements SaleStrategy {
 	private int price;
 	private String buyer;
 
+	public BuyoutStrategy(int price) {
+		this.price = price;
+	}
+
 	@Override
 	public void offer(Item item, int amount, String username) {
 		price = amount;
