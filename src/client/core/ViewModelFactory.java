@@ -2,11 +2,13 @@ package client.core;
 
 import client.views.auction.AuctionViewModel;
 import client.views.auctionsListe.AuctionsListeViewModel;
+import client.views.buyout.BuyoutViewModel;
 
 public class ViewModelFactory {
 	private static final ViewModelFactory instance = new ViewModelFactory();
 	private AuctionViewModel auctionViewModel;
 	private AuctionsListeViewModel auctionsListeViewModel;
+	private BuyoutViewModel buyoutViewModel;
 
 	private ViewModelFactory() {
 	}
@@ -36,5 +38,12 @@ public class ViewModelFactory {
 			auctionsListeViewModel = new AuctionsListeViewModel(ModelFactory.getInstance().getAuctionModelTest());
 		}
 		return auctionsListeViewModel;
+	}
+
+	public BuyoutViewModel getBuyoutViewModel() {
+		if (buyoutViewModel == null) {
+			buyoutViewModel = new BuyoutViewModel(ModelFactory.getInstance().getAuctionModelTest());
+		}
+		return buyoutViewModel;
 	}
 }

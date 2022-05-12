@@ -14,7 +14,6 @@ import java.beans.PropertyChangeListener;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.Temporal;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -23,8 +22,6 @@ public class AuctionViewModel implements PropertyChangeListener {
 	private final IntegerProperty currentHighestBid;
 	private final StringProperty timeLeft;
 	private final ObservableItem item;
-
-	private List<String> itemIdProperties;
 
 	public AuctionViewModel(ObservableItemListImpl observableItemList) {
 		itemText = new SimpleStringProperty();
