@@ -1,4 +1,4 @@
-package client.views.auctionsListe;
+package client.views.item_list;
 
 import client.core.ViewHandler;
 import client.core.ViewModelFactory;
@@ -9,7 +9,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class AuctionsListeController implements ViewController {
+public class ItemListController implements ViewController {
 
 	@FXML
 	private TableColumn<ObservableItem, String> idCol;
@@ -19,7 +19,7 @@ public class AuctionsListeController implements ViewController {
 
 	public void init(ViewHandler viewHandler, ViewModelFactory viewModelFactory) {
 		idCol.setCellValueFactory(new PropertyValueFactory<>("itemID"));
-		itemsTableView.setItems(viewModelFactory.getAuctionsListeViewModel().getObservableItemList());
+		itemsTableView.setItems(viewModelFactory.getItemListViewModel().getObservableItemList());
 	}
 
 	public void getNewAuctionView() {

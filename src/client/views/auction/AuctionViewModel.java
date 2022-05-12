@@ -2,7 +2,7 @@ package client.views.auction;
 
 import client.model.ItemCalculations;
 import client.model.ObservableItem;
-import client.model.ObservableItemListImpl;
+import client.model.ObservableItemList;
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -14,7 +14,6 @@ import java.beans.PropertyChangeListener;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.Temporal;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -24,9 +23,7 @@ public class AuctionViewModel implements PropertyChangeListener {
 	private final StringProperty timeLeft;
 	private final ObservableItem item;
 
-	private List<String> itemIdProperties;
-
-	public AuctionViewModel(ObservableItemListImpl observableItemList) {
+	public AuctionViewModel(ObservableItemList observableItemList) {
 		itemText = new SimpleStringProperty();
 		currentHighestBid = new SimpleIntegerProperty();
 		timeLeft = new SimpleStringProperty();

@@ -1,18 +1,18 @@
-package client.views.auctionsListe;
+package client.views.item_list;
 
 import client.model.ObservableItem;
-import client.model.ObservableItemListImpl;
+import client.model.ObservableItemList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class AuctionsListeViewModel {
+public class ItemListViewModel {
 
-	private final ObservableItemListImpl observableItemListImpl;
+	private final ObservableItemList observableItemListImpl;
 
-	public AuctionsListeViewModel(ObservableItemListImpl observableItemList) {
+	public ItemListViewModel(ObservableItemList observableItemList) {
 		observableItemListImpl = observableItemList;
 	}
-	
+
 	public ObservableList<ObservableItem> getObservableItemList() {
 		return FXCollections.observableList(observableItemListImpl.getAllItemsFromServer());
 	}
