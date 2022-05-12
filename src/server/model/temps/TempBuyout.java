@@ -38,4 +38,13 @@ public class TempBuyout implements TempSaleStrategy {
 	public String getBuyer() {
 		return buyer;
 	}
+
+	@Override
+	public String toString() {
+		return "TempBuyout{" +
+						"price=" + price +
+						", buyer='" + buyer + '\'' +
+						", saleStrategy='" + saleStrategy + '\'' +
+						'}';
+	}
 }

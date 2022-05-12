@@ -1,11 +1,13 @@
 package server.model;
 
+import org.postgresql.util.PSQLException;
 import server.model.auction.Item;
 import server.model.temps.TempAuction;
 import server.model.temps.TempBuyout;
 import server.model.temps.TempItem;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 
 /*
 Der skal huskes at synchronize på metoderne så man ikke kommer til at lave fejl med flere brugere
@@ -23,8 +25,13 @@ public class DatabaseAccess implements DatabaseIO {
 
 		//DatabaseAccess databaseAccess = new DatabaseAccess();
 
-		//databaseAccess.getItem(1);
-		//databaseAccess.getItem(2);
+		databaseAccess.getItem(1);
+		databaseAccess.getItem(2);
+
+
+		databaseAccess.updateItemOffer(new TempItem(0,new TempAuction(10.00,"Simon", LocalDateTime.of(2022,5,10,11,41,27)
+						,"AUCTION")));
+
 	}
 
 	private void createConnection() {
@@ -188,15 +195,16 @@ public class DatabaseAccess implements DatabaseIO {
 */
 
 	@Override
-	public Item getItem(int itemID) {
+	public synchronized Item getItem(int itemID) {
 		createConnection();
+
 		ResultSet resultSet = null;
 		String selecter = "SELECT itemID, saleStrategy FROM \"public\".Auction WHERE itemID = " + itemID;
 		String selecter2 = "SELECT itemID, saleStrategy FROM \"public\".Buyout WHERE itemID = " + itemID;
 		try {
 
 			String sql = selecter +
-							"UNION" +
+							" UNION " +
 							selecter2;
 
 			pstmt = c.prepareStatement(sql);
@@ -205,7 +213,6 @@ public class DatabaseAccess implements DatabaseIO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 		try {
 			assert resultSet != null;
 			resultSet.next();
@@ -252,34 +259,22 @@ public class DatabaseAccess implements DatabaseIO {
 	private TempItem auctionTransport(ResultSet auctionResult) throws SQLException {
 		TempAuction tempAuction = new TempAuction(Double.parseDouble(auctionResult.getString("currentBid")),
 						auctionResult.getString("currentBidder"),
-						auctionResult.getDate("AuctionEndDate"),
+						auctionResult.getTimestamp("AuctionEndDate").toLocalDateTime(),
 						auctionResult.getString("saleStrategy"));
-		TempItem tempItem = new TempItem(auctionResult.getInt("itemID"), tempAuction);
-		return tempItem;
+		return new TempItem(auctionResult.getInt("itemID"), tempAuction);
 	}
 
 	@Override
-	public void buyoutItemBought(TempItem item) {
+	public synchronized void buyoutItemBought(TempItem item) {
 		createConnection();
 
-		String sql = "UPDATE \"public\".buyout SET buyer = " + item.getTempSaleStrategy().getUsernameFromBuyer() + "WHERE itemID = " + item.getId();
+		String sql = "UPDATE \"public\".buyout SET buyer = '" + item.getTempSaleStrategy().getUsernameFromBuyer() + "' WHERE itemID = " + item.getId();
 
 		try {
 			pstmt = c.prepareStatement(sql);
-			pstmt.executeQuery();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		sql = "REMOVE FROM \"public\".buyout WHERE itemID = " + item; //Ændres når "køb" use casen er færdig
-
-		try {
-			pstmt = c.prepareStatement(sql);
-			pstmt.executeQuery();
-
-
-		} catch (SQLException e) {
-			e.printStackTrace();
+			pstmt.execute();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
 		}
 
 		closeConnection();
@@ -291,22 +286,21 @@ public class DatabaseAccess implements DatabaseIO {
 
 
 	@Override
-	public void updateItemOffer(TempItem item) {
-		createConnection();
+	public synchronized void updateItemOffer(TempItem item) {
+	createConnection();
 
-		String sql = "UPDATE \"public\".auction SET currentbid =" + item.getTempSaleStrategy().getOffer();
+	String sql = "UPDATE \"public\".auction SET currentBid =" + item.getTempSaleStrategy().getOffer() +
+					", currentBidder = '" + item.getTempSaleStrategy().getUsernameFromBuyer()+"'";
 
 		try {
 			pstmt = c.prepareStatement(sql);
-			pstmt.executeQuery();
+			pstmt.execute();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		closeConnection();
 	}
-
-
 }
 
 

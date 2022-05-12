@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+/*
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class DatabaseIOTest {
 	private DatabaseIO databaseAccess;
