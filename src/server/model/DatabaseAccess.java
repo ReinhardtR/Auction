@@ -23,7 +23,6 @@ public class DatabaseAccess implements DatabaseIO {
 
 	public static void main(String[] args) {
 
-		DatabaseAccess databaseAccess = new DatabaseAccess();
 
 		databaseAccess.getItem(1);
 		databaseAccess.getItem(2);
@@ -168,6 +167,14 @@ public class DatabaseAccess implements DatabaseIO {
 	}
 
 	private void checkAuctionTimers() {
+
+		//Select statement fra database
+
+		//For hver linje modtaget, lav en thread som sleeper i "remaining time"
+		//Thread modtager (itemId og Remaining time), og Muligvist databaseIO til kaldelse af nedenstående metode.
+
+		//Når en thread er færdig kaldes metoden "AuctionEndTimerFinished"
+		//som fjerner det gældne item fra Auction, (Med hensigt til at flyttes til et andet sted)
 
 		createConnection();
 		ResultSet resultSet = null;
