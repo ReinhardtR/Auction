@@ -69,7 +69,9 @@ public class AuctionViewModel implements PropertyChangeListener {
 				Platform.runLater(() -> {
 					timeLeft.setValue("SOLD");
 				});
+
 				timer.cancel();
+				return;
 			}
 
 			String formattedTime = String.format(
