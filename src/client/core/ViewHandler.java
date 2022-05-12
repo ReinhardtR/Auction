@@ -27,7 +27,7 @@ public class ViewHandler {
 	}
 
 	public void openAuctionListView() {
-		Scene auctionListScene = ViewFactory.getScene("AuctionsListe");
+		Scene auctionListScene = ViewFactory.getScene("ItemList");
 		stage.setScene(auctionListScene);
 		stage.show();
 	}

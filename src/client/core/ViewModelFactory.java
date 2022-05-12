@@ -2,7 +2,7 @@ package client.core;
 
 import client.views.auction.AuctionViewModel;
 import client.views.buyout.BuyoutViewModel;
-import client.views.item_list.ItemListViewModel;
+import client.views.itemlist.ItemListViewModel;
 
 public class ViewModelFactory {
 	private static final ViewModelFactory instance = new ViewModelFactory();

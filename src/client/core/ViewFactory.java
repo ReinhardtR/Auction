@@ -16,7 +16,7 @@ public class ViewFactory {
 
 	public static void init(Stage theStage) {
 		stage = theStage;
-		createScene("AuctionsListe");
+		createScene("ItemList");
 	}
 
 	private static void createScene(String sceneName) {

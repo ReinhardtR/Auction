@@ -1,4 +1,4 @@
-package client.views.item_list;
+package client.views.itemlist;
 
 import client.model.ObservableItem;
 import client.model.ObservableItemList;
