@@ -13,7 +13,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.time.LocalDateTime;
 import java.time.temporal.Temporal;
-import java.util.ArrayList;
+import java.util.List;
 
 public class ServerImpl extends UnicastRemoteObject implements Server {
 
@@ -30,7 +30,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 	}
 
 	@Override
-	public ArrayList<Item> getAllItemsInCart() throws RemoteException {
+	public List<Item> getAllItemsInCart() throws RemoteException {
 		return Cart.getInstance().returnAllItemsInCart();
 	}
 }
