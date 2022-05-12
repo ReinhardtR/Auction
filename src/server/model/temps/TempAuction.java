@@ -37,9 +37,7 @@ public class TempAuction implements TempSaleStrategy {
 		return bid;
 	}
 
-	public Date getEndDate() {
-		return endDate;
-	}
+
 
 	public String getCurrentBidder() {
 		return bidder;
