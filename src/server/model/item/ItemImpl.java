@@ -44,6 +44,11 @@ public class ItemImpl extends UnicastRemoteObject implements Item {
 	}
 
 	@Override
+	public String strategyType() throws RemoteException {
+		return strategy.strategyType();
+	}
+
+	@Override
 	public void userSaleStrategy(int amount, String username) throws RemoteException {
 		strategy.offer(amount, username);
 		broadcaster.broadcast();

@@ -13,16 +13,24 @@ public class ItemListController implements ViewController {
 
 	@FXML
 	private TableColumn<ObservableItem, String> idCol;
-
 	@FXML
 	private TableView<ObservableItem> itemsTableView;
+	@FXML
+	private ItemListViewModel itemListViewModel;
 
 	public void init(ViewHandler viewHandler, ViewModelFactory viewModelFactory) {
 		idCol.setCellValueFactory(new PropertyValueFactory<>("itemID"));
 		itemsTableView.setItems(viewModelFactory.getItemListViewModel().getObservableItemList());
+
+		itemListViewModel = viewModelFactory.getItemListViewModel();
 	}
 
-	public void getNewAuctionView() {
-		ViewHandler.getInstance().openAuctionView();
+	public void getNewViewForItem() {
+		ObservableItem observableItem = (itemsTableView.getSelectionModel().getSelectedItem());
+
+		if (itemListViewModel.getStrategyOnItem(observableItem).equals("Auction")) {
+			ViewHandler.getInstance().openAuctionView();
+		}
+
 	}
 }

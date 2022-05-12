@@ -39,4 +39,9 @@ public class ItemProxy extends UnicastRemoteObject implements Item {
 	public UpdateBroadcaster getUpdateBroadcaster() throws RemoteException {
 		return item.getUpdateBroadcaster();
 	}
+
+	@Override
+	public String strategyType() throws RemoteException {
+		return item.strategyType();
+	}
 }

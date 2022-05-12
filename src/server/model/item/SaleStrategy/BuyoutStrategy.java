@@ -16,4 +16,11 @@ public class BuyoutStrategy implements SaleStrategy {
 	public int getOfferAmount() {
 		return price;
 	}
+
+	@Override
+	public String strategyType() {
+		return "Buyout";
+	}
+
+
 }

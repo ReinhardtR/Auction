@@ -15,4 +15,9 @@ public class AuctionStrategy implements SaleStrategy {
 	public int getOfferAmount() {
 		return currentBid;
 	}
+
+	@Override
+	public String strategyType() {
+		return "Auction";
+	}
 }

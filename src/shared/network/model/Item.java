@@ -16,4 +16,6 @@ public interface Item extends Remote {
 	int getOfferAmount() throws RemoteException;
 
 	UpdateBroadcaster getUpdateBroadcaster() throws RemoteException;
+
+	String strategyType() throws RemoteException;
 }

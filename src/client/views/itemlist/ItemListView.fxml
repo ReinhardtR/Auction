@@ -21,7 +21,7 @@
                 <TableColumn fx:id="idCol" prefWidth="75.0" text="ID"/>
             </columns>
         </TableView>
-        <Button layoutX="255.0" layoutY="334.0" mnemonicParsing="false" onAction="#getNewAuctionView"
+        <Button layoutX="255.0" layoutY="334.0" mnemonicParsing="false" onAction="#getNewViewForItem"
                 text="Get That Item"/>
     </children>
 </AnchorPane>

@@ -15,6 +15,7 @@ public class ObservableItemListImpl implements ObservableItemList, PropertyChang
 	private final PropertyChangeSupport support;
 	private final HashMap<String, ObservableItem> items;
 	private final LocalClient client;
+	private String idForView;
 
 	public ObservableItemListImpl(LocalClient client) {
 		support = new PropertyChangeSupport(this);
@@ -59,6 +60,16 @@ public class ObservableItemListImpl implements ObservableItemList, PropertyChang
 		}
 
 		return observableItems;
+	}
+
+	@Override
+	public void setIdForView(String itemID) {
+		idForView = itemID;
+	}
+
+	@Override
+	public String getItemAndStrategy(ObservableItem observableItem) {
+		return items.get(observableItem.getItemID()).getStrategy();
 	}
 
 

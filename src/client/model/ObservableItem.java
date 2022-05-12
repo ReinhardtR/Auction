@@ -35,6 +35,14 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 		return endDateTime;
 	}
 
+	public String getStrategy() {
+		try {
+			return item.strategyType();
+		} catch (RemoteException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	public void userSaleStrategy(int amount, String username) {
 		System.out.println("MODEL: " + amount);
 		try {
