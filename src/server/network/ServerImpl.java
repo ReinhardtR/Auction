@@ -19,7 +19,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 
 	public ServerImpl() throws RemoteException {
 		//Til random item
-		Temporal endDateTime = LocalDateTime.of(2022, 5, 12, 11, 20);
+		Temporal endDateTime = LocalDateTime.of(2022, 5, 16, 11, 20);
 		Cart.getInstance().addItem(new ItemImpl("123", endDateTime, new AuctionStrategy()));
 		Cart.getInstance().addItem(new ItemImpl("456", endDateTime, new BuyoutStrategy(69)));
 	}
