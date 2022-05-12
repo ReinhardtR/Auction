@@ -1,6 +1,6 @@
 package shared;
 
-public enum SaleStrategy {
+public enum SaleStrategyType {
 	AUCTION,
 	BUYOUT
 }

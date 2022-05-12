@@ -1,5 +1,6 @@
 package server.model.item.SaleStrategy;
 
+import shared.SaleStrategyType;
 import shared.network.model.Item;
 
 public interface SaleStrategy {
@@ -10,5 +11,5 @@ public interface SaleStrategy {
 
 	int getOfferAmount();
 
-	String strategyType();
+	SaleStrategyType strategyType();
 }

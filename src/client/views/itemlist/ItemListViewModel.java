@@ -4,9 +4,9 @@ import client.model.ObservableItem;
 import client.model.ObservableItemList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import shared.SaleStrategyType;
 
 public class ItemListViewModel {
-
 	private final ObservableItemList observableItemListImpl;
 
 	public ItemListViewModel(ObservableItemList observableItemList) {
@@ -21,7 +21,7 @@ public class ItemListViewModel {
 		observableItemListImpl.setIDForView(itemID);
 	}
 
-	public String getStrategyOnItem(ObservableItem observableItem) {
-		return observableItemListImpl.getItemAndStrategy(observableItem);
+	public SaleStrategyType getStrategyOnItem(ObservableItem item) {
+		return item.getSaleStrategyType();
 	}
 }
