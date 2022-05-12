@@ -12,5 +12,4 @@ public interface ObservableItemList {
 
 	void setIDForView(String itemID);
 
-	String getItemAndStrategy(ObservableItem observableItem);
 }
