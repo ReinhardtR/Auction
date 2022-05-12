@@ -30,6 +30,7 @@ public class ItemListController implements ViewController {
 
 	public void getNewViewForItem() {
 		ObservableItem observableItem = itemsTableView.getSelectionModel().getSelectedItem();
+		itemListViewModel.setItemViewItem(observableItem.getItemID());
 
 		// TODO: should this logic be here?
 		if (itemListViewModel.getStrategyOnItem(observableItem).equals(SaleStrategyType.AUCTION)) {
