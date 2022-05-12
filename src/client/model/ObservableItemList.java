@@ -1,8 +1,10 @@
 package client.model;
 
+import shared.utils.PropertyChangeSubject;
+
 import java.util.List;
 
-public interface ObservableItemList {
+public interface ObservableItemList extends PropertyChangeSubject {
 
 	List<ObservableItem> getAllItemsFromServer();
 

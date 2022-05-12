@@ -25,7 +25,7 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 		itemID = item.getItemID();
 		endDateTime = item.getEndTimestamp();
 
-		client.addListener(itemID, this);
+		client.addListener("NEW_BID" + itemID, this);
 	}
 
 	public String getItemID() {

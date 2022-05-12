@@ -25,9 +25,13 @@ public class ClientImpl extends UnicastRemoteObject implements SharedClient, Loc
 	}
 
 	@Override
-	public void onNewBid(String itemID) throws RemoteException {
-		System.out.println("CLIENT FIRE");
-		support.firePropertyChange(itemID, null, null);
+	public void onServerEvent(String eventName, String itemID) throws RemoteException {
+		if (eventName.equals("NEW_BID")) {
+			support.firePropertyChange(eventName + itemID, null, itemID);
+			return;
+		}
+
+		support.firePropertyChange(eventName, null, itemID);
 	}
 
 	// Not used
