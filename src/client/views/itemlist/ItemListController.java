@@ -30,6 +30,8 @@ public class ItemListController implements ViewController {
 
 		if (itemListViewModel.getStrategyOnItem(observableItem).equals("Auction")) {
 			ViewHandler.getInstance().openAuctionView();
+		} else if (itemListViewModel.getStrategyOnItem(observableItem).equals("Buyout")) {
+			ViewHandler.getInstance().openBuyoutView();
 		}
 
 	}

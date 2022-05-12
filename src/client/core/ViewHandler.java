@@ -31,4 +31,9 @@ public class ViewHandler {
 		stage.setScene(auctionListScene);
 		stage.show();
 	}
+
+	public void openBuyoutView() {
+		stage.setScene(ViewFactory.startNewScene("Buyout"));
+		stage.show();
+	}
 }

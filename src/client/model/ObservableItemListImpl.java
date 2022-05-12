@@ -72,7 +72,6 @@ public class ObservableItemListImpl implements ObservableItemList, PropertyChang
 		return items.get(observableItem.getItemID()).getStrategy();
 	}
 
-
 	@Override
 	public void addListener(String eventName, PropertyChangeListener listener) {
 		support.addPropertyChangeListener(eventName, listener);
