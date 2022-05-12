@@ -258,8 +258,6 @@ public class DatabaseAccess implements DatabaseIO {
 		return tempItem;
 	}
 
-	;
-
 	@Override
 	public void buyoutItemBought(TempItem item) {
 		createConnection();
