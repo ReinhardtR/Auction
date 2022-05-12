@@ -23,8 +23,8 @@ Herudover skal der laves nogle transaction så vores "flere metodet" metoder som
 public class DatabaseAccess implements DatabaseIO {
 
 
-	private Connection c = null; //Flyttes
-	private PreparedStatement pstmt = null; //Flyttes
+	private Connection c = null;                  //Flyttes
+	private PreparedStatement pstmt = null;       //Flyttes
 
 	public static void main(String[] args) {
 
@@ -86,7 +86,7 @@ public class DatabaseAccess implements DatabaseIO {
 				TempItem auction = auctionTransport(auctionResult);
 				closeConnection();
 				System.out.println(auction);
-				return null;
+				return null; //Skal senere returnere item, har temp ligenu
 			} else if (resultSet.getString("saleStrategy").equalsIgnoreCase("buyout")) {
 				String buyoutItemGetterSQL = "SELECT * FROM \"public\".Buyout " +
 								" WHERE itemID = " + itemID;
@@ -96,7 +96,7 @@ public class DatabaseAccess implements DatabaseIO {
 				TempItem buyout = buyoutTransport(buyoutResult);
 				closeConnection();
 				System.out.println(buyout);
-				return null;
+				return null; //Skal senere returnere item, har temp ligenu
 			} else {
 				//intet
 			}
@@ -250,160 +250,3 @@ public class DatabaseAccess implements DatabaseIO {
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-	@Override
-	public void addItemToAuction(String relation, TempItem item) {
-		createConnection();
-		if (relation.equalsIgnoreCase("buyout"))
-		{
-			try {
-
-				String sql = "INSERT INTO \"public\"." + relation + "(itemID,price,buyer,salestrategy) + VALUES(?,?,?,?)";
-				pstmt = c.prepareStatement(sql);
-
-				pstmt.setString(1,"default");
-				pstmt.setString(2, String.valueOf(item.getTempSaleStrategy().getOffer()));
-				pstmt.setString(3,item.getTempSaleStrategy().getUsernameFromBuyer());
-				pstmt.setString(4,"BUYOUT");
-
-				pstmt.executeQuery();
-
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-
-		}
-		else if(relation.equalsIgnoreCase("auction"))
-		{
-
-		try {
-
-			String sql = "INSERT INTO \"public\"." + relation + "(itemid,currentbid,currentbidder,auctionenddate,salestrategy)" + "VALUES(?,?,?,?,?)";
-
-			pstmt = c.prepareStatement(sql);
-
-			pstmt.setString(1,"default");
-			pstmt.setString(2, String.valueOf(item.getTempSaleStrategy().getOffer()));
-			pstmt.setString(3,item.getTempSaleStrategy().getUsernameFromBuyer());
-			pstmt.setDouble(4,(TempAuction) item.getTempSaleStrategy().getEndDate());
-			pstmt.setString(5,"reinhardt"); //Person som har sat salget op.
-
-			pstmt.executeUpdate();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		}
-		closeConnection();
-
-	}
-
-	@Override
-	public void removeItemFromServer(String relation , AuctionItem item) throws SQLException {
-		createConnection();
-
-		String sql = "DELETE FROM \"public\".auctionitems WHERE title='"+item.getTitle()+"'"; //Kan snildt ændres
-		int homie = c.prepareStatement(sql).executeUpdate();
-		System.out.println(homie);
-		closeConnection();
-	}
-
-	@Override
-	public ArrayList<AuctionItem> searchAuctionItemsFromKeyword(String keyword, String relation) throws SQLException {
-
-		createConnection();
-
-		ArrayList<AuctionItem> listOfItems = new ArrayList<>();
-		Statement stmnt = c.createStatement();
-
-
-		ResultSet resultSet = stmnt.executeQuery("SELECT * FROM \"public\"."+relation+" WHERE title like '%" + keyword + "%'");
-
-		while(resultSet.next())
-		{
-			int itemId = resultSet.getInt("itemid");
-			String title = resultSet.getString("title");
-			String description = resultSet.getString("description");
-			String tags = resultSet.getString("tags");
-			double currentPrice = resultSet.getDouble("currentprice");
-
-			AuctionItem auctionItem = new AuctionItem(title,description,tags,currentPrice);
-			auctionItem.setItemId(itemId);
-			listOfItems.add(auctionItem);
-		}
-
-		closeConnection();
-
-		return listOfItems;
-
-	}
-
-	public void updateHighestBidder(AuctionItem item) throws SQLException {
-		createConnection();
-
-		String currenthighestbidder = "UPDATE \"public\".auctionitems SET currenthighestbidder ='xxMilosLongSchlongxx'";
-		c.prepareStatement(currenthighestbidder).executeUpdate();
-		String currentprice = "UPDATE \"public\".auctionitems SET currentprice ='6969.69'"; //Ændres til item price.
-		c.prepareStatement(currentprice).executeUpdate();
-
-
-		closeConnection();
-	}
-
-	public void clearTable(String relation) throws SQLException {
-		createConnection();
-
-
-		String sql = "TRUNCATE TABLE \"public\"." + relation;
-
-		c.prepareStatement(sql).executeUpdate();
-
-
-		closeConnection();
-	}
-
-	@Override
-	public int getLatestId(String relation) throws SQLException {
-		createConnection();
-		Statement stmnt = c.createStatement();
-		ResultSet resultSet = stmnt.executeQuery("SELECT * FROM \"public\"."+relation);
-
-		int latestIncrement;
-
-		if(resultSet.next())
-		{
-			latestIncrement = resultSet.getInt("latestItemId");
-		}
-		else
-		{
-			throw new SQLException("Latest itemId does not exist");
-		}
-
-		closeConnection();
-
-		return latestIncrement;
-	}
-*/
-
-
