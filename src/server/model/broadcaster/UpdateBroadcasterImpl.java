@@ -16,11 +16,11 @@ public class UpdateBroadcasterImpl extends UnicastRemoteObject implements Update
 		this.itemID = itemID;
 	}
 
-	public void broadcast() {
+	public void broadcast(String eventName) {
 		listeners.forEach((listener) -> {
 			try {
 				System.out.println("AM BROADCASTING");
-				listener.onNewBid(itemID);
+				listener.onServerEvent(eventName, itemID);
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}

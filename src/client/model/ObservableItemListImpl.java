@@ -3,8 +3,8 @@ package client.model;
 import client.network.LocalClient;
 import shared.network.client.SharedClient;
 import shared.network.model.Item;
-import shared.utils.PropertyChangeSubject;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.rmi.RemoteException;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class ObservableItemListImpl implements ObservableItemList, PropertyChangeSubject {
+public class ObservableItemListImpl implements ObservableItemList, PropertyChangeListener {
 	private final PropertyChangeSupport support;
 	private final HashMap<String, Item> items;
 	private final LocalClient client;
@@ -24,6 +24,7 @@ public class ObservableItemListImpl implements ObservableItemList, PropertyChang
 		items = new HashMap<>();
 
 		this.client = client;
+		client.addListener("ITEM_SOLD", this);
 	}
 
 	@Override
@@ -95,5 +96,12 @@ public class ObservableItemListImpl implements ObservableItemList, PropertyChang
 	@Override
 	public void removeListener(String eventName, PropertyChangeListener listener) {
 		support.removePropertyChangeListener(eventName, listener);
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent event) {
+		String itemID = (String) event.getNewValue();
+		items.remove(itemID);
+		support.firePropertyChange(event.getPropertyName(), null, itemID);
 	}
 }

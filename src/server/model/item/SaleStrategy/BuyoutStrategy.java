@@ -20,6 +20,7 @@ public class BuyoutStrategy implements SaleStrategy {
 
 		try {
 			item.setAsSold();
+			item.getUpdateBroadcaster().broadcast("ITEM_SOLD");
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
