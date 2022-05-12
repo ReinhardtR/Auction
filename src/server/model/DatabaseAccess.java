@@ -1,5 +1,6 @@
 package server.model;
 
+import com.sun.scenario.effect.Offset;
 import org.postgresql.util.PSQLException;
 import server.model.auction.Item;
 import server.model.temps.TempAuction;
@@ -23,14 +24,7 @@ public class DatabaseAccess implements DatabaseIO {
 
 	public static void main(String[] args) {
 
-		DatabaseAccess databaseAccess = new DatabaseAccess();
 
-		databaseAccess.getItem(1);
-		databaseAccess.getItem(2);
-
-
-		databaseAccess.updateItemOffer(new TempItem(0,new TempAuction(10.00,"Simon", LocalDateTime.of(2022,5,10,11,41,27)
-						,"AUCTION")));
 
 	}
 
@@ -295,14 +289,32 @@ public class DatabaseAccess implements DatabaseIO {
 					", currentBidder = '" + item.getTempSaleStrategy().getUsernameFromBuyer()+"'";
 
 		try {
+
 			pstmt = c.prepareStatement(sql);
 			pstmt.execute();
 
 		} catch (SQLException e) {
+
 			e.printStackTrace();
+
 		}
+
 		closeConnection();
 	}
+
+
+
+	private void checkAuctionTimers()
+	{
+		//Select statement fra database
+
+		//For hver linje modtaget, lav en thread som sleeper i "remaining time"
+		//Thread modtager (itemId og Remaining time), og Muligvist databaseIO til kaldelse af nedenstående metode.
+
+		//Når en thread er færdig kaldes metoden "AuctionEndTimerFinished"
+		//som fjerner det gældne item fra Auction, (Med hensigt til at flyttes til et andet sted)
+	}
+
 }
 
 
