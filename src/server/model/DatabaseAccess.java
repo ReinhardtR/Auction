@@ -21,11 +21,10 @@ public class DatabaseAccess implements DatabaseIO {
 
 	public static void main(String[] args) {
 
-		DatabaseAccess databaseAccess = new DatabaseAccess();
+		//DatabaseAccess databaseAccess = new DatabaseAccess();
 
-		databaseAccess.getItem(1);
+		//databaseAccess.getItem(1);
 		//databaseAccess.getItem(2);
-
 	}
 
 	private void createConnection() {
@@ -295,9 +294,9 @@ public class DatabaseAccess implements DatabaseIO {
 
 	@Override
 	public void updateItemOffer(TempItem item) {
-	createConnection();
+		createConnection();
 
-	String sql = "UPDATE \"public\".auction SET currentbid =" + item.getTempSaleStrategy().getOffer();
+		String sql = "UPDATE \"public\".auction SET currentbid =" + item.getTempSaleStrategy().getOffer();
 
 		try {
 			pstmt = c.prepareStatement(sql);
