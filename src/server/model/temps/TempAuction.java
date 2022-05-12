@@ -1,16 +1,17 @@
 package server.model.temps;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class TempAuction implements TempSaleStrategy {
 
 	private double bid;
 	private String bidder;
-	private Date endDate;
+	private LocalDateTime endDate;
 	private String saleStrategy;
 
 
-	public TempAuction(double bid, String bidder, Date endDate, String saleStrategy) {
+	public TempAuction(double bid, String bidder, LocalDateTime endDate, String saleStrategy) {
 		this.bid = bid;
 		this.bidder = bidder;
 		this.endDate = endDate;
