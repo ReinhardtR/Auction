@@ -5,6 +5,7 @@ import server.model.temps.TempAuction;
 import server.model.temps.TempBuyout;
 import server.model.temps.TempItem;
 
+import javax.xml.crypto.Data;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -23,14 +24,7 @@ public class DatabaseAccess implements DatabaseIO {
 
 	public static void main(String[] args) {
 
-
-		databaseAccess.getItem(1);
-		databaseAccess.getItem(2);
-
-
-		databaseAccess.updateItemOffer(new TempItem(0, new TempAuction(10.00, "Simon", LocalDateTime.of(2022, 5, 10, 11, 41, 27)
-						, "AUCTION")));
-
+		
 	}
 
 	private void createConnection() {
@@ -181,25 +175,22 @@ public class DatabaseAccess implements DatabaseIO {
 
 		String checkTime = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now().plusHours(1));
 		String selecter = "SELECT itemID, auctionenddate FROM \"public\".Auction " +
-						"WHERE auctionenddate < " + checkTime +
-						" ORDER BY auctionenddate";
+						"WHERE auctionenddate < '" + checkTime +
+						"' ORDER BY auctionenddate";
 		try {
 
-			String sql = selecter;
-
-			pstmt = c.prepareStatement(sql);
+			pstmt = c.prepareStatement(selecter);
 			resultSet = pstmt.executeQuery();
 
-			System.out.println(resultSet.toString());
-			/*
+
+
 			while (resultSet.next()) {
 				int itemID = resultSet.getInt("itemID");
-				Timestamp endTime = resultSet.getTimestamp("AuctionEndDate");
-				new Thread((itemID, endTime)->{
 
-				}).start();
+				Timestamp endTime = resultSet.getTimestamp("AuctionEndDate");
+
 			}
-			 */
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
