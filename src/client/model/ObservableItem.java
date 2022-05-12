@@ -1,6 +1,7 @@
 package client.model;
 
 import client.network.LocalClient;
+import shared.SaleStrategyType;
 import shared.network.model.Item;
 import shared.utils.PropertyChangeSubject;
 
@@ -35,14 +36,6 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 		return endDateTime;
 	}
 
-	public String getStrategy() {
-		try {
-			return item.strategyType();
-		} catch (RemoteException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
 	public void userSaleStrategy(int amount, String username) {
 		System.out.println("MODEL: " + amount);
 		try {
@@ -50,6 +43,16 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public SaleStrategyType getSaleStrategyType() {
+		try {
+			return item.strategyType();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 
 	public int getOfferAmount() {

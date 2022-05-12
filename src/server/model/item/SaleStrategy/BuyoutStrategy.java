@@ -1,5 +1,6 @@
 package server.model.item.SaleStrategy;
 
+import shared.SaleStrategyType;
 import shared.network.model.Item;
 
 import java.rmi.RemoteException;
@@ -31,7 +32,7 @@ public class BuyoutStrategy implements SaleStrategy {
 	}
 
 	@Override
-	public String strategyType() {
+	public SaleStrategyType strategyType() {
 		return "Buyout";
 	}
 

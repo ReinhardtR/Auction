@@ -1,6 +1,7 @@
 package server.model.item;
 
 import server.model.broadcaster.UpdateBroadcaster;
+import shared.SaleStrategyType;
 import shared.network.model.Item;
 
 import java.rmi.RemoteException;
@@ -47,7 +48,7 @@ public class ItemProxy extends UnicastRemoteObject implements Item {
 	}
 
 	@Override
-	public String strategyType() throws RemoteException {
+	public SaleStrategyType strategyType() throws RemoteException {
 		return item.strategyType();
 	}
 }

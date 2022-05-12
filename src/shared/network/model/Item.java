@@ -1,6 +1,7 @@
 package shared.network.model;
 
 import server.model.broadcaster.UpdateBroadcaster;
+import shared.SaleStrategyType;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -19,5 +20,5 @@ public interface Item extends Remote {
 
 	UpdateBroadcaster getUpdateBroadcaster() throws RemoteException;
 
-	String strategyType() throws RemoteException;
+	SaleStrategyType strategyType() throws RemoteException;
 }

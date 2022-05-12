@@ -1,5 +1,6 @@
 package server.model.item.SaleStrategy;
 
+import shared.SaleStrategyType;
 import shared.network.model.Item;
 
 public class AuctionStrategy implements SaleStrategy {
@@ -23,7 +24,7 @@ public class AuctionStrategy implements SaleStrategy {
 	}
 
 	@Override
-	public String strategyType() {
-		return "Auction";
+	public SaleStrategyType strategyType() {
+		return SaleStrategyType.AUCTION;
 	}
 }
