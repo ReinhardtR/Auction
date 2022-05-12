@@ -7,6 +7,7 @@ import shared.network.model.Item;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -31,13 +32,16 @@ public class Cart {
 		return instance;
 	}
 
-	public ArrayList<Item> returnAllItemsInCart() throws RemoteException {
+	public List<Item> returnAllItemsInCart() {
+		List<Item> itemsInCart = new ArrayList<>();
 
-		ArrayList<Item> itemsInCart = new ArrayList<>();
-
-		//Manuelt for fat i dem
-		itemsInCart.add(new ItemProxy(items.get("123")));
-		itemsInCart.add(new ItemProxy(items.get("456")));
+		items.forEach((itemID, item) -> {
+			try {
+				itemsInCart.add(new ItemProxy(item));
+			} catch (RemoteException e) {
+				throw new RuntimeException(e);
+			}
+		});
 
 		return itemsInCart;
 	}
@@ -48,9 +52,13 @@ public class Cart {
 	}
 
 	public void itemBought(Item item) {
-		//DATABASE KALD
+		try {
+			items.remove(item.getItemID());
+		} catch (RemoteException e) {
+			throw new RuntimeException(e);
+		}
 
-		//ITEM SOLGT
+		System.out.println("SOLD TO THE MAN IN BLUe");
 	}
 
 	public void updateItemOffer(Item item) {
