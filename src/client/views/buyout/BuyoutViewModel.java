@@ -1,13 +1,12 @@
 package client.views.buyout;
 
 import client.model.ObservableItem;
-import client.model.ObservableItemListImpl;
+import client.model.ObservableItemList;
 
 public class BuyoutViewModel {
-
 	private final ObservableItem item;
 
-	public BuyoutViewModel(ObservableItemListImpl observableItemList) {
-		item = observableItemList.getItem("123");
+	public BuyoutViewModel(ObservableItemList itemList) {
+		item = itemList.getItem("456");
 	}
 }

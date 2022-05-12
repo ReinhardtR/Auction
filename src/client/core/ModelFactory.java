@@ -1,7 +1,7 @@
 package client.core;
 
+import client.model.ObservableItemList;
 import client.model.ObservableItemListImpl;
-import client.network.LocalClient;
 
 public class ModelFactory {
 	private static final ModelFactory instance = new ModelFactory();
@@ -14,11 +14,9 @@ public class ModelFactory {
 		return instance;
 	}
 
-
-	public ObservableItemListImpl getAuctionModelTest() {
+	public ObservableItemList getObservableItemList() {
 		if (itemList == null) {
-			LocalClient client = ClientFactory.getInstance().getClient();
-			itemList = new ObservableItemListImpl(client);
+			itemList = new ObservableItemListImpl(ClientFactory.getInstance().getClient());
 		}
 
 		return itemList;

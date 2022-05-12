@@ -27,8 +27,8 @@ public class AuctionViewController implements ViewController {
 	public void init(ViewHandler viewHandler, ViewModelFactory viewModelFactory) {
 		this.auctionViewModel = viewModelFactory.getAuctionViewModel();
 
-		itemLabel.textProperty().bind(this.auctionViewModel.propertyItemLabel());
-		currentBid.textProperty().bind(this.auctionViewModel.propertyCurrentBid().asString());
+		itemLabel.textProperty().bind(auctionViewModel.propertyItemLabel());
+		currentBid.textProperty().bind(auctionViewModel.propertyCurrentBid().asString());
 		timeLeftOnBid.textProperty().bind(auctionViewModel.propertyTimeLeft());
 	}
 
