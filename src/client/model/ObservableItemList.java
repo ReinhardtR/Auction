@@ -8,7 +8,9 @@ public interface ObservableItemList {
 
 	List<ObservableItem> getAllItemsFromServer();
 
-	void setIdForView(String itemID);
+	String getIDForView();
+
+	void setIDForView(String itemID);
 
 	String getItemAndStrategy(ObservableItem observableItem);
 }

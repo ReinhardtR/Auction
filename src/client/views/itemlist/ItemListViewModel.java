@@ -18,7 +18,7 @@ public class ItemListViewModel {
 	}
 
 	public void setItemViewItem(String itemID) {
-		observableItemListImpl.setIdForView(itemID);
+		observableItemListImpl.setIDForView(itemID);
 	}
 
 	public String getStrategyOnItem(ObservableItem observableItem) {

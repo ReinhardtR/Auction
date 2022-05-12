@@ -63,7 +63,12 @@ public class ObservableItemListImpl implements ObservableItemList, PropertyChang
 	}
 
 	@Override
-	public void setIdForView(String itemID) {
+	public String getIDForView() {
+		return idForView;
+	}
+
+	@Override
+	public void setIDForView(String itemID) {
 		idForView = itemID;
 	}
 

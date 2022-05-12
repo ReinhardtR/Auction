@@ -27,8 +27,9 @@ public class AuctionViewModel implements PropertyChangeListener {
 		currentHighestBid = new SimpleIntegerProperty();
 		timeLeft = new SimpleStringProperty();
 
-		item = observableItemList.getItem("123");
+		item = observableItemList.getItem(observableItemList.getIDForView());
 		item.addListener(item.getItemID(), this);
+		itemText.setValue(item.getItemID());
 
 		runTimeSimulation(item.getEndDateTime());
 	}

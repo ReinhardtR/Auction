@@ -15,6 +15,9 @@ public class BuyoutViewController implements ViewController {
 	@Override
 	public void init(ViewHandler viewHandler, ViewModelFactory viewModelFactory) {
 		viewModel = viewModelFactory.getBuyoutViewModel();
+
+		itemLabel.textProperty().bind(viewModel.getItemNameProperty());
+		price.textProperty().bind(viewModel.getPriceProperty().asString());
 	}
 
 	@FXML
