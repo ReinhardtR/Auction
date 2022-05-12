@@ -1,6 +1,7 @@
 package client.model;
 
 import client.network.LocalClient;
+import shared.network.client.SharedClient;
 import shared.network.model.Item;
 import shared.utils.PropertyChangeSubject;
 
@@ -13,9 +14,10 @@ import java.util.List;
 
 public class ObservableItemListImpl implements ObservableItemList, PropertyChangeSubject {
 	private final PropertyChangeSupport support;
-	private final HashMap<String, ObservableItem> items;
+	private final HashMap<String, Item> items;
 	private final LocalClient client;
-	private String idForView;
+
+	private Item currentlyViewedItem;
 
 	public ObservableItemListImpl(LocalClient client) {
 		support = new PropertyChangeSupport(this);
@@ -25,51 +27,64 @@ public class ObservableItemListImpl implements ObservableItemList, PropertyChang
 	}
 
 	@Override
-	public ObservableItem getItem(String itemID) {
-		ObservableItem observableItem = items.get(itemID);
+	public List<ObservableItem> getAllItemsFromServer() {
+		List<ObservableItem> observableItemList = new ArrayList<>();
 
-		if (observableItem == null) {
+		try {
+			for (Item item : client.getAllItems()) {
+				items.put(item.getItemID(), item);
+				observableItemList.add(new ObservableItem(client, item));
+			}
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+
+		return observableItemList;
+	}
+
+	@Override
+	public ObservableItem getCurrentlyViewedItem() {
+		try {
+			return new ObservableItem(client, currentlyViewedItem);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+
+		return null; // TODO: throw exception?
+	}
+
+	@Override
+	public void setCurrentlyViewedItem(String itemID) {
+		if (currentlyViewedItem != null) {
 			try {
-				Item item = client.getItem(itemID);
-
-				observableItem = new ObservableItem(client, item);
-
-				items.put(itemID, observableItem);
+				currentlyViewedItem.getUpdateBroadcaster().unregisterClient((SharedClient) client);
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}
 		}
 
-		return observableItem;
-	}
-
-	@Override
-	public List<ObservableItem> getAllItemsFromServer() {
-		List<ObservableItem> observableItems = new ArrayList<>();
+		currentlyViewedItem = getItem(itemID);
 
 		try {
-			for (Item item : client.getAllItems()) {
-				ObservableItem observableItem = new ObservableItem(client, item);
-
-				observableItems.add(observableItem);
-				items.put(item.getItemID(), observableItem);
-				System.out.println(observableItem.getItemID());
-			}
+			currentlyViewedItem.getUpdateBroadcaster().registerClient((SharedClient) client);
 		} catch (RemoteException e) {
-			throw new RuntimeException(e);
+			e.printStackTrace();
+		}
+	}
+
+	private Item getItem(String itemID) {
+		Item item = items.get(itemID);
+
+		if (item == null) {
+			try {
+				item = client.getItem(itemID);
+				items.put(itemID, item);
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
 		}
 
-		return observableItems;
-	}
-
-	@Override
-	public String getIDForView() {
-		return idForView;
-	}
-
-	@Override
-	public void setIDForView(String itemID) {
-		idForView = itemID;
+		return item;
 	}
 
 	@Override

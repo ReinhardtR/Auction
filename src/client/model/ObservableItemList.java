@@ -4,12 +4,9 @@ import java.util.List;
 
 public interface ObservableItemList {
 
-	ObservableItem getItem(String itemId);
-
 	List<ObservableItem> getAllItemsFromServer();
 
-	String getIDForView();
+	ObservableItem getCurrentlyViewedItem();
 
-	void setIDForView(String itemID);
-
+	void setCurrentlyViewedItem(String itemID);
 }

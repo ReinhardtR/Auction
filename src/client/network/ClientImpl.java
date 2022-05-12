@@ -30,13 +30,10 @@ public class ClientImpl extends UnicastRemoteObject implements SharedClient, Loc
 		support.firePropertyChange(itemID, null, null);
 	}
 
+	// Not used
 	@Override
 	public Item getItem(String itemID) throws RemoteException {
-		Item item = server.getItem(itemID);
-
-		item.getUpdateBroadcaster().registerClient(this);
-
-		return item;
+		return server.getItem(itemID);
 	}
 
 	@Override

@@ -20,15 +20,14 @@ public class ViewHandler {
 		openAuctionListView();
 	}
 
-
-	public void openAuctionView() {
-		stage.setScene(ViewFactory.startNewScene("Auction"));
-		stage.show();
-	}
-
 	public void openAuctionListView() {
 		Scene auctionListScene = ViewFactory.getScene("ItemList");
 		stage.setScene(auctionListScene);
+		stage.show();
+	}
+
+	public void openAuctionView() {
+		stage.setScene(ViewFactory.startNewScene("Auction"));
 		stage.show();
 	}
 

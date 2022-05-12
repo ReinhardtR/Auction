@@ -1,7 +1,6 @@
 package client.views.buyout;
 
 import client.model.ObservableItem;
-import client.model.ObservableItemList;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -12,12 +11,11 @@ import java.beans.PropertyChangeListener;
 
 public class BuyoutViewModel implements PropertyChangeListener {
 	private final ObservableItem item;
-	private IntegerProperty priceProperty;
-	private StringProperty itemNameProperty;
+	private final IntegerProperty priceProperty;
+	private final StringProperty itemNameProperty;
 
-	public BuyoutViewModel(ObservableItemList itemList) {
-
-		item = itemList.getItem(itemList.getIDForView());
+	public BuyoutViewModel(ObservableItem item) {
+		this.item = item;
 		item.addListener(item.getItemID(), this);
 
 		priceProperty = new SimpleIntegerProperty();

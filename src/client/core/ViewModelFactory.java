@@ -27,7 +27,7 @@ public class ViewModelFactory {
 
 	public AuctionViewModel getAuctionViewModel() {
 		if (auctionViewModel == null) {
-			auctionViewModel = new AuctionViewModel(ModelFactory.getInstance().getObservableItemList());
+			auctionViewModel = new AuctionViewModel(ModelFactory.getInstance().getObservableItemList().getCurrentlyViewedItem());
 		}
 
 		return auctionViewModel;
@@ -35,7 +35,7 @@ public class ViewModelFactory {
 
 	public BuyoutViewModel getBuyoutViewModel() {
 		if (buyoutViewModel == null) {
-			buyoutViewModel = new BuyoutViewModel(ModelFactory.getInstance().getObservableItemList());
+			buyoutViewModel = new BuyoutViewModel(ModelFactory.getInstance().getObservableItemList().getCurrentlyViewedItem());
 		}
 
 		return buyoutViewModel;

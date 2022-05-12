@@ -2,7 +2,6 @@ package client.views.auction;
 
 import client.model.ItemCalculations;
 import client.model.ObservableItem;
-import client.model.ObservableItemList;
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -22,12 +21,12 @@ public class AuctionViewModel implements PropertyChangeListener {
 	private final StringProperty timeLeft;
 	private final ObservableItem item;
 
-	public AuctionViewModel(ObservableItemList observableItemList) {
+	public AuctionViewModel(ObservableItem item) {
 		itemText = new SimpleStringProperty();
 		currentHighestBid = new SimpleIntegerProperty();
 		timeLeft = new SimpleStringProperty();
 
-		item = observableItemList.getItem(observableItemList.getIDForView());
+		this.item = item;
 		item.addListener(item.getItemID(), this);
 		itemText.setValue(item.getItemID());
 

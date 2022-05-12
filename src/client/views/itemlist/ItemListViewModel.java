@@ -17,8 +17,8 @@ public class ItemListViewModel {
 		return FXCollections.observableList(observableItemListImpl.getAllItemsFromServer());
 	}
 
-	public void setItemViewItem(String itemID) {
-		observableItemListImpl.setIDForView(itemID);
+	public void setCurrentlyViewedItemID(String itemID) {
+		observableItemListImpl.setCurrentlyViewedItem(itemID);
 	}
 
 	public SaleStrategyType getStrategyOnItem(ObservableItem item) {
