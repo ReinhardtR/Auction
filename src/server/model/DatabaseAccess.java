@@ -1,6 +1,5 @@
 package server.model;
 
-import org.postgresql.util.PSQLException;
 import server.model.auction.Item;
 import server.model.temps.TempAuction;
 import server.model.temps.TempBuyout;
@@ -8,6 +7,7 @@ import server.model.temps.TempItem;
 
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /*
 Der skal huskes at synchronize på metoderne så man ikke kommer til at lave fejl med flere brugere
@@ -18,19 +18,19 @@ Herudover skal der laves nogle transaction så vores "flere metodet" metoder som
 public class DatabaseAccess implements DatabaseIO {
 
 
-	private Connection c = null;
-	private PreparedStatement pstmt = null;
+	private Connection c = null; //Flyttes
+	private PreparedStatement pstmt = null; //Flyttes
 
 	public static void main(String[] args) {
 
-		//DatabaseAccess databaseAccess = new DatabaseAccess();
+		DatabaseAccess databaseAccess = new DatabaseAccess();
 
 		databaseAccess.getItem(1);
 		databaseAccess.getItem(2);
 
 
-		databaseAccess.updateItemOffer(new TempItem(0,new TempAuction(10.00,"Simon", LocalDateTime.of(2022,5,10,11,41,27)
-						,"AUCTION")));
+		databaseAccess.updateItemOffer(new TempItem(0, new TempAuction(10.00, "Simon", LocalDateTime.of(2022, 5, 10, 11, 41, 27)
+						, "AUCTION")));
 
 	}
 
@@ -58,6 +58,139 @@ public class DatabaseAccess implements DatabaseIO {
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public synchronized Item getItem(int itemID) {
+		createConnection();
+
+		ResultSet resultSet = null;
+		String selecter = "SELECT itemID, saleStrategy FROM \"public\".Auction WHERE itemID = " + itemID;
+		String selecter2 = "SELECT itemID, saleStrategy FROM \"public\".Buyout WHERE itemID = " + itemID;
+		try {
+
+			String sql = selecter +
+							" UNION " +
+							selecter2;
+
+			pstmt = c.prepareStatement(sql);
+			resultSet = pstmt.executeQuery();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			assert resultSet != null;
+			resultSet.next();
+			if (resultSet.getString("saleStrategy").equalsIgnoreCase("auction")) {
+				String auctionItemGetterSQL = "SELECT * FROM \"public\".Auction " +
+								" WHERE itemID = " + itemID;
+				pstmt = c.prepareStatement(auctionItemGetterSQL);
+				ResultSet auctionResult = pstmt.executeQuery();
+				auctionResult.next();
+				TempItem auction = auctionTransport(auctionResult);
+				closeConnection();
+				System.out.println(auction);
+				return null;
+			} else if (resultSet.getString("saleStrategy").equalsIgnoreCase("buyout")) {
+				String buyoutItemGetterSQL = "SELECT * FROM \"public\".Buyout " +
+								" WHERE itemID = " + itemID;
+				pstmt = c.prepareStatement(buyoutItemGetterSQL);
+				ResultSet buyoutResult = pstmt.executeQuery();
+				buyoutResult.next();
+				TempItem buyout = buyoutTransport(buyoutResult);
+				closeConnection();
+				System.out.println(buyout);
+				return null;
+			} else {
+				//intet
+			}
+
+
+			closeConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null; //Returnere det item som blev returneret af databasen.
+	}
+
+	private TempItem buyoutTransport(ResultSet buyoutResult) throws SQLException {
+		TempBuyout tempBuyout = new TempBuyout(Double.parseDouble(buyoutResult.getString("price")),
+						buyoutResult.getString("buyer"),
+						buyoutResult.getString("saleStrategy"));
+		TempItem tempItem = new TempItem(buyoutResult.getInt("itemID"), tempBuyout);
+		return tempItem;
+	}
+
+	private TempItem auctionTransport(ResultSet auctionResult) throws SQLException {
+		TempAuction tempAuction = new TempAuction(Double.parseDouble(auctionResult.getString("currentBid")),
+						auctionResult.getString("currentBidder"),
+						auctionResult.getTimestamp("AuctionEndDate").toLocalDateTime(),
+						auctionResult.getString("saleStrategy"));
+		return new TempItem(auctionResult.getInt("itemID"), tempAuction);
+	}
+
+	@Override
+	public synchronized void buyoutItemBought(TempItem item) {
+		createConnection();
+
+		String sql = "UPDATE \"public\".buyout SET buyer = '" + item.getTempSaleStrategy().getUsernameFromBuyer() + "' WHERE itemID = " + item.getId();
+
+		try {
+			pstmt = c.prepareStatement(sql);
+			pstmt.execute();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+
+		closeConnection();
+
+		//The item has been "bought" (removed from the table)
+		//Efter item er blevet fjernet skal der muligvist kaldes en metode eller returneres noget som kan
+		// vise køberen at item'et er blevet købt.
+	}
+
+
+	@Override
+	public synchronized void updateItemOffer(TempItem item) {
+		createConnection();
+
+		String sql = "UPDATE \"public\".auction SET currentBid =" + item.getTempSaleStrategy().getOffer() +
+						", currentBidder = '" + item.getTempSaleStrategy().getUsernameFromBuyer() + "'";
+
+		try {
+			pstmt = c.prepareStatement(sql);
+			pstmt.execute();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		closeConnection();
+	}
+
+	private void checkAuctionTimers() {
+
+		createConnection();
+		ResultSet resultSet = null;
+
+		String checkTime = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now().plusHours(1));
+		String selecter = "SELECT itemID, auctionenddate FROM \"public\".Auction " +
+						"WHERE auctionenddate < " + checkTime +
+						" ORDER BY auctionenddate";
+		try {
+
+			String sql = selecter;
+
+			pstmt = c.prepareStatement(sql);
+			resultSet = pstmt.executeQuery();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		closeConnection();
+
+	}
+
 
 /*
 	@Override
@@ -193,114 +326,6 @@ public class DatabaseAccess implements DatabaseIO {
 		return latestIncrement;
 	}
 */
-
-	@Override
-	public synchronized Item getItem(int itemID) {
-		createConnection();
-
-		ResultSet resultSet = null;
-		String selecter = "SELECT itemID, saleStrategy FROM \"public\".Auction WHERE itemID = " + itemID;
-		String selecter2 = "SELECT itemID, saleStrategy FROM \"public\".Buyout WHERE itemID = " + itemID;
-		try {
-
-			String sql = selecter +
-							" UNION " +
-							selecter2;
-
-			pstmt = c.prepareStatement(sql);
-			resultSet = pstmt.executeQuery();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		try {
-			assert resultSet != null;
-			resultSet.next();
-			if (resultSet.getString("saleStrategy").equalsIgnoreCase("auction")) {
-				String auctionItemGetterSQL = "SELECT * FROM \"public\".Auction " +
-								" WHERE itemID = " + itemID;
-				pstmt = c.prepareStatement(auctionItemGetterSQL);
-				ResultSet auctionResult = pstmt.executeQuery();
-				auctionResult.next();
-				TempItem auction = auctionTransport(auctionResult);
-				closeConnection();
-				System.out.println(auction);
-				return null;
-			} else if (resultSet.getString("saleStrategy").equalsIgnoreCase("buyout")) {
-				String buyoutItemGetterSQL = "SELECT * FROM \"public\".Buyout " +
-								" WHERE itemID = " + itemID;
-				pstmt = c.prepareStatement(buyoutItemGetterSQL);
-				ResultSet buyoutResult = pstmt.executeQuery();
-				buyoutResult.next();
-				TempItem buyout = buyoutTransport(buyoutResult);
-				closeConnection();
-				System.out.println(buyout);
-				return null;
-			} else {
-				//intet
-			}
-
-
-			closeConnection();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null; //Returnere det item som blev returneret af databasen.
-	}
-
-	private TempItem buyoutTransport(ResultSet buyoutResult) throws SQLException {
-		TempBuyout tempBuyout = new TempBuyout(Double.parseDouble(buyoutResult.getString("price")),
-						buyoutResult.getString("buyer"),
-						buyoutResult.getString("saleStrategy"));
-		TempItem tempItem = new TempItem(buyoutResult.getInt("itemID"), tempBuyout);
-		return tempItem;
-	}
-
-	private TempItem auctionTransport(ResultSet auctionResult) throws SQLException {
-		TempAuction tempAuction = new TempAuction(Double.parseDouble(auctionResult.getString("currentBid")),
-						auctionResult.getString("currentBidder"),
-						auctionResult.getTimestamp("AuctionEndDate").toLocalDateTime(),
-						auctionResult.getString("saleStrategy"));
-		return new TempItem(auctionResult.getInt("itemID"), tempAuction);
-	}
-
-	@Override
-	public synchronized void buyoutItemBought(TempItem item) {
-		createConnection();
-
-		String sql = "UPDATE \"public\".buyout SET buyer = '" + item.getTempSaleStrategy().getUsernameFromBuyer() + "' WHERE itemID = " + item.getId();
-
-		try {
-			pstmt = c.prepareStatement(sql);
-			pstmt.execute();
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		}
-
-		closeConnection();
-
-		//The item has been "bought" (removed from the table)
-		//Efter item er blevet fjernet skal der muligvist kaldes en metode eller returneres noget som kan
-		// vise køberen at item'et er blevet købt.
-	}
-
-
-	@Override
-	public synchronized void updateItemOffer(TempItem item) {
-	createConnection();
-
-	String sql = "UPDATE \"public\".auction SET currentBid =" + item.getTempSaleStrategy().getOffer() +
-					", currentBidder = '" + item.getTempSaleStrategy().getUsernameFromBuyer()+"'";
-
-		try {
-			pstmt = c.prepareStatement(sql);
-			pstmt.execute();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		closeConnection();
-	}
 }
 
 
