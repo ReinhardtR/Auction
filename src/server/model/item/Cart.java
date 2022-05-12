@@ -35,7 +35,9 @@ public class Cart {
 
 		ArrayList<Item> itemsInCart = new ArrayList<>();
 
+		//Manuelt for fat i dem
 		itemsInCart.add(new ItemProxy(items.get("123")));
+		itemsInCart.add(new ItemProxy(items.get("456")));
 
 		return itemsInCart;
 	}
@@ -59,7 +61,7 @@ public class Cart {
 
 
 	//TIL TEST AF KØB USECASE
-	public void setItem(Item item) throws RemoteException {
+	public void addItem(Item item) throws RemoteException {
 		items.put(item.getItemID(), item);
 	}
 }
