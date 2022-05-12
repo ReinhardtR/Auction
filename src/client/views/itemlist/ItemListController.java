@@ -34,7 +34,7 @@ public class ItemListController implements ViewController {
 		// TODO: should this logic be here?
 		if (itemListViewModel.getStrategyOnItem(observableItem).equals(SaleStrategyType.AUCTION)) {
 			ViewHandler.getInstance().openAuctionView();
-		} else if (itemListViewModel.getStrategyOnItem(observableItem).equals("Buyout")) {
+		} else if (itemListViewModel.getStrategyOnItem(observableItem).equals(SaleStrategyType.BUYOUT)) {
 			ViewHandler.getInstance().openBuyoutView();
 		}
 	}

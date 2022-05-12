@@ -33,7 +33,7 @@ public class BuyoutStrategy implements SaleStrategy {
 
 	@Override
 	public SaleStrategyType strategyType() {
-		return "Buyout";
+		return SaleStrategyType.BUYOUT;
 	}
 
 
