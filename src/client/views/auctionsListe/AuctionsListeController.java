@@ -18,7 +18,7 @@ public class AuctionsListeController implements ViewController {
 	private TableView<ObservableItem> itemsTableView;
 
 	public void init(ViewHandler viewHandler, ViewModelFactory viewModelFactory) {
-		idCol.setCellValueFactory(new PropertyValueFactory<ObservableItem, String>("itemID"));
+		idCol.setCellValueFactory(new PropertyValueFactory<>("itemID"));
 		itemsTableView.setItems(viewModelFactory.getAuctionsListeViewModel().getObservableItemList());
 	}
 
