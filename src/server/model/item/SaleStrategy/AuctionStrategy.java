@@ -7,7 +7,7 @@ import server.model.item.Item;
 import java.rmi.RemoteException;
 
 public class AuctionStrategy implements SaleStrategy {
-	private int currentBid = 0;
+	private int currentBid;
 	private String currentBidder;
 
 	public AuctionStrategy(int currentBid) {
