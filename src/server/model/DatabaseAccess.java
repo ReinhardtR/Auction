@@ -4,6 +4,7 @@ import server.model.auction.Item;
 import server.model.temps.TempAuction;
 import server.model.temps.TempBuyout;
 import server.model.temps.TempItem;
+import shared.transferobjects.AuctionItem;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -26,9 +27,9 @@ public class DatabaseAccess implements DatabaseIO {
 	private Connection c = null;                  //Flyttes
 	private PreparedStatement pstmt = null;       //Flyttes
 
-	public static void main(String[] args) {
 
-	}
+
+
 
 	private void createConnection() {
 		try {
@@ -165,6 +166,17 @@ public class DatabaseAccess implements DatabaseIO {
 		closeConnection();
 	}
 
+	@Override
+	public void clearTable(String tableToClear)  {
+		String sql = "TRUNCATE " + tableToClear;
+
+		try {
+			c.prepareStatement(sql).executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	private void checkAuctionTimers() {
 		new Thread(() ->
 		{
@@ -239,8 +251,55 @@ public class DatabaseAccess implements DatabaseIO {
 			support.addPropertyChangeListener(listener);
 		}
 
+
+		//closeConnection();
+
+	//	return listOfItems;
+
+
+
+	public void updateHighestBidder(AuctionItem item) throws SQLException {
+		createConnection();
+
+		String currenthighestbidder = "UPDATE \"public\".auctionitems SET currenthighestbidder ='xxMilosLongSchlongxx'";
+		c.prepareStatement(currenthighestbidder).executeUpdate();
+		String currentprice = "UPDATE \"public\".auctionitems SET currentprice ='6969.69'"; //Ændres til item price.
+		c.prepareStatement(currentprice).executeUpdate();
+
+
+		closeConnection();
+	}
+
+
+	public void clearTable(String relation) throws SQLException {
+		createConnection();
+
+
+		String sql = "TRUNCATE TABLE \"public\"." + relation;
+
+		c.prepareStatement(sql).executeUpdate();
+
+
+		closeConnection();
+	}
+
+
+/*
+	@Override
+	public int getLatestId(String relation) throws SQLException {
+		createConnection();
+		Statement stmnt = c.createStatement();
+		ResultSet resultSet = stmnt.executeQuery("SELECT * FROM \"public\"."+relation);
+
+		int latestIncrement;
+
+		if(resultSet.next())
+		{
+			latestIncrement = resultSet.getInt("latestItemId");
+*/
 		@Override
 		public void run() {
+
 			Duration duration = Duration.between(localTimeIn1Hour, (Temporal) endTime);
 			System.out.println("itemID = " + itemID + " | " + "endtime = " + endTime);             //Skal fjernes senere
 			try {
@@ -249,6 +308,10 @@ public class DatabaseAccess implements DatabaseIO {
 				e.printStackTrace();
 			}
 			support.firePropertyChange("Time is up on item " + itemID, null, itemID);
-		}
+
 	}
+
+	}
+
+
 }
