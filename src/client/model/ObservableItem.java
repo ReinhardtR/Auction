@@ -27,8 +27,12 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 		itemID = item.getItemID();
 		endDateTime = item.getEndTimestamp();
 
-		client.addListener(EventType.NEW_BID.toString() + itemID, this);
+		if(client != null)
+		{
+			client.addListener(EventType.NEW_BID.toString() + itemID, this);
+		}
 	}
+
 
 	@Override
 	public String getItemID() {
@@ -43,11 +47,15 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 
 	@Override
 	public void userSaleStrategy(int amount, String username) {
-		System.out.println("MODEL: " + amount);
-		try {
-			item.userSaleStrategy(amount, username);
-		} catch (RemoteException e) {
-			e.printStackTrace();
+
+		if (ItemCalculations.isNewBidHigher(amount, this))
+		{
+			System.out.println("MODEL: " + amount);
+			try {
+				item.userSaleStrategy(amount, username);
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

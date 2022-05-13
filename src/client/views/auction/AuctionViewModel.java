@@ -36,9 +36,7 @@ public class AuctionViewModel implements PropertyChangeListener {
 	}
 
 	public void bidOnItem(int offer) {
-		if (ItemCalculations.isNewBidHigher(offer, item)) {
 			item.userSaleStrategy(offer, "Reinhardt");
-		}
 	}
 
 	public StringProperty propertyItemLabel() {
