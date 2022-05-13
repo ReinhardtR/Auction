@@ -10,6 +10,10 @@ public class AuctionStrategy implements SaleStrategy {
 	private int currentBid = 0;
 	private String currentBidder;
 
+	public AuctionStrategy(int currentBid) {
+		this.currentBid = currentBid;
+	}
+
 	@Override
 	public void offer(Item item, int amount, String username) {
 		currentBid = amount;

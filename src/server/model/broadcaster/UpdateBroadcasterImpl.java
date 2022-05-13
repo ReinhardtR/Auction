@@ -15,17 +15,6 @@ public class UpdateBroadcasterImpl extends UnicastRemoteObject implements Update
 	}
 
 	@Override
-	public void broadcastEvent(String eventName) throws RemoteException {
-		listeners.forEach((listener) -> {
-			try {
-				listener.onServerEvent(eventName, null);
-			} catch (RemoteException e) {
-				e.printStackTrace();
-			}
-		});
-	}
-
-	@Override
 	public void broadcastEventForItem(String eventName, String itemID) throws RemoteException {
 		listeners.forEach((listener) -> {
 			try {

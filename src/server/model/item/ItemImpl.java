@@ -22,7 +22,7 @@ public class ItemImpl extends UnicastRemoteObject implements Item {
 		this.endTimestamp = endTimestamp;
 		this.strategy = strategy;
 		
-		isSold = false; // take as parameter i guess
+		isSold = false; // take as parameter I guess
 		broadcaster = new UpdateBroadcasterImpl();
 	}
 

@@ -15,6 +15,7 @@ public class ItemListController implements ViewController {
 
 	@FXML
 	private Label errorLabel;
+
 	@FXML
 	private TableColumn<ObservableItem, String> idCol;
 
@@ -33,12 +34,11 @@ public class ItemListController implements ViewController {
 		errorLabel.setText("");
 	}
 
-	public void getNewViewForItem() {
+	@FXML
+	protected void getNewViewForItem() {
 		ObservableItem observableItem = itemsTableView.getSelectionModel().getSelectedItem();
 
-
-		if (observableItem != null)
-		{
+		if (observableItem != null) {
 			itemListViewModel.setCurrentlyViewedItemID(observableItem.getItemID());
 
 			// TODO: should this logic be here?
@@ -47,12 +47,10 @@ public class ItemListController implements ViewController {
 			} else if (itemListViewModel.getStrategyOnItem(observableItem).equals(SaleStrategyType.BUYOUT)) {
 				ViewHandler.getInstance().openBuyoutView();
 			}
+
 			errorLabel.setText("");
-
-		}
-		else
+		} else {
 			errorLabel.setText("Select an item you wanna bid on/buy!");
-
-
+		}
 	}
 }

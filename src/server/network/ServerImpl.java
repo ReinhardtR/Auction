@@ -8,13 +8,11 @@ import server.model.item.ItemImpl;
 import server.model.item.ItemProxy;
 import server.model.item.SaleStrategy.AuctionStrategy;
 import server.model.item.SaleStrategy.BuyoutStrategy;
-import shared.network.client.SharedClient;
 import shared.network.model.Item;
 import shared.network.server.Server;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.time.LocalDateTime;
@@ -30,7 +28,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server, PropertyC
 
 		//Til random item
 		Temporal endDateTime = LocalDateTime.of(2022, 5, 16, 11, 20);
-		Cart.getInstance().addItem(new ItemImpl("123", endDateTime, new AuctionStrategy()));
+		Cart.getInstance().addItem(new ItemImpl("123", endDateTime, new AuctionStrategy(0)));
 		Cart.getInstance().addItem(new ItemImpl("456", endDateTime, new BuyoutStrategy(69)));
 	}
 
