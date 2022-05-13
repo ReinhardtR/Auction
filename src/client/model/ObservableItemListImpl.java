@@ -16,7 +16,6 @@ public class ObservableItemListImpl implements ObservableItemList, PropertyChang
 	private final PropertyChangeSupport support;
 	private final HashMap<String, Item> items;
 	private final LocalClient client;
-
 	private Item currentlyViewedItem;
 
 	public ObservableItemListImpl(LocalClient client) {

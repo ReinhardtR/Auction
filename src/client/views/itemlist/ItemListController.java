@@ -5,6 +5,7 @@ import client.core.ViewModelFactory;
 import client.model.ObservableItem;
 import client.views.ViewController;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -12,6 +13,8 @@ import shared.SaleStrategyType;
 
 public class ItemListController implements ViewController {
 
+	@FXML
+	private Label errorLabel;
 	@FXML
 	private TableColumn<ObservableItem, String> idCol;
 
@@ -26,17 +29,30 @@ public class ItemListController implements ViewController {
 		itemsTableView.setItems(viewModelFactory.getItemListViewModel().getObservableItemList());
 
 		itemListViewModel = viewModelFactory.getItemListViewModel();
+
+		errorLabel.setText("");
 	}
 
 	public void getNewViewForItem() {
 		ObservableItem observableItem = itemsTableView.getSelectionModel().getSelectedItem();
-		itemListViewModel.setCurrentlyViewedItemID(observableItem.getItemID());
 
-		// TODO: should this logic be here?
-		if (itemListViewModel.getStrategyOnItem(observableItem).equals(SaleStrategyType.AUCTION)) {
-			ViewHandler.getInstance().openAuctionView();
-		} else if (itemListViewModel.getStrategyOnItem(observableItem).equals(SaleStrategyType.BUYOUT)) {
-			ViewHandler.getInstance().openBuyoutView();
+
+		if (observableItem != null)
+		{
+			itemListViewModel.setCurrentlyViewedItemID(observableItem.getItemID());
+
+			// TODO: should this logic be here?
+			if (itemListViewModel.getStrategyOnItem(observableItem).equals(SaleStrategyType.AUCTION)) {
+				ViewHandler.getInstance().openAuctionView();
+			} else if (itemListViewModel.getStrategyOnItem(observableItem).equals(SaleStrategyType.BUYOUT)) {
+				ViewHandler.getInstance().openBuyoutView();
+			}
+			errorLabel.setText("");
+
 		}
+		else
+			errorLabel.setText("Select an item you wanna bid on/buy!");
+
+
 	}
 }
