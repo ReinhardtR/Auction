@@ -2,16 +2,20 @@
 package server.model;
 
 import org.junit.jupiter.api.*;
-import org.junit.runners.Parameterized;
-import shared.transferobjects.AuctionItem;
+import server.model.temps.TempBuyout;
+import server.model.temps.TempItem;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+
+//Her skal udfyldes gennemgående test, der er opsat skabelon for testing
+
+
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class DatabaseIOTest {
@@ -29,6 +33,8 @@ class DatabaseIOTest {
 							.getConnection("jdbc:postgresql://hattie.db.elephantsql.com:5432/isgypvka",
 											"isgypvka", "UkY3C9sbYugpjto58d8FAk9M54JiLanr");
 
+
+			c.setAutoCommit(false);
 
 			//Auction creator:
 			String auctionTableCreator = "CREATE TABLE " + AUCIONTABLENAME +
@@ -61,6 +67,7 @@ class DatabaseIOTest {
 							" AS SELECT * FROM buyout " +
 							" WITH NO DATA";
 
+			c.prepareStatement(buyoutTableCreator).executeUpdate();
 
 			triggerCreator = "create trigger buyoutitembought" +
 							"    after update" +
@@ -68,10 +75,11 @@ class DatabaseIOTest {
 							"    for each row" +
 							"execute procedure buyoutitembought()";
 
-			c.prepareStatement(buyoutTableCreator).executeUpdate();
+				c.prepareStatement(triggerCreator).executeUpdate();
 
-				//Lav en samlet transaction med alle disse metodekald,
-			// så det bliver gjort på én gang. Altså setautocommit til false og kald en commit til sidst
+			c.commit();
+			c.setAutoCommit(true);
+
 		} catch ( Exception e ) {
 			System.err.println( e.getClass().getName()+": "+ e.getMessage() );
 			System.exit(0);
@@ -83,7 +91,7 @@ class DatabaseIOTest {
 //Auction table gives 5 tuples som udløber inden for en time, og 5 som udløber om mere end en time.
 	public void populateAuctionTable() {
 		String sql = "INSERT INTO "+AUCIONTABLENAME+" VALUES " +
-						"(default,0,null,TIMESTAMP(0) '"+ LocalDateTime.now().plusMinutes(59) +"','AUCTION')";
+						"(default,0,testName,TIMESTAMP(0) '"+ LocalDateTime.now().plusMinutes(59) +"','AUCTION')";
 
 
 		for (int i = 0; i < 6; i++) {
@@ -95,7 +103,7 @@ class DatabaseIOTest {
 		}
 
 		sql = "INSERT INTO "+AUCIONTABLENAME+" VALUES " +
-						"(default,0,null,TIMESTAMP(0) '"+ LocalDateTime.now().plusHours(3) +"','AUCTION')";
+						"(default,0,testName,TIMESTAMP(0) '"+ LocalDateTime.now().plusHours(3) +"','AUCTION')";
 
 		for (int i = 0; i < 6; i++) {
 			try {
@@ -105,11 +113,83 @@ class DatabaseIOTest {
 			}
 		}
 	}
+
+
+
+
+
+	@Test
+	@DisplayName("Get Item fra database tester")
+	void getItemTester() {
+		assertEquals(1, Integer.parseInt(databaseAccess.getItem(1).getId()),"Get an item we have set");
+		assertThrows(SQLException.class,() -> {databaseAccess.getItem(300);}, "Try to get an item that hasn't been set");
+
+	}
+
+
+
+	@Test
+	void buyBuyoutItemTester(){
+		databaseAccess.buyoutItemBought(new TempItem(6,new TempBuyout(0,"testName","BUYOUT")));
+
+		assertEquals(6,Integer.parseInt(databaseAccess.getItem(6).getId()));
+	}
+
+	@Test
+	void updateItemOfferTester(){
+
+
+	}
+
+	@Test
+	void clearTableTester() {
+
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 	protected void populateBuyoutTable(){
 		String sql = "INSERT INTO "+ BUYOUTTABLENAME+" VALUES " +
-						"(default,0,null,'BUYOUT')";
+						"(default,0,testName,'BUYOUT')";
 
 
 		for (int i = 0; i < 6; i++) {
@@ -120,6 +200,7 @@ class DatabaseIOTest {
 			}
 		}
 	}
+
 
 
 	protected void clearBuyoutTable(){

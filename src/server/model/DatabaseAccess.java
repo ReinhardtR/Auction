@@ -4,6 +4,7 @@ import server.model.auction.Item;
 import server.model.temps.TempAuction;
 import server.model.temps.TempBuyout;
 import server.model.temps.TempItem;
+import shared.transferobjects.AuctionItem;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -163,6 +164,17 @@ public class DatabaseAccess implements DatabaseIO {
 		closeConnection();
 	}
 
+	@Override
+	public void clearTable(String tableToClear)  {
+		String sql = "TRUNCATE " + tableToClear;
+
+		try {
+			c.prepareStatement(sql).executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	private void checkAuctionTimers() {
 		new Thread(() ->
 		{
@@ -243,7 +255,7 @@ public class DatabaseAccess implements DatabaseIO {
 	//	return listOfItems;
 
 
-/*
+
 	public void updateHighestBidder(AuctionItem item) throws SQLException {
 		createConnection();
 
@@ -256,7 +268,7 @@ public class DatabaseAccess implements DatabaseIO {
 		closeConnection();
 	}
 
-*/
+
 	public void clearTable(String relation) throws SQLException {
 		createConnection();
 
