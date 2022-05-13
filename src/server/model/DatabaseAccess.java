@@ -63,7 +63,6 @@ public class DatabaseAccess implements DatabaseIO {
 		String selecter = "SELECT itemID, saleStrategy FROM \"public\".Auction WHERE itemID = " + itemID;
 		String selecter2 = "SELECT itemID, saleStrategy FROM \"public\".Buyout WHERE itemID = " + itemID;
 		try {
-
 			String sql = selecter +
 							" UNION " +
 							selecter2;
@@ -71,9 +70,12 @@ public class DatabaseAccess implements DatabaseIO {
 			pstmt = c.prepareStatement(sql);
 			resultSet = pstmt.executeQuery();
 
+
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+
 		try {
 			assert resultSet != null;
 			resultSet.next();
