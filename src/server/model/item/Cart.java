@@ -33,6 +33,7 @@ public class Cart implements PropertyChangeSubject {
 					instance = new Cart();
 			}
 		}
+
 		return instance;
 	}
 
