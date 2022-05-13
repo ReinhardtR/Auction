@@ -1,30 +1,32 @@
-
 package server.model;
 
 import org.junit.jupiter.api.*;
-import server.model.temps.TempBuyout;
-import server.model.temps.TempItem;
+import server.softwarehouseacces.DatabaseAccess;
+import server.softwarehouseacces.DatabaseIO;
+import server.softwarehouseacces.temps.Item;
+import server.softwarehouseacces.temps.TempBuyout;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 //Her skal udfyldes gennemgående test, der er opsat skabelon for testing
 
 
-
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class DatabaseIOTest {
-	private DatabaseIO databaseAccess;
 	private final String AUCIONTABLENAME = "auctiontest";
 	private final String BUYOUTTABLENAME = "buyouttest";
 	Connection c = null;
+	private DatabaseIO databaseAccess;
+
 	@BeforeAll
-	public void createMethod(){
+	public void createMethod() {
 		databaseAccess = new DatabaseAccess();
 
 		try {
@@ -48,7 +50,7 @@ class DatabaseIOTest {
 			//Kopieret fra det rigtige table, kan måske finde anden løsning senere
 			String triggerCreator = "create trigger auctionbidchekcer" +
 							"    before update" +
-							"    on "+ AUCIONTABLENAME +
+							"    on " + AUCIONTABLENAME +
 							"    for each row" +
 							"execute procedure auctionbidchecker()";
 
@@ -56,10 +58,9 @@ class DatabaseIOTest {
 
 			triggerCreator = "create trigger auctionitembought" +
 							"    before delete" +
-							"    on " +AUCIONTABLENAME +
+							"    on " + AUCIONTABLENAME +
 							"    for each row" +
 							"execute procedure auctionitembought()";
-
 
 
 			//Buyout creator
@@ -75,23 +76,22 @@ class DatabaseIOTest {
 							"    for each row" +
 							"execute procedure buyoutitembought()";
 
-				c.prepareStatement(triggerCreator).executeUpdate();
+			c.prepareStatement(triggerCreator).executeUpdate();
 
 			c.commit();
 			c.setAutoCommit(true);
 
-		} catch ( Exception e ) {
-			System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+		} catch (Exception e) {
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
 	}
 
 
-
-//Auction table gives 5 tuples som udløber inden for en time, og 5 som udløber om mere end en time.
+	//Auction table gives 5 tuples som udløber inden for en time, og 5 som udløber om mere end en time.
 	public void populateAuctionTable() {
-		String sql = "INSERT INTO "+AUCIONTABLENAME+" VALUES " +
-						"(default,0,testName,TIMESTAMP(0) '"+ LocalDateTime.now().plusMinutes(59) +"','AUCTION')";
+		String sql = "INSERT INTO " + AUCIONTABLENAME + " VALUES " +
+						"(default,0,testName,TIMESTAMP(0) '" + LocalDateTime.now().plusMinutes(59) + "','AUCTION')";
 
 
 		for (int i = 0; i < 6; i++) {
@@ -102,8 +102,8 @@ class DatabaseIOTest {
 			}
 		}
 
-		sql = "INSERT INTO "+AUCIONTABLENAME+" VALUES " +
-						"(default,0,testName,TIMESTAMP(0) '"+ LocalDateTime.now().plusHours(3) +"','AUCTION')";
+		sql = "INSERT INTO " + AUCIONTABLENAME + " VALUES " +
+						"(default,0,testName,TIMESTAMP(0) '" + LocalDateTime.now().plusHours(3) + "','AUCTION')";
 
 		for (int i = 0; i < 6; i++) {
 			try {
@@ -113,30 +113,27 @@ class DatabaseIOTest {
 			}
 		}
 	}
-
-
-
 
 
 	@Test
 	@DisplayName("Get Item fra database tester")
-	void getItemTester() {
-		assertEquals(1, Integer.parseInt(databaseAccess.getItem(1).getId()),"Get an item we have set");
-		assertThrows(SQLException.class,() -> {databaseAccess.getItem(300);}, "Try to get an item that hasn't been set");
-
+	void getItemTester() throws SQLException {
+		assertEquals(1, databaseAccess.getItem(1).getId(), "Get an item we have set");
+		assertThrows(SQLException.class, () -> {
+			databaseAccess.getItem(300);
+		}, "Try to get an item that hasn't been set");
 	}
 
 
-
 	@Test
-	void buyBuyoutItemTester(){
-		databaseAccess.buyoutItemBought(new TempItem(6,new TempBuyout(0,"testName","BUYOUT")));
+	void buyBuyoutItemTester() throws SQLException {
+		databaseAccess.buyoutItemBought(new Item(6, new TempBuyout(0, "testName", "BUYOUT")));
 
-		assertEquals(6,Integer.parseInt(databaseAccess.getItem(6).getId()));
+		assertEquals(6, databaseAccess.getItem(6).getId());
 	}
 
 	@Test
-	void updateItemOfferTester(){
+	void updateItemOfferTester() {
 
 
 	}
@@ -147,48 +144,8 @@ class DatabaseIOTest {
 	}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	protected void populateBuyoutTable(){
-		String sql = "INSERT INTO "+ BUYOUTTABLENAME+" VALUES " +
+	protected void populateBuyoutTable() {
+		String sql = "INSERT INTO " + BUYOUTTABLENAME + " VALUES " +
 						"(default,0,testName,'BUYOUT')";
 
 
@@ -202,8 +159,7 @@ class DatabaseIOTest {
 	}
 
 
-
-	protected void clearBuyoutTable(){
+	protected void clearBuyoutTable() {
 		try {
 			databaseAccess.clearTable(BUYOUTTABLENAME);
 		} catch (SQLException e) {
@@ -211,7 +167,7 @@ class DatabaseIOTest {
 		}
 	}
 
-	protected void clearAuctionTable(){
+	protected void clearAuctionTable() {
 		try {
 			databaseAccess.clearTable(AUCIONTABLENAME);
 		} catch (SQLException e) {
@@ -232,13 +188,11 @@ class DatabaseIOTest {
 				e.printStackTrace();
 			}
 
-		} catch ( Exception e ) {
-			System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+		} catch (Exception e) {
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
 	}
-
-
 
 
 }

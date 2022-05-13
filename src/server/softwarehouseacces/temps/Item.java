@@ -1,12 +1,12 @@
-package server.model.temps;
+package server.softwarehouseacces.temps;
 
-public class TempItem {
+public class Item {
 
 	private int id;
-	private TempSaleStrategy tempSaleStrategy;
+	private SaleStrategy tempSaleStrategy;
 
 
-	public TempItem(int id, TempSaleStrategy tempSaleStrategy) {
+	public Item(int id, SaleStrategy tempSaleStrategy) {
 		this.id = id;
 		this.tempSaleStrategy = tempSaleStrategy;
 	}
@@ -16,7 +16,7 @@ public class TempItem {
 		return id;
 	}
 
-	public TempSaleStrategy getTempSaleStrategy() {
+	public SaleStrategy getTempSaleStrategy() {
 		return tempSaleStrategy;
 	}
 

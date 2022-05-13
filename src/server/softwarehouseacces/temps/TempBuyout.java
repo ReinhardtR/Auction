@@ -1,6 +1,6 @@
-package server.model.temps;
+package server.softwarehouseacces.temps;
 
-public class TempBuyout implements TempSaleStrategy {
+public class TempBuyout implements SaleStrategy {
 
 	private double price; //Possibly ændre navn på dette for mere accuracy
 	private String buyer;

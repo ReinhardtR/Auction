@@ -1,13 +1,9 @@
-package server.model.temps;
+package server.softwarehouseacces.temps;
 
-public interface TempSaleStrategy {
-
-
+public interface SaleStrategy {
 	void offer(double offer, String username);
 
 	String getUsernameFromBuyer();
 
 	double getOffer();
-
-
 }

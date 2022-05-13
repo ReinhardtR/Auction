@@ -1,9 +1,8 @@
-package server.model.temps;
+package server.softwarehouseacces.temps;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
-public class TempAuction implements TempSaleStrategy {
+public class TempAuction implements SaleStrategy {
 
 	private double bid;
 	private String bidder;
@@ -36,7 +35,6 @@ public class TempAuction implements TempSaleStrategy {
 	public double getOffer() {
 		return bid;
 	}
-
 
 
 	public String getCurrentBidder() {
