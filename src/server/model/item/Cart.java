@@ -3,7 +3,6 @@ package server.model.item;
 import database.DatabaseAccess;
 import database.DatabaseIO;
 import shared.EventType;
-import shared.network.model.Item;
 import shared.utils.PropertyChangeSubject;
 
 import java.beans.PropertyChangeListener;

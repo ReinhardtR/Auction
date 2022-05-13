@@ -2,7 +2,7 @@ package server.model.item.SaleStrategy;
 
 import shared.EventType;
 import shared.SaleStrategyType;
-import shared.network.model.Item;
+import server.model.item.Item;
 
 import java.rmi.RemoteException;
 

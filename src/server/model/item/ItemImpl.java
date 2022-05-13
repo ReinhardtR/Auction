@@ -4,7 +4,6 @@ import server.model.broadcaster.UpdateBroadcaster;
 import server.model.broadcaster.UpdateBroadcasterImpl;
 import server.model.item.SaleStrategy.SaleStrategy;
 import shared.SaleStrategyType;
-import shared.network.model.Item;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;

@@ -1,9 +1,7 @@
 package shared.network.server;
 
 import server.model.broadcaster.UpdateBroadcaster;
-import shared.network.client.SharedClient;
-import shared.network.model.Item;
-import shared.utils.PropertyChangeSubject;
+import server.model.item.Item;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

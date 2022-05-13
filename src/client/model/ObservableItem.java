@@ -3,7 +3,8 @@ package client.model;
 import client.network.LocalClient;
 import shared.EventType;
 import shared.SaleStrategyType;
-import shared.network.model.Item;
+import server.model.item.Item;
+import shared.network.model.GenerelItems;
 import shared.utils.PropertyChangeSubject;
 
 import java.beans.PropertyChangeEvent;
@@ -12,7 +13,7 @@ import java.beans.PropertyChangeSupport;
 import java.rmi.RemoteException;
 import java.time.temporal.Temporal;
 
-public class ObservableItem implements PropertyChangeListener, PropertyChangeSubject {
+public class ObservableItem implements PropertyChangeListener, PropertyChangeSubject, GenerelItems {
 	private final PropertyChangeSupport support;
 	private final Item item;
 	private final String itemID;
@@ -29,14 +30,18 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 		client.addListener(EventType.NEW_BID.toString() + itemID, this);
 	}
 
+	@Override
 	public String getItemID() {
 		return itemID;
 	}
 
-	public Temporal getEndDateTime() {
+
+	@Override
+	public Temporal getEndTimestamp() {
 		return endDateTime;
 	}
 
+	@Override
 	public void userSaleStrategy(int amount, String username) {
 		System.out.println("MODEL: " + amount);
 		try {
@@ -56,6 +61,7 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 		return null;
 	}
 
+	@Override
 	public int getOfferAmount() {
 		try {
 			return item.getOfferAmount();
@@ -64,6 +70,11 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 		}
 
 		return -1;
+	}
+
+	@Override
+	public void setAsSold() throws RemoteException {
+
 	}
 
 	public void propertyChange(PropertyChangeEvent event) {

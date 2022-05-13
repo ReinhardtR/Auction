@@ -32,7 +32,7 @@ public class AuctionViewModel implements PropertyChangeListener {
 		itemText.setValue(item.getItemID());
 		currentHighestBid.setValue(item.getOfferAmount());
 
-		runTimeSimulation(item.getEndDateTime());
+		runTimeSimulation(item.getEndTimestamp());
 	}
 
 	public void bidOnItem(int offer) {

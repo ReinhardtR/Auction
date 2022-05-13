@@ -3,7 +3,7 @@ package client.model;
 import client.network.LocalClient;
 import shared.EventType;
 import shared.network.client.SharedClient;
-import shared.network.model.Item;
+import server.model.item.Item;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

@@ -1,13 +1,11 @@
 package shared.network.model;
 
-import server.model.broadcaster.UpdateBroadcaster;
-import shared.SaleStrategyType;
-
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.time.temporal.Temporal;
 
-public interface Item extends Remote {
+public interface GenerelItems extends Remote {
+
 	String getItemID() throws RemoteException;
 
 	Temporal getEndTimestamp() throws RemoteException;
@@ -18,7 +16,4 @@ public interface Item extends Remote {
 
 	void setAsSold() throws RemoteException;
 
-	UpdateBroadcaster getUpdateBroadcaster() throws RemoteException;
-
-	SaleStrategyType strategyType() throws RemoteException;
 }
