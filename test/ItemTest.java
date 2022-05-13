@@ -4,9 +4,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import client.model.ObservableItem;
 import client.network.ClientImpl;
 import client.network.LocalClient;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
 import server.model.item.Item;
 import server.model.item.ItemImpl;
 import server.model.item.SaleStrategy.AuctionStrategy;
