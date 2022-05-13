@@ -32,4 +32,5 @@ public interface DatabaseIO {
 	 void updateItemOffer(TempItem item);
 
 
+	void clearTable(String testTable) throws SQLException;
 }

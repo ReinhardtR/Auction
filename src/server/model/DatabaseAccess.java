@@ -24,7 +24,7 @@ public class DatabaseAccess implements DatabaseIO {
 
 	public static void main(String[] args) {
 
-		
+
 	}
 
 	private void createConnection() {
@@ -299,6 +299,7 @@ public class DatabaseAccess implements DatabaseIO {
 
 		closeConnection();
 	}
+*/
 
 	public void clearTable(String relation) throws SQLException {
 		createConnection();
@@ -311,6 +312,8 @@ public class DatabaseAccess implements DatabaseIO {
 
 		closeConnection();
 	}
+
+	/*
 
 	@Override
 	public int getLatestId(String relation) throws SQLException {
