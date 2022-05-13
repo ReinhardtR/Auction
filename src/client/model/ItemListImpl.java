@@ -17,7 +17,6 @@ public class ItemListImpl implements ItemList {
 	private final PropertyChangeSupport support;
 	private final HashMap<String, Item> items;
 	private final LocalClient client;
-
 	private Item currentlyViewedItem;
 
 	public ItemListImpl(LocalClient client) {

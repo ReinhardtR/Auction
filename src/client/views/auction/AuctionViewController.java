@@ -10,14 +10,13 @@ import javafx.scene.control.TextField;
 public class AuctionViewController implements ViewController {
 
 	@FXML
+	private Label inputError;
+	@FXML
 	private Label timeLeftOnBid;
-
 	@FXML
 	private Label itemLabel;
-
 	@FXML
 	private Label currentBid;
-
 	@FXML
 	private TextField bidInput;
 
@@ -30,10 +29,20 @@ public class AuctionViewController implements ViewController {
 		itemLabel.textProperty().bind(auctionViewModel.propertyItemLabel());
 		currentBid.textProperty().bind(auctionViewModel.propertyCurrentBid().asString());
 		timeLeftOnBid.textProperty().bind(auctionViewModel.propertyTimeLeft());
+
+		inputError.setText("");
 	}
 
 	@FXML
 	public void bidOnItem() {
-		auctionViewModel.bidOnItem(Integer.parseInt(bidInput.getText()));
+		try{
+			auctionViewModel.bidOnItem(Integer.parseInt(bidInput.getText()));
+			inputError.setText("");
+		}
+		catch (NumberFormatException e)
+		{
+			inputError.setText("You have to type in a number!");
+		}
+
 	}
 }
