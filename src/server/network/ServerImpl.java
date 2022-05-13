@@ -8,13 +8,11 @@ import server.model.item.ItemImpl;
 import server.model.item.ItemProxy;
 import server.model.item.SaleStrategy.AuctionStrategy;
 import server.model.item.SaleStrategy.BuyoutStrategy;
-import shared.network.client.SharedClient;
-import shared.network.model.Item;
+import server.model.item.Item;
 import shared.network.server.Server;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.time.LocalDateTime;

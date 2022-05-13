@@ -1,7 +1,7 @@
 package server.model.item.SaleStrategy;
 
 import shared.SaleStrategyType;
-import shared.network.model.Item;
+import server.model.item.Item;
 
 public interface SaleStrategy {
 
