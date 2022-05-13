@@ -1,6 +1,7 @@
 package client.model;
 
 import client.network.LocalClient;
+import shared.EventType;
 import shared.SaleStrategyType;
 import shared.network.model.Item;
 import shared.utils.PropertyChangeSubject;
@@ -25,7 +26,7 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 		itemID = item.getItemID();
 		endDateTime = item.getEndTimestamp();
 
-		client.addListener("NEW_BID" + itemID, this);
+		client.addListener(EventType.NEW_BID.toString() + itemID, this);
 	}
 
 	public String getItemID() {

@@ -4,7 +4,7 @@ import shared.utils.PropertyChangeSubject;
 
 import java.util.List;
 
-public interface ObservableItemList extends PropertyChangeSubject {
+public interface ItemList extends PropertyChangeSubject {
 
 	List<ObservableItem> getAllItemsFromServer();
 

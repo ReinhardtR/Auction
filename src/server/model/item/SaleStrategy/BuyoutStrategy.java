@@ -1,5 +1,6 @@
 package server.model.item.SaleStrategy;
 
+import shared.EventType;
 import shared.SaleStrategyType;
 import shared.network.model.Item;
 
@@ -20,7 +21,7 @@ public class BuyoutStrategy implements SaleStrategy {
 
 		try {
 			item.setAsSold();
-			item.getUpdateBroadcaster().broadcast("ITEM_SOLD");
+			item.getUpdateBroadcaster().broadcastEventForItem(EventType.ITEM_SOLD.toString(), item.getItemID());
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
@@ -40,6 +41,4 @@ public class BuyoutStrategy implements SaleStrategy {
 	public SaleStrategyType strategyType() {
 		return SaleStrategyType.BUYOUT;
 	}
-
-
 }

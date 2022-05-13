@@ -23,7 +23,7 @@ public class ItemImpl extends UnicastRemoteObject implements Item {
 		this.strategy = strategy;
 		
 		isSold = false; // take as parameter i guess
-		broadcaster = new UpdateBroadcasterImpl(itemID);
+		broadcaster = new UpdateBroadcasterImpl();
 	}
 
 	@Override

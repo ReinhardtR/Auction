@@ -1,6 +1,7 @@
 package client.model;
 
 import client.network.LocalClient;
+import shared.EventType;
 import shared.network.client.SharedClient;
 import shared.network.model.Item;
 
@@ -12,19 +13,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class ObservableItemListImpl implements ObservableItemList, PropertyChangeListener {
+public class ItemListImpl implements ItemList {
 	private final PropertyChangeSupport support;
 	private final HashMap<String, Item> items;
 	private final LocalClient client;
 
 	private Item currentlyViewedItem;
 
-	public ObservableItemListImpl(LocalClient client) {
+	public ItemListImpl(LocalClient client) {
 		support = new PropertyChangeSupport(this);
 		items = new HashMap<>();
 
 		this.client = client;
-		client.addListener("ITEM_SOLD", this);
+		client.addListener(EventType.ITEM_SOLD.toString(), this::onItemSold);
 	}
 
 	@Override
@@ -56,6 +57,7 @@ public class ObservableItemListImpl implements ObservableItemList, PropertyChang
 
 	@Override
 	public void setCurrentlyViewedItem(String itemID) {
+		// Unregister as listener to previously viewed item.
 		if (currentlyViewedItem != null) {
 			try {
 				currentlyViewedItem.getUpdateBroadcaster().unregisterClient((SharedClient) client);
@@ -66,6 +68,7 @@ public class ObservableItemListImpl implements ObservableItemList, PropertyChang
 
 		currentlyViewedItem = getItem(itemID);
 
+		// Register as listener to the new item being viewed.
 		try {
 			currentlyViewedItem.getUpdateBroadcaster().registerClient((SharedClient) client);
 		} catch (RemoteException e) {
@@ -98,8 +101,7 @@ public class ObservableItemListImpl implements ObservableItemList, PropertyChang
 		support.removePropertyChangeListener(eventName, listener);
 	}
 
-	@Override
-	public void propertyChange(PropertyChangeEvent event) {
+	private void onItemSold(PropertyChangeEvent event) {
 		String itemID = (String) event.getNewValue();
 		items.remove(itemID);
 		support.firePropertyChange(event.getPropertyName(), null, itemID);
