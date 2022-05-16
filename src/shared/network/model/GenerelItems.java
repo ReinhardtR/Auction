@@ -12,9 +12,9 @@ public interface  GenerelItems extends Remote {
 
 	Temporal getEndTimestamp() throws RemoteException;
 
-	void userSaleStrategy(int amount, String username) throws RemoteException;
+	void userSaleStrategy(double amount, String username) throws RemoteException;
 
-	int getOfferAmount() throws RemoteException;
+	double getOfferAmount() throws RemoteException;
 
 	String getBuyerUsername() throws RemoteException;
 

@@ -36,7 +36,7 @@ public class AuctionViewController implements ViewController {
 	@FXML
 	protected void bidOnItem() {
 		try {
-			auctionViewModel.bidOnItem(Integer.parseInt(bidInput.getText()));
+			auctionViewModel.bidOnItem(Double.parseDouble(bidInput.getText()));
 			inputError.setText("");
 		} catch (NumberFormatException e) {
 			inputError.setText("You have to type in a number!");
