@@ -1,12 +1,15 @@
 package client.core;
 
 import client.views.auction.AuctionViewModel;
-import client.views.login.LoginViewModel;
+import client.views.buyout.BuyoutViewModel;
+import client.views.itemlist.ItemListViewModel;
 
 public class ViewModelFactory {
 	private static final ViewModelFactory instance = new ViewModelFactory();
-	private LoginViewModel loginViewModel;
+
+	private ItemListViewModel itemListViewModel;
 	private AuctionViewModel auctionViewModel;
+	private BuyoutViewModel buyoutViewModel;
 
 	private ViewModelFactory() {
 	}
@@ -15,27 +18,26 @@ public class ViewModelFactory {
 		return instance;
 	}
 
-	public LoginViewModel getLoginViewModel() {
-		if (loginViewModel == null) {
-			loginViewModel = new LoginViewModel();
+	public ItemListViewModel getItemListViewModel() {
+		if (itemListViewModel == null) {
+			itemListViewModel = new ItemListViewModel(ModelFactory.getInstance().getObservableItemList());
 		}
-
-		return loginViewModel;
+		return itemListViewModel;
 	}
-
-//	public AuctionViewModel getAuctionViewModel() {
-//		if (auctionViewModel == null) {
-//			auctionViewModel = new AuctionViewModel(ModelFactory.getInstance().getAuctionHouseModel());
-//		}
-//
-//		return auctionViewModel;
-//	}
 
 	public AuctionViewModel getAuctionViewModel() {
 		if (auctionViewModel == null) {
-			auctionViewModel = new AuctionViewModel(ModelFactory.getInstance().getAuctionModelTest());
+			auctionViewModel = new AuctionViewModel(ModelFactory.getInstance().getObservableItemList().getCurrentlyViewedItem());
 		}
 
 		return auctionViewModel;
+	}
+
+	public BuyoutViewModel getBuyoutViewModel() {
+		if (buyoutViewModel == null) {
+			buyoutViewModel = new BuyoutViewModel(ModelFactory.getInstance().getObservableItemList().getCurrentlyViewedItem());
+		}
+
+		return buyoutViewModel;
 	}
 }
