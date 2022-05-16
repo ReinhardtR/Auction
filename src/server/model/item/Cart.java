@@ -67,7 +67,7 @@ public class Cart implements PropertyChangeSubject {
 
 	public void clearAllItems() {
 		items.clear();
-	}
+	} //Midlertidig
 
 	public void updateItemOffer(Item item) {
 		database.updateAuctionOffer(item);
