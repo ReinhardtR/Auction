@@ -58,7 +58,7 @@ public class ItemTest {
 
 	@Test
 	@DisplayName("Testing functionality of broken item")
-	public void brokenStrategy() throws RemoteException {
+	public void brokenStrategy() {
 		//Ingen strategy er sat vi forventer der bliver throwet en null pointer
 		assertThrows(NullPointerException.class, () -> brokenObservableItem.userSaleStrategy(-123, ""));
 	}
@@ -77,7 +77,7 @@ public class ItemTest {
 
 	@Test
 	@DisplayName("Null boundary")
-	public void strategyBrokenTest() throws RemoteException {
+	public void strategyBrokenTest() {
 		assertThrows(NullPointerException.class, () -> brokenObservableItem.getStrategyType());
 	}
 
