@@ -1,13 +1,18 @@
 package server.model.item.SaleStrategy;
 
+import shared.EventType;
 import shared.SaleStrategyType;
-import shared.network.model.Item;
+import server.model.item.Item;
 
 import java.rmi.RemoteException;
 
 public class AuctionStrategy implements SaleStrategy {
-	private int currentBid = 0;
+	private int currentBid;
 	private String currentBidder;
+
+	public AuctionStrategy(int currentBid) {
+		this.currentBid = currentBid;
+	}
 
 	@Override
 	public void offer(Item item, int amount, String username) {
@@ -15,7 +20,7 @@ public class AuctionStrategy implements SaleStrategy {
 		currentBidder = username;
 
 		try {
-			item.getUpdateBroadcaster().broadcast("NEW_BID");
+			item.getUpdateBroadcaster().broadcastEventForItem(EventType.NEW_BID.toString(), item.getItemID());
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}

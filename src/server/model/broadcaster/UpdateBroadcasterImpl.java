@@ -9,17 +9,15 @@ import java.util.List;
 
 public class UpdateBroadcasterImpl extends UnicastRemoteObject implements UpdateBroadcaster {
 	private final List<SharedClient> listeners;
-	private final String itemID;
 
-	public UpdateBroadcasterImpl(String itemID) throws RemoteException {
+	public UpdateBroadcasterImpl() throws RemoteException {
 		listeners = new ArrayList<>();
-		this.itemID = itemID;
 	}
 
-	public void broadcast(String eventName) {
+	@Override
+	public void broadcastEventForItem(String eventName, String itemID) throws RemoteException {
 		listeners.forEach((listener) -> {
 			try {
-				System.out.println("AM BROADCASTING");
 				listener.onServerEvent(eventName, itemID);
 			} catch (RemoteException e) {
 				e.printStackTrace();

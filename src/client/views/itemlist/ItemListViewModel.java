@@ -1,7 +1,7 @@
 package client.views.itemlist;
 
 import client.model.ObservableItem;
-import client.model.ObservableItemList;
+import client.model.ItemList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import shared.SaleStrategyType;
@@ -10,13 +10,13 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class ItemListViewModel implements PropertyChangeListener {
-	private final ObservableItemList observableItemList;
+	private final ItemList itemList;
 	private final ObservableList<ObservableItem> observableList;
 
-	public ItemListViewModel(ObservableItemList observableItemList) {
-		this.observableItemList = observableItemList;
-		this.observableItemList.addListener("ITEM_SOLD", this);
-		observableList = FXCollections.observableList(this.observableItemList.getAllItemsFromServer());
+	public ItemListViewModel(ItemList itemList) {
+		this.itemList = itemList;
+		this.itemList.addListener("ITEM_SOLD", this);
+		observableList = FXCollections.observableList(this.itemList.getAllItemsFromServer());
 	}
 
 	public ObservableList<ObservableItem> getObservableItemList() {
@@ -24,7 +24,7 @@ public class ItemListViewModel implements PropertyChangeListener {
 	}
 
 	public void setCurrentlyViewedItemID(String itemID) {
-		observableItemList.setCurrentlyViewedItem(itemID);
+		itemList.setCurrentlyViewedItem(itemID);
 	}
 
 	public SaleStrategyType getStrategyOnItem(ObservableItem item) {

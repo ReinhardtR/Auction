@@ -6,7 +6,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface UpdateBroadcaster extends Remote {
-	void broadcast(String eventName) throws RemoteException;
+	void broadcastEventForItem(String eventName, String itemID) throws RemoteException;
 
 	void registerClient(SharedClient client) throws RemoteException;
 

@@ -1,11 +1,11 @@
 package client.core;
 
-import client.model.ObservableItemList;
-import client.model.ObservableItemListImpl;
+import client.model.ItemList;
+import client.model.ItemListImpl;
 
 public class ModelFactory {
 	private static final ModelFactory instance = new ModelFactory();
-	private ObservableItemListImpl itemList;
+	private ItemListImpl itemList;
 
 	private ModelFactory() {
 	}
@@ -14,9 +14,9 @@ public class ModelFactory {
 		return instance;
 	}
 
-	public ObservableItemList getObservableItemList() {
+	public ItemList getObservableItemList() {
 		if (itemList == null) {
-			itemList = new ObservableItemListImpl(ClientFactory.getInstance().getClient());
+			itemList = new ItemListImpl(ClientFactory.getInstance().getClient());
 		}
 
 		return itemList;

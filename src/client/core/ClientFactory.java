@@ -22,9 +22,7 @@ public class ClientFactory {
 		if (client == null) {
 			try {
 				client = new ClientImpl();
-			} catch (RemoteException e) {
-				e.printStackTrace();
-			} catch (NotBoundException e) {
+			} catch (RemoteException | NotBoundException e) {
 				e.printStackTrace();
 			}
 		}

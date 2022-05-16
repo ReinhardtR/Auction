@@ -21,7 +21,7 @@ public class BuyoutViewController implements ViewController {
 	}
 
 	@FXML
-	public void onBuy() {
+	protected void onBuy() {
 		viewModel.onBuy(Integer.parseInt(price.getText()), "Jens");
 	}
 }

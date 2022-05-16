@@ -4,7 +4,6 @@ import server.model.broadcaster.UpdateBroadcaster;
 import server.model.broadcaster.UpdateBroadcasterImpl;
 import server.model.item.SaleStrategy.SaleStrategy;
 import shared.SaleStrategyType;
-import shared.network.model.Item;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -22,8 +21,8 @@ public class ItemImpl extends UnicastRemoteObject implements Item {
 		this.endTimestamp = endTimestamp;
 		this.strategy = strategy;
 		
-		isSold = false; // take as parameter i guess
-		broadcaster = new UpdateBroadcasterImpl(itemID);
+		isSold = false; // take as parameter I guess
+		broadcaster = new UpdateBroadcasterImpl();
 	}
 
 	@Override

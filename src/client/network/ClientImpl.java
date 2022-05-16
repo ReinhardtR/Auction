@@ -1,7 +1,7 @@
 package client.network;
 
 import shared.network.client.SharedClient;
-import shared.network.model.Item;
+import server.model.item.Item;
 import shared.network.server.Server;
 
 import java.beans.PropertyChangeListener;
@@ -22,13 +22,13 @@ public class ClientImpl extends UnicastRemoteObject implements SharedClient, Loc
 
 		Registry registry = LocateRegistry.getRegistry("localhost", 1099);
 		server = (Server) registry.lookup("Server");
+		server.getBroadcaster().registerClient(this);
 	}
 
 	@Override
 	public void onServerEvent(String eventName, String itemID) throws RemoteException {
-		if (eventName.equals("NEW_BID")) {
+		if (itemID != null) {
 			support.firePropertyChange(eventName + itemID, null, itemID);
-			return;
 		}
 
 		support.firePropertyChange(eventName, null, itemID);
