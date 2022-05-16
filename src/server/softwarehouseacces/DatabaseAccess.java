@@ -52,6 +52,7 @@ public class DatabaseAccess implements DatabaseIO {
 	}
 
 	private void auctionTimeIsUp(PropertyChangeEvent propertyChangeEvent) {
+		System.out.println("inside auctiontimeisUp");
 		auctionItemBought((int) propertyChangeEvent.getNewValue());
 	}
 
@@ -81,6 +82,6 @@ public class DatabaseAccess implements DatabaseIO {
 
 	@Override
 	public void clearTable(String testTable) throws SQLException {
-
+		itemScanner.clearTable(createConnection(),testTable);
 	}
 }

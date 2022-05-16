@@ -21,6 +21,8 @@ public class ItemScanner {
 										item.getId()
 		);
 
+		//Indtil videre sætter den kun den købte data, herefter skal værdien endten fjernes eller flyttes
+
 		itemBoughtThruBuyout.execute();
 		itemBoughtThruBuyout.close();
 		c.close();
@@ -54,17 +56,18 @@ public class ItemScanner {
 
 		PreparedStatement pstmt = c.prepareStatement(
 						"SELECT itemID, auctionenddate FROM \"public\".Auction " +
-										"WHERE auctionenddate < " +
+										"WHERE auctionenddate < '" +
 										localTimeInWantedStringFormat +
-										" ORDER BY auctionenddate"
+										"' ORDER BY itemid" //Order by noget andet potentielt?
 		);
 
-		ResultSet allAuctionThatFinishesBeforeAHour = pstmt.executeQuery();
+		ResultSet allAuctionThatFinishesBeforeAnHour = pstmt.executeQuery();
 
+
+
+		auctionTimeSetter(allAuctionThatFinishesBeforeAnHour, listener, localTimeIn1Hour);
 		pstmt.close();
 		c.close();
-
-		auctionTimeSetter(allAuctionThatFinishesBeforeAHour, listener, localTimeIn1Hour);
 	}
 
 	private void auctionTimeSetter(ResultSet auctions, PropertyChangeListener listener, LocalDateTime localTimeIn1Hour) throws SQLException {
@@ -77,5 +80,20 @@ public class ItemScanner {
 											listener)
 			).start();
 		}
+	}
+
+	//Remover identitity, virker som en hard reset for et table.
+	public void clearTable(Connection c, String testTable) {
+		try {
+			PreparedStatement clearTableSQL = c.prepareStatement("TRUNCATE TABLE " +testTable+" RESTART IDENTITIY");
+
+			clearTableSQL.execute();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+
+
 	}
 }

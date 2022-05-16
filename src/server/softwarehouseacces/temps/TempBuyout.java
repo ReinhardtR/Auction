@@ -30,6 +30,11 @@ public class TempBuyout implements SaleStrategy {
 		return price;
 	}
 
+	@Override
+	public String getSalesMethod() {
+		return saleStrategy;
+	}
+
 
 	public double getPrice() {
 		return price;

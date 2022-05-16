@@ -6,4 +6,6 @@ public interface SaleStrategy {
 	String getUsernameFromBuyer();
 
 	double getOffer();
+
+	String getSalesMethod();
 }
