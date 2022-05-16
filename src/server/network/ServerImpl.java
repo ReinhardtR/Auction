@@ -5,17 +5,12 @@ import server.model.broadcaster.UpdateBroadcaster;
 import server.model.broadcaster.UpdateBroadcasterImpl;
 import server.model.item.Cart;
 import server.model.item.Item;
-import server.model.item.ItemImpl;
-import server.model.item.SaleStrategy.AuctionStrategy;
-import server.model.item.SaleStrategy.BuyoutStrategy;
 import shared.network.server.Server;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.time.LocalDateTime;
-import java.time.temporal.Temporal;
 import java.util.List;
 
 public class ServerImpl extends UnicastRemoteObject implements Server, PropertyChangeListener {
@@ -26,9 +21,12 @@ public class ServerImpl extends UnicastRemoteObject implements Server, PropertyC
 		Cart.getInstance().addListenerToAllEvents(this);
 
 		//Til random item
+		/*
 		Temporal endDateTime = LocalDateTime.of(2022, 5, 16, 11, 20);
 		Cart.getInstance().addItem(new ItemImpl("123", endDateTime, new AuctionStrategy(32)));
 		Cart.getInstance().addItem(new ItemImpl("456", endDateTime, new BuyoutStrategy(69)));
+
+		 */
 	}
 
 	@Override

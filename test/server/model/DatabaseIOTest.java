@@ -34,7 +34,7 @@ class DatabaseIOTest {
 							.getConnection("jdbc:postgresql://hattie.db.elephantsql.com:5432/isgypvka",
 											"isgypvka", "UkY3C9sbYugpjto58d8FAk9M54JiLanr");
 
-			c.setAutoCommit(false);
+		//	c.setAutoCommit(false);
 
 			//Auction creator:
 			String auctionTableCreator = "CREATE TABLE " + AUCIONTABLENAME +
@@ -42,23 +42,26 @@ class DatabaseIOTest {
 							" WITH NO DATA";
 
 			c.prepareStatement(auctionTableCreator).executeUpdate();
-
+			System.out.println("CREATED AUCTION!!");
 
 			//Trigger creator for auction:
 			//Kopieret fra det rigtige table, kan måske finde anden løsning senere
 			String triggerCreator = "create trigger auctionbidchekcer" +
-							"    before update" +
-							"    on " + AUCIONTABLENAME +
-							"    for each row" +
-							"execute procedure auctionbidchecker()";
+							" before update" +
+							" on " + AUCIONTABLENAME +
+							" for each row" +
+							" execute procedure auctionbidchecker()";
 
 			c.prepareStatement(triggerCreator).executeUpdate();
-
+			System.out.println("auction trigger 1 at the ready");
 			triggerCreator = "create trigger auctionitembought" +
 							"    before delete" +
 							"    on " + AUCIONTABLENAME +
-							"    for each row" +
+							"    for each row " +
 							"execute procedure auctionitembought()";
+
+			c.prepareStatement(triggerCreator).executeUpdate();
+			System.out.println("auction trigger 2 at the ready");
 
 
 			//Buyout creator
@@ -68,16 +71,17 @@ class DatabaseIOTest {
 
 			c.prepareStatement(buyoutTableCreator).executeUpdate();
 
+			System.out.println("Tistrold");
 			triggerCreator = "create trigger buyoutitembought" +
 							"    after update" +
 							"    on " + BUYOUTTABLENAME +
-							"    for each row" +
+							"    for each row " +
 							"execute procedure buyoutitembought()";
 
 			c.prepareStatement(triggerCreator).executeUpdate();
 
-			c.commit();
-			c.setAutoCommit(true);
+		//	c.commit();
+			//c.setAutoCommit(true);
 			c.close();
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());

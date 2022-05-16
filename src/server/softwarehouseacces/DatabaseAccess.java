@@ -18,7 +18,7 @@ public class DatabaseAccess implements DatabaseIO {
 		itemExpress = new ItemExpress();
 		itemScanner = new ItemScanner();
 
-		checkAuctionTimers();
+		//checkAuctionTimers();
 	}
 
 	private Connection createConnection() {

@@ -41,6 +41,11 @@ public class ItemImpl extends UnicastRemoteObject implements Item {
 	}
 
 	@Override
+	public String getBuyerUsername() throws RemoteException {
+		return null;
+	}
+
+	@Override
 	public void setAsSold() throws RemoteException {
 		isSold = true;
 		Cart.getInstance().itemBought(this);
