@@ -33,12 +33,12 @@ public class AuctionCountDown implements Runnable {
 		System.out.println(!duration.isNegative());
 		if (!(duration.isNegative()))
 		{
+			System.out.println("Inside of if");
 			try {
 			Thread.sleep(duration.toMillis());
 			} catch (InterruptedException e) {
 			e.printStackTrace();
 			}
-			System.out.println("Inside of if");
 		}
 
 		System.out.println("FIRING PROPERTY");
