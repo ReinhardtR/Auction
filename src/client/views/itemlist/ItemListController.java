@@ -36,6 +36,7 @@ public class ItemListController implements ViewController {
 
 	@FXML
 	protected void getNewViewForItem() {
+		//SKAL I VIEWMODEL
 		ObservableItem observableItem = itemsTableView.getSelectionModel().getSelectedItem();
 
 		if (observableItem != null) {
