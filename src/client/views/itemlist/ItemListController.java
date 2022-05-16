@@ -9,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import shared.SaleStrategyType;
 
 public class ItemListController implements ViewController {
 
@@ -39,15 +38,7 @@ public class ItemListController implements ViewController {
 		ObservableItem observableItem = itemsTableView.getSelectionModel().getSelectedItem();
 
 		if (observableItem != null) {
-			itemListViewModel.setCurrentlyViewedItemID(observableItem.getItemID());
-
-			// TODO: should this logic be here?
-			if (itemListViewModel.getStrategyOnItem(observableItem).equals(SaleStrategyType.AUCTION)) {
-				ViewHandler.getInstance().openAuctionView();
-			} else if (itemListViewModel.getStrategyOnItem(observableItem).equals(SaleStrategyType.BUYOUT)) {
-				ViewHandler.getInstance().openBuyoutView();
-			}
-
+			itemListViewModel.openViewForItem(observableItem);
 			errorLabel.setText("");
 		} else {
 			errorLabel.setText("Select an item you wanna bid on/buy!");

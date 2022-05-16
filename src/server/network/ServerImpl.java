@@ -4,11 +4,10 @@ package server.network;
 import server.model.broadcaster.UpdateBroadcaster;
 import server.model.broadcaster.UpdateBroadcasterImpl;
 import server.model.item.Cart;
+import server.model.item.Item;
 import server.model.item.ItemImpl;
-import server.model.item.ItemProxy;
 import server.model.item.SaleStrategy.AuctionStrategy;
 import server.model.item.SaleStrategy.BuyoutStrategy;
-import server.model.item.Item;
 import shared.network.server.Server;
 
 import java.beans.PropertyChangeEvent;
@@ -34,7 +33,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server, PropertyC
 
 	@Override
 	public Item getItem(String itemID) throws RemoteException {
-		return new ItemProxy(Cart.getInstance().getItem(itemID));
+		return Cart.getInstance().getItem(itemID);
 	}
 
 	@Override

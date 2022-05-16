@@ -1,6 +1,5 @@
 package client.views.auction;
 
-import client.model.ItemCalculations;
 import client.model.ObservableItem;
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
@@ -36,7 +35,7 @@ public class AuctionViewModel implements PropertyChangeListener {
 	}
 
 	public void bidOnItem(int offer) {
-			item.userSaleStrategy(offer, "Reinhardt");
+		item.userSaleStrategy(offer, "Reinhardt");
 	}
 
 	public StringProperty propertyItemLabel() {

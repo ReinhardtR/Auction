@@ -39,6 +39,6 @@ public class BuyoutViewModel implements PropertyChangeListener {
 
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
-
+		// TODO: sold property?
 	}
 }

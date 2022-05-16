@@ -15,9 +15,9 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Cart implements PropertyChangeSubject {
-	private final PropertyChangeSupport support;
 	private static final Lock lock = new ReentrantLock();
 	private static Cart instance;
+	private final PropertyChangeSupport support;
 	private final HashMap<String, Item> items = new HashMap<>();
 	private final DatabaseIO database;
 
@@ -41,11 +41,7 @@ public class Cart implements PropertyChangeSubject {
 		List<Item> itemsInCart = new ArrayList<>();
 
 		items.forEach((itemID, item) -> {
-			try {
-				itemsInCart.add(new ItemProxy(item));
-			} catch (RemoteException e) {
-				throw new RuntimeException(e);
-			}
+			itemsInCart.add(item);
 		});
 
 		return itemsInCart;
@@ -56,15 +52,14 @@ public class Cart implements PropertyChangeSubject {
 		return items.get(itemId);
 	}
 
-	public void itemBought(Item item) {
-		try {
-			items.remove(item.getItemID());
-			support.firePropertyChange(EventType.ITEM_SOLD.toString(), null, item.getItemID());
-		} catch (RemoteException e) {
-			throw new RuntimeException(e);
-		}
-
+	public void itemBought(Item item) throws RemoteException {
+		items.remove(item.getItemID());
+		support.firePropertyChange(EventType.ITEM_SOLD.toString(), null, item.getItemID());
 		System.out.println("SOLD TO THE MAN IN BLUe");
+	}
+
+	public void clearAllItems() {
+		items.clear();
 	}
 
 	public void updateItemOffer(Item item) {

@@ -1,7 +1,8 @@
 package client.views.itemlist;
 
-import client.model.ObservableItem;
+import client.core.ViewHandler;
 import client.model.ItemList;
+import client.model.ObservableItem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import shared.SaleStrategyType;
@@ -23,12 +24,16 @@ public class ItemListViewModel implements PropertyChangeListener {
 		return observableList;
 	}
 
-	public void setCurrentlyViewedItemID(String itemID) {
-		itemList.setCurrentlyViewedItem(itemID);
-	}
+	public void openViewForItem(ObservableItem observableItem) {
+		itemList.setCurrentlyViewedItem(observableItem.getItemID());
 
-	public SaleStrategyType getStrategyOnItem(ObservableItem item) {
-		return item.getSaleStrategyType();
+		SaleStrategyType strategyType = observableItem.getSaleStrategyType();
+
+		if (strategyType.equals(SaleStrategyType.AUCTION)) {
+			ViewHandler.getInstance().openAuctionView();
+		} else if (strategyType.equals(SaleStrategyType.BUYOUT)) {
+			ViewHandler.getInstance().openBuyoutView();
+		}
 	}
 
 	@Override
