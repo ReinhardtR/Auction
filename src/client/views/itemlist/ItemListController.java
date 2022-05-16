@@ -9,12 +9,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import shared.SaleStrategyType;
 
 public class ItemListController implements ViewController {
 
 	@FXML
+	private TableColumn<ObservableItem, SaleStrategyType> typeCol;
+	@FXML
 	private Label errorLabel;
-
 	@FXML
 	private TableColumn<ObservableItem, String> idCol;
 
@@ -26,6 +28,8 @@ public class ItemListController implements ViewController {
 
 	public void init(ViewHandler viewHandler, ViewModelFactory viewModelFactory) {
 		idCol.setCellValueFactory(new PropertyValueFactory<>("itemID"));
+		typeCol.setCellValueFactory(new PropertyValueFactory<>("strategyType"));
+
 		itemsTableView.setItems(viewModelFactory.getItemListViewModel().getObservableItemList());
 
 		itemListViewModel = viewModelFactory.getItemListViewModel();

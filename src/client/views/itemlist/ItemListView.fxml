@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
             prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18"
             fx:controller="client.views.itemlist.ItemListController">
     <children>
@@ -15,10 +12,11 @@
                 <Font size="27.0"/>
             </font>
         </Label>
-        <TableView fx:id="itemsTableView" layoutX="36.0" layoutY="120.0" prefHeight="200.0" prefWidth="485.0"
-                   onMouseClicked="#getNewViewForItem">
+        <TableView fx:id="itemsTableView" layoutX="36.0" layoutY="120.0" onMouseClicked="#getNewViewForItem"
+                   prefHeight="200.0" prefWidth="485.0">
             <columns>
                 <TableColumn fx:id="idCol" prefWidth="75.0" text="ID"/>
+                <TableColumn fx:id="typeCol" prefWidth="75.0" text="Type"/>
             </columns>
         </TableView>
         <Label fx:id="errorLabel" alignment="CENTER" layoutX="184.0" layoutY="369.0" prefHeight="17.0" prefWidth="240.0"

@@ -72,13 +72,13 @@ public class ItemTest {
 	@Test
 	@DisplayName("Strategy type test")
 	public void strategyTypeTest() throws RemoteException {
-		assertEquals(observableTestItem.strategyType(), SaleStrategyType.AUCTION);
+		assertEquals(observableTestItem.getStrategyType(), SaleStrategyType.AUCTION);
 	}
 
 	@Test
 	@DisplayName("Null boundary")
 	public void strategyBrokenTest() throws RemoteException {
-		assertThrows(NullPointerException.class, () -> brokenObservableItem.strategyType());
+		assertThrows(NullPointerException.class, () -> brokenObservableItem.getStrategyType());
 	}
 
 

@@ -18,6 +18,6 @@ public interface GenerelItems extends Remote {
 
 	void setAsSold() throws RemoteException;
 
-	SaleStrategyType strategyType() throws RemoteException;
+	SaleStrategyType getStrategyType() throws RemoteException;
 
 }
