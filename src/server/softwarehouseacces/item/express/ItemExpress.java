@@ -2,6 +2,7 @@ package server.softwarehouseacces.item.express;
 
 import server.softwarehouseacces.item.express.salestrategy.SaleStrategyExpress;
 import server.softwarehouseacces.temps.Item;
+import server.softwarehouseacces.utils.SQL;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,11 +17,7 @@ public class ItemExpress {
 	}
 
 	public Item fetchItem(Connection c, int itemID) throws SQLException {
-		PreparedStatement itemStatement = c.prepareStatement(
-						"SELECT itemID, saleStrategy FROM \"public\".Auction WHERE itemID = " + itemID +
-										" UNION " +
-										"SELECT itemID, saleStrategy FROM \"public\".Buyout WHERE itemID = " + itemID
-		);
+		PreparedStatement itemStatement = c.prepareStatement(SQL.selectItem(itemID));
 		ResultSet itemResultSet = itemStatement.executeQuery();
 
 		if (itemResultSet == null) {

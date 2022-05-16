@@ -3,6 +3,7 @@ package server.softwarehouseacces;
 import server.softwarehouseacces.item.express.ItemExpress;
 import server.softwarehouseacces.item.transactions.ItemScanner;
 import server.softwarehouseacces.temps.Item;
+import server.softwarehouseacces.utils.SQL;
 
 import java.beans.PropertyChangeEvent;
 import java.sql.Connection;
@@ -26,9 +27,9 @@ public class DatabaseAccess implements DatabaseIO {
 			Class.forName("org.postgresql.Driver");
 
 			c = DriverManager.getConnection(
-							"jdbc:postgresql://hattie.db.elephantsql.com:5432/isgypvka",
-							"isgypvka",
-							"UkY3C9sbYugpjto58d8FAk9M54JiLanr"
+							SQL.getURL(),
+							SQL.getUSERNAME(),
+							SQL.getPASSWORD()
 			);
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -82,6 +83,6 @@ public class DatabaseAccess implements DatabaseIO {
 
 	@Override
 	public void clearTable(String testTable) throws SQLException {
-		itemScanner.clearTable(createConnection(),testTable);
+		itemScanner.clearTable(createConnection(), testTable);
 	}
 }
