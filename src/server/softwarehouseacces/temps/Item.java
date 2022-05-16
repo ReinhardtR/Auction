@@ -16,7 +16,8 @@ public class Item {
 		return id;
 	}
 
-	public SaleStrategy getTempSaleStrategy() {
+	public SaleStrategy getTempSaleStrategy()
+	{
 		return tempSaleStrategy;
 	}
 

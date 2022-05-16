@@ -10,7 +10,8 @@ public class AuctionStrategy implements SaleStrategy {
 	private int currentBid;
 	private String currentBidder;
 
-	public AuctionStrategy(int currentBid) {
+	public AuctionStrategy(int currentBid)
+	{
 		this.currentBid = currentBid;
 	}
 
