@@ -16,6 +16,8 @@ public interface GenerelItems extends Remote {
 
 	int getOfferAmount() throws RemoteException;
 
+	String getBuyerUsername() throws RemoteException;
+
 	void setAsSold() throws RemoteException;
 
 	SaleStrategyType getStrategyType() throws RemoteException;
