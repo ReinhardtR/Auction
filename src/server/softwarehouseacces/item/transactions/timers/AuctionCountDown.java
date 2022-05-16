@@ -13,6 +13,9 @@ public class AuctionCountDown implements Runnable {
 	private final LocalDateTime localTimeIn1Hour;
 	private final PropertyChangeSupport support;
 
+
+
+
 	public AuctionCountDown(int itemID, Timestamp endTime, LocalDateTime localTimeIn1Hour, PropertyChangeListener listener) {
 		this.itemID = itemID;
 		this.endTime = endTime;
@@ -23,13 +26,23 @@ public class AuctionCountDown implements Runnable {
 
 	@Override
 	public void run() {
-		Duration duration = Duration.between(localTimeIn1Hour, (Temporal) endTime);
+		Duration duration = Duration.between(endTime.toLocalDateTime(),  localTimeIn1Hour);
+
 		System.out.println("itemID = " + itemID + " | " + "endtime = " + endTime);             //Skal fjernes senere
-		try {
+
+		System.out.println(!duration.isNegative());
+		if (!(duration.isNegative()))
+		{
+			try {
 			Thread.sleep(duration.toMillis());
-		} catch (InterruptedException e) {
+			} catch (InterruptedException e) {
 			e.printStackTrace();
+			}
+			System.out.println("Inside of if");
 		}
+
+		System.out.println("FIRING PROPERTY");
 		support.firePropertyChange("Time is up on item " + itemID, null, itemID);
+
 	}
 }

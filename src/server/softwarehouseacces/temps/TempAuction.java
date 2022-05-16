@@ -36,6 +36,11 @@ public class TempAuction implements SaleStrategy {
 		return bid;
 	}
 
+	@Override
+	public String getSalesMethod() {
+		return saleStrategy;
+	}
+
 
 	public String getCurrentBidder() {
 		return bidder;
@@ -44,6 +49,9 @@ public class TempAuction implements SaleStrategy {
 	public double getCurrentBid() {
 		return bid;
 	}
+
+
+
 
 	@Override
 	public String toString() {
