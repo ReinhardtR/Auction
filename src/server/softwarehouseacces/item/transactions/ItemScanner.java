@@ -85,7 +85,7 @@ public class ItemScanner {
 	//Remover identitity, virker som en hard reset for et table.
 	public void clearTable(Connection c, String testTable) {
 		try {
-			PreparedStatement clearTableSQL = c.prepareStatement("TRUNCATE TABLE " +testTable+" RESTART IDENTITIY");
+			PreparedStatement clearTableSQL = c.prepareStatement("TRUNCATE TABLE " +testTable+" RESTART IDENTITY");
 
 			clearTableSQL.execute();
 
