@@ -1,15 +1,19 @@
 package server.model.item.SaleStrategy;
 
-import shared.SaleStrategyType;
 import server.model.item.Item;
+import shared.SaleStrategyType;
+
+import java.time.temporal.Temporal;
 
 public interface SaleStrategy {
 
-	void offer(Item item, int amount, String username);
+	void offer(Item item, double amount, String username);
 
 	String getBuyer();
 
-	int getOfferAmount();
+	double getOfferAmount();
 
 	SaleStrategyType strategyType();
+
+	Temporal getEndTime();
 }

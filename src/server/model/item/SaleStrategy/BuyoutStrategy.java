@@ -1,13 +1,14 @@
 package server.model.item.SaleStrategy;
 
+import server.model.item.Item;
 import shared.EventType;
 import shared.SaleStrategyType;
-import server.model.item.Item;
 
 import java.rmi.RemoteException;
+import java.time.temporal.Temporal;
 
 public class BuyoutStrategy implements SaleStrategy {
-	private int price;
+	private double price;
 	private String buyer;
 
 	public BuyoutStrategy(int price)
@@ -16,7 +17,7 @@ public class BuyoutStrategy implements SaleStrategy {
 	}
 
 	@Override
-	public void offer(Item item, int amount, String username) {
+	public void offer(Item item, double amount, String username) {
 		price = amount;
 		buyer = username;
 
@@ -34,12 +35,18 @@ public class BuyoutStrategy implements SaleStrategy {
 	}
 
 	@Override
-	public int getOfferAmount() {
+	public double getOfferAmount() {
 		return price;
 	}
 
 	@Override
 	public SaleStrategyType strategyType() {
 		return SaleStrategyType.BUYOUT;
+	}
+
+
+	@Override
+	public Temporal getEndTime() {
+		return null;
 	}
 }

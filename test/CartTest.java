@@ -18,7 +18,7 @@ public class CartTest {
 
 	@BeforeAll
 	static void setUp() throws RemoteException {
-		item = new ItemImpl("item-id", LocalDateTime.now(), new AuctionStrategy(0));
+		item = new ItemImpl("item-id", new AuctionStrategy(10,"Tisse", LocalDateTime.now()));
 	}
 
 	@BeforeEach
