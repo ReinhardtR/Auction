@@ -27,7 +27,7 @@ public class ItemListViewModel implements PropertyChangeListener {
 	public void openViewForItem(ObservableItem observableItem) {
 		itemList.setCurrentlyViewedItem(observableItem.getItemID());
 
-		SaleStrategyType strategyType = observableItem.getSaleStrategyType();
+		SaleStrategyType strategyType = observableItem.strategyType();
 
 		if (strategyType.equals(SaleStrategyType.AUCTION)) {
 			ViewHandler.getInstance().openAuctionView();

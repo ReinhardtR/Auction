@@ -1,9 +1,9 @@
 package client.model;
 
 import client.network.LocalClient;
+import server.model.item.Item;
 import shared.EventType;
 import shared.SaleStrategyType;
-import server.model.item.Item;
 import shared.network.model.GenerelItems;
 import shared.utils.PropertyChangeSubject;
 
@@ -27,8 +27,7 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 		itemID = item.getItemID();
 		endDateTime = item.getEndTimestamp();
 
-		if(client != null)
-		{
+		if (client != null) {
 			client.addListener(EventType.NEW_BID.toString() + itemID, this);
 		}
 	}
@@ -48,8 +47,7 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 	@Override
 	public void userSaleStrategy(int amount, String username) {
 
-		if (ItemCalculations.isNewBidHigher(amount, this))
-		{
+		if (ItemCalculations.isNewBidHigher(amount, this)) {
 			System.out.println("MODEL: " + amount);
 			try {
 				item.userSaleStrategy(amount, username);
@@ -59,7 +57,8 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 		}
 	}
 
-	public SaleStrategyType getSaleStrategyType() {
+	@Override
+	public SaleStrategyType strategyType() {
 		try {
 			return item.strategyType();
 		} catch (RemoteException e) {
