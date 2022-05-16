@@ -37,26 +37,26 @@ public class ItemTest {
 	@Test
 	@DisplayName("Testing currentBid increases for every new offer")
 	public void auctionBiddingUpTest() throws RemoteException {
-		assertTrue(testItem.getOfferAmount() == 0);
+		assertEquals(0, testItem.getOfferAmount());
 
 		observableTestItem.userSaleStrategy(20, "TestName1");
-		assertTrue(testItem.getOfferAmount() == 20);
+		assertEquals(20, testItem.getOfferAmount());
 
 		observableTestItem.userSaleStrategy(2000, "TestName2");
-		assertTrue(testItem.getOfferAmount() == 2000);
+		assertEquals(2000, testItem.getOfferAmount());
 
 		observableTestItem.userSaleStrategy(1000, "TestName1");
-		assertTrue(testItem.getOfferAmount() == 2000);
+		assertEquals(2000, testItem.getOfferAmount());
 	}
 
 	@Test
 	@DisplayName("Testing boundaries for the offer")
 	public void boundaryTest() throws RemoteException {
 		observableTestItem.userSaleStrategy(-20, "TestName1");
-		assertTrue(testItem.getOfferAmount() == 0);
+		assertEquals(0, testItem.getOfferAmount());
 
 		observableTestItem.userSaleStrategy(Integer.MAX_VALUE, "TestName2");
-		assertTrue(testItem.getOfferAmount() == Integer.MAX_VALUE);
+		assertEquals(Integer.MAX_VALUE, testItem.getOfferAmount());
 	}
 
 	@Test
@@ -69,7 +69,7 @@ public class ItemTest {
 	@Test
 	@DisplayName("Testing itemID when is null")
 	public void itemIDTest() throws RemoteException {
-		assertEquals(brokenObservableItem.getItemID(), null);
+		assertNull(brokenObservableItem.getItemID());
 	}
 
 	@Test
