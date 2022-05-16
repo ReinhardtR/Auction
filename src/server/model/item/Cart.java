@@ -8,6 +8,7 @@ import shared.utils.PropertyChangeSubject;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -73,8 +74,9 @@ public class Cart implements PropertyChangeSubject {
 	}
 
 	//TIL TEST AF KØB USECASE
-	public void addItem(Item item) throws RemoteException {
+	public void addItem(Item item) throws SQLException {
 		items.put("1", database.getItem(1));
+		items.put("2", database.getItem(2));
 
 
 		//FØR DATABASE MERGE
