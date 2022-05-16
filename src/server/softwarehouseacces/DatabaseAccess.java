@@ -52,6 +52,7 @@ public class DatabaseAccess implements DatabaseIO {
 		}).start();
 	}
 
+
 	private void auctionTimeIsUp(PropertyChangeEvent propertyChangeEvent) {
 		System.out.println("inside auctiontimeisUp");
 		auctionItemBought((int) propertyChangeEvent.getNewValue());
