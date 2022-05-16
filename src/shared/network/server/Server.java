@@ -1,13 +1,16 @@
 package shared.network.server;
 
-import shared.network.client.Client;
+import server.model.broadcaster.UpdateBroadcaster;
+import server.model.item.Item;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.List;
 
 public interface Server extends Remote {
+	Item getItem(String itemID) throws RemoteException;
 
-	IAuctionHouse getActionHouse() throws RemoteException;
+	List<Item> getAllItemsInCart() throws RemoteException;
 
-	void registerAsClient(Client client) throws RemoteException;
+	UpdateBroadcaster getBroadcaster() throws RemoteException;
 }

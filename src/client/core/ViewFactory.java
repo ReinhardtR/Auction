@@ -16,8 +16,7 @@ public class ViewFactory {
 
 	public static void init(Stage theStage) {
 		stage = theStage;
-		createScene("Auction");
-		createScene("Login");
+		createScene("ItemList");
 	}
 
 	private static void createScene(String sceneName) {
@@ -40,6 +39,11 @@ public class ViewFactory {
 		ViewController viewController = loader.getController();
 		viewController.init(ViewHandler.getInstance(), ViewModelFactory.getInstance());
 		return root;
+	}
+
+	public static Scene startNewScene(String sceneName) {
+		createScene(sceneName);
+		return scenes.get(sceneName);
 	}
 
 	public static Scene getScene(String sceneName) {

@@ -1,11 +1,15 @@
 package client.core;
 
-import client.network.MainClientHandler;
+import client.network.ClientImpl;
+import client.network.LocalClient;
+
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 
 // Singleton pattern
 public class ClientFactory {
 	private static final ClientFactory instance = new ClientFactory();
-	private MainClientHandler client;
+	private LocalClient client;
 
 	private ClientFactory() {
 	}
@@ -14,9 +18,13 @@ public class ClientFactory {
 		return instance;
 	}
 
-	public MainClientHandler getClient() {
+	public LocalClient getClient() {
 		if (client == null) {
-			client = new MainClientHandler();
+			try {
+				client = new ClientImpl();
+			} catch (RemoteException | NotBoundException e) {
+				e.printStackTrace();
+			}
 		}
 
 		return client;
