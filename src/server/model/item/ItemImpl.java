@@ -12,13 +12,13 @@ import java.time.temporal.Temporal;
 public class ItemImpl extends UnicastRemoteObject implements Item {
 	private final UpdateBroadcaster broadcaster;
 	private final String itemID;
+
+	//Enum
 	private final SaleStrategy strategy;
-	private final Temporal endTimestamp;
 	private Boolean isSold;
 
-	public ItemImpl(String itemID, Temporal endTimestamp, SaleStrategy strategy) throws RemoteException {
+	public ItemImpl(String itemID, SaleStrategy strategy) throws RemoteException {
 		this.itemID = itemID;
-		this.endTimestamp = endTimestamp;
 		this.strategy = strategy;
 
 		isSold = false; // take as parameter I guess
@@ -32,7 +32,7 @@ public class ItemImpl extends UnicastRemoteObject implements Item {
 
 	@Override
 	public Temporal getEndTimestamp() throws RemoteException {
-		return endTimestamp;
+		return strategy.getEndTime();
 	}
 
 	@Override
