@@ -11,8 +11,7 @@ public class BuyoutStrategy implements SaleStrategy {
 	private double price;
 	private String buyer;
 
-	public BuyoutStrategy(int price)
-	{
+	public BuyoutStrategy(double price) {
 		this.price = price;
 	}
 

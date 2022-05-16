@@ -1,9 +1,10 @@
 package server.softwarehouseacces.item.express;
 
+import server.model.item.ItemImpl;
 import server.softwarehouseacces.item.express.salestrategy.SaleStrategyExpress;
-import server.softwarehouseacces.temps.Item;
 import server.softwarehouseacces.utils.SQL;
 
+import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +17,7 @@ public class ItemExpress {
 		saleStrategyExpress = new SaleStrategyExpress();
 	}
 
-	public Item fetchItem(Connection c, int itemID) throws SQLException {
+	public ItemImpl fetchItem(Connection c, String itemID) throws SQLException {
 		PreparedStatement itemStatement = c.prepareStatement(SQL.selectItem(itemID));
 		ResultSet itemResultSet = itemStatement.executeQuery();
 
@@ -27,14 +28,19 @@ public class ItemExpress {
 		}
 
 		itemResultSet.next();
-		Item itemToReturn = new Item(
-						itemResultSet.getInt("itemID"),
-						saleStrategyExpress.fetchStrategy(
-										c,
-										itemResultSet.getInt("itemID"),
-										itemResultSet.getString("saleStrategy")
-						)
-		);
+		ItemImpl itemToReturn = null;
+		try {
+			itemToReturn = new ItemImpl(
+							itemResultSet.getString("itemID"),
+							saleStrategyExpress.fetchStrategy(
+											c,
+											itemResultSet.getString("itemID"),
+											itemResultSet.getString("saleStrategy")
+							)
+			);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 
 		itemStatement.close();
 		c.close();

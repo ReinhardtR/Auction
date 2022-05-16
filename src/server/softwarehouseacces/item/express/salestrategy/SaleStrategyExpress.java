@@ -1,8 +1,9 @@
 package server.softwarehouseacces.item.express.salestrategy;
 
-import server.softwarehouseacces.temps.SaleStrategy;
-import server.softwarehouseacces.temps.TempAuction;
-import server.softwarehouseacces.temps.TempBuyout;
+import server.model.item.SaleStrategy.AuctionStrategy;
+import server.model.item.SaleStrategy.BuyoutStrategy;
+import server.model.item.SaleStrategy.SaleStrategy;
+import server.softwarehouseacces.utils.SQL;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,21 +11,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class SaleStrategyExpress {
-	public SaleStrategy fetchStrategy(Connection c, int itemID, String saleStrategy)
-					throws SQLException {
-		PreparedStatement saleStrategyStatement = c.prepareStatement(
-						"SELECT * FROM \"public\"." +
-										saleStrategy +
-										" WHERE itemID = " + itemID);
+	public SaleStrategy fetchStrategy(Connection c, String itemID, String saleStrategy) throws SQLException {
+		PreparedStatement saleStrategyStatement = c.prepareStatement(SQL.selectSaleStrategy(itemID, saleStrategy));
 
 		ResultSet saleStrategyResult = saleStrategyStatement.executeQuery();
 		saleStrategyResult.next();
 
 		SaleStrategy saleStrategyToReturn = null;
 
-		if (saleStrategy.equalsIgnoreCase("auction")) {
+		if (saleStrategy.equals("auction")) {
 			saleStrategyToReturn = auctionFetcher(saleStrategyResult);
-		} else if (saleStrategy.equalsIgnoreCase("buyout")) {
+		} else if (saleStrategy.equals("buyout")) {
 			saleStrategyToReturn = buyoutFetcher(saleStrategyResult);
 		}
 
@@ -35,16 +32,13 @@ public class SaleStrategyExpress {
 
 
 	private SaleStrategy buyoutFetcher(ResultSet buyoutResult) throws SQLException {
-		return new TempBuyout(Double.parseDouble(buyoutResult.getString("price")),
-						buyoutResult.getString("buyer"),
-						buyoutResult.getString("saleStrategy"));
+		return new BuyoutStrategy(Double.parseDouble(buyoutResult.getString("price")));
 	}
 
 
 	private SaleStrategy auctionFetcher(ResultSet auctionResult) throws SQLException {
-		return new TempAuction(Double.parseDouble(auctionResult.getString("currentBid")),
+		return new AuctionStrategy(Double.parseDouble(auctionResult.getString("currentBid")),
 						auctionResult.getString("currentBidder"),
-						auctionResult.getTimestamp("AuctionEndDate").toLocalDateTime(),
-						auctionResult.getString("saleStrategy"));
+						auctionResult.getTimestamp("AuctionEndDate").toLocalDateTime());
 	}
 }
