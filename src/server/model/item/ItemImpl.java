@@ -20,7 +20,7 @@ public class ItemImpl extends UnicastRemoteObject implements Item {
 		this.itemID = itemID;
 		this.endTimestamp = endTimestamp;
 		this.strategy = strategy;
-		
+
 		isSold = false; // take as parameter I guess
 		broadcaster = new UpdateBroadcasterImpl();
 	}
@@ -52,7 +52,7 @@ public class ItemImpl extends UnicastRemoteObject implements Item {
 	}
 
 	@Override
-	public SaleStrategyType strategyType() throws RemoteException {
+	public SaleStrategyType getStrategyType() throws RemoteException {
 		return strategy.strategyType();
 	}
 

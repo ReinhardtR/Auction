@@ -18,6 +18,7 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 	private final Item item;
 	private final String itemID;
 	private final Temporal endDateTime;
+	private final SaleStrategyType strategyType;
 
 	public ObservableItem(LocalClient client, Item item) throws RemoteException {
 		support = new PropertyChangeSupport(this);
@@ -25,6 +26,7 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 
 		// Cache
 		itemID = item.getItemID();
+		strategyType = item.getStrategyType();
 		endDateTime = item.getEndTimestamp();
 
 		if (client != null) {
@@ -58,14 +60,8 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 	}
 
 	@Override
-	public SaleStrategyType strategyType() {
-		try {
-			return item.strategyType();
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
-
-		return null;
+	public SaleStrategyType getStrategyType() {
+		return strategyType;
 	}
 
 	@Override

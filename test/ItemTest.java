@@ -17,7 +17,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ItemTest {
 	private Item testItem;
-	private Item testItemProxy;
 	private Item brokenTestItem;
 	private GenerelItems observableTestItem;
 	private GenerelItems brokenObservableItem;
@@ -25,8 +24,7 @@ public class ItemTest {
 	@BeforeEach
 	void createTestItem() throws RemoteException {
 		testItem = new ItemImpl("123", LocalDateTime.of(2022, 5, 16, 11, 20), new AuctionStrategy(0));
-		testItemProxy = testItem;
-		observableTestItem = new ObservableItem(null, testItemProxy);
+		observableTestItem = new ObservableItem(null, testItem);
 
 		brokenTestItem = new ItemImpl(null, LocalDateTime.of(200002, 12, 31, 23, 59), null);
 		brokenObservableItem = new ObservableItem(null, brokenTestItem);
@@ -74,13 +72,13 @@ public class ItemTest {
 	@Test
 	@DisplayName("Strategy type test")
 	public void strategyTypeTest() throws RemoteException {
-		assertEquals(observableTestItem.strategyType(), SaleStrategyType.AUCTION);
+		assertEquals(observableTestItem.getStrategyType(), SaleStrategyType.AUCTION);
 	}
 
 	@Test
 	@DisplayName("Null boundary")
 	public void strategyBrokenTest() throws RemoteException {
-		assertThrows(NullPointerException.class, () -> brokenObservableItem.strategyType());
+		assertThrows(NullPointerException.class, () -> brokenObservableItem.getStrategyType());
 	}
 
 
