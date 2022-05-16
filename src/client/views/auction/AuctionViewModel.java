@@ -1,6 +1,7 @@
 package client.views.auction;
 
 import client.model.ObservableItem;
+import client.utils.SystemNotifcation;
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -54,7 +55,15 @@ public class AuctionViewModel implements PropertyChangeListener {
 	public void propertyChange(PropertyChangeEvent event) {
 		System.out.println("change!");
 		Platform.runLater(() -> {
-			currentHighestBid.setValue(item.getOfferAmount());
+			int offerAmount = item.getOfferAmount();
+			String itemID = item.getItemID();
+
+			currentHighestBid.setValue(offerAmount);
+
+			// Display notification
+			String caption = "New bid on: " + itemID;
+			String message = "A bid of: " + offerAmount + ", has been placed on item: " + itemID + ".";
+			SystemNotifcation.getInstance().send(caption, message);
 		});
 	}
 

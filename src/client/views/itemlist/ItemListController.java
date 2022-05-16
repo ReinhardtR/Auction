@@ -35,14 +35,11 @@ public class ItemListController implements ViewController {
 
 	@FXML
 	protected void getNewViewForItem() {
-		//SKAL I VIEWMODEL
 		ObservableItem observableItem = itemsTableView.getSelectionModel().getSelectedItem();
 
 		if (observableItem != null) {
 			itemListViewModel.openViewForItem(observableItem);
 			errorLabel.setText("");
-		} else {
-			errorLabel.setText("Select an item you wanna bid on/buy!");
 		}
 	}
 }
