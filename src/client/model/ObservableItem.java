@@ -76,6 +76,11 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 	}
 
 	@Override
+	public String getBuyerUsername() throws RemoteException {
+		return null;
+	}
+
+	@Override
 	public void setAsSold() throws RemoteException {
 
 	}

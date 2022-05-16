@@ -1,17 +1,22 @@
 package server.model.item.SaleStrategy;
 
+import server.model.item.Item;
 import shared.EventType;
 import shared.SaleStrategyType;
-import server.model.item.Item;
 
 import java.rmi.RemoteException;
+import java.time.LocalDateTime;
+import java.time.temporal.Temporal;
 
 public class AuctionStrategy implements SaleStrategy {
-	private int currentBid;
+	private final Temporal endTimestamp;
+	private double currentBid;
 	private String currentBidder;
 
-	public AuctionStrategy(int currentBid) {
+	public AuctionStrategy(double currentBid, String bidder, LocalDateTime endTimestamp) {
 		this.currentBid = currentBid;
+		this.currentBidder = bidder;
+		this.endTimestamp = endTimestamp;
 	}
 
 	@Override
@@ -39,5 +44,10 @@ public class AuctionStrategy implements SaleStrategy {
 	@Override
 	public SaleStrategyType strategyType() {
 		return SaleStrategyType.AUCTION;
+	}
+
+	@Override
+	public Temporal getEndTime() {
+		return endTimestamp;
 	}
 }

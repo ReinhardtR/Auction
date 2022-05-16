@@ -1,7 +1,9 @@
 package server.model.item.SaleStrategy;
 
-import shared.SaleStrategyType;
 import server.model.item.Item;
+import shared.SaleStrategyType;
+
+import java.time.temporal.Temporal;
 
 public interface SaleStrategy {
 
@@ -12,4 +14,6 @@ public interface SaleStrategy {
 	int getOfferAmount();
 
 	SaleStrategyType strategyType();
+
+	Temporal getEndTime();
 }
