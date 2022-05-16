@@ -49,10 +49,16 @@ public class Cart implements PropertyChangeSubject {
 
 	//TODO SKAL IMPLEMENTERES
 	public Item getItem(String itemId) {
+
+
 		return items.get(itemId);
 	}
 
 	public void itemBought(Item item) throws RemoteException {
+
+
+		//FØR DATABASE MERGE
+		database.buyoutItemBought(items.get(item.getItemID()));
 		items.remove(item.getItemID());
 		support.firePropertyChange(EventType.ITEM_SOLD.toString(), null, item.getItemID());
 		System.out.println("SOLD TO THE MAN IN BLUe");
@@ -63,13 +69,16 @@ public class Cart implements PropertyChangeSubject {
 	}
 
 	public void updateItemOffer(Item item) {
-		//DATABASE
-		//ITEM UPDATED
+		database.updateAuctionOffer(item);
 	}
 
 	//TIL TEST AF KØB USECASE
 	public void addItem(Item item) throws RemoteException {
-		items.put(item.getItemID(), item);
+		items.put("1", database.getItem(1));
+
+
+		//FØR DATABASE MERGE
+		//items.put(item.getItemID(), item);
 	}
 
 	public void addListenerToAllEvents(PropertyChangeListener listener) {

@@ -59,5 +59,6 @@ public class ItemImpl extends UnicastRemoteObject implements Item {
 	@Override
 	public void userSaleStrategy(int amount, String username) throws RemoteException {
 		strategy.offer(this, amount, username);
+		Cart.getInstance().updateItemOffer(this);
 	}
 }
