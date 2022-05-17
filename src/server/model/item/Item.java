@@ -7,5 +7,4 @@ import java.rmi.RemoteException;
 
 public interface Item extends GenerelItems {
 	UpdateBroadcaster getUpdateBroadcaster() throws RemoteException;
-
 }
