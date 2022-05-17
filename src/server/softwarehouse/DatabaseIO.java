@@ -16,5 +16,4 @@ public interface DatabaseIO {
 
 	void updateAuctionOffer(Item item) throws SQLException;
 
-	void clearTable(String testTable) throws SQLException;
 }

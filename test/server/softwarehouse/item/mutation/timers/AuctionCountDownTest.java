@@ -9,6 +9,7 @@ import java.beans.PropertyChangeEvent;
 import java.rmi.RemoteException;
 import java.time.LocalDateTime;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class AuctionCountDownTest {
@@ -26,17 +27,16 @@ class AuctionCountDownTest {
 
 
 	@BeforeAll
-static void setUp()
-{
-	try {
-		fakeItemForFutureTest = new ItemImpl("1",new AuctionStrategy(0,"testMan", LocalDateTime.now().plusSeconds(secondsIntoFutureTest)));
-		fakeItemForPastTest = new ItemImpl("2",new AuctionStrategy(0,"testman2",LocalDateTime.now().minusHours(24)));
+static void setUp() {
+		try {
+			fakeItemForFutureTest = new ItemImpl("1", new AuctionStrategy(0, "testMan", LocalDateTime.now().plusSeconds(secondsIntoFutureTest)));
+			fakeItemForPastTest = new ItemImpl("2", new AuctionStrategy(0, "testman2", LocalDateTime.now().minusHours(24)));
 
-	} catch (RemoteException e) {
-		e.printStackTrace();
+		} catch (RemoteException e) {
+			e.printStackTrace();
 
+		}
 	}
-
 
 	@Test
 	void auctionTimerTester() {

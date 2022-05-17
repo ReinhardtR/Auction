@@ -1,6 +1,6 @@
 package server.softwarehouseacces.utils.statements;
 
-import server.softwarehouseacces.utils.tables.Table;
+import server.softwarehouse.utils.tables.Table;
 
 public class SQLStatements {
 
@@ -12,7 +12,7 @@ public class SQLStatements {
 		return " ORDER BY " +columnToOrderBy+ " " + ascOrDesc;
 	}
 
-	public String selectAmount( Table[] tables,String columnToOrderBy ,String ascOrDesc ,int amount){
+	public String selectAmount(Table[] tables, String columnToOrderBy , String ascOrDesc , int amount){
 
 		return "SELECT " + coalesce(tables,columnToOrderBy) + fromFullJoin() + orderBy(columnToOrderBy,ascOrDesc)+ fetchRows(amount);
 	}
