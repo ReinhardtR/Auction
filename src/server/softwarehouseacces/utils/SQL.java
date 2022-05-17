@@ -1,5 +1,6 @@
 package server.softwarehouseacces.utils;
 
+import server.softwarehouseacces.utils.exceptions.ColumnNonExistent;
 import server.softwarehouseacces.utils.exceptions.TableNonExistent;
 import server.softwarehouseacces.utils.statements.SQLStatements;
 import server.softwarehouseacces.utils.tables.AuctionTable;
@@ -57,10 +58,36 @@ public class SQL {
 		return statements.union(new Table[]{auc, buy}, item.getColumns(), conditionOnBothTables);
 	}
 
+	public static String selectAmountOfItems(int amount, String ascOrDesc){
+		Table item = null,
+						auc = null,
+						buy = null;
+try {
+	item = table("item");
+	auc = table("auction");
+	buy = table("buyout");
+}catch (TableNonExistent e)
+{
+	e.printStackTrace();
+}
+
+
+		return statements.selectAmount(new Table[]{auc,buy},"itemid", ascOrDesc,amount);
+
+	}
+
+
+
+
+
+
+
+
 	public static String selectSaleStrategy(String itemID, String saleStrategy) {
 		Table style = null;
 		String[] columnNames = null;
 		String[][] conditions = null;
+
 		try {
 			style = table(saleStrategy);
 			columnNames = style.getColumns();
@@ -68,6 +95,7 @@ public class SQL {
 		} catch (TableNonExistent e) {
 			e.printStackTrace();
 		}
+
 		return statements.select(style, columnNames, conditions);
 	}
 

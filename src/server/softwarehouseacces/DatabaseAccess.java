@@ -74,6 +74,11 @@ public class DatabaseAccess implements DatabaseIO {
 		return itemExpress.fetchItem(createConnection(), itemID);
 	}
 
+	@Override
+	public Item[] getAmountOfItems(int amount, String ascOrDesc) throws SQLException {
+		return itemExpress.fetchAmountOfItems(createConnection(),amount,ascOrDesc);
+	}
+
 
 	@Override
 	public synchronized void buyoutItemBought(Item item) throws SQLException {

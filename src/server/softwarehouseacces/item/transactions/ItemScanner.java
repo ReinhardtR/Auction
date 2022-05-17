@@ -61,26 +61,26 @@ public class ItemScanner {
 	}
 
 	public void auctionTimers(Connection c, PropertyChangeListener listener) throws SQLException {
-		LocalDateTime localTimeIn1Hour = LocalDateTime.now().plusHours(1);
-		String localTimeInWantedStringFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(localTimeIn1Hour);
+		LocalDateTime localTimeNow = LocalDateTime.now();
+		String localTimeInWantedStringFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(localTimeNow.plusHours(1));
 
 		PreparedStatement pstmt = c.prepareStatement(
 						SQL.auctionsSoonToFinish(localTimeInWantedStringFormat)
 		);
 		ResultSet allAuctionThatFinishesBeforeAnHour = pstmt.executeQuery();
 
-		auctionTimeSetter(allAuctionThatFinishesBeforeAnHour, listener, localTimeIn1Hour);
+		auctionTimeSetter(allAuctionThatFinishesBeforeAnHour, listener, localTimeNow);
 		pstmt.close();
 		c.close();
 	}
 
-	private void auctionTimeSetter(ResultSet auctions, PropertyChangeListener listener, LocalDateTime localTimeIn1Hour) throws SQLException {
+	private void auctionTimeSetter(ResultSet auctions, PropertyChangeListener listener, LocalDateTime localTimeNow) throws SQLException {
 		while (auctions.next()) {
 			new Thread(
 							new AuctionCountDown(
 											auctions.getString("itemID"),
 											auctions.getTimestamp("AuctionEndDate").toLocalDateTime(),
-											localTimeIn1Hour,
+											localTimeNow,
 											listener)
 			).start();
 		}
