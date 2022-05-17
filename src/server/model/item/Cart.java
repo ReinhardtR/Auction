@@ -87,7 +87,6 @@ public class Cart implements PropertyChangeSubject {
 
 		//manuelt for testing
 
-
 		//FØR DATABASE MERGE
 		//items.put(item.getItemID(), item);
 	}

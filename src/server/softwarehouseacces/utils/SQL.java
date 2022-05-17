@@ -105,6 +105,7 @@ public class SQL {
 		return statements.update(auc, columnsToSet, conditions);
 	}
 
+
 	public static String auctionsSoonToFinish(String wantedTime) {
 		Table auc = null;
 		String[] columns = null;
