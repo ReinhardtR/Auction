@@ -14,10 +14,12 @@ import java.sql.SQLException;
 public class DatabaseAccess implements DatabaseIO {
 	private final ItemExpress itemExpress;
 	private final ItemScanner itemScanner;
+	private final long ONE_HOUR_IN_MILLI;
 
 	public DatabaseAccess() {
 		itemExpress = new ItemExpress();
 		itemScanner = new ItemScanner();
+		ONE_HOUR_IN_MILLI = 3600000;
 
 		//checkAuctionTimers();
 	}
@@ -44,7 +46,7 @@ public class DatabaseAccess implements DatabaseIO {
 			while (true) {
 				try {
 					itemScanner.auctionTimers(createConnection(), this::auctionTimeIsUp);
-					Thread.sleep(60 * 60 * 1000);
+					Thread.sleep(ONE_HOUR_IN_MILLI);
 				} catch (InterruptedException | SQLException e) {
 					e.printStackTrace();
 				}

@@ -43,6 +43,7 @@ public class ItemScanner {
 		c.close();
 	}
 
+
 	public void newBid(Connection c, ItemImpl item) throws SQLException {
 		PreparedStatement itemNewBidTruAuction = null;
 		try {
