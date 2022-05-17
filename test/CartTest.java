@@ -1,21 +1,10 @@
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import server.model.item.Cart;
 import server.model.item.Item;
-import server.model.item.ItemImpl;
-import server.model.item.SaleStrategy.AuctionStrategy;
-
-import java.rmi.RemoteException;
-import java.time.LocalDateTime;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class CartTest {
 	private static Item item;
 	private static Item brokenItem;
 
+	/*
 	@BeforeAll
 	static void setUp() throws RemoteException {
 		item = new ItemImpl("item-id", new AuctionStrategy(10,"Tisse", LocalDateTime.now()));
@@ -69,4 +58,6 @@ public class CartTest {
 		Cart.getInstance().itemBought(item);
 		assertEquals(0, Cart.getInstance().returnAllItemsInCart().size(), "The list should be empty, as the newly added item has been bought and removed");
 	}
+
+	 */
 }
