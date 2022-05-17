@@ -1,7 +1,7 @@
 package server.model.item;
 
-import server.softwarehouseacces.DatabaseAccess;
-import server.softwarehouseacces.DatabaseIO;
+import server.softwarehouse.DatabaseAccess;
+import server.softwarehouse.DatabaseIO;
 import shared.EventType;
 import shared.utils.PropertyChangeSubject;
 
