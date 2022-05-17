@@ -15,7 +15,6 @@ public class ItemImpl extends UnicastRemoteObject implements Item {
 
 	//Enum
 	private final SaleStrategy strategy;
-	private Boolean isSold;
 
 	public ItemImpl(String itemID, SaleStrategy strategy) throws RemoteException {
 		this.itemID = itemID;
@@ -43,12 +42,6 @@ public class ItemImpl extends UnicastRemoteObject implements Item {
 	@Override
 	public String getBuyerUsername() throws RemoteException {
 		return null;
-	}
-
-	@Override
-	public void setAsSold() throws RemoteException {
-		isSold = true;
-		Cart.getInstance().itemBought(this);
 	}
 
 	@Override
