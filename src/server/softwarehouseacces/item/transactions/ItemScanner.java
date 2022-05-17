@@ -44,6 +44,7 @@ public class ItemScanner {
 						"UPDATE \"public\".auction SET currentBid = " + item.getTempSaleStrategy().getOffer() +
 										", currentBidder = '" + item.getTempSaleStrategy().getUsernameFromBuyer() + "'"
 		);
+
 		itemNewBidTruAuction.execute();
 
 		itemNewBidTruAuction.close();
