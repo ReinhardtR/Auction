@@ -68,14 +68,13 @@ public class SQL {
 	public static String selectAmountOfItems(int amount, String ascOrDesc){
 		Table auc = null,
 						buy = null;
-try {
-
-	auc = table("auction");
-	buy = table("buyout");
-}catch (TableNonExistent e)
-{
-	e.printStackTrace();
-}
+		try {
+			auc = table("auction");
+			buy = table("buyout");
+			}catch (TableNonExistent e)
+		{
+			e.printStackTrace();
+		}
 
 		return statements.selectAmount(new Table[]{auc,buy},"itemid", ascOrDesc,amount);
 
@@ -93,7 +92,7 @@ try {
 	public static String selectSaleStrategy(String itemID, String saleStrategy) {
 		Table style = null;
 		String[] columnNames = null;
-		String[][] conditions = null;
+		String conditions = null;
 
 		try {
 			style = table(saleStrategy);
