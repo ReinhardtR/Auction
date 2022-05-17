@@ -63,12 +63,13 @@ public class SQL {
 		return statements.union(new Table[]{auc, buy}, item.getColumns(), conditionOnBothTables);
 	}
 
+
+
 	public static String selectAmountOfItems(int amount, String ascOrDesc){
-		Table item = null,
-						auc = null,
+		Table auc = null,
 						buy = null;
 try {
-	item = table("item");
+
 	auc = table("auction");
 	buy = table("buyout");
 }catch (TableNonExistent e)
@@ -76,8 +77,9 @@ try {
 	e.printStackTrace();
 }
 
-
 		return statements.selectAmount(new Table[]{auc,buy},"itemid", ascOrDesc,amount);
+
+
 
 	}
 

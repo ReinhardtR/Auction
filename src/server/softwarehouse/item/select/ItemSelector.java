@@ -65,21 +65,17 @@ public class ItemSelector {
 			for (int i = 0; i < itemsToGetInformationFor.getFetchSize(); i++) {
 				itemsToGetInformationFor.next();
 				itemsToReturn[i] = (fetchItem(c,itemsToGetInformationFor.getString("itemid")));
-
 			}
 
 
-			return itemsToReturn;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
+		return itemsToReturn;
 
 
-		//Get amount of items,
-		// gem dem i en array,
-		// for hver item i array så kald fetch item metoden for at få den fulde information om item.
 
 	}
 }
