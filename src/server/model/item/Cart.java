@@ -1,13 +1,14 @@
 package server.model.item;
 
-import database.DatabaseAccess;
-import database.DatabaseIO;
+import server.softwarehouseacces.DatabaseAccess;
+import server.softwarehouseacces.DatabaseIO;
 import shared.EventType;
 import shared.utils.PropertyChangeSubject;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,10 +50,16 @@ public class Cart implements PropertyChangeSubject {
 
 	//TODO SKAL IMPLEMENTERES
 	public Item getItem(String itemId) {
+
+
 		return items.get(itemId);
 	}
 
 	public void itemBought(Item item) throws RemoteException {
+
+
+		//FØR DATABASE MERGE
+		database.buyoutItemBought(items.get(item.getItemID()));
 		items.remove(item.getItemID());
 		support.firePropertyChange(EventType.ITEM_SOLD.toString(), null, item.getItemID());
 		System.out.println("SOLD TO THE MAN IN BLUe");
@@ -60,16 +67,22 @@ public class Cart implements PropertyChangeSubject {
 
 	public void clearAllItems() {
 		items.clear();
-	}
+	} //Midlertidig
 
 	public void updateItemOffer(Item item) {
-		//DATABASE
-		//ITEM UPDATED
+		database.updateAuctionOffer(item);
 	}
 
 	//TIL TEST AF KØB USECASE
-	public void addItem(Item item) throws RemoteException {
-		items.put(item.getItemID(), item);
+	public void addItem(Item item) throws SQLException {
+
+		//manuelt for testing
+		items.put("1", database.getItem(1));
+		items.put("2", database.getItem(2));
+
+
+		//FØR DATABASE MERGE
+		//items.put(item.getItemID(), item);
 	}
 
 	public void addListenerToAllEvents(PropertyChangeListener listener) {

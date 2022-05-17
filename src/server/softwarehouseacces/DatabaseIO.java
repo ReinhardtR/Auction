@@ -1,12 +1,13 @@
 package server.softwarehouseacces;
 
-import server.softwarehouseacces.temps.Item;
+
+import server.model.item.Item;
 
 import java.sql.SQLException;
 
 
 public interface DatabaseIO {
-	Item getItem(int itemID) throws SQLException;
+	Item getItem(String itemID) throws SQLException;
 
 	void buyoutItemBought(Item itemID) throws SQLException;
 

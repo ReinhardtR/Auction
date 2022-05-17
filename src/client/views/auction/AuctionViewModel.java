@@ -3,10 +3,7 @@ package client.views.auction;
 import client.model.ObservableItem;
 import client.utils.SystemNotifcation;
 import javafx.application.Platform;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import shared.utils.TimedTask;
 
 import java.beans.PropertyChangeEvent;
@@ -17,13 +14,13 @@ import java.time.temporal.Temporal;
 
 public class AuctionViewModel implements PropertyChangeListener {
 	private final StringProperty itemText;
-	private final IntegerProperty currentHighestBid;
+	private final DoubleProperty currentHighestBid;
 	private final StringProperty timeLeft;
 	private final ObservableItem item;
 
 	public AuctionViewModel(ObservableItem item) {
 		itemText = new SimpleStringProperty();
-		currentHighestBid = new SimpleIntegerProperty();
+		currentHighestBid = new SimpleDoubleProperty();
 		timeLeft = new SimpleStringProperty();
 
 		this.item = item;
@@ -35,7 +32,7 @@ public class AuctionViewModel implements PropertyChangeListener {
 		runTimeSimulation(item.getEndTimestamp());
 	}
 
-	public void bidOnItem(int offer) {
+	public void bidOnItem(double offer) {
 		item.userSaleStrategy(offer, "Reinhardt");
 	}
 
@@ -43,7 +40,7 @@ public class AuctionViewModel implements PropertyChangeListener {
 		return itemText;
 	}
 
-	public IntegerProperty propertyCurrentBid() {
+	public DoubleProperty propertyCurrentBid() {
 		return currentHighestBid;
 	}
 
@@ -55,7 +52,7 @@ public class AuctionViewModel implements PropertyChangeListener {
 	public void propertyChange(PropertyChangeEvent event) {
 		System.out.println("change!");
 		Platform.runLater(() -> {
-			int offerAmount = item.getOfferAmount();
+			double offerAmount = item.getOfferAmount();
 			String itemID = item.getItemID();
 
 			currentHighestBid.setValue(offerAmount);

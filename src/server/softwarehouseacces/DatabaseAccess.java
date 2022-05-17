@@ -1,8 +1,10 @@
 package server.softwarehouseacces;
 
+import server.model.item.Item;
+import server.model.item.ItemImpl;
 import server.softwarehouseacces.item.express.ItemExpress;
 import server.softwarehouseacces.item.transactions.ItemScanner;
-import server.softwarehouseacces.temps.Item;
+import server.softwarehouseacces.utils.SQL;
 
 import java.beans.PropertyChangeEvent;
 import java.sql.Connection;
@@ -17,18 +19,17 @@ public class DatabaseAccess implements DatabaseIO {
 		itemExpress = new ItemExpress();
 		itemScanner = new ItemScanner();
 
-		checkAuctionTimers();
+		//checkAuctionTimers();
 	}
 
 	private Connection createConnection() {
 		Connection c = null;
 		try {
 			Class.forName("org.postgresql.Driver");
-
 			c = DriverManager.getConnection(
-							"jdbc:postgresql://hattie.db.elephantsql.com:5432/isgypvka",
-							"isgypvka",
-							"UkY3C9sbYugpjto58d8FAk9M54JiLanr"
+							SQL.getURL(),
+							SQL.getUSERNAME(),
+							SQL.getPASSWORD()
 			);
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -51,12 +52,13 @@ public class DatabaseAccess implements DatabaseIO {
 		}).start();
 	}
 
+
 	private void auctionTimeIsUp(PropertyChangeEvent propertyChangeEvent) {
 		System.out.println("inside auctiontimeisUp");
-		auctionItemBought((int) propertyChangeEvent.getNewValue());
+		auctionItemBought((String) propertyChangeEvent.getNewValue());
 	}
 
-	private void auctionItemBought(int itemID) {
+	private void auctionItemBought(String itemID) {
 		try {
 			itemScanner.auctionBought(createConnection(), itemID);
 		} catch (SQLException e) {
@@ -65,23 +67,24 @@ public class DatabaseAccess implements DatabaseIO {
 	}
 
 	@Override
-	public synchronized Item getItem(int itemID) throws SQLException {
+	public synchronized Item getItem(String itemID) throws SQLException {
 		return itemExpress.fetchItem(createConnection(), itemID);
 	}
 
 
 	@Override
 	public synchronized void buyoutItemBought(Item item) throws SQLException {
-		itemScanner.buyoutBought(createConnection(), item);
+		itemScanner.buyoutBought(createConnection(), (ItemImpl) item);
 	}
 
 	@Override
 	public synchronized void updateAuctionOffer(Item item) throws SQLException {
-		itemScanner.newBid(createConnection(), item);
+		itemScanner.newBid(createConnection(), (ItemImpl) item);
 	}
 
 	@Override
-	public void clearTable(String testTable) throws SQLException {
-		itemScanner.clearTable(createConnection(),testTable);
+	public void clearTable(String testTable)
+	{
+		itemScanner.clearTable(createConnection(), testTable);
 	}
 }
