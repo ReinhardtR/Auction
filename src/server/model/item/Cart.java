@@ -93,7 +93,7 @@ public class Cart implements PropertyChangeSubject {
 	}
 
 	public void getManyItems() {
-		
+
 	}
 
 	public void addListenerToAllEvents(PropertyChangeListener listener) {
