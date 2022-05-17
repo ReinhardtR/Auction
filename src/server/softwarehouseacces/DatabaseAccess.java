@@ -37,6 +37,7 @@ public class DatabaseAccess implements DatabaseIO {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
+
 		return c;
 	}
 

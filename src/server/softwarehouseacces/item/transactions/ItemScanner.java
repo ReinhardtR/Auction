@@ -79,7 +79,7 @@ public class ItemScanner {
 			new Thread(
 							new AuctionCountDown(
 											auctions.getString("itemID"),
-											auctions.getTimestamp("AuctionEndDate"),
+											auctions.getTimestamp("AuctionEndDate").toLocalDateTime(),
 											localTimeIn1Hour,
 											listener)
 			).start();
