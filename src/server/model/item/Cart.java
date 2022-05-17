@@ -82,23 +82,18 @@ public class Cart implements PropertyChangeSubject {
 		}
 	}
 
-	//TIL TEST AF KØB USECASE
+	//TIL LAV ITEM USECASE
 	public void addItem() throws RemoteException {
 
 		//manuelt for testing
 
-		try {
-			items.put("1", database.getItem("1"));
-			items.put("2", database.getItem("2"));
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-		System.out.println(items.get("1"));
-		System.out.println(items.get("2"));
-
 
 		//FØR DATABASE MERGE
 		//items.put(item.getItemID(), item);
+	}
+
+	public void getManyItems() {
+
 	}
 
 	public void addListenerToAllEvents(PropertyChangeListener listener) {
