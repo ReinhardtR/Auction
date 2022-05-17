@@ -1,9 +1,9 @@
-package server.softwarehouseacces.item.express;
+package server.softwarehouse.item.select;
 
 import server.model.item.Item;
 import server.model.item.ItemImpl;
-import server.softwarehouseacces.item.express.salestrategy.SaleStrategyExpress;
-import server.softwarehouseacces.utils.SQL;
+import server.softwarehouse.item.select.salestrategy.SaleStrategySelector;
+import server.softwarehouse.utils.SQL;
 
 import java.rmi.RemoteException;
 import java.sql.Connection;
@@ -12,14 +12,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ItemExpress {
-	private final SaleStrategyExpress saleStrategyExpress;
+public class ItemSelector {
+	private final SaleStrategySelector saleStrategySelector;
 
-	public ItemExpress() {
-		saleStrategyExpress = new SaleStrategyExpress();
+	public ItemSelector() {
+		saleStrategySelector = new SaleStrategySelector();
 	}
 
 	public ItemImpl fetchItem(Connection c, String itemID) throws SQLException {
+
 		PreparedStatement itemStatement = c.prepareStatement(SQL.selectItem(itemID));
 		ResultSet itemResultSet = itemStatement.executeQuery();
 
@@ -34,7 +35,7 @@ public class ItemExpress {
 		try {
 			itemToReturn = new ItemImpl(
 							itemResultSet.getString("itemID"),
-							saleStrategyExpress.fetchStrategy(
+							saleStrategySelector.fetchStrategy(
 											c,
 											itemResultSet.getString("itemID"),
 											itemResultSet.getString("saleStrategy")

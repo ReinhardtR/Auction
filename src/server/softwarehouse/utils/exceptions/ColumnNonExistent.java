@@ -1,4 +1,4 @@
-package server.softwarehouseacces.utils.exceptions;
+package server.softwarehouse.utils.exceptions;
 
 public class ColumnNonExistent extends TableNonExistent {
 	public ColumnNonExistent(String errorMessage) {

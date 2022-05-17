@@ -1,7 +1,7 @@
 package server.model.item;
 
-import server.softwarehouseacces.DatabaseAccess;
-import server.softwarehouseacces.DatabaseIO;
+import server.softwarehouse.DatabaseAccess;
+import server.softwarehouse.DatabaseIO;
 import shared.EventType;
 import shared.utils.PropertyChangeSubject;
 
@@ -86,7 +86,6 @@ public class Cart implements PropertyChangeSubject {
 	public void addItem() throws RemoteException {
 
 		//manuelt for testing
-
 
 		//FØR DATABASE MERGE
 		//items.put(item.getItemID(), item);

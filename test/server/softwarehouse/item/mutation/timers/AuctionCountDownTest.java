@@ -1,4 +1,4 @@
-package server.softwarehouseacces.item.transactions.timers;
+package server.softwarehouse.item.mutation.timers;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -9,7 +9,7 @@ import java.beans.PropertyChangeEvent;
 import java.rmi.RemoteException;
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class AuctionCountDownTest {
 
@@ -34,19 +34,19 @@ static void setUp()
 
 	} catch (RemoteException e) {
 		e.printStackTrace();
+
 	}
-}
 
 
 	@Test
-	void auctionTimerTester()
-	{
+	void auctionTimerTester() {
 		try {
 			Thread Auction5SecondsIntoFuture = new Thread(new AuctionCountDown(fakeItemForFutureTest.getItemID(), fakeItemForFutureTest.getEndTimestamp(),
 																								LocalDateTime.now(),this::listenerTestMethod));
 
 			Auction5SecondsIntoFuture.start();
 			Thread.sleep(secondsIntoFutureTest*1100);
+
 
 			assertTrue(listenerMethodCalled);
 

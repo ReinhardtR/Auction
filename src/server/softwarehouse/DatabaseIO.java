@@ -1,4 +1,4 @@
-package server.softwarehouseacces;
+package server.softwarehouse;
 
 
 import server.model.item.Item;

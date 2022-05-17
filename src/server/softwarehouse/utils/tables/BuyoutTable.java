@@ -1,4 +1,4 @@
-package server.softwarehouseacces.utils.tables;
+package server.softwarehouse.utils.tables;
 
 public class BuyoutTable extends Table {
 	public BuyoutTable() {
