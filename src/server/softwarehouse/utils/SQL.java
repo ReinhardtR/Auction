@@ -50,7 +50,7 @@ public class SQL {
 		Table item = null,
 						auc = null,
 						buy = null;
-		String conditionOnBothTables = null;
+		String[][] conditionOnBothTables = null;
 		try {
 			item = table("item");
 			auc = table("auction");
