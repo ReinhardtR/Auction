@@ -57,11 +57,12 @@ public class SQLStatements {
 	private String operationSetter(String[][] sameConditionOnBothTables) {
 		StringBuilder conditionToReturn = new StringBuilder();
 		for (int i = 0; i < sameConditionOnBothTables.length; i++) {
-			conditionToReturn.append(sameConditionOnBothTables[i][0])
+			conditionToReturn
+							.append(sameConditionOnBothTables[i][0])
 							.append(" ").append(operators(sameConditionOnBothTables[i][1]))
 							.append(" ").append(sameConditionOnBothTables[i][2]);
 			if (!(i == sameConditionOnBothTables.length - 1))
-				conditionToReturn.append(" ").append(sameConditionOnBothTables[i][3]);
+				conditionToReturn.append(" ").append(sameConditionOnBothTables[i][3]).append(" ");
 		}
 		return conditionToReturn.toString();
 	}

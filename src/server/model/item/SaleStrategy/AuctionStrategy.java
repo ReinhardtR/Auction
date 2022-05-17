@@ -20,7 +20,7 @@ public class AuctionStrategy implements SaleStrategy {
 	}
 
 	@Override
-	public void offer(Item item, int amount, String username) {
+	public void offer(Item item, double amount, String username) {
 		currentBid = amount;
 		currentBidder = username;
 
@@ -37,7 +37,7 @@ public class AuctionStrategy implements SaleStrategy {
 	}
 
 	@Override
-	public int getOfferAmount() {
+	public double getOfferAmount() {
 		return currentBid;
 	}
 

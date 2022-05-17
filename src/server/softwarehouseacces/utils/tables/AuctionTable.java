@@ -5,11 +5,9 @@ public class AuctionTable extends Table {
 		this.schemaName = "public";
 		this.tableName = "auction";
 		this.columns = new String[]{
-						"itemid",
 						"currentbid",
 						"currentbidder",
-						"auctionenddate",
-						"salestrategy"
+						"auctionenddate"
 		};
 	}
 }

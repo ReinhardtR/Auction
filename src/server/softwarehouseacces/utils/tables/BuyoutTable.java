@@ -5,10 +5,8 @@ public class BuyoutTable extends Table {
 		this.schemaName = "public";
 		this.tableName = "buyout";
 		this.columns = new String[]{
-						"itemid",
 						"price",
-						"buyer",
-						"salestrategy"
+						"buyer"
 		};
 	}
 }

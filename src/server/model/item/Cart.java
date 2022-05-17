@@ -75,6 +75,8 @@ public class Cart implements PropertyChangeSubject {
 
 	//TIL TEST AF KØB USECASE
 	public void addItem(Item item) throws SQLException {
+
+		//manuelt for testing
 		items.put("1", database.getItem(1));
 		items.put("2", database.getItem(2));
 

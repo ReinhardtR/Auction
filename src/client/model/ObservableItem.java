@@ -47,7 +47,7 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 	}
 
 	@Override
-	public void userSaleStrategy(int amount, String username) {
+	public void userSaleStrategy(double amount, String username) {
 
 		if (ItemCalculations.isNewBidHigher(amount, this)) {
 			System.out.println("MODEL: " + amount);
@@ -65,7 +65,7 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 	}
 
 	@Override
-	public int getOfferAmount() {
+	public double getOfferAmount() {
 		try {
 			return item.getOfferAmount();
 		} catch (RemoteException e) {

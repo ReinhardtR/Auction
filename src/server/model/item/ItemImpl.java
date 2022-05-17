@@ -36,7 +36,7 @@ public class ItemImpl extends UnicastRemoteObject implements Item {
 	}
 
 	@Override
-	public int getOfferAmount() throws RemoteException {
+	public double getOfferAmount() throws RemoteException {
 		return strategy.getOfferAmount();
 	}
 
@@ -62,7 +62,7 @@ public class ItemImpl extends UnicastRemoteObject implements Item {
 	}
 
 	@Override
-	public void userSaleStrategy(int amount, String username) throws RemoteException {
+	public void userSaleStrategy(double amount, String username) throws RemoteException {
 		strategy.offer(this, amount, username);
 		Cart.getInstance().updateItemOffer(this);
 	}

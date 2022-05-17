@@ -8,15 +8,15 @@ import java.rmi.RemoteException;
 import java.time.temporal.Temporal;
 
 public class BuyoutStrategy implements SaleStrategy {
-	private int price;
+	private double price;
 	private String buyer;
 
-	public BuyoutStrategy(int price) {
+	public BuyoutStrategy(double price) {
 		this.price = price;
 	}
 
 	@Override
-	public void offer(Item item, int amount, String username) {
+	public void offer(Item item, double amount, String username) {
 		price = amount;
 		buyer = username;
 
@@ -34,7 +34,7 @@ public class BuyoutStrategy implements SaleStrategy {
 	}
 
 	@Override
-	public int getOfferAmount() {
+	public double getOfferAmount() {
 		return price;
 	}
 
