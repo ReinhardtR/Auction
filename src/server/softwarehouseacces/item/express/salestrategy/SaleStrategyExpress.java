@@ -4,6 +4,7 @@ import server.model.item.SaleStrategy.AuctionStrategy;
 import server.model.item.SaleStrategy.BuyoutStrategy;
 import server.model.item.SaleStrategy.SaleStrategy;
 import server.softwarehouseacces.utils.SQL;
+import shared.SaleStrategyType;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,9 +20,9 @@ public class SaleStrategyExpress {
 
 		SaleStrategy saleStrategyToReturn = null;
 
-		if (saleStrategy.equals("auction")) {
+		if (saleStrategy.equals(SaleStrategyType.AUCTION.toString())) {
 			saleStrategyToReturn = auctionFetcher(saleStrategyResult);
-		} else if (saleStrategy.equals("buyout")) {
+		} else if (saleStrategy.equals(SaleStrategyType.BUYOUT.toString())) {
 			saleStrategyToReturn = buyoutFetcher(saleStrategyResult);
 		}
 

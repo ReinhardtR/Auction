@@ -66,4 +66,14 @@ public class ItemImpl extends UnicastRemoteObject implements Item {
 		strategy.offer(this, amount, username);
 		Cart.getInstance().updateItemOffer(this);
 	}
+
+	@Override
+	public String toString() {
+		return "ItemImpl{" +
+						"broadcaster=" + broadcaster +
+						", itemID='" + itemID + '\'' +
+						", strategy=" + strategy +
+						", isSold=" + isSold +
+						'}';
+	}
 }

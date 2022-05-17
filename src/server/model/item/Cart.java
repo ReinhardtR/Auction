@@ -58,8 +58,13 @@ public class Cart implements PropertyChangeSubject {
 	public void itemBought(Item item) throws RemoteException {
 
 
+		System.out.println("Before selling");
 		//FØR DATABASE MERGE
-		database.buyoutItemBought(items.get(item.getItemID()));
+		try {
+			database.buyoutItemBought(item);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 		items.remove(item.getItemID());
 		support.firePropertyChange(EventType.ITEM_SOLD.toString(), null, item.getItemID());
 		System.out.println("SOLD TO THE MAN IN BLUe");
@@ -70,15 +75,26 @@ public class Cart implements PropertyChangeSubject {
 	} //Midlertidig
 
 	public void updateItemOffer(Item item) {
-		database.updateAuctionOffer(item);
+		try {
+			database.updateAuctionOffer(item);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	//TIL TEST AF KØB USECASE
-	public void addItem(Item item) throws SQLException {
+	public void addItem() throws RemoteException {
 
 		//manuelt for testing
-		items.put("1", database.getItem(1));
-		items.put("2", database.getItem(2));
+
+		try {
+			items.put("1", database.getItem("1"));
+			items.put("2", database.getItem("2"));
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		System.out.println(items.get("1"));
+		System.out.println(items.get("2"));
 
 
 		//FØR DATABASE MERGE
