@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class ItemSelector {
 	private final SaleStrategySelector saleStrategySelector;
@@ -39,15 +40,15 @@ public class ItemSelector {
 		return itemToReturn;
 	}
 
-	public Item[] fetchAmountOfItems(Connection c, int amount, String ascOrDesc) throws SQLException {
-		Item[] itemsToReturn = new Item[amount];
+	public ArrayList<Item> fetchAmountOfItems(Connection c, int amount, String ascOrDesc) throws SQLException {
+		ArrayList<Item> itemsToReturn = new ArrayList<>();
 
 		PreparedStatement amountOfItemsStatement = c.prepareStatement(SQL.selectAmountOfItems(amount, ascOrDesc));
 		ResultSet itemsToGetInformationFor = amountOfItemsStatement.executeQuery();
 
-		for (int i = 0; i < itemsToGetInformationFor.getFetchSize(); i++) {
+		while (itemsToGetInformationFor.next()) {
 			itemsToGetInformationFor.next();
-			itemsToReturn[i] = itemCreation(c, itemsToGetInformationFor);
+			itemsToReturn.add(itemCreation(c, itemsToGetInformationFor));
 		}
 		amountOfItemsStatement.close();
 		c.close();

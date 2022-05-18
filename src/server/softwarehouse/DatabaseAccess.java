@@ -10,6 +10,7 @@ import java.beans.PropertyChangeEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class DatabaseAccess implements DatabaseIO {
 	private final ItemSelector itemSelector;
@@ -75,7 +76,7 @@ public class DatabaseAccess implements DatabaseIO {
 	}
 
 	@Override
-	public Item[] getAmountOfItems(int amount, String ascOrDesc) throws SQLException {
+	public ArrayList<Item> getAmountOfItems(int amount, String ascOrDesc) throws SQLException {
 		return itemSelector.fetchAmountOfItems(createConnection(), amount, ascOrDesc);
 	}
 
