@@ -32,4 +32,13 @@ class SQLStatementsTest {
 						"SELECT test, test FROM \"null\".null WHERE test = true", statements.union(new Table[]{test, test}, new String[]{"test", "test"}, "test = true"));
 	}
 
+	@Test
+	void coalesce() {
+		assertEquals("SELECT COALESCE(null.test, null.test) as test, " +
+										"COALESCE(null.test, null.test) as test " +
+										"FROM auction FULL JOIN buyout on auction.itemid = buyout.itemid " +
+										"ORDER BY test " +
+										"ASC FETCH FIRST 10 ROWS ONLY"
+						, statements.selectAmount(new Table[]{test, test}, "test", "ASC", 10));
+	}
 }

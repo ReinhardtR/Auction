@@ -1,10 +1,8 @@
 package server.softwarehouse.utils;
 
-
-import server.softwarehouseacces.utils.statements.SQLStatements;
-
 import server.softwarehouse.utils.exceptions.TableNonExistent;
 import server.softwarehouse.utils.sqlcode.SQLOperation;
+import server.softwarehouse.utils.sqlcode.SQLStatements;
 import server.softwarehouse.utils.tables.AuctionTable;
 import server.softwarehouse.utils.tables.BuyoutTable;
 import server.softwarehouse.utils.tables.ItemTable;
@@ -50,7 +48,7 @@ public class SQL {
 		Table item = null,
 						auc = null,
 						buy = null;
-		String[][] conditionOnBothTables = null;
+		String conditionOnBothTables = null;
 		try {
 			item = table("item");
 			auc = table("auction");
@@ -63,37 +61,23 @@ public class SQL {
 		return statements.union(new Table[]{auc, buy}, item.getColumns(), conditionOnBothTables);
 	}
 
-
-
-	public static String selectAmountOfItems(int amount, String ascOrDesc){
+	public static String selectAmountOfItems(int amount, String ascOrDesc) {
 		Table auc = null,
 						buy = null;
 		try {
 			auc = table("auction");
 			buy = table("buyout");
-			}catch (TableNonExistent e)
-		{
+		} catch (TableNonExistent e) {
 			e.printStackTrace();
 		}
 
-		return statements.selectAmount(new Table[]{auc,buy},"itemid", ascOrDesc,amount);
-
-
-
+		return statements.selectAmount(new Table[]{auc, buy}, "itemid", ascOrDesc, amount);
 	}
-
-
-
-
-
-
-
 
 	public static String selectSaleStrategy(String itemID, String saleStrategy) {
 		Table style = null;
 		String[] columnNames = null;
 		String conditions = null;
-
 		try {
 			style = table(saleStrategy);
 			columnNames = style.getColumns();
@@ -101,7 +85,6 @@ public class SQL {
 		} catch (TableNonExistent e) {
 			e.printStackTrace();
 		}
-
 		return statements.select(style, columnNames, conditions);
 	}
 
