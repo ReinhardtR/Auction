@@ -1,4 +1,4 @@
-package server.softwarehouseacces.utils.tables;
+package server.softwarehouse.utils.tables;
 
 public class ItemTable extends Table { //Doesn't exist on database, but we play pretend
 	public ItemTable() {

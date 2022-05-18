@@ -1,9 +1,9 @@
-package server.softwarehouseacces.item.transactions;
+package server.softwarehouse.item.mutation;
 
 
 import server.model.item.ItemImpl;
-import server.softwarehouseacces.item.transactions.timers.AuctionCountDown;
-import server.softwarehouseacces.utils.SQL;
+import server.softwarehouse.item.mutation.timers.AuctionCountDown;
+import server.softwarehouse.utils.SQL;
 
 import java.beans.PropertyChangeListener;
 import java.rmi.RemoteException;
@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class ItemScanner {
+public class ItemMutator {
 	public void buyoutBought(Connection c, ItemImpl item) throws SQLException {
 		PreparedStatement itemBoughtThruBuyout = null;
 		try {
@@ -26,8 +26,7 @@ public class ItemScanner {
 			e.printStackTrace();
 		}
 		//Indtil videre sætter den kun den købte data, herefter skal værdien endten fjernes eller flyttes
-
-		assert itemBoughtThruBuyout != null;
+		if (itemBoughtThruBuyout == null) throw new SQLException("itemBoughtThruBuyout was null");
 		itemBoughtThruBuyout.execute();
 		itemBoughtThruBuyout.close();
 		c.close();
@@ -53,7 +52,8 @@ public class ItemScanner {
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
-		assert itemNewBidTruAuction != null;
+
+		if (itemNewBidTruAuction == null) throw new SQLException("itemNewBidTruAuction was null");
 		itemNewBidTruAuction.execute();
 
 		itemNewBidTruAuction.close();
@@ -61,42 +61,28 @@ public class ItemScanner {
 	}
 
 	public void auctionTimers(Connection c, PropertyChangeListener listener) throws SQLException {
-		LocalDateTime localTimeIn1Hour = LocalDateTime.now().plusHours(1);
-		String localTimeInWantedStringFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(localTimeIn1Hour);
+		LocalDateTime localTimeNow = LocalDateTime.now();
+		String localTimeInWantedStringFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(localTimeNow.plusHours(1));
 
 		PreparedStatement pstmt = c.prepareStatement(
 						SQL.auctionsSoonToFinish(localTimeInWantedStringFormat)
 		);
 		ResultSet allAuctionThatFinishesBeforeAnHour = pstmt.executeQuery();
 
-		auctionTimeSetter(allAuctionThatFinishesBeforeAnHour, listener, localTimeIn1Hour);
+		auctionTimeSetter(allAuctionThatFinishesBeforeAnHour, listener, localTimeNow);
 		pstmt.close();
 		c.close();
 	}
 
-	private void auctionTimeSetter(ResultSet auctions, PropertyChangeListener listener, LocalDateTime localTimeIn1Hour) throws SQLException {
+	private void auctionTimeSetter(ResultSet auctions, PropertyChangeListener listener, LocalDateTime localTimeNow) throws SQLException {
 		while (auctions.next()) {
 			new Thread(
 							new AuctionCountDown(
 											auctions.getString("itemID"),
 											auctions.getTimestamp("AuctionEndDate").toLocalDateTime(),
-											localTimeIn1Hour,
+											localTimeNow,
 											listener)
 			).start();
 		}
-	}
-
-	//Remover identitity, virker som en hard reset for et table.
-	public void clearTable(Connection c, String testTable) {
-		try {
-			PreparedStatement clearTableSQL = c.prepareStatement("TRUNCATE TABLE " + testTable + " RESTART IDENTITY");
-
-			clearTableSQL.execute();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-
 	}
 }

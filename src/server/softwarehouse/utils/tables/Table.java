@@ -1,6 +1,6 @@
-package server.softwarehouseacces.utils.tables;
+package server.softwarehouse.utils.tables;
 
-import server.softwarehouseacces.utils.exceptions.ColumnNonExistent;
+import server.softwarehouse.utils.exceptions.ColumnNonExistent;
 
 import java.util.Locale;
 
@@ -26,7 +26,7 @@ public abstract class Table {
 
 		throw new ColumnNonExistent("The column does either not exist in the database on table \""
 						+ tableName + "\", or util.tables." + tableName +
-						"is not updated.\nPlease check if column !\"" + columnName + "\"! should exist in either");
+						"is not updated.\nPlease check if column !\"" + columnSearchingFor + "\"! should exist in either");
 	}
 
 	public String[] getColumns() {
