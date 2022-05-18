@@ -47,7 +47,6 @@ public class ItemSelector {
 		ResultSet itemsToGetInformationFor = amountOfItemsStatement.executeQuery();
 
 		while (itemsToGetInformationFor.next()) {
-			itemsToGetInformationFor.next();
 			itemsToReturn.add(itemCreation(c, itemsToGetInformationFor));
 		}
 		amountOfItemsStatement.close();
@@ -65,7 +64,9 @@ public class ItemSelector {
 											itemResultSet.getString("itemID"),
 											itemResultSet.getString("saleStrategy")
 							)
+
 			);
+			System.out.println(itemToReturn.getItemID() +" " + itemToReturn.getStrategyType());
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
