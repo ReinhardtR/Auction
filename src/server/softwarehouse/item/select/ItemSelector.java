@@ -64,9 +64,8 @@ public class ItemSelector {
 											itemResultSet.getString("itemID"),
 											itemResultSet.getString("saleStrategy")
 							)
-
 			);
-			System.out.println(itemToReturn.getItemID() +" " + itemToReturn.getStrategyType());
+			System.out.println(itemToReturn.getItemID() + " " + itemToReturn.getStrategyType());
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}

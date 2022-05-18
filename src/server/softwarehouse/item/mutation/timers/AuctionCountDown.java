@@ -2,7 +2,6 @@ package server.softwarehouse.item.mutation.timers;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.Temporal;
@@ -14,7 +13,7 @@ public class AuctionCountDown implements Runnable {
 	private final PropertyChangeSupport support;
 
 
-	public AuctionCountDown(String itemID, Temporal endTime,LocalDateTime now, PropertyChangeListener listener) {
+	public AuctionCountDown(String itemID, Temporal endTime, LocalDateTime now, PropertyChangeListener listener) {
 		this.itemID = itemID;
 		this.endTime = endTime;
 		localTimeNow = now;

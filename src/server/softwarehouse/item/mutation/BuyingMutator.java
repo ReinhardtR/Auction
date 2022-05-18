@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class ItemMutator {
+public class BuyingMutator {
 	public void buyoutBought(Connection c, ItemImpl item) throws SQLException {
 		PreparedStatement itemBoughtThruBuyout = null;
 		try {

@@ -15,19 +15,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class AuctionCountDownTest {
 
 
+	private static final int secondsIntoFutureTest = 5;
 	private static ItemImpl fakeItemForFutureTest;
 	private static ItemImpl fakeItemForPastTest;
-
-	private boolean listenerMethodCalled = false;
-
-	private static final int secondsIntoFutureTest = 5;
-
 	//Used by listener
 	int counter = 1;
-
+	private boolean listenerMethodCalled = false;
 
 	@BeforeAll
-static void setUp() {
+	static void setUp() {
 		try {
 			fakeItemForFutureTest = new ItemImpl("1", new AuctionStrategy(0, "testMan", LocalDateTime.now().plusSeconds(secondsIntoFutureTest)));
 			fakeItemForPastTest = new ItemImpl("2", new AuctionStrategy(0, "testman2", LocalDateTime.now().minusHours(24)));
@@ -42,10 +38,10 @@ static void setUp() {
 	void auctionTimerTester() {
 		try {
 			Thread Auction5SecondsIntoFuture = new Thread(new AuctionCountDown(fakeItemForFutureTest.getItemID(), fakeItemForFutureTest.getEndTimestamp(),
-																								LocalDateTime.now(),this::listenerTestMethod));
+							LocalDateTime.now(), this::listenerTestMethod));
 
 			Auction5SecondsIntoFuture.start();
-			Thread.sleep(secondsIntoFutureTest*1100);
+			Thread.sleep(secondsIntoFutureTest * 1100);
 
 
 			assertTrue(listenerMethodCalled);
@@ -56,8 +52,8 @@ static void setUp() {
 			listenerMethodCalled = false;
 
 
-			Thread AuctionTimerAlreadyRanOut = new Thread(new AuctionCountDown(fakeItemForPastTest.getItemID(),fakeItemForPastTest.getEndTimestamp(),
-																											LocalDateTime.now(),this::listenerTestMethod));
+			Thread AuctionTimerAlreadyRanOut = new Thread(new AuctionCountDown(fakeItemForPastTest.getItemID(), fakeItemForPastTest.getEndTimestamp(),
+							LocalDateTime.now(), this::listenerTestMethod));
 
 			AuctionTimerAlreadyRanOut.start();
 
@@ -72,19 +68,16 @@ static void setUp() {
 
 	private void listenerTestMethod(PropertyChangeEvent propertyChangeEvent) {
 
-		if (counter == 1)
-		{
+		if (counter == 1) {
 			try {
-				assertEquals(fakeItemForFutureTest.getItemID(),propertyChangeEvent.getNewValue());
+				assertEquals(fakeItemForFutureTest.getItemID(), propertyChangeEvent.getNewValue());
 				counter++;
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}
-		}
-		else if (counter == 2)
-		{
+		} else if (counter == 2) {
 			try {
-				assertEquals(fakeItemForPastTest.getItemID(),propertyChangeEvent.getNewValue());
+				assertEquals(fakeItemForPastTest.getItemID(), propertyChangeEvent.getNewValue());
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}
@@ -93,8 +86,6 @@ static void setUp() {
 		listenerMethodCalled = true;
 
 	}
-
-
 
 
 }

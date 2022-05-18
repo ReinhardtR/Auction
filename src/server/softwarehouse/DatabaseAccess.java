@@ -2,7 +2,7 @@ package server.softwarehouse;
 
 import server.model.item.Item;
 import server.model.item.ItemImpl;
-import server.softwarehouse.item.mutation.ItemMutator;
+import server.softwarehouse.item.mutation.BuyingMutator;
 import server.softwarehouse.item.select.ItemSelector;
 import server.softwarehouse.utils.SQL;
 
@@ -14,12 +14,12 @@ import java.util.ArrayList;
 
 public class DatabaseAccess implements DatabaseIO {
 	private final ItemSelector itemSelector;
-	private final ItemMutator itemMutator;
+	private final BuyingMutator buyingMutator;
 	private final long ONE_HOUR_IN_MILLI;
 
 	public DatabaseAccess() {
 		itemSelector = new ItemSelector();
-		itemMutator = new ItemMutator();
+		buyingMutator = new BuyingMutator();
 		ONE_HOUR_IN_MILLI = 3600000;
 
 		//checkAuctionTimers();
@@ -47,7 +47,7 @@ public class DatabaseAccess implements DatabaseIO {
 		{
 			while (true) {
 				try {
-					itemMutator.auctionTimers(createConnection(), this::auctionTimeIsUp);
+					buyingMutator.auctionTimers(createConnection(), this::auctionTimeIsUp);
 					Thread.sleep(ONE_HOUR_IN_MILLI);
 				} catch (InterruptedException | SQLException e) {
 					e.printStackTrace();
@@ -64,7 +64,7 @@ public class DatabaseAccess implements DatabaseIO {
 
 	private void auctionItemBought(String itemID) {
 		try {
-			itemMutator.auctionBought(createConnection(), itemID);
+			buyingMutator.auctionBought(createConnection(), itemID);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -82,11 +82,11 @@ public class DatabaseAccess implements DatabaseIO {
 
 	@Override
 	public synchronized void buyoutItemBought(Item item) throws SQLException {
-		itemMutator.buyoutBought(createConnection(), (ItemImpl) item);
+		buyingMutator.buyoutBought(createConnection(), (ItemImpl) item);
 	}
 
 	@Override
 	public synchronized void updateAuctionOffer(Item item) throws SQLException {
-		itemMutator.newBid(createConnection(), (ItemImpl) item);
+		buyingMutator.newBid(createConnection(), (ItemImpl) item);
 	}
 }
