@@ -74,6 +74,11 @@ public class DatabaseAccess implements DatabaseIO {
 		return itemSelector.fetchItem(createConnection(), itemID);
 	}
 
+	@Override
+	public Item[] getAmountOfItems(int amount, String ascOrDesc) throws SQLException {
+		return itemSelector.fetchAmountOfItems(createConnection(),amount,ascOrDesc);
+	}
+
 
 	@Override
 	public synchronized void buyoutItemBought(Item item) throws SQLException {
@@ -85,8 +90,4 @@ public class DatabaseAccess implements DatabaseIO {
 		itemMutator.newBid(createConnection(), (ItemImpl) item);
 	}
 
-	@Override
-	public void clearTable(String testTable) {
-		itemMutator.clearTable(createConnection(), testTable);
-	}
 }

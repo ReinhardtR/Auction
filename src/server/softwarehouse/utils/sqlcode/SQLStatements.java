@@ -8,6 +8,42 @@ public class SQLStatements {
 		return "SELECT " + columns(columns) + from(tableInUse) + where(conditions);
 	}
 
+	public String selectAmount( Table[] tables,String columnToOrderBy ,String ascOrDesc ,int amount){
+
+		return "SELECT " + coalesce(tables,columnToOrderBy) + fromFullJoin() + orderBy(columnToOrderBy,ascOrDesc)+ fetchRows(amount);
+	}
+
+
+
+	private String coalesce(Table[] tables, String columnToOrderBy) {
+		if (tables.length < 1)
+			return null;
+
+
+		String[] tablesToCoalesce = new String[tables.length];
+		for (int i = 0; i < tables.length; i++) {
+
+			tablesToCoalesce[i] = tables[i].getTableName()+"."+columnToOrderBy;
+		}
+
+		StringBuilder columnsToCoalesce = new StringBuilder();
+
+		for (int i = 0; i < tablesToCoalesce.length; i++) {
+			columnsToCoalesce.append("COALESCE ( ");
+			columnsToCoalesce.append(tablesToCoalesce[i]);
+			columnsToCoalesce.append(") as ").append(columnToOrderBy);
+			if (!(i == tablesToCoalesce.length - 1))
+				columnsToCoalesce.append(", ");
+		}
+
+		return columnsToCoalesce.toString();
+	}
+
+
+	private String fromFullJoin() {
+		return " from auction full join buyout on auction.itemid = buyout.itemid"; //todo prøv at gøre dette IKKE hardcoded, har ikke fundet en metode til at joine flere tabeller endnu, i tilfælde der blev lavet fler.
+	}
+
 	public String update(Table tableInUse, String columnsToSet, String conditions) {
 		return "UPDATE \"" + tableInUse.getSchema() + "\"." + tableInUse.getTableName() + set(columnsToSet) + where(conditions);
 	}
@@ -52,5 +88,13 @@ public class SQLStatements {
 		}
 
 		return columnsToReturn.toString();
+	}
+
+	public String orderBy(String columnToOrderBy,String ascOrDesc){
+		return " ORDER BY " +columnToOrderBy+ " " + ascOrDesc;
+	}
+
+	public String fetchRows(int amount) {
+		return " FETCH FIRST " + amount + " rows only";
 	}
 }

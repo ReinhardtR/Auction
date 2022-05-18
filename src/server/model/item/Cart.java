@@ -91,8 +91,14 @@ public class Cart implements PropertyChangeSubject {
 		//items.put(item.getItemID(), item);
 	}
 
-	public void getManyItems() {
-
+	public void getManyItems() throws RemoteException {
+		try {
+			for (Item item:database.getAmountOfItems(10,"asc")) {
+				items.put(item.getItemID(),item);
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public void addListenerToAllEvents(PropertyChangeListener listener) {
