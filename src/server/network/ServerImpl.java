@@ -19,7 +19,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server, PropertyC
 	public ServerImpl() throws RemoteException {
 		broadcaster = new UpdateBroadcasterImpl();
 		Cart.getInstance().addListenerToAllEvents(this);
-		Cart.getInstance().addItem();
+		Cart.getInstance().getManyItems();
 		//Til random item
 		/*
 		Temporal endDateTime = LocalDateTime.of(2022, 5, 16, 11, 20);
