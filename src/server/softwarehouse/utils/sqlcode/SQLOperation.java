@@ -3,6 +3,7 @@ package server.softwarehouse.utils.sqlcode;
 import server.softwarehouse.utils.exceptions.NonExistentOperator;
 
 public class SQLOperation {
+
 	public String make(String[][] sameConditionOnBothTables) throws NonExistentOperator {
 		StringBuilder conditionToReturn = new StringBuilder();
 		for (int i = 0; i < sameConditionOnBothTables.length; i++) {
