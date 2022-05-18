@@ -20,7 +20,7 @@ public class ClientImpl extends UnicastRemoteObject implements SharedClient, Loc
 	public ClientImpl() throws RemoteException, NotBoundException {
 		support = new PropertyChangeSupport(this);
 
-		Registry registry = LocateRegistry.getRegistry("localhost", 1100);
+		Registry registry = LocateRegistry.getRegistry("localhost", 1099);
 		server = (Server) registry.lookup("Server");
 		server.getBroadcaster().registerClient(this);
 	}
