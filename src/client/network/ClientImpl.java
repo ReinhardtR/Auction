@@ -1,7 +1,7 @@
 package client.network;
 
-import shared.network.client.SharedClient;
 import server.model.item.Item;
+import shared.network.client.SharedClient;
 import shared.network.server.Server;
 
 import java.beans.PropertyChangeListener;
@@ -20,7 +20,7 @@ public class ClientImpl extends UnicastRemoteObject implements SharedClient, Loc
 	public ClientImpl() throws RemoteException, NotBoundException {
 		support = new PropertyChangeSupport(this);
 
-		Registry registry = LocateRegistry.getRegistry("localhost", 1099);
+		Registry registry = LocateRegistry.getRegistry("localhost", 1100);
 		server = (Server) registry.lookup("Server");
 		server.getBroadcaster().registerClient(this);
 	}

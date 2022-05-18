@@ -42,6 +42,11 @@ public class Cart implements PropertyChangeSubject {
 		List<Item> itemsInCart = new ArrayList<>();
 
 		items.forEach((itemID, item) -> {
+			try {
+				System.out.println(item.getItemID());
+			} catch (RemoteException e) {
+				throw new RuntimeException(e);
+			}
 			itemsInCart.add(item);
 		});
 
@@ -93,6 +98,7 @@ public class Cart implements PropertyChangeSubject {
 
 	public void getManyItems() throws RemoteException {
 		try {
+
 			for (Item item : database.getAmountOfItems(10, "asc")) {
 				items.put(item.getItemID(), item);
 			}

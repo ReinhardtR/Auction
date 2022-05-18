@@ -17,10 +17,13 @@ public class ItemListViewModel implements PropertyChangeListener {
 	public ItemListViewModel(ItemList itemList) {
 		this.itemList = itemList;
 		this.itemList.addListener("ITEM_SOLD", this);
+
+		System.out.println("");
 		observableList = FXCollections.observableList(this.itemList.getAllItemsFromServer());
 	}
 
 	public ObservableList<ObservableItem> getObservableItemList() {
+		System.out.println("kalder i viewmodel");
 		return observableList;
 	}
 
