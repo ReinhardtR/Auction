@@ -1,5 +1,6 @@
 package server.softwarehouse.utils;
 
+import server.softwarehouse.utils.exceptions.SQLUtilsException;
 import server.softwarehouse.utils.exceptions.TableNonExistent;
 import server.softwarehouse.utils.sqlcode.SQLOperation;
 import server.softwarehouse.utils.sqlcode.SQLStatements;
@@ -54,7 +55,7 @@ public class SQL {
 			auc = table("auction");
 			buy = table("buyout");
 			conditionOnBothTables = operation.make(new String[][]{{item.getColumn("itemid"), "=", itemID}});
-		} catch (TableNonExistent e) {
+		} catch (SQLUtilsException e) {
 			e.printStackTrace();
 		}
 		assert item != null;
@@ -72,7 +73,7 @@ public class SQL {
 		} catch (TableNonExistent e) {
 			e.printStackTrace();
 		}
-
+		assert item != null;
 		return statements.selectAmount(new Table[]{auc, buy}, item.getColumns(), "itemid", ascOrDesc, amount);
 	}
 
@@ -84,7 +85,7 @@ public class SQL {
 			style = table(saleStrategy);
 			columnNames = style.getColumns();
 			conditions = operation.make(new String[][]{{"itemid", "=", itemID}});
-		} catch (TableNonExistent e) {
+		} catch (SQLUtilsException e) {
 			e.printStackTrace();
 		}
 		return statements.select(style, columnNames, conditions);
@@ -96,7 +97,7 @@ public class SQL {
 		try {
 			auc = table("auction");
 			conditions = operation.make(new String[][]{{"itemid", "=", itemID}});
-		} catch (TableNonExistent e) {
+		} catch (SQLUtilsException e) {
 			e.printStackTrace();
 		}
 		assert auc != null;
@@ -114,7 +115,7 @@ public class SQL {
 							{auc.getColumn("currentbidder"), ("="), "'" + newBidder + "'"}});
 			conditions = operation.make(new String[][]{{"itemid", ("="), itemID}});
 			return statements.update(auc, columnsToSet, conditions);
-		} catch (TableNonExistent e) {
+		} catch (SQLUtilsException e) {
 			e.printStackTrace();
 		}
 		assert auc != null;
@@ -129,7 +130,7 @@ public class SQL {
 			auc = table("auction");
 			columns = new String[]{"itemid", auc.getColumn("auctionenddate")};
 			conditions = operation.make(new String[][]{{auc.getColumn("auctionenddate"), "<", wantedTime}});
-		} catch (TableNonExistent e) {
+		} catch (SQLUtilsException e) {
 			e.printStackTrace();
 		}
 		return statements.select(auc, columns, conditions);
@@ -143,7 +144,7 @@ public class SQL {
 			buy = table("buyout");
 			columnsToSet = operation.make(new String[][]{{buy.getColumn("buyer"), "=", "'" + buyerUsername + "'"}});
 			conditions = operation.make(new String[][]{{"itemid", "=", itemID}});
-		} catch (TableNonExistent e) {
+		} catch (SQLUtilsException e) {
 			e.printStackTrace();
 		}
 		assert buy != null;
