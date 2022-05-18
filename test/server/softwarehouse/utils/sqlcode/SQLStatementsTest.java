@@ -22,7 +22,7 @@ class SQLStatementsTest {
 
 	@Test
 	void testDelete() {
-		assertEquals("DELETE \"null\".null WHERE test = false", statements.delete(test, "test = true"));
+		assertEquals("DELETE \"null\".null WHERE test = true", statements.delete(test, "test = true"));
 	}
 
 	@Test
@@ -34,11 +34,13 @@ class SQLStatementsTest {
 
 	@Test
 	void coalesce() {
-		assertEquals("SELECT COALESCE(null.test, null.test) as test, " +
-										"COALESCE(null.test, null.test) as test " +
-										"FROM auction FULL JOIN buyout on auction.itemid = buyout.itemid " +
-										"ORDER BY test " +
+		assertEquals("SELECT COALESCE(null.test1, null.test1) as test1, " +
+										"COALESCE(null.test2, null.test2) as test2, " +
+										"COALESCE(null.test3, null.test3) as test3 " +
+										"FROM auction " +
+										"FULL JOIN buyout on auction.itemid = buyout.itemid " +
+										"ORDER BY test1 " +
 										"ASC FETCH FIRST 10 ROWS ONLY"
-						, statements.selectAmount(new Table[]{test, test}, "test", "ASC", 10));
+						, statements.selectAmount(new Table[]{test, test}, new String[]{"test1", "test2", "test3"}, "test1", "ASC", 10));
 	}
 }

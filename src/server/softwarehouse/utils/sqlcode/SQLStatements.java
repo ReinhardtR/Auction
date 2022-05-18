@@ -12,27 +12,26 @@ public class SQLStatements {
 		return " ORDER BY " + columnToOrderBy + " " + ascOrDesc;
 	}
 
-	public String selectAmount(Table[] tables, String columnToOrderBy, String ascOrDesc, int amount) {
-		return "SELECT " + coalesce(tables, columnToOrderBy) + fromFullJoin() + orderBy(columnToOrderBy, ascOrDesc) + fetchRows(amount);
+	public String selectAmount(Table[] tables, String[] columns, String columnToOrderBy, String ascOrDesc, int amount) {
+		return "SELECT " + coalesce(tables, columns) + fromFullJoin() + orderBy(columnToOrderBy, ascOrDesc) + fetchRows(amount);
 	}
 
-	private String coalesce(Table[] tables, String columnToOrderBy) {
+	private String coalesce(Table[] tables, String[] columns) {
 		if (tables.length < 1)
 			return null;
 
-		String tablesToCoalesce = "";
-		for (int i = 0; i < tables.length; i++) {
-			tablesToCoalesce += tables[i].getTableName() + "." + columnToOrderBy;
-			if (!(i == tables.length - 1))
-				tablesToCoalesce += ", ";
-		}
-
 		StringBuilder columnsToCoalesce = new StringBuilder();
-		for (int i = 0; i < tables.length; i++) {
+		for (int i = 0; i < columns.length; i++) {
 			columnsToCoalesce.append("COALESCE(");
-			columnsToCoalesce.append(tablesToCoalesce);
-			columnsToCoalesce.append(") as ").append(columnToOrderBy);
-			if (!(i == tables.length - 1))
+			for (int j = 0; j < tables.length; j++) {
+				columnsToCoalesce.append(tables[j].getTableName())
+								.append(".")
+								.append(columns[i]);
+				if (!(j == tables.length - 1))
+					columnsToCoalesce.append(", ");
+			}
+			columnsToCoalesce.append(") as ").append(columns[i]);
+			if (!(i == columns.length - 1))
 				columnsToCoalesce.append(", ");
 		}
 

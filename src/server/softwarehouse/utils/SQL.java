@@ -63,15 +63,17 @@ public class SQL {
 
 	public static String selectAmountOfItems(int amount, String ascOrDesc) {
 		Table auc = null,
-						buy = null;
+						buy = null,
+						item = null;
 		try {
 			auc = table("auction");
 			buy = table("buyout");
+			item = table("item");
 		} catch (TableNonExistent e) {
 			e.printStackTrace();
 		}
 
-		return statements.selectAmount(new Table[]{auc, buy}, "itemid", ascOrDesc, amount);
+		return statements.selectAmount(new Table[]{auc, buy}, item.getColumns(), "itemid", ascOrDesc, amount);
 	}
 
 	public static String selectSaleStrategy(String itemID, String saleStrategy) {
@@ -118,7 +120,6 @@ public class SQL {
 		assert auc != null;
 		return statements.update(auc, columnsToSet, conditions);
 	}
-
 
 	public static String auctionsSoonToFinish(String wantedTime) {
 		Table auc = null;
