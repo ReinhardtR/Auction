@@ -36,6 +36,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server, PropertyC
 
 	@Override
 	public List<Item> getAllItemsInCart() throws RemoteException {
+		System.out.println("ER tæt å cart");
 		return Cart.getInstance().returnAllItemsInCart();
 	}
 
