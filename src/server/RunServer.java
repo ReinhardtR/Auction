@@ -12,7 +12,7 @@ public class RunServer {
 	public static void main(String[] args) throws RemoteException, AlreadyBoundException {
 		ServerImpl server = new ServerImpl();
 
-		Registry registry = LocateRegistry.createRegistry(1099);
+		Registry registry = LocateRegistry.createRegistry(1100);
 		registry.bind("Server", server);
 
 		System.out.println("Server is up!");
