@@ -1,23 +1,26 @@
-package server.softwarehouseacces;
+package server.softwarehouse;
 
 import server.model.item.Item;
 import server.model.item.ItemImpl;
-import server.softwarehouseacces.item.express.ItemExpress;
-import server.softwarehouseacces.item.transactions.ItemScanner;
-import server.softwarehouseacces.utils.SQL;
+import server.softwarehouse.item.mutation.ItemMutator;
+import server.softwarehouse.item.select.ItemSelector;
+import server.softwarehouse.utils.SQL;
 
 import java.beans.PropertyChangeEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class DatabaseAccess implements DatabaseIO {
-	private final ItemExpress itemExpress;
-	private final ItemScanner itemScanner;
+	private final ItemSelector itemSelector;
+	private final ItemMutator itemMutator;
+	private final long ONE_HOUR_IN_MILLI;
 
 	public DatabaseAccess() {
-		itemExpress = new ItemExpress();
-		itemScanner = new ItemScanner();
+		itemSelector = new ItemSelector();
+		itemMutator = new ItemMutator();
+		ONE_HOUR_IN_MILLI = 3600000;
 
 		//checkAuctionTimers();
 	}
@@ -35,6 +38,7 @@ public class DatabaseAccess implements DatabaseIO {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
+
 		return c;
 	}
 
@@ -43,8 +47,8 @@ public class DatabaseAccess implements DatabaseIO {
 		{
 			while (true) {
 				try {
-					itemScanner.auctionTimers(createConnection(), this::auctionTimeIsUp);
-					Thread.sleep(60 * 60 * 1000);
+					itemMutator.auctionTimers(createConnection(), this::auctionTimeIsUp);
+					Thread.sleep(ONE_HOUR_IN_MILLI);
 				} catch (InterruptedException | SQLException e) {
 					e.printStackTrace();
 				}
@@ -60,7 +64,7 @@ public class DatabaseAccess implements DatabaseIO {
 
 	private void auctionItemBought(String itemID) {
 		try {
-			itemScanner.auctionBought(createConnection(), itemID);
+			itemMutator.auctionBought(createConnection(), itemID);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -68,23 +72,21 @@ public class DatabaseAccess implements DatabaseIO {
 
 	@Override
 	public synchronized Item getItem(String itemID) throws SQLException {
-		return itemExpress.fetchItem(createConnection(), itemID);
+		return itemSelector.fetchItem(createConnection(), itemID);
 	}
 
+	@Override
+	public ArrayList<Item> getAmountOfItems(int amount, String ascOrDesc) throws SQLException {
+		return itemSelector.fetchAmountOfItems(createConnection(), amount, ascOrDesc);
+	}
 
 	@Override
 	public synchronized void buyoutItemBought(Item item) throws SQLException {
-		itemScanner.buyoutBought(createConnection(), (ItemImpl) item);
+		itemMutator.buyoutBought(createConnection(), (ItemImpl) item);
 	}
 
 	@Override
 	public synchronized void updateAuctionOffer(Item item) throws SQLException {
-		itemScanner.newBid(createConnection(), (ItemImpl) item);
-	}
-
-	@Override
-	public void clearTable(String testTable)
-	{
-		itemScanner.clearTable(createConnection(), testTable);
+		itemMutator.newBid(createConnection(), (ItemImpl) item);
 	}
 }

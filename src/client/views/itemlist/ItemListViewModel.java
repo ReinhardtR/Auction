@@ -23,6 +23,7 @@ public class ItemListViewModel implements PropertyChangeListener {
 	}
 
 	public ObservableList<ObservableItem> getObservableItemList() {
+		System.out.println("kalder i viewmodel");
 		return observableList;
 	}
 

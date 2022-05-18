@@ -1,17 +1,20 @@
-package server.softwarehouseacces.utils;
+package server.softwarehouse.utils;
 
-import server.softwarehouseacces.utils.exceptions.TableNonExistent;
-import server.softwarehouseacces.utils.statements.SQLStatements;
-import server.softwarehouseacces.utils.tables.AuctionTable;
-import server.softwarehouseacces.utils.tables.BuyoutTable;
-import server.softwarehouseacces.utils.tables.ItemTable;
-import server.softwarehouseacces.utils.tables.Table;
+import server.softwarehouse.utils.exceptions.SQLUtilsException;
+import server.softwarehouse.utils.exceptions.TableNonExistent;
+import server.softwarehouse.utils.sqlcode.SQLOperation;
+import server.softwarehouse.utils.sqlcode.SQLStatements;
+import server.softwarehouse.utils.tables.AuctionTable;
+import server.softwarehouse.utils.tables.BuyoutTable;
+import server.softwarehouse.utils.tables.ItemTable;
+import server.softwarehouse.utils.tables.Table;
 
 import java.util.Map;
 
 public class SQL {
 
 	private static final SQLStatements statements;
+	private static final SQLOperation operation;
 	private static final Map<String, Table> TABLES_ON_DATABASE;
 
 	static {
@@ -25,6 +28,8 @@ public class SQL {
 						auctionTable.getTableName(), auctionTable,
 						buyoutTable.getTableName(), buyoutTable
 		);
+
+		operation = new SQLOperation();
 	}
 
 
@@ -44,28 +49,43 @@ public class SQL {
 		Table item = null,
 						auc = null,
 						buy = null;
-		String[][] conditionOnBothTables = null;
+		String conditionOnBothTables = null;
 		try {
 			item = table("item");
 			auc = table("auction");
 			buy = table("buyout");
-			conditionOnBothTables = new String[][]{{item.getColumn("itemid"), "=", itemID}};
-		} catch (TableNonExistent e) {
+			conditionOnBothTables = operation.make(new String[][]{{item.getColumn("itemid"), "=", itemID}});
+		} catch (SQLUtilsException e) {
 			e.printStackTrace();
 		}
 		assert item != null;
 		return statements.union(new Table[]{auc, buy}, item.getColumns(), conditionOnBothTables);
 	}
 
+	public static String selectAmountOfItems(int amount, String ascOrDesc) {
+		Table auc = null,
+						buy = null,
+						item = null;
+		try {
+			auc = table("auction");
+			buy = table("buyout");
+			item = table("item");
+		} catch (TableNonExistent e) {
+			e.printStackTrace();
+		}
+		assert item != null;
+		return statements.selectAmount(new Table[]{auc, buy}, item.getColumns(), "itemid", ascOrDesc, amount);
+	}
+
 	public static String selectSaleStrategy(String itemID, String saleStrategy) {
 		Table style = null;
 		String[] columnNames = null;
-		String[][] conditions = null;
+		String conditions = null;
 		try {
 			style = table(saleStrategy);
 			columnNames = style.getColumns();
-			conditions = new String[][]{{"itemid", "=", itemID}};
-		} catch (TableNonExistent e) {
+			conditions = operation.make(new String[][]{{"itemid", "=", itemID}});
+		} catch (SQLUtilsException e) {
 			e.printStackTrace();
 		}
 		return statements.select(style, columnNames, conditions);
@@ -73,11 +93,11 @@ public class SQL {
 
 	public static String auctionBought(String itemID) {
 		Table auc = null;
-		String[][] conditions = null;
+		String conditions = null;
 		try {
 			auc = table("auction");
-			conditions = new String[][]{{"itemid", "=", itemID}};
-		} catch (TableNonExistent e) {
+			conditions = operation.make(new String[][]{{"itemid", "=", itemID}});
+		} catch (SQLUtilsException e) {
 			e.printStackTrace();
 		}
 		assert auc != null;
@@ -86,15 +106,16 @@ public class SQL {
 
 	public static String auctionNewBid(String itemID, Double newOffer, String newBidder) {
 		Table auc = null;
-		String[][] columnsToSet = null;
-		String[][] conditions = null;
+		String columnsToSet = null;
+		String conditions = null;
 		try {
 			auc = table("auction");
-			columnsToSet = new String[][]{
-							{auc.getColumn("currentbid"), "=", "" + newOffer, ","},
-							{auc.getColumn("currentbidder"), "=", "'" + newBidder + "'"}};
-			conditions = new String[][]{{"itemid", "=", itemID}};
-		} catch (TableNonExistent e) {
+			columnsToSet = operation.make(new String[][]{
+							{auc.getColumn("currentbid"), ("="), "" + newOffer, ","},
+							{auc.getColumn("currentbidder"), ("="), "'" + newBidder + "'"}});
+			conditions = operation.make(new String[][]{{"itemid", ("="), itemID}});
+			return statements.update(auc, columnsToSet, conditions);
+		} catch (SQLUtilsException e) {
 			e.printStackTrace();
 		}
 		assert auc != null;
@@ -104,12 +125,12 @@ public class SQL {
 	public static String auctionsSoonToFinish(String wantedTime) {
 		Table auc = null;
 		String[] columns = null;
-		String[][] conditions = null;
+		String conditions = null;
 		try {
 			auc = table("auction");
 			columns = new String[]{"itemid", auc.getColumn("auctionenddate")};
-			conditions = new String[][]{{auc.getColumn("auctionenddate"), "<", wantedTime}};
-		} catch (TableNonExistent e) {
+			conditions = operation.make(new String[][]{{auc.getColumn("auctionenddate"), "<", wantedTime}});
+		} catch (SQLUtilsException e) {
 			e.printStackTrace();
 		}
 		return statements.select(auc, columns, conditions);
@@ -117,13 +138,13 @@ public class SQL {
 
 	public static String buyoutBought(String itemID, String buyerUsername) {
 		Table buy = null;
-		String[][] columnsToSet = null;
-		String[][] conditions = null;
+		String columnsToSet = null;
+		String conditions = null;
 		try {
 			buy = table("buyout");
-			columnsToSet = new String[][]{{buy.getColumn("buyer"), "=", "'" + buyerUsername + "'"}};
-			conditions = new String[][]{{"itemid", "=", itemID}};
-		} catch (TableNonExistent e) {
+			columnsToSet = operation.make(new String[][]{{buy.getColumn("buyer"), "=", "'" + buyerUsername + "'"}});
+			conditions = operation.make(new String[][]{{"itemid", "=", itemID}});
+		} catch (SQLUtilsException e) {
 			e.printStackTrace();
 		}
 		assert buy != null;

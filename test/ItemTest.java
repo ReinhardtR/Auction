@@ -9,7 +9,6 @@ import shared.SaleStrategyType;
 import shared.network.model.GenerelItems;
 
 import java.rmi.RemoteException;
-import java.time.DateTimeException;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,7 +22,7 @@ public class ItemTest {
 
 	@BeforeEach
 	void createTestItem() throws RemoteException {
-		testItem = new ItemImpl("123", new AuctionStrategy(0,"tis", LocalDateTime.of(2022, 5, 16, 11, 20)));
+		testItem = new ItemImpl("123", new AuctionStrategy(0, "tis", LocalDateTime.of(2022, 5, 16, 11, 20)));
 		observableTestItem = new ObservableItem(null, testItem);
 
 		brokenTestItem = new ItemImpl(null, null);
@@ -32,7 +31,7 @@ public class ItemTest {
 
 	//UserSale Strategy ZOMBIES
 	@Test
-	@DisplayName("Testing currentBid increases for every new offer")
+	@DisplayName("Testing currentBid increases with higher offers")
 	public void auctionBiddingUpTest() throws RemoteException {
 		assertEquals(0, testItem.getOfferAmount());
 
@@ -41,8 +40,15 @@ public class ItemTest {
 
 		observableTestItem.userSaleStrategy(2000, "TestName2");
 		assertEquals(2000, testItem.getOfferAmount());
+	}
 
-		observableTestItem.userSaleStrategy(1000, "TestName1");
+	@Test
+	@DisplayName("Testing currentBid does not increase with a offer not high enough")
+	public void toLowBidTest() throws RemoteException {
+		observableTestItem.userSaleStrategy(2000, "TestName1");
+		assertEquals(2000, testItem.getOfferAmount());
+
+		observableTestItem.userSaleStrategy(1000, "TestName2");
 		assertEquals(2000, testItem.getOfferAmount());
 	}
 
@@ -62,6 +68,7 @@ public class ItemTest {
 		//Ingen strategy er sat vi forventer der bliver throwet en null pointer
 		assertThrows(NullPointerException.class, () -> brokenObservableItem.userSaleStrategy(-123, ""));
 	}
+
 
 	@Test
 	@DisplayName("Testing itemID when is null")

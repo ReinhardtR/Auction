@@ -32,6 +32,7 @@ public class ItemListController implements ViewController {
 		idCol.setCellValueFactory(new PropertyValueFactory<>("itemID"));
 		typeCol.setCellValueFactory(new PropertyValueFactory<>("strategyType"));
 
+		System.out.println("kalder her");
 		itemsTableView.setItems(viewModelFactory.getItemListViewModel().getObservableItemList());
 
 		itemListViewModel = viewModelFactory.getItemListViewModel();

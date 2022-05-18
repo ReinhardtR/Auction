@@ -1,7 +1,7 @@
 package server.model.item;
 
-import server.softwarehouseacces.DatabaseAccess;
-import server.softwarehouseacces.DatabaseIO;
+import server.softwarehouse.DatabaseAccess;
+import server.softwarehouse.DatabaseIO;
 import shared.EventType;
 import shared.utils.PropertyChangeSubject;
 
@@ -42,6 +42,11 @@ public class Cart implements PropertyChangeSubject {
 		List<Item> itemsInCart = new ArrayList<>();
 
 		items.forEach((itemID, item) -> {
+			try {
+				System.out.println(item.getItemID());
+			} catch (RemoteException e) {
+				throw new RuntimeException(e);
+			}
 			itemsInCart.add(item);
 		});
 
@@ -58,8 +63,13 @@ public class Cart implements PropertyChangeSubject {
 	public void itemBought(Item item) throws RemoteException {
 
 
+		System.out.println("Before selling");
 		//FØR DATABASE MERGE
-		database.buyoutItemBought(items.get(item.getItemID()));
+		try {
+			database.buyoutItemBought(item);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 		items.remove(item.getItemID());
 		support.firePropertyChange(EventType.ITEM_SOLD.toString(), null, item.getItemID());
 		System.out.println("SOLD TO THE MAN IN BLUe");
@@ -70,19 +80,31 @@ public class Cart implements PropertyChangeSubject {
 	} //Midlertidig
 
 	public void updateItemOffer(Item item) {
-		database.updateAuctionOffer(item);
+		try {
+			database.updateAuctionOffer(item);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
-	//TIL TEST AF KØB USECASE
-	public void addItem(Item item) throws SQLException {
+	//TIL LAV ITEM USECASE
+	public void addItem() throws RemoteException {
 
 		//manuelt for testing
-		items.put("1", database.getItem(1));
-		items.put("2", database.getItem(2));
-
 
 		//FØR DATABASE MERGE
 		//items.put(item.getItemID(), item);
+	}
+
+	public void getManyItems() throws RemoteException {
+		try {
+
+			for (Item item : database.getAmountOfItems(10, "asc")) {
+				items.put(item.getItemID(), item);
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public void addListenerToAllEvents(PropertyChangeListener listener) {

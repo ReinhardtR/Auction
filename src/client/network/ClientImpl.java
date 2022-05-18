@@ -1,7 +1,7 @@
 package client.network;
 
-import shared.network.client.SharedClient;
 import server.model.item.Item;
+import shared.network.client.SharedClient;
 import shared.network.server.Server;
 
 import java.beans.PropertyChangeListener;

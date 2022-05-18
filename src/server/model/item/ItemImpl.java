@@ -19,8 +19,6 @@ public class ItemImpl extends UnicastRemoteObject implements Item {
 	public ItemImpl(String itemID, SaleStrategy strategy) throws RemoteException {
 		this.itemID = itemID;
 		this.strategy = strategy;
-
-		isSold = false; // take as parameter I guess
 		broadcaster = new UpdateBroadcasterImpl();
 	}
 
@@ -56,7 +54,17 @@ public class ItemImpl extends UnicastRemoteObject implements Item {
 
 	@Override
 	public void userSaleStrategy(double amount, String username) throws RemoteException {
+		System.out.println("still buying");
 		strategy.offer(this, amount, username);
 		Cart.getInstance().updateItemOffer(this);
+	}
+
+	@Override
+	public String toString() {
+		return "ItemImpl{" +
+						"broadcaster=" + broadcaster +
+						", itemID='" + itemID + '\'' +
+						", strategy=" + strategy +
+						'}';
 	}
 }

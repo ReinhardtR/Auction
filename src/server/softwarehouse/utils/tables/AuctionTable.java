@@ -1,4 +1,4 @@
-package server.softwarehouseacces.utils.tables;
+package server.softwarehouse.utils.tables;
 
 public class AuctionTable extends Table {
 	public AuctionTable() {

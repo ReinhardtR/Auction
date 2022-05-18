@@ -33,7 +33,9 @@ public class ItemListImpl implements ItemList {
 
 		try {
 			for (Item item : client.getAllItems()) {
+				System.out.println(item.getItemID() + "IN DA LOOP");
 				items.put(item.getItemID(), item);
+
 				observableItemList.add(new ObservableItem(client, item));
 			}
 		} catch (RemoteException e) {
@@ -46,6 +48,7 @@ public class ItemListImpl implements ItemList {
 	@Override
 	public ObservableItem getCurrentlyViewedItem() {
 		try {
+			//Laver proxy af Item
 			return new ObservableItem(client, currentlyViewedItem);
 		} catch (RemoteException e) {
 			e.printStackTrace();

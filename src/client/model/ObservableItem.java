@@ -34,12 +34,10 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 		}
 	}
 
-
 	@Override
 	public String getItemID() {
 		return itemID;
 	}
-
 
 	@Override
 	public Temporal getEndTimestamp() {
@@ -76,11 +74,6 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 	@Override
 	public String getBuyerUsername() throws RemoteException {
 		return null;
-	}
-
-	@Override
-	public void setAsSold() throws RemoteException {
-
 	}
 
 	public void propertyChange(PropertyChangeEvent event) {

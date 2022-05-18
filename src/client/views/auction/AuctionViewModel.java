@@ -1,9 +1,13 @@
 package client.views.auction;
 
+import client.model.ItemCalculations;
 import client.model.ObservableItem;
 import client.utils.SystemNotifcation;
 import javafx.application.Platform;
-import javafx.beans.property.*;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import shared.utils.TimedTask;
 
 import java.beans.PropertyChangeEvent;
@@ -33,8 +37,12 @@ public class AuctionViewModel implements PropertyChangeListener {
 	}
 
 	public void bidOnItem(double offer) {
-		item.userSaleStrategy(offer, "Reinhardt");
+		if (ItemCalculations.isNewBidHigher(offer, item)) {
+			item.userSaleStrategy(offer, "Reinhardt");
+
+		}
 	}
+
 
 	public StringProperty propertyItemLabel() {
 		return itemText;
