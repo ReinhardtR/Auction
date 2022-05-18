@@ -1,7 +1,7 @@
 package server;
 
 
-import server.network.ServerImpl;
+import server.view.ServerImpl;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
