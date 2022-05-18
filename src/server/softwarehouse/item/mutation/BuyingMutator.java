@@ -45,6 +45,7 @@ public class BuyingMutator {
 
 	public void newBid(Connection c, ItemImpl item) throws SQLException {
 		PreparedStatement itemNewBidTruAuction = null;
+
 		try {
 			itemNewBidTruAuction = c.prepareStatement(
 							SQL.auctionNewBid(item.getItemID(), item.getOfferAmount(), item.getBuyerUsername())
@@ -55,8 +56,8 @@ public class BuyingMutator {
 
 		if (itemNewBidTruAuction == null) throw new SQLException("itemNewBidTruAuction was null");
 		itemNewBidTruAuction.execute();
-
 		itemNewBidTruAuction.close();
+
 		c.close();
 	}
 

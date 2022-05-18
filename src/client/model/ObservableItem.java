@@ -34,12 +34,10 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 		}
 	}
 
-
 	@Override
 	public String getItemID() {
 		return itemID;
 	}
-
 
 	@Override
 	public Temporal getEndTimestamp() {
@@ -48,13 +46,12 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 
 	@Override
 	public void userSaleStrategy(double amount, String username) {
-
-
-		System.out.println("MODEL: " + amount);
-		try {
-			item.userSaleStrategy(amount, username);
-		} catch (RemoteException e) {
-			e.printStackTrace();
+		if (ItemCalculations.isNewBidHigher(amount, this)) {
+			try {
+				item.userSaleStrategy(amount, username);
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

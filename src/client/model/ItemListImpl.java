@@ -28,7 +28,7 @@ public class ItemListImpl implements ItemList {
 	}
 
 	@Override
-	public List<ObservableItem> getAllItemsFromServer() {
+	public List<ObservableItem> getItemList() {
 		List<ObservableItem> observableItemList = new ArrayList<>();
 
 		try {

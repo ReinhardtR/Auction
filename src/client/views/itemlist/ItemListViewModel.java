@@ -5,6 +5,7 @@ import client.model.ItemList;
 import client.model.ObservableItem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import shared.EventType;
 import shared.SaleStrategyType;
 
 import java.beans.PropertyChangeEvent;
@@ -16,10 +17,9 @@ public class ItemListViewModel implements PropertyChangeListener {
 
 	public ItemListViewModel(ItemList itemList) {
 		this.itemList = itemList;
-		this.itemList.addListener("ITEM_SOLD", this);
 
-		System.out.println("");
-		observableList = FXCollections.observableList(this.itemList.getAllItemsFromServer());
+		itemList.addListener(EventType.ITEM_SOLD.toString(), this);
+		observableList = FXCollections.observableList(itemList.getItemList());
 	}
 
 	public ObservableList<ObservableItem> getObservableItemList() {
