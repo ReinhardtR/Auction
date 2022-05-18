@@ -47,7 +47,6 @@ public class ItemSelector {
 		ResultSet itemsToGetInformationFor = amountOfItemsStatement.executeQuery();
 
 		while (itemsToGetInformationFor.next()) {
-			itemsToGetInformationFor.next();
 			itemsToReturn.add(itemCreation(c, itemsToGetInformationFor));
 		}
 		amountOfItemsStatement.close();
