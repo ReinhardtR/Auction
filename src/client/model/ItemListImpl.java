@@ -1,9 +1,9 @@
 package client.model;
 
 import client.network.LocalClient;
+import server.model.item.Item;
 import shared.EventType;
 import shared.network.client.SharedClient;
-import server.model.item.Item;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -28,7 +28,7 @@ public class ItemListImpl implements ItemList {
 	}
 
 	@Override
-	public List<ObservableItem> getAllItemsFromServer() {
+	public List<ObservableItem> getItemList() {
 		List<ObservableItem> observableItemList = new ArrayList<>();
 
 		try {

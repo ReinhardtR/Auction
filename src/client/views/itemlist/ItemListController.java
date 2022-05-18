@@ -15,8 +15,10 @@ public class ItemListController implements ViewController {
 
 	@FXML
 	private TableColumn<ObservableItem, SaleStrategyType> typeCol;
+
 	@FXML
 	private Label errorLabel;
+	
 	@FXML
 	private TableColumn<ObservableItem, String> idCol;
 

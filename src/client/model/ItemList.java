@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ItemList extends PropertyChangeSubject {
 
-	List<ObservableItem> getAllItemsFromServer();
+	List<ObservableItem> getItemList();
 
 	ObservableItem getCurrentlyViewedItem();
 

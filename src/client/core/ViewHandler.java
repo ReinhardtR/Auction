@@ -1,6 +1,5 @@
 package client.core;
 
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class ViewHandler {
@@ -17,12 +16,11 @@ public class ViewHandler {
 	public void start() {
 		stage = new Stage();
 		ViewFactory.init(stage);
-		openAuctionListView();
+		openItemListView();
 	}
 
-	public void openAuctionListView() {
-		Scene auctionListScene = ViewFactory.getScene("ItemList");
-		stage.setScene(auctionListScene);
+	public void openItemListView() {
+		stage.setScene(ViewFactory.getScene("ItemList"));
 		stage.show();
 	}
 
