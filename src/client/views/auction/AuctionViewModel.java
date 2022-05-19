@@ -20,12 +20,14 @@ public class AuctionViewModel implements PropertyChangeListener {
 	private final StringProperty itemText;
 	private final DoubleProperty currentHighestBid;
 	private final StringProperty timeLeft;
+	private final StringProperty errorText;
 	private final ObservableItem item;
 
 	public AuctionViewModel(ObservableItem item) {
 		itemText = new SimpleStringProperty();
 		currentHighestBid = new SimpleDoubleProperty();
 		timeLeft = new SimpleStringProperty();
+		errorText = new SimpleStringProperty();
 
 		this.item = item;
 		item.addListener(item.getItemID(), this);
@@ -36,13 +38,19 @@ public class AuctionViewModel implements PropertyChangeListener {
 		runTimeSimulation(item.getEndTimestamp());
 	}
 
-	public void bidOnItem(double offer) {
-		if (ItemCalculations.isNewBidHigher(offer, item)) {
-			item.userSaleStrategy(offer, "Reinhardt");
+	public void bidOnItem(String offerInputText) {
+		try {
+			double offer = Double.parseDouble(offerInputText);
 
+			if (ItemCalculations.isNewBidHigher(offer, item)) {
+				item.userSaleStrategy(offer, "Reinhardt");
+			} else {
+				errorText.setValue("You need to bid higher than the current bid.");
+			}
+		} catch (NumberFormatException | NullPointerException e) {
+			errorText.setValue("Please type a valid number as your bid.");
 		}
 	}
-
 
 	public StringProperty propertyItemLabel() {
 		return itemText;
@@ -54,6 +62,10 @@ public class AuctionViewModel implements PropertyChangeListener {
 
 	public StringProperty propertyTimeLeft() {
 		return timeLeft;
+	}
+
+	public StringProperty propertyErrorText() {
+		return errorText;
 	}
 
 	@Override
