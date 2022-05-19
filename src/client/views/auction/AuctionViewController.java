@@ -29,17 +29,11 @@ public class AuctionViewController implements ViewController {
 		itemLabel.textProperty().bind(auctionViewModel.propertyItemLabel());
 		currentBid.textProperty().bind(auctionViewModel.propertyCurrentBid().asString());
 		timeLeftOnBid.textProperty().bind(auctionViewModel.propertyTimeLeft());
-
-		inputError.setText("");
+		inputError.textProperty().bind(auctionViewModel.propertyErrorText());
 	}
 
 	@FXML
 	protected void bidOnItem() {
-		try {
-			auctionViewModel.bidOnItem(Double.parseDouble(bidInput.getText()));
-			inputError.setText("");
-		} catch (NumberFormatException e) {
-			inputError.setText("You have to type in a number!");
-		}
+		auctionViewModel.bidOnItem(bidInput.getText());
 	}
 }
