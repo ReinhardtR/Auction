@@ -114,7 +114,6 @@ public class SQL {
 							{auc.getColumn("currentbid"), ("="), "" + newOffer, ","},
 							{auc.getColumn("currentbidder"), ("="), "'" + newBidder + "'"}});
 			conditions = operation.make(new String[][]{{"itemid", ("="), itemID}});
-			return statements.update(auc, columnsToSet, conditions);
 		} catch (SQLUtilsException e) {
 			e.printStackTrace();
 		}
