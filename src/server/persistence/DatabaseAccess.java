@@ -3,8 +3,10 @@ package server.persistence;
 import server.model.item.Item;
 import server.model.item.ItemImpl;
 import server.persistence.item.mutation.BuyingMutator;
-import server.persistence.item.select.ItemSelector;
+import server.persistence.item.select.ItemSelectorImpl;
 import server.persistence.utils.SQL;
+import server.persistence.utils.resultSetAdapter.ResultSetAdapter;
+import server.persistence.utils.resultSetAdapter.ResultSetAdapterImpl;
 
 import java.beans.PropertyChangeEvent;
 import java.sql.Connection;
@@ -13,14 +15,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class DatabaseAccess implements DatabaseIO {
-	private final ItemSelector itemSelector;
 	private final BuyingMutator buyingMutator;
 	private final long ONE_HOUR_IN_MILLI;
+	private final ResultSetAdapter resultSetAdapter;
 
 	public DatabaseAccess() {
-		itemSelector = new ItemSelector();
 		buyingMutator = new BuyingMutator();
 		ONE_HOUR_IN_MILLI = 3600000;
+		resultSetAdapter = new ResultSetAdapterImpl();
 
 		//checkAuctionTimers();
 	}
@@ -72,12 +74,16 @@ public class DatabaseAccess implements DatabaseIO {
 
 	@Override
 	public synchronized Item getItem(String itemID) throws SQLException {
-		return itemSelector.fetchItem(createConnection(), itemID);
+
+		//itemSelector.fetchItem(createConnection(), itemID);
+		return resultSetAdapter.fetchItem(createConnection(),itemID);
 	}
 
 	@Override
 	public ArrayList<Item> getAmountOfItems(int amount, String ascOrDesc) throws SQLException {
-		return itemSelector.fetchAmountOfItems(createConnection(), amount, ascOrDesc);
+
+		//itemSelector.fetchAmountOfItems(createConnection(), amount, ascOrDesc);
+		return resultSetAdapter.fetchAmountOfItems(createConnection(),amount,ascOrDesc);
 	}
 
 	@Override
