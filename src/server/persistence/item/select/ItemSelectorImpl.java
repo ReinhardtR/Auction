@@ -16,12 +16,8 @@ public class ItemSelectorImpl implements ItemSelector {
 		return c.prepareStatement(SQL.selectItem(itemID)).executeQuery();
 	}
 
-	public ResultSet fetchAmountOfItems(Connection c, int amount, String ascOrDesc, PreparedStatement statement) throws SQLException {
-
-		PreparedStatement amountOfItemsStatement = c.prepareStatement(SQL.selectAmountOfItems(amount, ascOrDesc));
-
-
-		return amountOfItemsStatement.executeQuery();
+	public ResultSet fetchAmountOfItems(Connection c, int amount, String ascOrDesc) throws SQLException {
+		return c.prepareStatement(SQL.selectAmountOfItems(amount, ascOrDesc)).executeQuery();
 	}
 
 }

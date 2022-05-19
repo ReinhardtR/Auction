@@ -44,20 +44,16 @@ public class ResultSetAdapterImpl implements ResultSetAdapter {
 	@Override
 	public ArrayList<Item> fetchAmountOfItems(Connection c, int amount, String ascOrDesc) {
 		ArrayList<Item> itemsToReturn = new ArrayList<>();
-		PreparedStatement statement = null;
-		ResultSet resultset = null;
-
-
 		try {
-			resultset = itemSelector.fetchAmountOfItems(c, amount, ascOrDesc, statement);
+			ResultSet resultset = itemSelector.fetchAmountOfItems(c, amount, ascOrDesc);
 
-
-			while (resultset.next()) {
-				itemsToReturn.add(itemCreation(c, resultset));
+			if (resultset != null) {
+				while (resultset.next()) {
+					itemsToReturn.add(itemCreation(c, resultset));
+				}
 			}
 
 			c.close();
-			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
