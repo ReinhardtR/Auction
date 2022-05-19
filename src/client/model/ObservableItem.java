@@ -46,12 +46,10 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 
 	@Override
 	public void userSaleStrategy(double amount, String username) {
-		if (ItemCalculations.isNewBidHigher(amount, this)) {
-			try {
-				item.userSaleStrategy(amount, username);
-			} catch (RemoteException e) {
-				e.printStackTrace();
-			}
+		try {
+			item.userSaleStrategy(amount, username);
+		} catch (RemoteException e) {
+			e.printStackTrace();
 		}
 	}
 
