@@ -43,6 +43,7 @@ public class AuctionViewModel implements PropertyChangeListener {
 			double offer = Double.parseDouble(offerInputText);
 
 			if (ItemCalculations.isNewBidHigher(offer, item)) {
+				errorText.setValue(null);
 				item.userSaleStrategy(offer, "Reinhardt");
 			} else {
 				errorText.setValue("You need to bid higher than the current bid.");
