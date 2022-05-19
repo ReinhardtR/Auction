@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public interface ItemSelector {
 
-	ResultSet fetchItem(Connection c, String itemID, PreparedStatement statement) throws SQLException;
+	ResultSet fetchItem(Connection c, String itemID) throws SQLException;
 
 	ResultSet fetchAmountOfItems(Connection c, int amount, String ascOrDesc, PreparedStatement statement) throws SQLException;
 
