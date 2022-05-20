@@ -37,10 +37,10 @@ class SQLStatementsTest {
 		assertEquals("SELECT COALESCE(test.test1, test.test1) as test1, " +
 										"COALESCE(test.test2, test.test2) as test2, " +
 										"COALESCE(test.test3, test.test3) as test3 " +
-										"FROM auction " +
-										"FULL JOIN buyout on auction.itemid = buyout.itemid " +
+										"FROM \"testSchema\".test " +
+										"FULL JOIN test on test.test1 = test.test1 " +
 										"ORDER BY test1 " +
 										"ASC FETCH FIRST 10 ROWS ONLY"
-						, statements.selectAmount(new Table[]{test, test}, new String[]{"test1", "test2", "test3"}, "test1", "ASC", 10));
+						, statements.selectCoalesce(new Table[]{test, test}, new String[]{"test1", "test2", "test3"}, "test1", "ASC", 10));
 	}
 }

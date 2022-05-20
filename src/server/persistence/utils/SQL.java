@@ -39,9 +39,9 @@ public class SQL {
 		try {
 			Table auc = tables.getTable("auction"),
 							buy = tables.getTable("buyout");
-			String[] cummonColumns = auc.getCummonColumns(buy);
+			String[] commonColumns = auc.getCummonColumns(buy);
 			String conditionOnBothTables = operation.make(new String[][]{{"itemid", "=", itemID}});
-			return statements.union(new Table[]{auc, buy}, cummonColumns, conditionOnBothTables);
+			return statements.union(new Table[]{auc, buy}, commonColumns, conditionOnBothTables);
 		} catch (SQLUtilsException e) {
 			e.printStackTrace();
 			return null;
@@ -52,7 +52,8 @@ public class SQL {
 		try {
 			Table auc = tables.getTable("auction"),
 							buy = tables.getTable("buyout");
-			return statements.selectAmount(new Table[]{auc, buy}, auc.getCummonColumns(buy), "itemid", ascOrDesc, amount);
+			System.out.println(statements.selectCoalesce(new Table[]{auc, buy}, auc.getCummonColumns(buy), "itemid", ascOrDesc, amount));
+			return statements.selectCoalesce(new Table[]{auc, buy}, auc.getCummonColumns(buy), "itemid", ascOrDesc, amount);
 		} catch (TableNonExistent e) {
 			e.printStackTrace();
 			return null;
