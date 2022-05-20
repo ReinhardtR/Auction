@@ -3,7 +3,6 @@ package server.persistence;
 import server.model.item.Item;
 import server.model.item.ItemImpl;
 import server.persistence.item.mutation.BuyingMutator;
-import server.persistence.item.select.ItemSelectorImpl;
 import server.persistence.utils.SQL;
 import server.persistence.utils.resultSetAdapter.ResultSetAdapter;
 import server.persistence.utils.resultSetAdapter.ResultSetAdapterImpl;
@@ -24,6 +23,7 @@ public class DatabaseAccess implements DatabaseIO {
 		ONE_HOUR_IN_MILLI = 3600000;
 		resultSetAdapter = new ResultSetAdapterImpl();
 
+		SQL.constructDatabaseTables(createConnection());
 		//checkAuctionTimers();
 	}
 
@@ -76,14 +76,14 @@ public class DatabaseAccess implements DatabaseIO {
 	public synchronized Item getItem(String itemID) throws SQLException {
 
 		//itemSelector.fetchItem(createConnection(), itemID);
-		return resultSetAdapter.fetchItem(createConnection(),itemID);
+		return resultSetAdapter.fetchItem(createConnection(), itemID);
 	}
 
 	@Override
 	public ArrayList<Item> getAmountOfItems(int amount, String ascOrDesc) throws SQLException {
 
 		//itemSelector.fetchAmountOfItems(createConnection(), amount, ascOrDesc);
-		return resultSetAdapter.fetchAmountOfItems(createConnection(),amount,ascOrDesc);
+		return resultSetAdapter.fetchAmountOfItems(createConnection(), amount, ascOrDesc);
 	}
 
 	@Override

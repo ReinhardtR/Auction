@@ -8,51 +8,37 @@ import server.persistence.utils.exceptions.ColumnNonExistent;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TableTest {
-	Table auction;
-	Table buyout;
+	Table test1;
+	Table test2;
 
 	@BeforeEach
 	void setUp() {
-		auction = new AuctionTable();
-		buyout = new BuyoutTable();
-	}
-
-	@Test
-	@DisplayName("Check if all tables have the agreed upon schema location")
-	void getSchemaTest() {
-		assertEquals("public", auction.schemaName, "Should be true, if not check if schema name on database = " + auction.schemaName + " and update either AuctionTable or Test to represent");
-		assertEquals("public", buyout.schemaName, "Should be true, if not check if schema name on database = " + buyout.schemaName + " and update either BuyoutTable or Test to represent");
-	}
-
-	@Test
-	@DisplayName("Check if all tables have the agreed upon table name")
-	void getTableTest() {
-		assertEquals("auction", auction.tableName, "Should be true, if not check if table name on database = " + auction.tableName + " and update either AuctionTable or Test to represent");
-		assertEquals("buyout", buyout.tableName, "Should be true, if not check if table name on database = " + buyout.tableName + " and update either BuyoutTable or Test to represent");
+		test1 = new Table("test1Schema", "test1");
+		test2 = new Table("test2Schema", "test2");
+		test1.addColumn("test");
+		test2.addColumn("test");
 	}
 
 	@Test
 	@DisplayName("Check getColumn with AuctionTable as test subject")
 	void getColumnTest() {
 		assertAll("Checking Sunnyside for Table.getColumn",
-						() -> assertEquals("currentbid", auction.getColumn("currentbid")),
-						() -> assertEquals("currentbid", auction.getColumn("CurReNtbiD"), "Should work since method isn't case sensitive"),
-						() -> assertEquals("currentbid", auction.getColumn("     currentbid         "), "Should work since string gets stripped")
+						() -> assertEquals("test", test1.getColumn("test")),
+						() -> assertEquals("test", test1.getColumn("TeSt"), "Should work since method isn't case sensitive"),
+						() -> assertEquals("test", test1.getColumn("     test         "), "Should work since string gets stripped")
 		);
 	}
 
 	@Test
 	@DisplayName("Check getColumn Throw of ColumnNonExistent with AuctionTable as test subject")
 	void checkGetColumnThrowTest() {
-		assertThrows(ColumnNonExistent.class, () -> auction.getColumn("test"), "Should throw since column is non existent");
+		assertThrows(ColumnNonExistent.class, () -> test1.getColumn("testt"), "Should throw since column is non existent");
 	}
 
 	@Test
 	void getColumnsTest() {
-		String[] aucSupposedColumns = {"currentbid", "currentbidder", "auctionenddate"};
-		String[] buySupposedColumns = {"price", "buyer"};
-		assertTrue(columnChecks(auction, aucSupposedColumns));
-		assertTrue(columnChecks(buyout, buySupposedColumns));
+		String[] test1SupposedColumns = {"test"};
+		assertTrue(columnChecks(test1, test1SupposedColumns));
 	}
 
 	private boolean columnChecks(Table tableToCheck, String[] supposedColumns) {
