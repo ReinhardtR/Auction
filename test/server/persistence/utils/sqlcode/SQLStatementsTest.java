@@ -22,7 +22,7 @@ class SQLStatementsTest {
 
 	@Test
 	void testDelete() {
-		assertEquals("DELETE \"testSchema\".test WHERE test = true", statements.delete(test, "test = true"));
+		assertEquals("DELETE FROM \"testSchema\".test WHERE test = true", statements.delete(test, "test = true"));
 	}
 
 	@Test

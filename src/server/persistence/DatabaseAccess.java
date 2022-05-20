@@ -24,7 +24,7 @@ public class DatabaseAccess implements DatabaseIO {
 		resultSetAdapter = new ResultSetAdapterImpl();
 
 		SQL.constructDatabaseTables(createConnection());
-		//checkAuctionTimers();
+		checkAuctionTimers();
 	}
 
 	private Connection createConnection() {
@@ -64,7 +64,7 @@ public class DatabaseAccess implements DatabaseIO {
 		auctionItemBought((String) propertyChangeEvent.getNewValue());
 	}
 
-	private void auctionItemBought(String itemID) {
+	private synchronized void auctionItemBought(String itemID) {
 		try {
 			buyingMutator.auctionBought(createConnection(), itemID);
 		} catch (SQLException e) {

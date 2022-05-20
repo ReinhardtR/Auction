@@ -104,7 +104,7 @@ public class SQLStatements {
 	}
 
 	public String delete(Table tableInUse, String conditions) {
-		return "DELETE \"" + tableInUse.getSchema() + "\"." + tableInUse.getTableName() + where(conditions);
+		return "DELETE" + from(tableInUse) + where(conditions);
 	}
 
 	public String from(Table tableInUse) {
