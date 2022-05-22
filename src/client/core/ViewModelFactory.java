@@ -22,9 +22,7 @@ public class ViewModelFactory {
 	}
 
 	public ItemListViewModel getItemListViewModel() {
-		if (itemListViewModel == null) {
-			itemListViewModel = new ItemListViewModelImpl(ModelFactory.getInstance().getObservableItemList());
-		}
+		itemListViewModel = new ItemListViewModelImpl(ModelFactory.getInstance().getObservableItemList());
 		return itemListViewModel;
 	}
 

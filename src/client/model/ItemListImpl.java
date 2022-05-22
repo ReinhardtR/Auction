@@ -33,7 +33,6 @@ public class ItemListImpl implements ItemList {
 
 		try {
 			for (Item item : client.getAllItems()) {
-				System.out.println(item.getItemID() + "IN DA LOOP");
 				items.put(item.getItemID(), item);
 
 				observableItemList.add(new ObservableItem(client, item));
