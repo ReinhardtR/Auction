@@ -46,4 +46,8 @@ public class BuyoutViewModelImpl implements BuyoutViewModel{
 	public void propertyChange(PropertyChangeEvent event) {
 		// TODO: sold property?
 	}
+	@Override
+	public void returnToItemListView() {
+
+	}
 }

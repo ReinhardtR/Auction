@@ -1,6 +1,7 @@
 package client.model;
 
 import client.network.LocalClient;
+import server.model.broadcaster.UpdateBroadcaster;
 import server.model.item.Item;
 import shared.EventType;
 import shared.SaleStrategyType;
@@ -13,7 +14,7 @@ import java.beans.PropertyChangeSupport;
 import java.rmi.RemoteException;
 import java.time.temporal.Temporal;
 
-public class ObservableItem implements PropertyChangeListener, PropertyChangeSubject, GenerelItems {
+public class ObservableItem implements PropertyChangeListener, PropertyChangeSubject, Item {
 	private final PropertyChangeSupport support;
 	private final Item item;
 	private final String itemID;
@@ -86,5 +87,10 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 	@Override
 	public void removeListener(String eventName, PropertyChangeListener listener) {
 		support.addPropertyChangeListener(eventName, listener);
+	}
+
+	@Override
+	public UpdateBroadcaster getUpdateBroadcaster() throws RemoteException {
+		return item.getUpdateBroadcaster();
 	}
 }

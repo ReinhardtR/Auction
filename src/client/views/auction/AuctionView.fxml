@@ -30,4 +30,5 @@
     <Button layoutX="408.0" layoutY="311.0" mnemonicParsing="false" onAction="#bidOnItem" text="Submit" />
     <Label fx:id="itemLabel" layoutX="307.0" layoutY="283.0" text="THE ITEM" />
    <Label fx:id="inputError" layoutX="293.0" layoutY="343.0" text="Label" textFill="#fc2a2a" />
+   <Button layoutX="18.0" layoutY="348.0" mnemonicParsing="false" text="Return" onAction="#returnToList"/>
 </AnchorPane>

@@ -3,6 +3,7 @@ package client.views.auction;
 import client.core.ViewHandler;
 import client.core.ViewModelFactory;
 import client.views.ViewController;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -49,5 +50,8 @@ public class AuctionViewController implements ViewController {
 	@FXML
 	protected void bidOnItem() {
 		auctionViewModel.bidOnItem(bidInput.getText());
+	}
+
+	public void returnToList(ActionEvent actionEvent) {
 	}
 }

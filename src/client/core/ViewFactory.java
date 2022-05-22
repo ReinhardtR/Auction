@@ -29,7 +29,10 @@ public class ViewFactory {
 			@Override
 			public void handle(WindowEvent event) {
 				try {
-					ClientFactory.getInstance().getClient().unregisterClient();
+					ClientImpl client = (ClientImpl) ClientFactory.getInstance().getClient();
+
+					client.unregisterClient();
+					ModelFactory.getInstance().getObservableItemList().getCurrentlyViewedItem().getUpdateBroadcaster().unregisterClient(client);
 				} catch (RemoteException e) {
 					throw new RuntimeException(e);
 				}

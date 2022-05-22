@@ -3,6 +3,7 @@ package client.views.buyout;
 import client.core.ViewHandler;
 import client.core.ViewModelFactory;
 import client.views.ViewController;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
@@ -26,4 +27,7 @@ public class BuyoutViewController implements ViewController {
 	}
 
 
+	public void returnToList(ActionEvent actionEvent) {
+		viewModel.returnToItemListView();
+	}
 }
