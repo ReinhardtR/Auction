@@ -1,8 +1,11 @@
 package client.core;
 
 import client.views.auction.AuctionViewModel;
+import client.views.auction.AuctionViewModelImpl;
 import client.views.buyout.BuyoutViewModel;
+import client.views.buyout.BuyoutViewModelImpl;
 import client.views.itemlist.ItemListViewModel;
+import client.views.itemlist.ItemListViewModelImpl;
 
 public class ViewModelFactory {
 	private static final ViewModelFactory instance = new ViewModelFactory();
@@ -20,14 +23,14 @@ public class ViewModelFactory {
 
 	public ItemListViewModel getItemListViewModel() {
 		if (itemListViewModel == null) {
-			itemListViewModel = new ItemListViewModel(ModelFactory.getInstance().getObservableItemList());
+			itemListViewModel = new ItemListViewModelImpl(ModelFactory.getInstance().getObservableItemList());
 		}
 		return itemListViewModel;
 	}
 
 	public AuctionViewModel getAuctionViewModel() {
 		if (auctionViewModel == null) {
-			auctionViewModel = new AuctionViewModel(ModelFactory.getInstance().getObservableItemList().getCurrentlyViewedItem());
+			auctionViewModel = new AuctionViewModelImpl(ModelFactory.getInstance().getObservableItemList().getCurrentlyViewedItem());
 		}
 
 		return auctionViewModel;
@@ -35,7 +38,7 @@ public class ViewModelFactory {
 
 	public BuyoutViewModel getBuyoutViewModel() {
 		if (buyoutViewModel == null) {
-			buyoutViewModel = new BuyoutViewModel(ModelFactory.getInstance().getObservableItemList().getCurrentlyViewedItem());
+			buyoutViewModel = new BuyoutViewModelImpl(ModelFactory.getInstance().getObservableItemList().getCurrentlyViewedItem());
 		}
 
 		return buyoutViewModel;

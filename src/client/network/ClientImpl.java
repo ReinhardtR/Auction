@@ -32,6 +32,7 @@ public class ClientImpl extends UnicastRemoteObject implements SharedClient, Loc
 		}
 
 		support.firePropertyChange(eventName, null, itemID);
+
 	}
 
 	// Not used
@@ -44,6 +45,12 @@ public class ClientImpl extends UnicastRemoteObject implements SharedClient, Loc
 	public List<Item> getAllItems() throws RemoteException {
 		return server.getAllItemsInCart();
 	}
+
+	@Override
+	public void unregisterClient() throws RemoteException {
+		server.getBroadcaster().unregisterClient(this);
+	}
+
 
 	@Override
 	public void addListener(String eventName, PropertyChangeListener listener) {

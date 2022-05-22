@@ -24,4 +24,6 @@ public class BuyoutViewController implements ViewController {
 	protected void onBuy() {
 		viewModel.onBuy(Double.parseDouble(price.getText()), "Jens");
 	}
+
+
 }

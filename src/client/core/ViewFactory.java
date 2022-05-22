@@ -1,12 +1,19 @@
 package client.core;
 
+import client.network.ClientImpl;
+import client.network.LocalClient;
 import client.views.ViewController;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +24,20 @@ public class ViewFactory {
 	public static void init(Stage theStage) {
 		stage = theStage;
 		createScene("ItemList");
+
+		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			@Override
+			public void handle(WindowEvent event) {
+				try {
+					ClientFactory.getInstance().getClient().unregisterClient();
+				} catch (RemoteException e) {
+					throw new RuntimeException(e);
+				}
+
+				Platform.exit();
+				System.exit(0);
+			}
+		});
 	}
 
 	private static void createScene(String sceneName) {

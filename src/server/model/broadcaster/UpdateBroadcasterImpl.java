@@ -27,11 +27,14 @@ public class UpdateBroadcasterImpl extends UnicastRemoteObject implements Update
 
 	@Override
 	public void registerClient(SharedClient client) throws RemoteException {
+		System.out.println("register" + client);
 		listeners.add(client);
 	}
 
 	@Override
 	public void unregisterClient(SharedClient client) throws RemoteException {
+		System.out.println("removing client" + client);
+		System.out.println(listeners.size());
 		listeners.remove(client);
 	}
 }
