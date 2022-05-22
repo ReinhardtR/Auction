@@ -26,5 +26,6 @@
     <Label fx:id="price" layoutX="246.0" layoutY="274.0" prefHeight="17.0" prefWidth="149.0" text="0" />
     <Button layoutX="208.0" layoutY="311.0" mnemonicParsing="false" onAction="#onBuy" text="Buy" />
     <Label fx:id="itemLabel" layoutX="295.0" layoutY="274.0" text="THE ITEM" />
-   <Button layoutX="18.0" layoutY="348.0" mnemonicParsing="false" text="Return" onAction="#returnToList"/>
+   <Button layoutX="18.0" layoutY="348.0" mnemonicParsing="false" onAction="#returnToList" text="Return" />
+   <Label layoutX="286.0" layoutY="340.0" text="Error" textFill="#d02424" fx:id="errorLabel" />
 </AnchorPane>

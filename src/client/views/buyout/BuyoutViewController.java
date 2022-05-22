@@ -11,6 +11,7 @@ public class BuyoutViewController implements ViewController {
 	public Label timeLeftOnBid;
 	public Label price;
 	public Label itemLabel;
+	public Label errorLabel;
 	private BuyoutViewModel viewModel;
 
 	@Override
@@ -19,6 +20,7 @@ public class BuyoutViewController implements ViewController {
 
 		itemLabel.textProperty().bind(viewModel.getItemNameProperty());
 		price.textProperty().bind(viewModel.getPriceProperty().asString());
+		errorLabel.textProperty().bind(viewModel.getErrorProperty());
 	}
 
 	@FXML
