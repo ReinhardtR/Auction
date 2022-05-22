@@ -13,4 +13,6 @@ public interface BuyoutViewModel extends PropertyChangeListener {
 	DoubleProperty getPriceProperty();
 	StringProperty getItemNameProperty();
 	void returnToItemListView();
+
+	void propertyChange(PropertyChangeEvent event);
 }

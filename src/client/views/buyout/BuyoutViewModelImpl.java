@@ -1,13 +1,16 @@
 package client.views.buyout;
 
+import client.core.ClientFactory;
+import client.core.ViewHandler;
 import client.model.ObservableItem;
+import client.network.ClientImpl;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import java.rmi.RemoteException;
 
 public class BuyoutViewModelImpl implements BuyoutViewModel{
 	private final ObservableItem item;
@@ -43,11 +46,17 @@ public class BuyoutViewModelImpl implements BuyoutViewModel{
 	}
 
 	@Override
+	public void returnToItemListView() {
+		try {
+			item.getUpdateBroadcaster().unregisterClient((ClientImpl)ClientFactory.getInstance().getClient());
+		} catch (RemoteException e) {
+			throw new RuntimeException(e);
+		}
+		ViewHandler.getInstance().openItemListView();
+	}
+
+	@Override
 	public void propertyChange(PropertyChangeEvent event) {
 		// TODO: sold property?
-	}
-	@Override
-	public void returnToItemListView() {
-
 	}
 }

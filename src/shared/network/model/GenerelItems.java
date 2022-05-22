@@ -1,5 +1,7 @@
 package shared.network.model;
 
+import client.network.ClientImpl;
+import client.network.LocalClient;
 import shared.SaleStrategyType;
 
 import java.rmi.Remote;
@@ -19,5 +21,6 @@ public interface GenerelItems extends Remote {
 	String getBuyerUsername() throws RemoteException;
 
 	SaleStrategyType getStrategyType() throws RemoteException;
+
 
 }

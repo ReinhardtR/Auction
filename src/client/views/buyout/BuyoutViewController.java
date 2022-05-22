@@ -27,7 +27,7 @@ public class BuyoutViewController implements ViewController {
 	}
 
 
-	public void returnToList(ActionEvent actionEvent) {
+	public void returnToList() {
 		viewModel.returnToItemListView();
 	}
 }

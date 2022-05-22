@@ -1,5 +1,6 @@
 package client.model;
 
+import client.network.ClientImpl;
 import client.network.LocalClient;
 import server.model.broadcaster.UpdateBroadcaster;
 import server.model.item.Item;
@@ -58,6 +59,7 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 	public SaleStrategyType getStrategyType() {
 		return strategyType;
 	}
+
 
 	@Override
 	public double getOfferAmount() {
