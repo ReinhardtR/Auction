@@ -29,18 +29,12 @@ public class ViewModelFactory {
 	}
 
 	public AuctionViewModel getAuctionViewModel() {
-		if (auctionViewModel == null) {
-			auctionViewModel = new AuctionViewModelImpl(ModelFactory.getInstance().getObservableItemList().getCurrentlyViewedItem());
-		}
-
+		auctionViewModel = new AuctionViewModelImpl(ModelFactory.getInstance().getObservableItemList().getCurrentlyViewedItem());
 		return auctionViewModel;
 	}
 
 	public BuyoutViewModel getBuyoutViewModel() {
-		if (buyoutViewModel == null) {
-			buyoutViewModel = new BuyoutViewModelImpl(ModelFactory.getInstance().getObservableItemList().getCurrentlyViewedItem());
-		}
-
+		buyoutViewModel = new BuyoutViewModelImpl(ModelFactory.getInstance().getObservableItemList().getCurrentlyViewedItem());
 		return buyoutViewModel;
 	}
 }

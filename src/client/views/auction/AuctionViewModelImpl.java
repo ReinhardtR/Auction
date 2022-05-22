@@ -1,7 +1,10 @@
 package client.views.auction;
 
+import client.core.ClientFactory;
+import client.core.ViewHandler;
 import client.model.ItemCalculations;
 import client.model.ObservableItem;
+import client.network.ClientImpl;
 import client.utils.SystemNotifcation;
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
@@ -12,6 +15,7 @@ import shared.utils.TimedTask;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.rmi.RemoteException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.Temporal;
@@ -84,6 +88,16 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 			String message = "A bid of: " + offerAmount + ", has been placed on item: " + itemID + ".";
 			SystemNotifcation.getInstance().send(caption, message);
 		});
+	}
+
+	@Override
+	public void returnToItemListView() {
+			try {
+				item.getUpdateBroadcaster().unregisterClient((ClientImpl) ClientFactory.getInstance().getClient());
+			} catch (RemoteException e) {
+				throw new RuntimeException(e);
+			}
+			ViewHandler.getInstance().openItemListView();
 	}
 
 

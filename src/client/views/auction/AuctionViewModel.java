@@ -15,4 +15,5 @@ public interface AuctionViewModel extends PropertyChangeListener {
 	StringProperty propertyTimeLeft();
 	StringProperty propertyErrorText();
 	void propertyChange(PropertyChangeEvent event);
+	void returnToItemListView();
 }

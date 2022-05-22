@@ -52,6 +52,7 @@ public class AuctionViewController implements ViewController {
 		auctionViewModel.bidOnItem(bidInput.getText());
 	}
 
-	public void returnToList(ActionEvent actionEvent) {
+	public void returnToList() {
+		auctionViewModel.returnToItemListView();
 	}
 }

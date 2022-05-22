@@ -59,14 +59,6 @@ public class ItemListImpl implements ItemList {
 
 	@Override
 	public void setCurrentlyViewedItem(String itemID) {
-		// Unregister as listener to previously viewed item.
-		if (currentlyViewedItem != null) {
-			try {
-				currentlyViewedItem.getUpdateBroadcaster().unregisterClient((SharedClient) client);
-			} catch (RemoteException e) {
-				e.printStackTrace();
-			}
-		}
 
 		currentlyViewedItem = getItem(itemID);
 
