@@ -1,5 +1,7 @@
 package server.model.item;
 
+import client.network.ClientImpl;
+import client.network.LocalClient;
 import server.model.broadcaster.UpdateBroadcaster;
 import server.model.broadcaster.UpdateBroadcasterImpl;
 import server.model.item.SaleStrategy.SaleStrategy;
@@ -54,9 +56,7 @@ public class ItemImpl extends UnicastRemoteObject implements Item {
 
 	@Override
 	public void userSaleStrategy(double amount, String username) throws RemoteException {
-		System.out.println("still buying");
 		strategy.offer(this, amount, username);
-		Cart.getInstance().updateItemOffer(this);
 	}
 
 	@Override
@@ -67,4 +67,5 @@ public class ItemImpl extends UnicastRemoteObject implements Item {
 						", strategy=" + strategy +
 						'}';
 	}
+
 }

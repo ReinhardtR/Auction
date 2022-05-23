@@ -33,7 +33,6 @@ public class ItemListImpl implements ItemList {
 
 		try {
 			for (Item item : client.getAllItems()) {
-				System.out.println(item.getItemID() + "IN DA LOOP");
 				items.put(item.getItemID(), item);
 
 				observableItemList.add(new ObservableItem(client, item));
@@ -59,14 +58,6 @@ public class ItemListImpl implements ItemList {
 
 	@Override
 	public void setCurrentlyViewedItem(String itemID) {
-		// Unregister as listener to previously viewed item.
-		if (currentlyViewedItem != null) {
-			try {
-				currentlyViewedItem.getUpdateBroadcaster().unregisterClient((SharedClient) client);
-			} catch (RemoteException e) {
-				e.printStackTrace();
-			}
-		}
 
 		currentlyViewedItem = getItem(itemID);
 

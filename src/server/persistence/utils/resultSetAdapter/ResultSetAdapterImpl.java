@@ -25,65 +25,40 @@ public class ResultSetAdapterImpl implements ResultSetAdapter {
 		saleStrategySelector = new SaleStrategySelectorImpl();
 	}
 
-
-
 	@Override
 	public Item fetchItem(Connection c, String itemID) {
-		PreparedStatement statement = null;
+		ItemImpl itemToReturn = null;
 		try {
-
-			ResultSet itemResultSet = itemSelector.fetchItem(c,itemID, statement);
-			if (itemResultSet == null) {
-				statement.close();
-				c.close();
-				return null;
+			ResultSet itemResultSet = itemSelector.fetchItem(c, itemID);
+			if (itemResultSet != null) {
+				itemResultSet.next();
+				itemToReturn = itemCreation(c, itemResultSet);
 			}
-
-			itemResultSet.next();
-
-			Item itemtoReturn = itemCreation(c,itemResultSet);
-
 			c.close();
-			statement.close();
-
-
-			return itemtoReturn;
-
-
-
-	} catch (SQLException e) {
-		e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return itemToReturn;
 	}
-
-		return null;
-	}
-
-
 
 	@Override
 	public ArrayList<Item> fetchAmountOfItems(Connection c, int amount, String ascOrDesc) {
 		ArrayList<Item> itemsToReturn = new ArrayList<>();
-		PreparedStatement statement = null;
-		ResultSet resultset = null;
-
-
 		try {
-			resultset = itemSelector.fetchAmountOfItems(c, amount, ascOrDesc, statement);
+			ResultSet resultset = itemSelector.fetchAmountOfItems(c, amount, ascOrDesc);
 
+			if (resultset != null) {
+				while (resultset.next()) {
+					itemsToReturn.add(itemCreation(c, resultset));
+				}
+			}
 
-		while(resultset.next())
-		{
-			itemsToReturn.add(itemCreation(c,resultset));
-		}
-
-		c.close();
-		statement.close();
+			c.close();
 		} catch (SQLException e) {
-		e.printStackTrace();
-	}
+			e.printStackTrace();
+		}
 		return itemsToReturn;
 	}
-
 
 
 	private ItemImpl itemCreation(Connection c, ResultSet itemResultSet) throws SQLException {
@@ -105,12 +80,6 @@ public class ResultSetAdapterImpl implements ResultSetAdapter {
 
 		return itemToReturn;
 	}
-
-
-
-
-
-
 
 
 }

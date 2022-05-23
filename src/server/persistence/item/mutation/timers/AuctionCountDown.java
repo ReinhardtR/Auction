@@ -35,6 +35,5 @@ public class AuctionCountDown implements Runnable {
 			}
 		}
 		support.firePropertyChange("Time is up on item " + itemID, null, itemID);
-
 	}
 }

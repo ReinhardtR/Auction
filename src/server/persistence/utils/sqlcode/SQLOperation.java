@@ -4,14 +4,14 @@ import server.persistence.utils.exceptions.NonExistentOperator;
 
 public class SQLOperation {
 
-	public String make(String[][] sameConditionOnBothTables) throws NonExistentOperator {
+	public String make(String[][] operations) throws NonExistentOperator {
 		StringBuilder conditionToReturn = new StringBuilder();
-		for (int i = 0; i < sameConditionOnBothTables.length; i++) {
-			conditionToReturn.append(sameConditionOnBothTables[i][0])
-							.append(" ").append(use(sameConditionOnBothTables[i][1]))
-							.append(" ").append(sameConditionOnBothTables[i][2]);
-			if (!(i == sameConditionOnBothTables.length - 1))
-				conditionToReturn.append(" ").append(sameConditionOnBothTables[i][3]).append(" ");
+		for (int i = 0; i < operations.length; i++) {
+			conditionToReturn.append(operations[i][0])
+							.append(" ").append(use(operations[i][1]))
+							.append(" ").append(operations[i][2]);
+			if (!(i == operations.length - 1))
+				conditionToReturn.append(" ").append(operations[i][3]).append(" ");
 		}
 		return conditionToReturn.toString();
 	}

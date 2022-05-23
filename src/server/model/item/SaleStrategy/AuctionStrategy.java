@@ -1,5 +1,6 @@
 package server.model.item.SaleStrategy;
 
+import server.model.item.Cart;
 import server.model.item.Item;
 import shared.EventType;
 import shared.SaleStrategyType;
@@ -26,6 +27,7 @@ public class AuctionStrategy implements SaleStrategy {
 
 		try {
 			item.getUpdateBroadcaster().broadcastEventForItem(EventType.NEW_BID.toString(), item.getItemID());
+			Cart.getInstance().updateItemOffer(item);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
