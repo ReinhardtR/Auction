@@ -3,7 +3,6 @@ package client.views.auction;
 import client.core.ViewHandler;
 import client.core.ViewModelFactory;
 import client.views.ViewController;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -46,7 +45,7 @@ public class AuctionViewController implements ViewController {
 
 		bidButton.disableProperty().bind(auctionViewModel.propertyIsSold());
 
-		Pattern pattern = Pattern.compile(".{0,5}");
+		Pattern pattern = Pattern.compile(".{0,20}");
 		TextFormatter formatter = new TextFormatter((UnaryOperator<TextFormatter.Change>) change -> {
 			return pattern.matcher(change.getControlNewText()).matches() ? change : null;
 		});
