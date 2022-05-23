@@ -1,10 +1,7 @@
 package client.views.buyout;
 
-import client.core.ClientFactory;
 import client.core.ViewHandler;
-import client.model.ItemCalculations;
 import client.model.ObservableItem;
-import client.network.ClientImpl;
 import client.utils.SystemNotifcation;
 import javafx.beans.property.*;
 import shared.EventType;
@@ -12,7 +9,7 @@ import shared.EventType;
 import java.beans.PropertyChangeEvent;
 import java.rmi.RemoteException;
 
-public class BuyoutViewModelImpl implements BuyoutViewModel{
+public class BuyoutViewModelImpl implements BuyoutViewModel {
 	private final ObservableItem item;
 
 	// Brug samme naming convention i begge viewmodels
@@ -24,7 +21,7 @@ public class BuyoutViewModelImpl implements BuyoutViewModel{
 
 	public BuyoutViewModelImpl(ObservableItem item) {
 		this.item = item;
-		item.addListener(EventType.ITEM_SOLD + item.getItemID(), this::onItemSold);
+		item.addListener(EventType.ITEM_SOLD.toString(), this::onItemSold);
 
 		isSoldProperty = new SimpleBooleanProperty();
 		priceProperty = new SimpleDoubleProperty();
@@ -38,13 +35,16 @@ public class BuyoutViewModelImpl implements BuyoutViewModel{
 	@Override
 	public void onBuy(double amount, String username) {
 		System.out.println("Buying");
-		if(ItemCalculations.isItemSold(item))
-		{
-			errorProperty.setValue("Item is already sold!");
-		}
-		else
-		{
-			item.userSaleStrategy(amount, username);
+		try {
+			boolean isSold = item.getIsSold();
+			System.out.println(isSold);
+			if (isSold) {
+				errorProperty.setValue("Item is already sold!");
+			} else {
+				item.userSaleStrategy(amount, username);
+			}
+		} catch (RemoteException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -69,6 +69,7 @@ public class BuyoutViewModelImpl implements BuyoutViewModel{
 	}
 
 	private void onItemSold(PropertyChangeEvent event) {
+		System.out.println("ITEM SOLD BUYOUT");
 		isSoldProperty.setValue(true);
 
 		String caption = "Item sold: " + item.getItemID();
@@ -78,11 +79,6 @@ public class BuyoutViewModelImpl implements BuyoutViewModel{
 
 	@Override
 	public void returnToItemListView() {
-		try {
-			item.getUpdateBroadcaster().unregisterClient((ClientImpl)ClientFactory.getInstance().getClient());
-		} catch (RemoteException e) {
-			throw new RuntimeException(e);
-		}
 		ViewHandler.getInstance().openItemListView();
 	}
 }

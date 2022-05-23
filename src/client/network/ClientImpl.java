@@ -1,7 +1,7 @@
 package client.network;
 
-import server.model.item.Item;
 import shared.network.client.SharedClient;
+import shared.network.model.Item;
 import shared.network.server.Server;
 
 import java.beans.PropertyChangeListener;
@@ -25,18 +25,13 @@ public class ClientImpl extends UnicastRemoteObject implements SharedClient, Loc
 		server.getBroadcaster().registerClient(this);
 	}
 
-	// Some listen to items, some listen to everything
-	// Maybe make two different support instances and create a listenToItem method
 	@Override
 	public void onServerEvent(String eventName, String itemID) throws RemoteException {
-		if (itemID != null) {
-			support.firePropertyChange(eventName + itemID, null, itemID);
-		}
-
 		support.firePropertyChange(eventName, null, itemID);
+		System.out.println(eventName + " " + itemID);
 	}
 
-	// Not used
+	// Not used?
 	@Override
 	public Item getItem(String itemID) throws RemoteException {
 		return server.getItem(itemID);
@@ -52,6 +47,15 @@ public class ClientImpl extends UnicastRemoteObject implements SharedClient, Loc
 		server.getBroadcaster().unregisterClient(this);
 	}
 
+	@Override
+	public void addListener(PropertyChangeListener listener) {
+		support.addPropertyChangeListener(listener);
+	}
+
+	@Override
+	public void removeListener(PropertyChangeListener listener) {
+		support.removePropertyChangeListener(listener);
+	}
 
 	@Override
 	public void addListener(String eventName, PropertyChangeListener listener) {

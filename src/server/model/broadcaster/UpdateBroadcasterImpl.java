@@ -2,6 +2,7 @@ package server.model.broadcaster;
 
 import shared.network.client.SharedClient;
 
+import java.rmi.ConnectException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -19,6 +20,9 @@ public class UpdateBroadcasterImpl extends UnicastRemoteObject implements Update
 		listeners.forEach((listener) -> {
 			try {
 				listener.onServerEvent(eventName, itemID);
+			} catch (ConnectException e) {
+				System.out.println("Connection failed, removed listener.");
+				listeners.remove(listener);
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}

@@ -51,7 +51,6 @@ public class AuctionViewController implements ViewController {
 		});
 
 		bidInput.setTextFormatter(formatter);
-
 	}
 
 	@FXML

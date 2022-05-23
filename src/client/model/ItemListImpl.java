@@ -1,9 +1,8 @@
 package client.model;
 
 import client.network.LocalClient;
-import server.model.item.Item;
 import shared.EventType;
-import shared.network.client.SharedClient;
+import shared.network.model.Item;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -47,7 +46,7 @@ public class ItemListImpl implements ItemList {
 	@Override
 	public ObservableItem getCurrentlyViewedItem() {
 		try {
-			//Laver proxy af Item
+			// Laver proxy af Item
 			return new ObservableItem(client, currentlyViewedItem);
 		} catch (RemoteException e) {
 			e.printStackTrace();
@@ -58,15 +57,7 @@ public class ItemListImpl implements ItemList {
 
 	@Override
 	public void setCurrentlyViewedItem(String itemID) {
-
 		currentlyViewedItem = getItem(itemID);
-
-		// Register as listener to the new item being viewed.
-		try {
-			currentlyViewedItem.getUpdateBroadcaster().registerClient((SharedClient) client);
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
 	}
 
 	private Item getItem(String itemID) {
@@ -85,6 +76,16 @@ public class ItemListImpl implements ItemList {
 	}
 
 	@Override
+	public void addListener(PropertyChangeListener listener) {
+		support.addPropertyChangeListener(listener);
+	}
+
+	@Override
+	public void removeListener(PropertyChangeListener listener) {
+		support.removePropertyChangeListener(listener);
+	}
+
+	@Override
 	public void addListener(String eventName, PropertyChangeListener listener) {
 		support.addPropertyChangeListener(eventName, listener);
 	}
@@ -95,8 +96,9 @@ public class ItemListImpl implements ItemList {
 	}
 
 	private void onItemSold(PropertyChangeEvent event) {
+		System.out.println(event.getPropertyName());
 		String itemID = (String) event.getNewValue();
 		items.remove(itemID);
-		support.firePropertyChange(event.getPropertyName(), null, itemID);
+		support.firePropertyChange(EventType.ITEM_SOLD.toString(), null, itemID);
 	}
 }

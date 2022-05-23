@@ -4,7 +4,7 @@ package server.view;
 import server.model.broadcaster.UpdateBroadcaster;
 import server.model.broadcaster.UpdateBroadcasterImpl;
 import server.model.item.Cart;
-import server.model.item.Item;
+import shared.network.model.Item;
 import shared.network.server.Server;
 
 import java.beans.PropertyChangeEvent;
@@ -20,13 +20,6 @@ public class ServerImpl extends UnicastRemoteObject implements Server, PropertyC
 		broadcaster = new UpdateBroadcasterImpl();
 		Cart.getInstance().addListenerToAllEvents(this);
 		Cart.getInstance().getManyItems();
-		//Til random item
-		/*
-		Temporal endDateTime = LocalDateTime.of(2022, 5, 16, 11, 20);
-		Cart.getInstance().addItem(new ItemImpl("123", endDateTime, new AuctionStrategy(32)));
-		Cart.getInstance().addItem(new ItemImpl("456", endDateTime, new BuyoutStrategy(69)));
-
-		 */
 	}
 
 	@Override
