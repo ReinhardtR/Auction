@@ -3,7 +3,6 @@ package client.views.auction;
 import client.core.ViewHandler;
 import client.core.ViewModelFactory;
 import client.views.ViewController;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -52,7 +51,6 @@ public class AuctionViewController implements ViewController {
 		});
 
 		bidInput.setTextFormatter(formatter);
-
 	}
 
 	@FXML

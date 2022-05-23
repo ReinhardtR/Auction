@@ -1,18 +1,14 @@
 package server.model.item;
 
-import client.network.ClientImpl;
-import client.network.LocalClient;
-import server.model.broadcaster.UpdateBroadcaster;
-import server.model.broadcaster.UpdateBroadcasterImpl;
 import server.model.item.SaleStrategy.SaleStrategy;
 import shared.SaleStrategyType;
+import shared.network.model.Item;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.time.temporal.Temporal;
 
 public class ItemImpl extends UnicastRemoteObject implements Item {
-	private final UpdateBroadcaster broadcaster;
 	private final String itemID;
 
 	//Enum
@@ -21,7 +17,6 @@ public class ItemImpl extends UnicastRemoteObject implements Item {
 	public ItemImpl(String itemID, SaleStrategy strategy) throws RemoteException {
 		this.itemID = itemID;
 		this.strategy = strategy;
-		broadcaster = new UpdateBroadcasterImpl();
 	}
 
 	@Override
@@ -39,14 +34,15 @@ public class ItemImpl extends UnicastRemoteObject implements Item {
 		return strategy.getOfferAmount();
 	}
 
+	// Synchronized?
 	@Override
-	public String getBuyerUsername() throws RemoteException {
-		return null;
+	public boolean getIsSold() throws RemoteException {
+		return strategy.getIsSold();
 	}
 
 	@Override
-	public UpdateBroadcaster getUpdateBroadcaster() throws RemoteException {
-		return broadcaster;
+	public String getBuyerUsername() throws RemoteException {
+		return null;
 	}
 
 	@Override
@@ -62,10 +58,8 @@ public class ItemImpl extends UnicastRemoteObject implements Item {
 	@Override
 	public String toString() {
 		return "ItemImpl{" +
-						"broadcaster=" + broadcaster +
 						", itemID='" + itemID + '\'' +
 						", strategy=" + strategy +
 						'}';
 	}
-
 }

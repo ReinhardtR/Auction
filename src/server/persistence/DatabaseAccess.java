@@ -1,17 +1,17 @@
 package server.persistence;
 
-import server.model.item.Item;
 import server.model.item.ItemImpl;
 import server.persistence.item.mutation.BuyingMutator;
 import server.persistence.utils.SQL;
 import server.persistence.utils.resultSetAdapter.ResultSetAdapter;
 import server.persistence.utils.resultSetAdapter.ResultSetAdapterImpl;
+import shared.network.model.Item;
 
 import java.beans.PropertyChangeEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseAccess implements DatabaseIO {
 	private final BuyingMutator buyingMutator;
@@ -80,7 +80,7 @@ public class DatabaseAccess implements DatabaseIO {
 	}
 
 	@Override
-	public ArrayList<Item> getAmountOfItems(int amount, String ascOrDesc) throws SQLException {
+	public List<Item> getAmountOfItems(int amount, String ascOrDesc) throws SQLException {
 
 		//itemSelector.fetchAmountOfItems(createConnection(), amount, ascOrDesc);
 		return resultSetAdapter.fetchAmountOfItems(createConnection(), amount, ascOrDesc);

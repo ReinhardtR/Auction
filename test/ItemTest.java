@@ -2,11 +2,10 @@ import client.model.ObservableItem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import server.model.item.Item;
 import server.model.item.ItemImpl;
 import server.model.item.SaleStrategy.AuctionStrategy;
 import shared.SaleStrategyType;
-import shared.network.model.GenerelItems;
+import shared.network.model.Item;
 
 import java.rmi.RemoteException;
 import java.time.LocalDateTime;
@@ -17,8 +16,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ItemTest {
 	private Item testItem;
 	private Item brokenTestItem;
-	private GenerelItems observableTestItem;
-	private GenerelItems brokenObservableItem;
+	private Item observableTestItem;
+	private Item brokenObservableItem;
 
 	@BeforeEach
 	void createTestItem() throws RemoteException {

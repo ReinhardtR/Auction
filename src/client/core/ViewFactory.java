@@ -1,19 +1,14 @@
 package client.core;
 
-import client.network.ClientImpl;
-import client.network.LocalClient;
 import client.views.ViewController;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,22 +20,15 @@ public class ViewFactory {
 		stage = theStage;
 		createScene("ItemList");
 
-		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-			@Override
-			public void handle(WindowEvent event) {
-				try {
-
-					//DIS OK??????
-					ClientImpl client = (ClientImpl) ClientFactory.getInstance().getClient();
-					client.unregisterClient();
-					ModelFactory.getInstance().getObservableItemList().getCurrentlyViewedItem().getUpdateBroadcaster().unregisterClient(client);
-				} catch (RemoteException e) {
-					throw new RuntimeException(e);
-				}
-
-				Platform.exit();
-				System.exit(0);
+		stage.setOnCloseRequest(windowEvent -> {
+			try {
+				ClientFactory.getInstance().getClient().unregisterClient();
+			} catch (RemoteException e) {
+				e.printStackTrace();
 			}
+
+			Platform.exit();
+			System.exit(0);
 		});
 	}
 

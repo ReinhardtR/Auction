@@ -1,17 +1,17 @@
 package server.persistence;
 
 
-import server.model.item.Item;
+import shared.network.model.Item;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 
 
 public interface DatabaseIO {
 
 	Item getItem(String itemID) throws SQLException;
 
-	ArrayList<Item> getAmountOfItems(int amount, String ascOrDesc) throws SQLException;
+	List<Item> getAmountOfItems(int amount, String ascOrDesc) throws SQLException;
 
 	void buyoutItemBought(Item item) throws SQLException;
 

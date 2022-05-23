@@ -1,10 +1,8 @@
 package client.views.auction;
 
-import client.core.ClientFactory;
 import client.core.ViewHandler;
 import client.model.ItemCalculations;
 import client.model.ObservableItem;
-import client.network.ClientImpl;
 import client.utils.SystemNotifcation;
 import javafx.application.Platform;
 import javafx.beans.property.*;
@@ -12,7 +10,6 @@ import shared.EventType;
 import shared.utils.TimedTask;
 
 import java.beans.PropertyChangeEvent;
-import java.rmi.RemoteException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.Temporal;
@@ -33,8 +30,8 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 		errorText = new SimpleStringProperty();
 
 		this.item = item;
-		item.addListener(EventType.NEW_BID + item.getItemID(), this::onNewBid);
-		item.addListener(EventType.ITEM_SOLD + item.getItemID(), this::onItemSold);
+		item.addListener(EventType.NEW_BID.toString(), this::onNewBid);
+		item.addListener(EventType.ITEM_SOLD.toString(), this::onItemSold);
 
 		itemText.setValue(item.getItemID());
 		currentHighestBid.setValue(item.getOfferAmount());
@@ -57,6 +54,7 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 			errorText.setValue("Please type a valid number as your bid.");
 		}
 	}
+
 	@Override
 	public StringProperty propertyItemLabel() {
 		return itemText;
@@ -105,14 +103,8 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 
 	@Override
 	public void returnToItemListView() {
-			try {
-				item.getUpdateBroadcaster().unregisterClient((ClientImpl) ClientFactory.getInstance().getClient());
-			} catch (RemoteException e) {
-				throw new RuntimeException(e);
-			}
-			ViewHandler.getInstance().openItemListView();
+		ViewHandler.getInstance().openItemListView();
 	}
-
 
 	private void runTimeSimulation(Temporal endDateTime) {
 		TimedTask.runTask((timer) -> {

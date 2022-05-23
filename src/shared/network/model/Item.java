@@ -1,14 +1,12 @@
 package shared.network.model;
 
-import client.network.ClientImpl;
-import client.network.LocalClient;
 import shared.SaleStrategyType;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.time.temporal.Temporal;
 
-public interface GenerelItems extends Remote {
+public interface Item extends Remote {
 
 	String getItemID() throws RemoteException;
 
@@ -18,9 +16,9 @@ public interface GenerelItems extends Remote {
 
 	double getOfferAmount() throws RemoteException;
 
+	boolean getIsSold() throws RemoteException;
+
 	String getBuyerUsername() throws RemoteException;
 
 	SaleStrategyType getStrategyType() throws RemoteException;
-
-
 }
