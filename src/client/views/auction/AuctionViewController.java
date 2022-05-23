@@ -45,7 +45,7 @@ public class AuctionViewController implements ViewController {
 
 		bidButton.disableProperty().bind(auctionViewModel.propertyIsSold());
 
-		Pattern pattern = Pattern.compile(".{0,5}");
+		Pattern pattern = Pattern.compile(".{0,20}");
 		TextFormatter formatter = new TextFormatter((UnaryOperator<TextFormatter.Change>) change -> {
 			return pattern.matcher(change.getControlNewText()).matches() ? change : null;
 		});

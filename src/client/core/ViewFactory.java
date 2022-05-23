@@ -25,7 +25,7 @@ public class ViewFactory {
 				ClientFactory.getInstance().getClient().unregisterClient();
 			} catch (RemoteException e) {
 				e.printStackTrace();
-			}
+      }
 
 			Platform.exit();
 			System.exit(0);
