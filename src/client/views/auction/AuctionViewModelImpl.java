@@ -7,14 +7,11 @@ import client.model.ObservableItem;
 import client.network.ClientImpl;
 import client.utils.SystemNotifcation;
 import javafx.application.Platform;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
+import shared.EventType;
 import shared.utils.TimedTask;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.rmi.RemoteException;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -22,6 +19,7 @@ import java.time.temporal.Temporal;
 
 public class AuctionViewModelImpl implements AuctionViewModel {
 	private final StringProperty itemText;
+	private final BooleanProperty isSold;
 	private final DoubleProperty currentHighestBid;
 	private final StringProperty timeLeft;
 	private final StringProperty errorText;
@@ -29,12 +27,14 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 
 	public AuctionViewModelImpl(ObservableItem item) {
 		itemText = new SimpleStringProperty();
+		isSold = new SimpleBooleanProperty();
 		currentHighestBid = new SimpleDoubleProperty();
 		timeLeft = new SimpleStringProperty();
 		errorText = new SimpleStringProperty();
 
 		this.item = item;
-		item.addListener(item.getItemID(), this);
+		item.addListener(EventType.NEW_BID + item.getItemID(), this::onNewBid);
+		item.addListener(EventType.ITEM_SOLD + item.getItemID(), this::onItemSold);
 
 		itemText.setValue(item.getItemID());
 		currentHighestBid.setValue(item.getOfferAmount());
@@ -61,21 +61,34 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 	public StringProperty propertyItemLabel() {
 		return itemText;
 	}
+
 	@Override
 	public DoubleProperty propertyCurrentBid() {
 		return currentHighestBid;
 	}
+
 	@Override
 	public StringProperty propertyTimeLeft() {
 		return timeLeft;
 	}
+
 	@Override
 	public StringProperty propertyErrorText() {
 		return errorText;
 	}
 
 	@Override
-	public void propertyChange(PropertyChangeEvent event) {
+	public BooleanProperty propertyIsSold() {
+		return isSold;
+	}
+
+	private void onItemSold(PropertyChangeEvent event) {
+		Platform.runLater(() -> {
+			isSold.setValue(true);
+		});
+	}
+
+	private void onNewBid(PropertyChangeEvent event) {
 		System.out.println("change!");
 		Platform.runLater(() -> {
 			double offerAmount = item.getOfferAmount();

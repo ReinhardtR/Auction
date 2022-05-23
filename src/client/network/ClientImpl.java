@@ -25,6 +25,8 @@ public class ClientImpl extends UnicastRemoteObject implements SharedClient, Loc
 		server.getBroadcaster().registerClient(this);
 	}
 
+	// Some listen to items, some listen to everything
+	// Maybe make two different support instances and create a listenToItem method
 	@Override
 	public void onServerEvent(String eventName, String itemID) throws RemoteException {
 		if (itemID != null) {
@@ -32,7 +34,6 @@ public class ClientImpl extends UnicastRemoteObject implements SharedClient, Loc
 		}
 
 		support.firePropertyChange(eventName, null, itemID);
-
 	}
 
 	// Not used

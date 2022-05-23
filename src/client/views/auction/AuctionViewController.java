@@ -5,6 +5,7 @@ import client.core.ViewModelFactory;
 import client.views.ViewController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
@@ -15,13 +16,20 @@ import java.util.regex.Pattern;
 public class AuctionViewController implements ViewController {
 
 	@FXML
+	private Button bidButton;
+
+	@FXML
 	private Label inputError;
+
 	@FXML
 	private Label timeLeftOnBid;
+
 	@FXML
 	private Label itemLabel;
+
 	@FXML
 	private Label currentBid;
+
 	@FXML
 	private TextField bidInput;
 
@@ -36,7 +44,7 @@ public class AuctionViewController implements ViewController {
 		timeLeftOnBid.textProperty().bind(auctionViewModel.propertyTimeLeft());
 		inputError.textProperty().bind(auctionViewModel.propertyErrorText());
 
-
+		bidButton.disableProperty().bind(auctionViewModel.propertyIsSold());
 
 		Pattern pattern = Pattern.compile(".{0,5}");
 		TextFormatter formatter = new TextFormatter((UnaryOperator<TextFormatter.Change>) change -> {

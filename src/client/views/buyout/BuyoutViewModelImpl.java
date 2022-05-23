@@ -5,16 +5,18 @@ import client.core.ViewHandler;
 import client.model.ItemCalculations;
 import client.model.ObservableItem;
 import client.network.ClientImpl;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import client.utils.SystemNotifcation;
+import javafx.beans.property.*;
+import shared.EventType;
 
 import java.beans.PropertyChangeEvent;
 import java.rmi.RemoteException;
 
 public class BuyoutViewModelImpl implements BuyoutViewModel{
 	private final ObservableItem item;
+
+	// Brug samme naming convention i begge viewmodels
+	private final BooleanProperty isSoldProperty;
 	private final DoubleProperty priceProperty;
 	private final StringProperty itemNameProperty;
 	private final StringProperty errorProperty;
@@ -22,8 +24,9 @@ public class BuyoutViewModelImpl implements BuyoutViewModel{
 
 	public BuyoutViewModelImpl(ObservableItem item) {
 		this.item = item;
-		item.addListener(item.getItemID(), this);
+		item.addListener(EventType.ITEM_SOLD + item.getItemID(), this::onItemSold);
 
+		isSoldProperty = new SimpleBooleanProperty();
 		priceProperty = new SimpleDoubleProperty();
 		itemNameProperty = new SimpleStringProperty();
 		errorProperty = new SimpleStringProperty();
@@ -61,6 +64,19 @@ public class BuyoutViewModelImpl implements BuyoutViewModel{
 	}
 
 	@Override
+	public BooleanProperty getIsSoldProperty() {
+		return isSoldProperty;
+	}
+
+	private void onItemSold(PropertyChangeEvent event) {
+		isSoldProperty.setValue(true);
+
+		String caption = "Item sold: " + item.getItemID();
+		String message = "The item: " + item.getItemID() + ", that you were watching has been sold.";
+		SystemNotifcation.getInstance().send(caption, message);
+	}
+
+	@Override
 	public void returnToItemListView() {
 		try {
 			item.getUpdateBroadcaster().unregisterClient((ClientImpl)ClientFactory.getInstance().getClient());
@@ -68,10 +84,5 @@ public class BuyoutViewModelImpl implements BuyoutViewModel{
 			throw new RuntimeException(e);
 		}
 		ViewHandler.getInstance().openItemListView();
-	}
-
-	@Override
-	public void propertyChange(PropertyChangeEvent event) {
-		// TODO: sold property?
 	}
 }
