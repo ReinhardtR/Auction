@@ -75,7 +75,7 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 	}
 
 	public void propertyChange(PropertyChangeEvent event) {
-		support.firePropertyChange(itemID, null, null);
+		support.firePropertyChange(EventType.NEW_BID.toString(), null, null);
 	}
 
 	@Override

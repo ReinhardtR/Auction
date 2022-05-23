@@ -8,6 +8,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import shared.EventType;
 import shared.utils.TimedTask;
 
 import java.beans.PropertyChangeEvent;
@@ -30,7 +31,7 @@ public class AuctionViewModel implements PropertyChangeListener {
 		errorText = new SimpleStringProperty();
 
 		this.item = item;
-		item.addListener(item.getItemID(), this);
+		item.addListener(EventType.NEW_BID.toString(), this);
 
 		itemText.setValue(item.getItemID());
 		currentHighestBid.setValue(item.getOfferAmount());
@@ -44,7 +45,7 @@ public class AuctionViewModel implements PropertyChangeListener {
 
 			if (ItemCalculations.isNewBidHigher(offer, item)) {
 				errorText.setValue(null);
-				item.userSaleStrategy(offer, "Reinhardt");
+				item.userSaleStrategy(offer, "username");
 			} else {
 				errorText.setValue("You need to bid higher than the current bid.");
 			}
@@ -71,14 +72,13 @@ public class AuctionViewModel implements PropertyChangeListener {
 
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
-		System.out.println("change!");
 		Platform.runLater(() -> {
 			double offerAmount = item.getOfferAmount();
 			String itemID = item.getItemID();
 
 			currentHighestBid.setValue(offerAmount);
 
-			// Display notification
+			// Display system notification
 			String caption = "New bid on: " + itemID;
 			String message = "A bid of: " + offerAmount + ", has been placed on item: " + itemID + ".";
 			SystemNotifcation.getInstance().send(caption, message);
