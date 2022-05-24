@@ -6,14 +6,12 @@ import server.persistence.item.mutation.BuyingMutator;
 import server.persistence.utils.SQL;
 import server.persistence.utils.resultSetAdapter.ResultSetAdapter;
 import server.persistence.utils.resultSetAdapter.ResultSetAdapterImpl;
-import shared.SaleStrategyType;
 import shared.network.model.Item;
 
 import java.beans.PropertyChangeEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class DatabaseAccess implements CustomerDatabaseMethods, SalesManDatabaseMethods {
@@ -28,6 +26,8 @@ public class DatabaseAccess implements CustomerDatabaseMethods, SalesManDatabase
 		ONE_HOUR_IN_MILLI = 3600000;
 		resultSetAdapter = new ResultSetAdapterImpl();
 		adderToDatabase = new AdderToDatabase();
+
+		SQL.constructDatabaseTables(createConnection());
 		//checkAuctionTimers();
 	}
 
@@ -102,7 +102,7 @@ public class DatabaseAccess implements CustomerDatabaseMethods, SalesManDatabase
 
 	@Override
 	public void addItemToDatabase(Item itemToAdd) throws SQLException {
-		adderToDatabase.addItemToDatabase(createConnection(),(ItemImpl) itemToAdd);
+		adderToDatabase.addItemToDatabase(createConnection(), (ItemImpl) itemToAdd);
 	}
 
 	@Override

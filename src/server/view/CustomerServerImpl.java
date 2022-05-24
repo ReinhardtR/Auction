@@ -19,6 +19,7 @@ public class CustomerServerImpl extends UnicastRemoteObject implements CustomerS
 
 	public CustomerServerImpl() throws RemoteException {
 		broadcaster = new UpdateBroadcasterImpl();
+
 		Cart.getInstance().addListenerToAllEvents(this);
 		Cart.getInstance().getManyItems();
 	}

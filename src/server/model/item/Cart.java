@@ -1,7 +1,7 @@
 package server.model.item;
 
-import server.persistence.DatabaseAccess;
 import server.persistence.CustomerDatabaseMethods;
+import server.persistence.DatabaseAccess;
 import shared.EventType;
 import shared.network.model.Item;
 
@@ -23,6 +23,7 @@ public class Cart {
 	private final CustomerDatabaseMethods database;
 
 	private Cart() {
+		System.out.println("make");
 		support = new PropertyChangeSupport(this);
 		database = new DatabaseAccess();
 	}

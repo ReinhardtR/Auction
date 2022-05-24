@@ -89,6 +89,11 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 		return null;
 	}
 
+	@Override
+	public String getSalesManUsername() throws RemoteException {
+		return null;
+	}
+
 	public void propertyChange(PropertyChangeEvent event) {
 		// Only care about its own updates.
 		System.out.println("Receive " + getItemID() + " " + event.getNewValue());

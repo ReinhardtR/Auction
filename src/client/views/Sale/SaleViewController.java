@@ -49,14 +49,13 @@ public class SaleViewController implements ViewController {
 		endTimeTextField.setVisible(false);
 		endDatePicker.setVisible(false);
 
-		title.textProperty().bind(saleViewModel.titleTextProperty());
-		description.textProperty().bind(saleViewModel.descriptionTextProperty());
-		tags.textProperty().bind(saleViewModel.tagsTextProperty());
-		price_BidTextField.textProperty().bind(saleViewModel.priceBidTextProperty().asString());
-		endTimeTextField.textProperty().bind(saleViewModel.endTimeTextProperty());
-		endDatePicker.chronologyProperty().bind(saleViewModel.endDateChronologyProperty());
+		title.textProperty().bindBidirectional(saleViewModel.titleTextProperty());
+		description.textProperty().bindBidirectional(saleViewModel.descriptionTextProperty());
+		tags.textProperty().bindBidirectional(saleViewModel.tagsTextProperty());
+		price_BidTextField.textProperty().bindBidirectional(saleViewModel.priceBidTextProperty());
+		endTimeTextField.textProperty().bindBidirectional(saleViewModel.endTimeTextProperty());
 
-		errorCreateLabel.textProperty().bind(saleViewModel.errorLabelProperty());
+		errorCreateLabel.textProperty().bindBidirectional(saleViewModel.errorLabelProperty());
 
 
 	}
