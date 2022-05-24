@@ -62,14 +62,19 @@ public class SaleViewModelImpl implements SaleViewModel {
 	public void setItemUpForSale(SaleStrategyType saleType) {
 		try {
 			double offer = Double.parseDouble(priceOfferProperty.getValue());
-			if (titleTextProperty.getValue().isBlank() || priceOfferProperty.getValue().isBlank()
-							|| endTimeProperty.getValue().isBlank()) {
+			if ((titleTextProperty.getValue() == null || priceOfferProperty.getValue() == null
+							|| endTimeProperty.getValue() == null)
+							&& saleType == SaleStrategyType.AUCTION ||
+
+							(titleTextProperty.getValue() == null || priceOfferProperty.getValue() == null) &&
+											saleType == SaleStrategyType.BUYOUT) {
+
 				errorLabelProperty.setValue("Please fill out all required fields!");
 			} else {
 				salesman.createItem(titleTextProperty.getValue(), descriptionTextProperty.getValue(),
 								tagsTextProperty.getValue(), saleType, offer, endTimeProperty.getValue());
 			}
-		} catch (NumberFormatException | NullPointerException e) {
+		} catch (NumberFormatException e) {
 			errorLabelProperty.setValue("Please type in a valid number in price/starter bid!");
 		}
 	}
