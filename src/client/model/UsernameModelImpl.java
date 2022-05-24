@@ -3,7 +3,6 @@ package client.model;
 import client.network.LocalClient;
 
 public class UsernameModelImpl implements UsernameModel {
-
 	private final LocalClient client;
 	private String username;
 

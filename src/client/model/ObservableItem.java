@@ -2,7 +2,6 @@ package client.model;
 
 import client.network.LocalClient;
 import shared.SaleStrategyType;
-import shared.network.model.Item;
 import shared.utils.PropertyChangeSubject;
 
 import java.beans.PropertyChangeEvent;
@@ -11,7 +10,7 @@ import java.beans.PropertyChangeSupport;
 import java.rmi.RemoteException;
 import java.time.temporal.Temporal;
 
-public class ObservableItem implements PropertyChangeListener, PropertyChangeSubject, Item {
+public class ObservableItem implements PropertyChangeListener, PropertyChangeSubject, ItemCacheProxy {
 	private final PropertyChangeSupport support;
 	private final ItemCacheProxy item;
 
@@ -27,6 +26,21 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 	@Override
 	public String getItemID() {
 		return item.getItemID();
+	}
+
+	@Override
+	public String getTitle() {
+		return null;
+	}
+
+	@Override
+	public String getDescription() {
+		return null;
+	}
+
+	@Override
+	public String getTags() {
+		return null;
 	}
 
 	@Override

@@ -10,6 +10,9 @@ public class ItemCacheProxyImpl implements ItemCacheProxy {
 	private final Item item;
 
 	private final String itemID;
+	private final String title;
+	private final String description;
+	private final String tags;
 	private final Temporal endTimestamp;
 	private final SaleStrategyType strategyType;
 
@@ -18,6 +21,9 @@ public class ItemCacheProxyImpl implements ItemCacheProxy {
 
 		// Cache
 		itemID = item.getItemID();
+		title = item.getTitle();
+		description = item.getDescription();
+		tags = item.getTags();
 		strategyType = item.getStrategyType();
 		endTimestamp = item.getEndTimestamp();
 	}
@@ -25,6 +31,21 @@ public class ItemCacheProxyImpl implements ItemCacheProxy {
 	@Override
 	public String getItemID() {
 		return itemID;
+	}
+
+	@Override
+	public String getTitle() throws RemoteException {
+		return title;
+	}
+
+	@Override
+	public String getDescription() throws RemoteException {
+		return description;
+	}
+
+	@Override
+	public String getTags() throws RemoteException {
+		return tags;
 	}
 
 	@Override
