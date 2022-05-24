@@ -90,8 +90,7 @@ public class SaleViewController implements ViewController {
 	}
 
 	public void setItemUpForSale(ActionEvent actionEvent) {
-
-
+		saleViewModel.
 	}
 
 	public void returnToItemList(ActionEvent actionEvent) {
