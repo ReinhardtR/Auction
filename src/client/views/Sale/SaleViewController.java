@@ -2,6 +2,7 @@ package client.views.Sale;
 
 import client.core.ViewHandler;
 import client.core.ViewModelFactory;
+import client.views.ViewController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
@@ -10,7 +11,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import shared.SaleStrategyType;
 
-public class SaleViewController {
+public class SaleViewController implements ViewController {
 
 
 	@FXML
@@ -36,6 +37,7 @@ public class SaleViewController {
 
 	private SaleViewModel saleViewModel;
 
+	@Override
 	public void init(ViewHandler viewHandler, ViewModelFactory viewModelFactory) {
 		saleViewModel = viewModelFactory.getSaleViewModel();
 
