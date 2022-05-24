@@ -1,11 +1,16 @@
 package server;
 
+import server.model.item.ItemImpl;
+import server.model.item.SaleStrategy.AuctionStrategy;
+import server.model.item.SaleStrategy.BuyoutStrategy;
 import server.persistence.DatabaseAccess;
 import server.persistence.SalesManDatabaseMethods;
 import shared.SaleStrategyType;
 import shared.network.model.Item;
 
+import java.rmi.RemoteException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 
 public class MakeItemForSaleImpl implements MakeItemForSale {
 
@@ -20,20 +25,18 @@ public class MakeItemForSaleImpl implements MakeItemForSale {
 
 		System.out.println("item getting made");
 		System.out.println(title);
-		/*
 		try {
 			Item item = null;
 			if (saleType == SaleStrategyType.AUCTION) {
-				item = new ItemImpl(username, title, description, tags, new AuctionStrategy(offer, "", null));
+				item = new ItemImpl(null, username, title, description, tags, new AuctionStrategy(offer, null, LocalDateTime.now()));
 			} else if (saleType == SaleStrategyType.BUYOUT) {
-				item = new ItemImpl(username, title, description, tags, new BuyoutStrategy(offer));
+				item = new ItemImpl(null, username, title, description, tags, new BuyoutStrategy(offer));
 			}
 			sendItemToDatabase(item);
 		} catch (RemoteException e) {
 			throw new RuntimeException();
 		}
 
-		 */
 	}
 
 	private void sendItemToDatabase(Item item) {
