@@ -1,7 +1,7 @@
 package client.views.Sale;
 
 import client.core.ViewHandler;
-import client.model.UsernameModel;
+import client.model.User;
 import client.utils.ViewEnum;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -14,7 +14,7 @@ import java.time.chrono.Chronology;
 
 public class SaleViewModelImpl implements SaleViewModel {
 
-	private final UsernameModel usernameModel;
+	private final User salesman;
 	private final StringProperty titleTextProperty;
 	private final StringProperty descriptionTextProperty;
 	private final StringProperty tagsTextProperty;
@@ -24,8 +24,8 @@ public class SaleViewModelImpl implements SaleViewModel {
 
 	private Chronology endDateProperty;
 
-	public SaleViewModelImpl(UsernameModel userNameModel) {
-		this.usernameModel = userNameModel;
+	public SaleViewModelImpl(User salesman) {
+		this.salesman = salesman;
 
 		titleTextProperty = new SimpleStringProperty();
 		descriptionTextProperty = new SimpleStringProperty();
@@ -34,7 +34,6 @@ public class SaleViewModelImpl implements SaleViewModel {
 		endTimeProperty = new SimpleStringProperty();
 		errorLabelProperty = new SimpleStringProperty();
 	}
-
 
 	@Override
 	public StringProperty titleTextProperty() {
@@ -65,11 +64,11 @@ public class SaleViewModelImpl implements SaleViewModel {
 	public void setItemUpForSale(SaleStrategyType saleType) {
 		try {
 			if (titleTextProperty.toString().isEmpty() || priceOfferProperty.toString().isEmpty()
-							|| endTimeProperty.toString().isEmpty()) {
+					|| endTimeProperty.toString().isEmpty()) {
 				errorLabelProperty.setValue("Please fill out all required fields!");
 			} else {
-				usernameModel.createItem(titleTextProperty.toString(), descriptionTextProperty.toString(),
-								tagsTextProperty.toString(), saleType, priceOfferProperty.doubleValue(), endTimeProperty.toString());
+				salesman.createItem(titleTextProperty.toString(), descriptionTextProperty.toString(),
+						tagsTextProperty.toString(), saleType, priceOfferProperty.doubleValue(), endTimeProperty.toString());
 			}
 		} catch (NumberFormatException | NullPointerException e) {
 			errorLabelProperty.setValue("Please type in a valid number in price/starter bid!");

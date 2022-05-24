@@ -14,12 +14,6 @@ import client.views.itemlist.ItemListViewModelImpl;
 public class ViewModelFactory {
 	private static final ViewModelFactory instance = new ViewModelFactory();
 
-	private ItemListViewModel itemListViewModel;
-	private AuctionViewModel auctionViewModel;
-	private BuyoutViewModel buyoutViewModel;
-	private LoginViewModel loginViewModel;
-	private SaleViewModel saleViewModel;
-
 	private ViewModelFactory() {
 	}
 
@@ -28,27 +22,28 @@ public class ViewModelFactory {
 	}
 
 	public ItemListViewModel getItemListViewModel() {
-		itemListViewModel = new ItemListViewModelImpl(ModelFactory.getInstance().getObservableItemList());
-		return itemListViewModel;
+		return new ItemListViewModelImpl(ModelFactory.getInstance().getObservableItemList());
 	}
 
 	public AuctionViewModel getAuctionViewModel() {
-		auctionViewModel = new AuctionViewModelImpl(ModelFactory.getInstance().getObservableItemList().getCurrentlyViewedItem());
-		return auctionViewModel;
+		return new AuctionViewModelImpl(
+						ModelFactory.getInstance().getUser(),
+						ModelFactory.getInstance().getObservableItemList().getCurrentlyViewedItem()
+		);
 	}
 
 	public BuyoutViewModel getBuyoutViewModel() {
-		buyoutViewModel = new BuyoutViewModelImpl(ModelFactory.getInstance().getObservableItemList().getCurrentlyViewedItem());
-		return buyoutViewModel;
+		return new BuyoutViewModelImpl(
+						ModelFactory.getInstance().getUser(),
+						ModelFactory.getInstance().getObservableItemList().getCurrentlyViewedItem()
+		);
 	}
 
 	public LoginViewModel getLoginViewModel() {
-		loginViewModel = new LoginViewModelImpl(ModelFactory.getInstance().getUserNameModel());
-		return loginViewModel;
+		return new LoginViewModelImpl(ModelFactory.getInstance().getUser());
 	}
 
 	public SaleViewModel getSaleViewModel() {
-		saleViewModel = new SaleViewModelImpl(ModelFactory.getInstance().getUserNameModel());
-		return saleViewModel;
+		return new SaleViewModelImpl(ModelFactory.getInstance().getUser());
 	}
 }

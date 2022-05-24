@@ -15,36 +15,36 @@ import java.util.regex.Pattern;
 public class AuctionViewController implements ViewController {
 
 	@FXML
-	private Button bidButton;
-
-	@FXML
-	private Label inputError;
-
-	@FXML
-	private Label timeLeftOnBid;
-
-	@FXML
 	private Label itemLabel;
+
+	@FXML
+	private Button bidButton;
 
 	@FXML
 	private Label currentBid;
 
 	@FXML
+	private Label timeLeftOnAuction;
+
+	@FXML
 	private TextField bidInput;
+
+	@FXML
+	private Label errorLabel;
 
 	private AuctionViewModel auctionViewModel;
 
 	@Override
 	public void init(ViewHandler viewHandler, ViewModelFactory viewModelFactory) {
-		this.auctionViewModel = viewModelFactory.getAuctionViewModel();
+		auctionViewModel = viewModelFactory.getAuctionViewModel();
 
-		itemLabel.textProperty().bind(auctionViewModel.propertyItemLabel());
+		itemLabel.textProperty().bind(auctionViewModel.propertyItemName());
 		currentBid.textProperty().bind(auctionViewModel.propertyCurrentBid().asString());
-		timeLeftOnBid.textProperty().bind(auctionViewModel.propertyTimeLeft());
-		inputError.textProperty().bind(auctionViewModel.propertyErrorText());
-
+		timeLeftOnAuction.textProperty().bind(auctionViewModel.propertyTimeLeft());
+		errorLabel.textProperty().bind(auctionViewModel.propertyErrorText());
 		bidButton.disableProperty().bind(auctionViewModel.propertyIsSold());
 
+		// TODO: rethink this
 		Pattern pattern = Pattern.compile(".{0,20}");
 		TextFormatter formatter = new TextFormatter((UnaryOperator<TextFormatter.Change>) change -> {
 			return pattern.matcher(change.getControlNewText()).matches() ? change : null;
@@ -58,7 +58,8 @@ public class AuctionViewController implements ViewController {
 		auctionViewModel.bidOnItem(bidInput.getText());
 	}
 
-	public void returnToList() {
+	@FXML
+	protected void returnToList() {
 		auctionViewModel.returnToItemListView();
 	}
 }
