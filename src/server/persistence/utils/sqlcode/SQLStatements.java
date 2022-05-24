@@ -1,6 +1,9 @@
 package server.persistence.utils.sqlcode;
 
 import server.persistence.utils.tables.Table;
+import shared.SaleStrategyType;
+
+import java.time.temporal.Temporal;
 
 public class SQLStatements {
 	public String select() {
@@ -153,5 +156,18 @@ public class SQLStatements {
 
 	public String fetchRows(int amount) {
 		return " FETCH FIRST " + amount + " ROWS ONLY";
+	}
+
+
+	public String insert(Table auction, double offerAmount, Temporal endTimestamp, String strategyType) {
+		return "INSERT INTO " + auction.getSchema()+"." + auction.getTableName() + " VALUES " +
+						"(DEFAULT," + offerAmount + "," + "null,TIMESTAMP(0) '" + endTimestamp + "'," + strategyType + ")";
+
+						//Default ItemID Skal nok ændres senere for at være sikker på at ændre i den rigtige item, som matcher det item i item table
+	}
+
+	public String insert(Table buyout, double offerAmount, String strategyType) {
+	return "INSERT INTO " + buyout.getSchema()+buyout.getTableName() + " VALUES " +
+					"(DEFAULT," + offerAmount+",null,"+ strategyType+")";
 	}
 }

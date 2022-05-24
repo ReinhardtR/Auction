@@ -10,18 +10,39 @@ import java.time.temporal.Temporal;
 
 public class ItemImpl extends UnicastRemoteObject implements Item {
 	private final String itemID;
+	private final String title;
+	private final String description;
+	private final String tags;
 
 	//Enum
 	private final SaleStrategy strategy;
 
-	public ItemImpl(String itemID, SaleStrategy strategy) throws RemoteException {
+	public ItemImpl(String itemID, String title, String description, String tags, SaleStrategy strategy) throws RemoteException {
 		this.itemID = itemID;
+		this.title = title;
+		this.description = description;
+		this.tags = tags;
 		this.strategy = strategy;
 	}
 
 	@Override
 	public String getItemID() throws RemoteException {
 		return itemID;
+	}
+
+	@Override
+	public String getTitle() throws RemoteException {
+		return title;
+	}
+
+	@Override
+	public String getDescription() throws RemoteException {
+		return description;
+	}
+
+	@Override
+	public String getTags() throws RemoteException {
+		return tags;
 	}
 
 	@Override

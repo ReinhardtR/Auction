@@ -10,6 +10,12 @@ public interface Item extends Remote {
 
 	String getItemID() throws RemoteException;
 
+	String getTitle() throws RemoteException;
+
+	String getDescription() throws RemoteException;
+
+	String getTags() throws RemoteException;
+
 	Temporal getEndTimestamp() throws RemoteException;
 
 	void userSaleStrategy(double amount, String username) throws RemoteException;

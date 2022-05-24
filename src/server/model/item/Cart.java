@@ -1,7 +1,7 @@
 package server.model.item;
 
 import server.persistence.DatabaseAccess;
-import server.persistence.DatabaseIO;
+import server.persistence.CustomerDatabaseMethods;
 import shared.EventType;
 import shared.network.model.Item;
 
@@ -20,7 +20,7 @@ public class Cart {
 	private static Cart instance;
 	private final PropertyChangeSupport support;
 	private final HashMap<String, Item> items = new HashMap<>();
-	private final DatabaseIO database;
+	private final CustomerDatabaseMethods database;
 
 	private Cart() {
 		support = new PropertyChangeSupport(this);

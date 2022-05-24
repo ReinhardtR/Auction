@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 
-public interface DatabaseIO {
+public interface CustomerDatabaseMethods {
 
 	Item getItem(String itemID) throws SQLException;
 
