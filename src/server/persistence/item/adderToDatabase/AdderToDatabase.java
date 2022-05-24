@@ -17,17 +17,15 @@ public class AdderToDatabase {
 		try {
 			if (itemToAdd.getStrategyType().toString().equalsIgnoreCase("auction"))
 			{
-				connection.prepareStatement(SQL.addAuctionItem(itemToAdd.getOfferAmount(),itemToAdd.getEndTimestamp(),itemToAdd.getStrategyType()));
-				//Til ovenstående metode skal sælgerens username addes.
+				connection.prepareStatement(SQL.addAuctionItem(itemToAdd.getOfferAmount(),itemToAdd.getEndTimestamp(),itemToAdd.getStrategyType()
+				, itemToAdd.getTitle(),itemToAdd.getTags(),itemToAdd.getDescription(),itemToAdd.getSalesManUsername()));
 			}
-			else if (itemToAdd.getItemID().toString().equalsIgnoreCase("buyout"))
+			else if (itemToAdd.getStrategyType().toString().equalsIgnoreCase("buyout"))
 			{
-				connection.prepareStatement(SQL.addBuyoutItem(itemToAdd.getOfferAmount(),itemToAdd.getStrategyType()));
-				//Til ovenståendem etode skal sælgerens username addes.
+				connection.prepareStatement(SQL.addBuyoutItem(itemToAdd.getOfferAmount(),itemToAdd.getStrategyType()
+				, itemToAdd.getTitle(),itemToAdd.getTags(),itemToAdd.getDescription(),itemToAdd.getSalesManUsername()));
 			}
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
+		} catch (RemoteException | SQLException e) {
 			e.printStackTrace();
 		}
 		//Lave metode som bliver kaldt på database ud fra de informationer som ligger hos itemToAdd
