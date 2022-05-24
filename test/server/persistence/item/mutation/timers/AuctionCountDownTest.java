@@ -25,8 +25,8 @@ class AuctionCountDownTest {
 	@BeforeAll
 	static void setUp() {
 		try {
-			fakeItemForFutureTest = new ItemImpl("1", title, description, tags, new AuctionStrategy(0, "testMan", LocalDateTime.now().plusSeconds(secondsIntoFutureTest)));
-			fakeItemForPastTest = new ItemImpl("2", title, description, tags, new AuctionStrategy(0, "testman2", LocalDateTime.now().minusHours(24)));
+			fakeItemForFutureTest = new ItemImpl("1", "title", "description", "tags", new AuctionStrategy(0, "testMan", LocalDateTime.now().plusSeconds(secondsIntoFutureTest)));
+			fakeItemForPastTest = new ItemImpl("2", "title", "description", "tags", new AuctionStrategy(0, "testman2", LocalDateTime.now().minusHours(24)));
 
 		} catch (RemoteException e) {
 			e.printStackTrace();
