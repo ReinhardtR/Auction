@@ -18,12 +18,12 @@ public class AdderToDatabase {
 			if (itemToAdd.getStrategyType().toString().equalsIgnoreCase("auction"))
 			{
 				connection.prepareStatement(SQL.addAuctionItem(itemToAdd.getOfferAmount(),itemToAdd.getEndTimestamp(),itemToAdd.getStrategyType()
-				, itemToAdd.getTitle(),itemToAdd.getTags(),itemToAdd.getDescription(),itemToAdd.getSalesmanUsername()));
+				, itemToAdd.getTitle(),itemToAdd.getTags(),itemToAdd.getDescription(),itemToAdd.getSalesmanUsername())).execute();
 			}
 			else if (itemToAdd.getStrategyType().toString().equalsIgnoreCase("buyout"))
 			{
 				connection.prepareStatement(SQL.addBuyoutItem(itemToAdd.getOfferAmount(),itemToAdd.getStrategyType()
-				, itemToAdd.getTitle(),itemToAdd.getTags(),itemToAdd.getDescription(),itemToAdd.getSalesmanUsername()));
+				, itemToAdd.getTitle(),itemToAdd.getTags(),itemToAdd.getDescription(),itemToAdd.getSalesmanUsername())).execute();
 			}
 		} catch (RemoteException | SQLException e) {
 			e.printStackTrace();
