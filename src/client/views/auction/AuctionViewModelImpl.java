@@ -104,13 +104,7 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 
 	@Override
 	public void returnToItemListView() {
-		try {
-			item.getUpdateBroadcaster().unregisterClient((ClientImpl) ClientFactory.getInstance().getClient());
-		} catch (RemoteException e) {
-			throw new RuntimeException(e);
-		}
 		ViewHandler.getInstance().openView(ViewEnum.ItemList.toString());
-		ViewHandler.getInstance().openItemListView();
 	}
 
 	private void runTimeSimulation(Temporal endDateTime) {

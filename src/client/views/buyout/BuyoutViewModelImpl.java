@@ -79,11 +79,6 @@ public class BuyoutViewModelImpl implements BuyoutViewModel {
 
 	@Override
 	public void returnToItemListView() {
-		try {
-			item.getUpdateBroadcaster().unregisterClient((ClientImpl) ClientFactory.getInstance().getClient());
-		} catch (RemoteException e) {
-			throw new RuntimeException(e);
-		}
 		ViewHandler.getInstance().openView(ViewEnum.ItemList.toString());
 	}
 }
