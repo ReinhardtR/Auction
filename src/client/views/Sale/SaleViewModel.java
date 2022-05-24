@@ -13,4 +13,6 @@ public interface SaleViewModel {
 	DoubleProperty priceBidTextProperty();
 
 	void returnToItemList();
+
+	void setItemUpForSale();
 }

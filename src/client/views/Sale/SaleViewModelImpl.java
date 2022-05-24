@@ -50,4 +50,9 @@ public class SaleViewModelImpl implements SaleViewModel {
 	public void returnToItemList() {
 		ViewHandler.getInstance().openView(ViewEnum.ItemList.toString());
 	}
+
+	@Override
+	public void setItemUpForSale() {
+		
+	}
 }
