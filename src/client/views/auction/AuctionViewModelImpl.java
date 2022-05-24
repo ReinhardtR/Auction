@@ -90,8 +90,9 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 	private void onNewBid(PropertyChangeEvent event) {
 		System.out.println("change!");
 		Platform.runLater(() -> {
-			double offerAmount = item.getOfferAmount();
-			String itemID = item.getItemID();
+			String itemID = (String) event.getOldValue();
+			System.out.println(event.getNewValue());
+			double offerAmount = (double) event.getNewValue();
 
 			currentHighestBid.setValue(offerAmount);
 

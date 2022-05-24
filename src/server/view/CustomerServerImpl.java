@@ -9,6 +9,7 @@ import shared.network.server.CustomerServer;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
@@ -40,7 +41,8 @@ public class CustomerServerImpl extends UnicastRemoteObject implements CustomerS
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
 		try {
-			broadcaster.broadcastEventForItem(event.getPropertyName(), (String) event.getNewValue());
+			System.out.println("EVENT FROM: " + event.getSource().getClass().getName());
+			broadcaster.broadcastEventForItem(event.getPropertyName(), (String) event.getOldValue(), (Serializable) event.getNewValue());
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
