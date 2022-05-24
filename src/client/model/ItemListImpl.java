@@ -14,40 +14,36 @@ import java.util.List;
 
 public class ItemListImpl implements ItemList {
 	private final PropertyChangeSupport support;
-	private final HashMap<String, Item> items;
+	private final HashMap<String, ItemCacheProxy> items;
 	private final LocalClient client;
-	private Item currentlyViewedItem;
+	private String currentlyViewedItemID;
 
 	public ItemListImpl(LocalClient client) {
 		support = new PropertyChangeSupport(this);
 		items = new HashMap<>();
+
+		try {
+			for (ItemCacheProxy item : client.getAllItems()) {
+				items.put(item.getItemID(), item);
+			}
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 
 		this.client = client;
 		client.addListener(EventType.ITEM_SOLD.toString(), this::onItemSold);
 	}
 
 	@Override
-	public List<ObservableItem> getItemList() {
-		List<ObservableItem> observableItemList = new ArrayList<>();
-
-		try {
-			for (Item item : client.getAllItems()) {
-				items.put(item.getItemID(), item);
-
-				observableItemList.add(new ObservableItem(client, item));
-			}
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
-
-		return observableItemList;
+	public List<ItemCacheProxy> getItemList() {
+		return new ArrayList<>(items.values());
 	}
 
 	@Override
 	public ObservableItem getCurrentlyViewedItem() {
 		try {
 			// Laver proxy af Item
-			return new ObservableItem(client, currentlyViewedItem);
+			return new ObservableItem(client, items.get(currentlyViewedItemID));
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
@@ -56,12 +52,12 @@ public class ItemListImpl implements ItemList {
 	}
 
 	@Override
-	public void setCurrentlyViewedItem(String itemID) {
-		currentlyViewedItem = getItem(itemID);
+	public void setCurrentlyViewedItemID(String itemID) {
+		currentlyViewedItemID = itemID;
 	}
 
-	private Item getItem(String itemID) {
-		Item item = items.get(itemID);
+	private ItemCacheProxy getItem(String itemID) {
+		ItemCacheProxy item = items.get(itemID);
 
 		if (item == null) {
 			try {
@@ -97,7 +93,7 @@ public class ItemListImpl implements ItemList {
 
 	private void onItemSold(PropertyChangeEvent event) {
 		System.out.println(event.getPropertyName());
-		String itemID = (String) event.getNewValue();
+		String itemID = (String) event.getOldValue();
 		items.remove(itemID);
 		support.firePropertyChange(EventType.ITEM_SOLD.toString(), null, itemID);
 	}
