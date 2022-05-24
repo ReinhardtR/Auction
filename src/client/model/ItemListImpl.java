@@ -1,8 +1,8 @@
 package client.model;
 
+import client.model.item.ItemCacheProxy;
 import client.network.LocalClient;
 import shared.EventType;
-import shared.network.model.Item;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

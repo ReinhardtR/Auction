@@ -1,4 +1,4 @@
-package client.model;
+package client.model.item;
 
 import shared.SaleStrategyType;
 import shared.network.model.Item;
@@ -7,7 +7,7 @@ import java.time.temporal.Temporal;
 
 public interface ItemCacheProxy extends Item {
 	String getItemID();
-	String getSellerUsername();
+	String getSalesmanUsername();
 	Temporal getEndTimestamp();
 	SaleStrategyType getStrategyType();
 }

@@ -1,18 +1,15 @@
 package client.views.itemlist;
 
 import client.core.ViewHandler;
-import client.model.ItemCacheProxy;
+import client.model.item.ItemCacheProxy;
 import client.model.ItemList;
-import client.model.ObservableItem;
 import client.utils.ViewEnum;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import shared.EventType;
 import shared.SaleStrategyType;
-import shared.network.model.Item;
 
 import java.beans.PropertyChangeEvent;
-import java.rmi.RemoteException;
 
 public class ItemListViewModelImpl implements ItemListViewModel {
 	private final ItemList itemList;

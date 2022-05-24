@@ -1,5 +1,6 @@
 package client.model;
 
+import client.model.item.ItemCacheProxy;
 import shared.utils.PropertyChangeSubject;
 
 import java.util.List;

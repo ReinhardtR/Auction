@@ -1,4 +1,4 @@
-import client.model.ItemCacheProxyImpl;
+import client.model.item.ItemCacheProxyImpl;
 import client.model.ObservableItem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

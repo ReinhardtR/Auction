@@ -85,7 +85,7 @@ public class ResultSetAdapterImpl implements ResultSetAdapter {
 			e.printStackTrace();
 		}
 		try {
-			System.out.println(itemToReturn.getItemID()+"<- itemid "+itemToReturn.getTitle()+ itemToReturn.getTags()+itemToReturn.getDescription()+itemToReturn.getSalesManUsername());
+			System.out.println(itemToReturn.getItemID()+"<- itemid "+itemToReturn.getTitle()+ itemToReturn.getTags()+itemToReturn.getDescription()+itemToReturn.getSalesmanUsername());
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}

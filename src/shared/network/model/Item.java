@@ -10,7 +10,7 @@ public interface Item extends Remote {
 
 	String getItemID() throws RemoteException;
 
-	String getSellerUsername() throws RemoteException;
+	String getSalesmanUsername() throws RemoteException;
 
 	String getTitle() throws RemoteException;
 
@@ -27,8 +27,6 @@ public interface Item extends Remote {
 	boolean getIsSold() throws RemoteException;
 
 	String getBuyerUsername() throws RemoteException;
-
-	String getSalesManUsername() throws RemoteException;
 
 	SaleStrategyType getStrategyType() throws RemoteException;
 }

@@ -2,7 +2,7 @@ package client.views.itemlist;
 
 import client.core.ViewHandler;
 import client.core.ViewModelFactory;
-import client.model.ItemCacheProxy;
+import client.model.item.ItemCacheProxy;
 import client.model.ObservableItem;
 import client.views.ViewController;
 import javafx.fxml.FXML;
@@ -11,7 +11,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import shared.SaleStrategyType;
-import shared.network.model.Item;
 
 public class ItemListController implements ViewController {
 
