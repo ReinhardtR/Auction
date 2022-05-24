@@ -1,45 +1,24 @@
 package client.views.buyout;
 
-import client.model.ObservableItem;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-public class BuyoutViewModel implements PropertyChangeListener {
-	private final ObservableItem item;
-	private final DoubleProperty priceProperty;
-	private final StringProperty itemNameProperty;
+public interface BuyoutViewModel {
 
-	public BuyoutViewModel(ObservableItem item) {
-		this.item = item;
-		item.addListener(item.getItemID(), this);
+	void onBuy(double amount, String username);
 
-		priceProperty = new SimpleDoubleProperty();
-		itemNameProperty = new SimpleStringProperty();
+	// brug samme naming convention i begge viewmodels (kan godt lide den i auction)
+	DoubleProperty getPriceProperty();
 
-		itemNameProperty.setValue(item.getItemID());
-		priceProperty.setValue(item.getOfferAmount());
-	}
+	StringProperty getItemNameProperty();
 
-	public void onBuy(double amount, String username) {
-		System.out.println("Buying");
-		item.userSaleStrategy(amount, username);
-	}
+	StringProperty getErrorProperty();
 
-	public DoubleProperty getPriceProperty() {
-		return priceProperty;
-	}
+	BooleanProperty getIsSoldProperty();
 
-	public StringProperty getItemNameProperty() {
-		return itemNameProperty;
-	}
-
-	@Override
-	public void propertyChange(PropertyChangeEvent event) {
-		// TODO: sold property?
-	}
+	void returnToItemListView();
 }

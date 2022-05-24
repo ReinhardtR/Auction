@@ -1,11 +1,11 @@
 package server.model.item.SaleStrategy;
 
 import server.model.item.Cart;
-import server.model.item.Item;
-import shared.EventType;
 import shared.SaleStrategyType;
+import shared.network.model.Item;
 
 import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.time.temporal.Temporal;
 
 public class BuyoutStrategy implements SaleStrategy {
@@ -18,15 +18,19 @@ public class BuyoutStrategy implements SaleStrategy {
 
 	@Override
 	public void offer(Item item, double amount, String username) {
-		price = amount;
-		buyer = username;
-
 		try {
 			Cart.getInstance().itemBought(item);
-			item.getUpdateBroadcaster().broadcastEventForItem(EventType.ITEM_SOLD.toString(), item.getItemID());
-		} catch (RemoteException e) {
+
+			price = amount;
+			buyer = username;
+		} catch (RemoteException | SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public boolean getIsSold() {
+		return buyer != null;
 	}
 
 	@Override

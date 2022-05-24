@@ -1,18 +1,18 @@
 package server.persistence.utils.resultSetAdapter;
 
-import server.model.item.Item;
 import server.model.item.ItemImpl;
 import server.persistence.item.select.ItemSelector;
 import server.persistence.item.select.ItemSelectorImpl;
 import server.persistence.item.select.salestrategy.SaleStrategySelector;
 import server.persistence.item.select.salestrategy.SaleStrategySelectorImpl;
+import shared.network.model.Item;
 
 import java.rmi.RemoteException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ResultSetAdapterImpl implements ResultSetAdapter {
 
@@ -27,7 +27,8 @@ public class ResultSetAdapterImpl implements ResultSetAdapter {
 
 	@Override
 	public Item fetchItem(Connection c, String itemID) {
-		ItemImpl itemToReturn = null;
+		Item itemToReturn = null;
+
 		try {
 			ResultSet itemResultSet = itemSelector.fetchItem(c, itemID);
 			if (itemResultSet != null) {
@@ -38,12 +39,14 @@ public class ResultSetAdapterImpl implements ResultSetAdapter {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+
 		return itemToReturn;
 	}
 
 	@Override
-	public ArrayList<Item> fetchAmountOfItems(Connection c, int amount, String ascOrDesc) {
-		ArrayList<Item> itemsToReturn = new ArrayList<>();
+	public List<Item> fetchAmountOfItems(Connection c, int amount, String ascOrDesc) {
+		List<Item> itemsToReturn = new ArrayList<>();
+
 		try {
 			ResultSet resultset = itemSelector.fetchAmountOfItems(c, amount, ascOrDesc);
 
@@ -57,13 +60,14 @@ public class ResultSetAdapterImpl implements ResultSetAdapter {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+
 		return itemsToReturn;
 	}
 
 
-	private ItemImpl itemCreation(Connection c, ResultSet itemResultSet) throws SQLException {
+	private Item itemCreation(Connection c, ResultSet itemResultSet) throws SQLException {
+		Item itemToReturn = null;
 
-		ItemImpl itemToReturn = null;
 		try {
 			itemToReturn = new ItemImpl(
 							itemResultSet.getString("itemID"),
@@ -77,10 +81,6 @@ public class ResultSetAdapterImpl implements ResultSetAdapter {
 			e.printStackTrace();
 		}
 
-
 		return itemToReturn;
 	}
-
-
 }
-

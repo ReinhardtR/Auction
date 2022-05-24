@@ -6,9 +6,13 @@ import server.persistence.utils.sqlcode.SQLOperation;
 import server.persistence.utils.sqlcode.SQLStatements;
 import server.persistence.utils.tables.DatabaseTables;
 import server.persistence.utils.tables.Table;
+import shared.SaleStrategyType;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.temporal.Temporal;
 
 
 public class SQL {
@@ -126,4 +130,39 @@ public class SQL {
 			e.printStackTrace();
 		}
 	}
+
+	//Nu begynder salesman metoderne
+
+
+	public static String addAuctionItem(double offerAmount, Temporal endTimestamp, SaleStrategyType strategyType){
+		Table auction = null;
+
+		try {
+
+			//I Denne metode skal der addes nogle values ind i Item table, herefter skal der addes dens salesstrategy pris ind i
+			// auction table, Disse 2 tuples i forskellige tables skal have den samme itemID
+			auction = tables.getTable("auction");
+
+
+		} catch (TableNonExistent e) {
+			e.printStackTrace();
+		}
+		System.out.println(statements.insert(auction,offerAmount,endTimestamp,strategyType.toString()));
+		return statements.insert(auction,offerAmount,endTimestamp,strategyType.toString());
+	}
+
+	public static String addBuyoutItem(double offerAmount, SaleStrategyType strategyType) {
+		Table buyout = null;
+
+
+		try {
+			buyout = tables.getTable("buyout");
+		} catch (TableNonExistent e) {
+			e.printStackTrace();
+		}
+
+		return statements.insert(buyout,offerAmount,strategyType.toString());
+
+	}
+
 }

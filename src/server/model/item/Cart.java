@@ -1,9 +1,9 @@
 package server.model.item;
 
 import server.persistence.DatabaseAccess;
-import server.persistence.DatabaseIO;
+import server.persistence.CustomerDatabaseMethods;
 import shared.EventType;
-import shared.utils.PropertyChangeSubject;
+import shared.network.model.Item;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -15,12 +15,12 @@ import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class Cart implements PropertyChangeSubject {
+public class Cart {
 	private static final Lock lock = new ReentrantLock();
 	private static Cart instance;
 	private final PropertyChangeSupport support;
 	private final HashMap<String, Item> items = new HashMap<>();
-	private final DatabaseIO database;
+	private final CustomerDatabaseMethods database;
 
 	private Cart() {
 		support = new PropertyChangeSupport(this);
@@ -53,25 +53,14 @@ public class Cart implements PropertyChangeSubject {
 		return itemsInCart;
 	}
 
-	//TODO SKAL IMPLEMENTERES
 	public Item getItem(String itemId) {
-
-
 		return items.get(itemId);
 	}
 
-	public void itemBought(Item item) throws RemoteException {
-
-
-		System.out.println("Before selling");
-		//FØR DATABASE MERGE
-		try {
-			database.buyoutItemBought(item);
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
+	public void itemBought(Item item) throws RemoteException, SQLException {
+		database.buyoutItemBought(item);
 		items.remove(item.getItemID());
-		support.firePropertyChange(EventType.ITEM_SOLD.toString(), null, item.getItemID());
+		support.firePropertyChange(EventType.ITEM_SOLD.toString(), item.getItemID(), null);
 		System.out.println("SOLD TO THE MAN IN BLUe");
 	}
 
@@ -79,12 +68,13 @@ public class Cart implements PropertyChangeSubject {
 		items.clear();
 	} //Midlertidig
 
-	public void updateItemOffer(Item item) {
-		try {
-			database.updateAuctionOffer(item);
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
+	public void updateItemOffer(Item item, Runnable callback) throws SQLException, RemoteException {
+		database.updateAuctionOffer(item);
+
+		callback.run();
+
+		support.firePropertyChange(EventType.NEW_BID.toString(), item.getItemID(), item.getOfferAmount());
+		System.out.println("Bid went through");
 	}
 
 	//TIL LAV ITEM USECASE
@@ -98,7 +88,6 @@ public class Cart implements PropertyChangeSubject {
 
 	public void getManyItems() throws RemoteException {
 		try {
-
 			for (Item item : database.getAmountOfItems(10, "asc")) {
 				items.put(item.getItemID(), item);
 			}
@@ -109,15 +98,5 @@ public class Cart implements PropertyChangeSubject {
 
 	public void addListenerToAllEvents(PropertyChangeListener listener) {
 		support.addPropertyChangeListener(listener);
-	}
-
-	@Override
-	public void addListener(String eventName, PropertyChangeListener listener) {
-		support.addPropertyChangeListener(eventName, listener);
-	}
-
-	@Override
-	public void removeListener(String eventName, PropertyChangeListener listener) {
-		support.removePropertyChangeListener(eventName, listener);
 	}
 }

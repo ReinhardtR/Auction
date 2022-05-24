@@ -1,12 +1,12 @@
+import client.model.ItemCacheProxyImpl;
 import client.model.ObservableItem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import server.model.item.Item;
 import server.model.item.ItemImpl;
 import server.model.item.SaleStrategy.AuctionStrategy;
 import shared.SaleStrategyType;
-import shared.network.model.GenerelItems;
+import shared.network.model.Item;
 
 import java.rmi.RemoteException;
 import java.time.LocalDateTime;
@@ -17,16 +17,16 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ItemTest {
 	private Item testItem;
 	private Item brokenTestItem;
-	private GenerelItems observableTestItem;
-	private GenerelItems brokenObservableItem;
+	private Item observableTestItem;
+	private Item brokenObservableItem;
 
 	@BeforeEach
 	void createTestItem() throws RemoteException {
 		testItem = new ItemImpl("123", new AuctionStrategy(0, "tis", LocalDateTime.of(2022, 5, 16, 11, 20)));
-		observableTestItem = new ObservableItem(null, testItem);
+		observableTestItem = new ObservableItem(null, new ItemCacheProxyImpl(testItem));
 
 		brokenTestItem = new ItemImpl(null, null);
-		brokenObservableItem = new ObservableItem(null, brokenTestItem);
+		brokenObservableItem = new ObservableItem(null, new ItemCacheProxyImpl(brokenTestItem));
 	}
 
 	//UserSale Strategy ZOMBIES

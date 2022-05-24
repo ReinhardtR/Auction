@@ -2,6 +2,8 @@ package server.model.broadcaster;
 
 import shared.network.client.SharedClient;
 
+import java.io.Serializable;
+import java.rmi.ConnectException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -15,10 +17,14 @@ public class UpdateBroadcasterImpl extends UnicastRemoteObject implements Update
 	}
 
 	@Override
-	public void broadcastEventForItem(String eventName, String itemID) throws RemoteException {
+	public void broadcastEventForItem(String eventName, String itemID, Serializable newValue) throws RemoteException {
 		listeners.forEach((listener) -> {
 			try {
-				listener.onServerEvent(eventName, itemID);
+				System.out.println("BROADCAST NEW VALUE: " + newValue);
+				listener.onServerEvent(eventName, itemID, newValue);
+			} catch (ConnectException e) {
+				System.out.println("Connection failed, removed listener.");
+				listeners.remove(listener);
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}

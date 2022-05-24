@@ -1,10 +1,8 @@
 package client.model;
 
 import client.network.LocalClient;
-import server.model.item.Item;
-import shared.EventType;
 import shared.SaleStrategyType;
-import shared.network.model.GenerelItems;
+import shared.network.model.Item;
 import shared.utils.PropertyChangeSubject;
 
 import java.beans.PropertyChangeEvent;
@@ -13,35 +11,32 @@ import java.beans.PropertyChangeSupport;
 import java.rmi.RemoteException;
 import java.time.temporal.Temporal;
 
-public class ObservableItem implements PropertyChangeListener, PropertyChangeSubject, GenerelItems {
+public class ObservableItem implements PropertyChangeListener, PropertyChangeSubject, Item {
 	private final PropertyChangeSupport support;
-	private final Item item;
-	private final String itemID;
-	private final Temporal endDateTime;
-	private final SaleStrategyType strategyType;
+	private final ItemCacheProxy item;
 
-	public ObservableItem(LocalClient client, Item item) throws RemoteException {
+	public ObservableItem(LocalClient client, ItemCacheProxy item) throws RemoteException {
 		support = new PropertyChangeSupport(this);
 		this.item = item;
 
-		// Cache
-		itemID = item.getItemID();
-		strategyType = item.getStrategyType();
-		endDateTime = item.getEndTimestamp();
-
 		if (client != null) {
-			client.addListener(EventType.NEW_BID.toString() + itemID, this);
+			client.addListener(this);
 		}
 	}
 
 	@Override
 	public String getItemID() {
-		return itemID;
+		return item.getItemID();
+	}
+
+	@Override
+	public boolean getIsSold() throws RemoteException {
+		return item.getIsSold();
 	}
 
 	@Override
 	public Temporal getEndTimestamp() {
-		return endDateTime;
+		return item.getEndTimestamp();
 	}
 
 	@Override
@@ -55,7 +50,7 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 
 	@Override
 	public SaleStrategyType getStrategyType() {
-		return strategyType;
+		return item.getStrategyType();
 	}
 
 	@Override
@@ -69,13 +64,29 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 		return -1;
 	}
 
+	// TODO
 	@Override
 	public String getBuyerUsername() throws RemoteException {
 		return null;
 	}
 
 	public void propertyChange(PropertyChangeEvent event) {
-		support.firePropertyChange(itemID, null, null);
+		// Only care about its own updates.
+		System.out.println("Receive " + getItemID() + " " + event.getNewValue());
+		if (!event.getOldValue().equals(getItemID())) return;
+
+		System.out.println("Send");
+		support.firePropertyChange(event);
+	}
+
+	@Override
+	public void addListener(PropertyChangeListener listener) {
+		support.addPropertyChangeListener(listener);
+	}
+
+	@Override
+	public void removeListener(PropertyChangeListener listener) {
+		support.removePropertyChangeListener(listener);
 	}
 
 	@Override
