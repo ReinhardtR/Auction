@@ -91,8 +91,8 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 	}
 
 	@Override
-	public String getSalesManUsername() throws RemoteException {
-		return "TEstermanUsername";
+	public String getSalesManUsername() {
+		return item.getSalesmanUsername();
 	}
 
 	public void propertyChange(PropertyChangeEvent event) {
