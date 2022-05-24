@@ -5,4 +5,6 @@ public interface UsernameModel {
 	String getUsername();
 
 	void setUsername(String username);
+
+	void createItem();
 }

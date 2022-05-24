@@ -20,4 +20,9 @@ public class UsernameModelImpl implements UsernameModel {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
+	@Override
+	public void createItem() {
+		client.createItem();
+	}
 }

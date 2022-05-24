@@ -70,6 +70,11 @@ public class ClientImpl extends UnicastRemoteObject implements SharedClient, Loc
 	}
 
 	@Override
+	public void createItem() throws RemoteException {
+		server.getSalesmanServer().createItem();
+	}
+
+	@Override
 	public void addListener(PropertyChangeListener listener) {
 		support.addPropertyChangeListener(listener);
 	}

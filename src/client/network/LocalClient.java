@@ -12,4 +12,6 @@ public interface LocalClient extends PropertyChangeSubject {
 	List<ItemCacheProxy> getAllItems() throws RemoteException;
 
 	void unregisterClient() throws RemoteException;
+
+	void createItem() throws RemoteException;
 }
