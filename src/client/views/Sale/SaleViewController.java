@@ -15,7 +15,7 @@ public class SaleViewController implements ViewController {
 
 
 	@FXML
-	private Label errorCreateLabel;
+	private Label eventCreateLabel;
 	@FXML
 	private TextField title;
 	@FXML
@@ -55,7 +55,7 @@ public class SaleViewController implements ViewController {
 		price_BidTextField.textProperty().bindBidirectional(saleViewModel.priceBidTextProperty());
 		endTimeTextField.textProperty().bindBidirectional(saleViewModel.endTimeTextProperty());
 
-		errorCreateLabel.textProperty().bindBidirectional(saleViewModel.errorLabelProperty());
+		eventCreateLabel.textProperty().bindBidirectional(saleViewModel.errorLabelProperty());
 
 
 	}

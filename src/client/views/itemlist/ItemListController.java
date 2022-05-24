@@ -18,9 +18,6 @@ public class ItemListController implements ViewController {
 	private TableColumn<ObservableItem, SaleStrategyType> typeCol;
 
 	@FXML
-	private Label errorLabel;
-
-	@FXML
 	private TableColumn<ItemCacheProxy, String> idCol;
 
 	@FXML
@@ -37,8 +34,6 @@ public class ItemListController implements ViewController {
 		itemsTableView.setItems(viewModelFactory.getItemListViewModel().getObservableItemList());
 
 		itemListViewModel = viewModelFactory.getItemListViewModel();
-
-		errorLabel.setText("");
 	}
 
 	@FXML
@@ -47,7 +42,6 @@ public class ItemListController implements ViewController {
 
 		if (item != null) {
 			itemListViewModel.openViewForItem(item);
-			errorLabel.setText("");
 		}
 	}
 
