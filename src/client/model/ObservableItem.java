@@ -90,7 +90,6 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 		return null;
 	}
 
-	@Override
 	public String getSalesManUsername() {
 		return item.getSalesmanUsername();
 	}
