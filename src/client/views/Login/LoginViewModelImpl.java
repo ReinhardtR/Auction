@@ -1,16 +1,19 @@
 package client.views.Login;
 
 import client.core.ViewHandler;
+import client.model.UsernameModel;
 import client.utils.ViewEnum;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class LoginViewModelImpl implements LoginViewModel {
 
-	private StringProperty errorTextProperty;
+	private final StringProperty errorTextProperty;
+	private final UsernameModel usernameModel;
 
-	public LoginViewModelImpl() {
+	public LoginViewModelImpl(UsernameModel usernameModel) {
 		errorTextProperty = new SimpleStringProperty();
+		this.usernameModel = usernameModel;
 	}
 
 	@Override
@@ -20,12 +23,12 @@ public class LoginViewModelImpl implements LoginViewModel {
 
 	@Override
 	public void login(String username) {
-		System.out.println("BLACK");
 		if (username.isBlank()) {
 			errorTextProperty.setValue("Please type in a username!");
 		} else if (username.length() > 20) {
 			errorTextProperty.setValue("Please type in a shorter username");
 		} else {
+			usernameModel.setUsername(username);
 			ViewHandler.getInstance().openView(ViewEnum.ItemList.toString());
 		}
 	}

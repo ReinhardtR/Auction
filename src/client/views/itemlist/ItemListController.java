@@ -18,7 +18,7 @@ public class ItemListController implements ViewController {
 
 	@FXML
 	private Label errorLabel;
-	
+
 	@FXML
 	private TableColumn<ObservableItem, String> idCol;
 
@@ -48,5 +48,9 @@ public class ItemListController implements ViewController {
 			itemListViewModel.openViewForItem(observableItem);
 			errorLabel.setText("");
 		}
+	}
+
+	public void openSaleView() {
+		itemListViewModel.openSaleView();
 	}
 }

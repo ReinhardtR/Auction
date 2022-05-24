@@ -104,6 +104,7 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 
 	@Override
 	public void returnToItemListView() {
+
 		ViewHandler.getInstance().openView(ViewEnum.ItemList.toString());
 	}
 

@@ -4,5 +4,7 @@ public enum ViewEnum {
 	ItemList,
 	Auction,
 	Buyout,
-	Login
+	Login,
+
+	Sale
 }

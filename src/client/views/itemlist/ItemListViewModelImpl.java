@@ -24,6 +24,11 @@ public class ItemListViewModelImpl implements ItemListViewModel {
 	}
 
 	@Override
+	public void openSaleView() {
+		ViewHandler.getInstance().openView(ViewEnum.Sale.toString());
+	}
+
+	@Override
 	public ObservableList<ObservableItem> getObservableItemList() {
 		System.out.println("kalder i viewmodel");
 		return observableList;
