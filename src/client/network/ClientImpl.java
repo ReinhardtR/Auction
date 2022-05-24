@@ -1,7 +1,7 @@
 package client.network;
 
-import client.model.ItemCacheProxy;
-import client.model.ItemCacheProxyImpl;
+import client.model.item.ItemCacheProxy;
+import client.model.item.ItemCacheProxyImpl;
 import shared.SaleStrategyType;
 import shared.network.client.SharedClient;
 import shared.network.server.MainServer;

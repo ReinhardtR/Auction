@@ -1,5 +1,6 @@
 package client.model;
 
+import client.model.item.ItemCacheProxy;
 import client.network.LocalClient;
 import shared.SaleStrategyType;
 import shared.utils.PropertyChangeSubject;
@@ -29,8 +30,8 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 	}
 
 	@Override
-	public String getSellerUsername() {
-		return item.getSellerUsername();
+	public String getSalesmanUsername() {
+		return item.getSalesmanUsername();
 	}
 
 	@Override

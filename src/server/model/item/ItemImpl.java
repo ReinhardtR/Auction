@@ -9,7 +9,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.time.temporal.Temporal;
 
 public class ItemImpl extends UnicastRemoteObject implements Item {
-	private final String sellerUsername;
+	private final String salesmanUsername;
 	private final String title;
 	private final String description;
 	private final String tags;
@@ -17,17 +17,9 @@ public class ItemImpl extends UnicastRemoteObject implements Item {
 	private final SaleStrategy strategy;
 	private String itemID;
 
-	public ItemImpl(String itemID, String sellerUsername, String title, String description, String tags, SaleStrategy strategy) throws RemoteException {
+	public ItemImpl(String itemID, String salesmanUsername, String title, String description, String tags, SaleStrategy strategy) throws RemoteException {
 		this.itemID = itemID;
-		this.sellerUsername = sellerUsername;
-		this.title = title;
-		this.description = description;
-		this.tags = tags;
-		this.strategy = strategy;
-	}
-
-	public ItemImpl(String sellerUsername, String title, String description, String tags, SaleStrategy strategy) throws RemoteException {
-		this.sellerUsername = sellerUsername;
+		this.salesmanUsername = salesmanUsername;
 		this.title = title;
 		this.description = description;
 		this.tags = tags;
@@ -40,8 +32,8 @@ public class ItemImpl extends UnicastRemoteObject implements Item {
 	}
 
 	@Override
-	public String getSellerUsername() throws RemoteException {
-		return sellerUsername;
+	public String getSalesmanUsername() throws RemoteException {
+		return salesmanUsername;
 	}
 
 	@Override
@@ -78,11 +70,6 @@ public class ItemImpl extends UnicastRemoteObject implements Item {
 	@Override
 	public String getBuyerUsername() throws RemoteException {
 		return null;
-	}
-
-	@Override
-	public String getSalesManUsername() throws RemoteException {
-		return "TemporarySalesman";
 	}
 
 	@Override
