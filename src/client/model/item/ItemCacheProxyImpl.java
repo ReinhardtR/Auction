@@ -84,4 +84,9 @@ public class ItemCacheProxyImpl implements ItemCacheProxy {
 	public String getBuyerUsername() throws RemoteException {
 		return item.getBuyerUsername();
 	}
+
+	@Override
+	public String getSalesManUsername() throws RemoteException {
+		return null;
+	}
 }

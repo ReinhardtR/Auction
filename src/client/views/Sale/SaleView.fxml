@@ -22,8 +22,8 @@
         <Label fx:id="endDateLabel" layoutX="264.0" layoutY="282.0" text="EndDate" />
         <TextField fx:id="endTimeTextField" layoutX="190.0" layoutY="333.0" prefHeight="26.0" prefWidth="200.0" promptText="hh/mm/ss *required*" />
         <Button layoutX="14.0" layoutY="18.0" mnemonicParsing="false" onAction="#returnToItemList" text="Return" />
-        <Button layoutX="317.0" layoutY="366.0" mnemonicParsing="false" onAction="#setItemUpForSale" text="CreateItem" />
+        <Button layoutX="451.0" layoutY="333.0" mnemonicParsing="false" onAction="#setItemUpForSale" text="CreateItem" />
         <DatePicker fx:id="endDatePicker" layoutX="190.0" layoutY="304.0" prefHeight="26.0" prefWidth="200.0" promptText="*required*" />
-        <Label fx:id="errorCreateLabel" layoutX="217.0" layoutY="370.0" text="Label" textFill="#dc0f0f" />
+        <Label fx:id="errorCreateLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="151.0" layoutY="368.0" prefHeight="18.0" prefWidth="285.0" text="Label" textFill="#dc0f0f" />
     </children>
 </AnchorPane>

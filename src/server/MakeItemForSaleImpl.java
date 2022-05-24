@@ -1,14 +1,10 @@
 package server;
 
-import server.model.item.ItemImpl;
-import server.model.item.SaleStrategy.AuctionStrategy;
-import server.model.item.SaleStrategy.BuyoutStrategy;
 import server.persistence.DatabaseAccess;
 import server.persistence.SalesManDatabaseMethods;
 import shared.SaleStrategyType;
 import shared.network.model.Item;
 
-import java.rmi.RemoteException;
 import java.sql.SQLException;
 
 public class MakeItemForSaleImpl implements MakeItemForSale {
@@ -21,6 +17,10 @@ public class MakeItemForSaleImpl implements MakeItemForSale {
 
 	@Override
 	public void makeItem(String title, String description, String tags, SaleStrategyType saleType, String username, double offer, String endtime) {
+
+		System.out.println("item getting made");
+		System.out.println(title);
+		/*
 		try {
 			Item item = null;
 			if (saleType == SaleStrategyType.AUCTION) {
@@ -32,6 +32,8 @@ public class MakeItemForSaleImpl implements MakeItemForSale {
 		} catch (RemoteException e) {
 			throw new RuntimeException();
 		}
+
+		 */
 	}
 
 	private void sendItemToDatabase(Item item) {

@@ -1,6 +1,5 @@
 package client.views.Sale;
 
-import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
 import shared.SaleStrategyType;
@@ -14,7 +13,7 @@ public interface SaleViewModel {
 
 	StringProperty tagsTextProperty();
 
-	DoubleProperty priceBidTextProperty();
+	StringProperty priceBidTextProperty();
 
 	void returnToItemList();
 
