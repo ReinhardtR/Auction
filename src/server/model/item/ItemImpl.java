@@ -10,6 +10,7 @@ import java.time.temporal.Temporal;
 
 public class ItemImpl extends UnicastRemoteObject implements Item {
 	private final String itemID;
+	private final String sellerUsername;
 	private final String title;
 	private final String description;
 	private final String tags;
@@ -17,8 +18,9 @@ public class ItemImpl extends UnicastRemoteObject implements Item {
 	//Enum
 	private final SaleStrategy strategy;
 
-	public ItemImpl(String itemID, String title, String description, String tags, SaleStrategy strategy) throws RemoteException {
+	public ItemImpl(String itemID, String sellerUsername, String title, String description, String tags, SaleStrategy strategy) throws RemoteException {
 		this.itemID = itemID;
+		this.sellerUsername = sellerUsername;
 		this.title = title;
 		this.description = description;
 		this.tags = tags;
@@ -28,6 +30,11 @@ public class ItemImpl extends UnicastRemoteObject implements Item {
 	@Override
 	public String getItemID() throws RemoteException {
 		return itemID;
+	}
+
+	@Override
+	public String getSellerUsername() throws RemoteException {
+		return sellerUsername;
 	}
 
 	@Override

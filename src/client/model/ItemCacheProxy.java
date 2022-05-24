@@ -7,6 +7,7 @@ import java.time.temporal.Temporal;
 
 public interface ItemCacheProxy extends Item {
 	String getItemID();
+	String getSellerUsername();
 	Temporal getEndTimestamp();
 	SaleStrategyType getStrategyType();
 }

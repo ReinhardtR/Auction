@@ -29,6 +29,11 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 	}
 
 	@Override
+	public String getSellerUsername() {
+		return item.getSellerUsername();
+	}
+
+	@Override
 	public String getTitle() {
 		return null;
 	}
