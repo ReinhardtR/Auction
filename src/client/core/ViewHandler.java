@@ -1,5 +1,6 @@
 package client.core;
 
+import client.utils.ViewEnum;
 import javafx.stage.Stage;
 
 public class ViewHandler {
@@ -14,23 +15,20 @@ public class ViewHandler {
 	}
 
 	public void start() {
+		String viewLogin = ViewEnum.Login.toString();
+
 		stage = new Stage();
-		ViewFactory.init(stage);
-		openItemListView();
+		ViewFactory.init(stage, viewLogin);
+		openView(viewLogin);
 	}
 
-	public void openItemListView() {
-		stage.setScene(ViewFactory.getScene("ItemList"));
+	public void openView(String viewName) {
+		stage.setScene(ViewFactory.getScene(viewName));
 		stage.show();
 	}
 
-	public void openAuctionView() {
-		stage.setScene(ViewFactory.startNewScene("Auction"));
-		stage.show();
+	public void openView(ViewEnum viewEnum, String viewName) {
+		stage.setScene(ViewFactory.getScene(viewEnum, viewName));
 	}
 
-	public void openBuyoutView() {
-		stage.setScene(ViewFactory.startNewScene("Buyout"));
-		stage.show();
-	}
 }

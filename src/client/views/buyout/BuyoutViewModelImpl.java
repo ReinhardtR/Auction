@@ -6,13 +6,14 @@ import client.model.ItemCalculations;
 import client.model.ObservableItem;
 import client.network.ClientImpl;
 import client.utils.SystemNotifcation;
+import client.utils.ViewEnum;
 import javafx.beans.property.*;
 import shared.EventType;
 
 import java.beans.PropertyChangeEvent;
 import java.rmi.RemoteException;
 
-public class BuyoutViewModelImpl implements BuyoutViewModel{
+public class BuyoutViewModelImpl implements BuyoutViewModel {
 	private final ObservableItem item;
 
 	// Brug samme naming convention i begge viewmodels
@@ -38,12 +39,9 @@ public class BuyoutViewModelImpl implements BuyoutViewModel{
 	@Override
 	public void onBuy(double amount, String username) {
 		System.out.println("Buying");
-		if(ItemCalculations.isItemSold(item))
-		{
+		if (ItemCalculations.isItemSold(item)) {
 			errorProperty.setValue("Item is already sold!");
-		}
-		else
-		{
+		} else {
 			item.userSaleStrategy(amount, username);
 		}
 	}
@@ -79,10 +77,10 @@ public class BuyoutViewModelImpl implements BuyoutViewModel{
 	@Override
 	public void returnToItemListView() {
 		try {
-			item.getUpdateBroadcaster().unregisterClient((ClientImpl)ClientFactory.getInstance().getClient());
+			item.getUpdateBroadcaster().unregisterClient((ClientImpl) ClientFactory.getInstance().getClient());
 		} catch (RemoteException e) {
 			throw new RuntimeException(e);
 		}
-		ViewHandler.getInstance().openItemListView();
+		ViewHandler.getInstance().openView(ViewEnum.ItemList.toString());
 	}
 }

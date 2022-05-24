@@ -2,7 +2,7 @@ package client.network;
 
 import server.model.item.Item;
 import shared.network.client.SharedClient;
-import shared.network.server.Server;
+import shared.network.server.MainServer;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -15,14 +15,14 @@ import java.util.List;
 
 public class ClientImpl extends UnicastRemoteObject implements SharedClient, LocalClient {
 	private final PropertyChangeSupport support;
-	private final Server server;
+	private final MainServer server;
 
 	public ClientImpl() throws RemoteException, NotBoundException {
 		support = new PropertyChangeSupport(this);
 
 		Registry registry = LocateRegistry.getRegistry("localhost", 1099);
-		server = (Server) registry.lookup("Server");
-		server.getBroadcaster().registerClient(this);
+		server = (MainServer) registry.lookup("Server");
+		server.getCustomerServer().getBroadcaster().registerClient(this);
 	}
 
 	// Some listen to items, some listen to everything
@@ -39,17 +39,17 @@ public class ClientImpl extends UnicastRemoteObject implements SharedClient, Loc
 	// Not used
 	@Override
 	public Item getItem(String itemID) throws RemoteException {
-		return server.getItem(itemID);
+		return server.getCustomerServer().getItem(itemID);
 	}
 
 	@Override
 	public List<Item> getAllItems() throws RemoteException {
-		return server.getAllItemsInCart();
+		return server.getCustomerServer().getAllItemsInCart();
 	}
 
 	@Override
 	public void unregisterClient() throws RemoteException {
-		server.getBroadcaster().unregisterClient(this);
+		server.getCustomerServer().getBroadcaster().unregisterClient(this);
 	}
 
 

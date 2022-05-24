@@ -3,6 +3,7 @@ package client.views.itemlist;
 import client.core.ViewHandler;
 import client.model.ItemList;
 import client.model.ObservableItem;
+import client.utils.ViewEnum;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import shared.EventType;
@@ -35,9 +36,9 @@ public class ItemListViewModelImpl implements PropertyChangeListener, ItemListVi
 		SaleStrategyType strategyType = observableItem.getStrategyType();
 
 		if (strategyType.equals(SaleStrategyType.AUCTION)) {
-			ViewHandler.getInstance().openAuctionView();
+			ViewHandler.getInstance().openView(ViewEnum.Auction, observableItem.getItemID());
 		} else if (strategyType.equals(SaleStrategyType.BUYOUT)) {
-			ViewHandler.getInstance().openBuyoutView();
+			ViewHandler.getInstance().openView(ViewEnum.Buyout, observableItem.getItemID());
 		}
 	}
 

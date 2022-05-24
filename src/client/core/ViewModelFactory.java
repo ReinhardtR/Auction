@@ -1,5 +1,7 @@
 package client.core;
 
+import client.views.Login.LoginViewModel;
+import client.views.Login.LoginViewModelImpl;
 import client.views.auction.AuctionViewModel;
 import client.views.auction.AuctionViewModelImpl;
 import client.views.buyout.BuyoutViewModel;
@@ -13,6 +15,7 @@ public class ViewModelFactory {
 	private ItemListViewModel itemListViewModel;
 	private AuctionViewModel auctionViewModel;
 	private BuyoutViewModel buyoutViewModel;
+	private LoginViewModel loginViewModel;
 
 	private ViewModelFactory() {
 	}
@@ -34,5 +37,10 @@ public class ViewModelFactory {
 	public BuyoutViewModel getBuyoutViewModel() {
 		buyoutViewModel = new BuyoutViewModelImpl(ModelFactory.getInstance().getObservableItemList().getCurrentlyViewedItem());
 		return buyoutViewModel;
+	}
+
+	public LoginViewModel getLoginViewModel() {
+		loginViewModel = new LoginViewModelImpl();
+		return loginViewModel;
 	}
 }

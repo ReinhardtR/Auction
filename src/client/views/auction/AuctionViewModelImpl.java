@@ -6,6 +6,7 @@ import client.model.ItemCalculations;
 import client.model.ObservableItem;
 import client.network.ClientImpl;
 import client.utils.SystemNotifcation;
+import client.utils.ViewEnum;
 import javafx.application.Platform;
 import javafx.beans.property.*;
 import shared.EventType;
@@ -57,6 +58,7 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 			errorText.setValue("Please type a valid number as your bid.");
 		}
 	}
+
 	@Override
 	public StringProperty propertyItemLabel() {
 		return itemText;
@@ -105,12 +107,12 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 
 	@Override
 	public void returnToItemListView() {
-			try {
-				item.getUpdateBroadcaster().unregisterClient((ClientImpl) ClientFactory.getInstance().getClient());
-			} catch (RemoteException e) {
-				throw new RuntimeException(e);
-			}
-			ViewHandler.getInstance().openItemListView();
+		try {
+			item.getUpdateBroadcaster().unregisterClient((ClientImpl) ClientFactory.getInstance().getClient());
+		} catch (RemoteException e) {
+			throw new RuntimeException(e);
+		}
+		ViewHandler.getInstance().openView(ViewEnum.ItemList.toString());
 	}
 
 
