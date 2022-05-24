@@ -61,13 +61,13 @@ public class SaleViewModelImpl implements SaleViewModel {
 	@Override
 	public void setItemUpForSale(SaleStrategyType saleType) {
 		try {
-			double offer = Double.parseDouble(priceOfferProperty.toString());
-			if (titleTextProperty.toString().isEmpty() || priceOfferProperty.toString().isEmpty()
-							|| endTimeProperty.toString().isEmpty()) {
+			double offer = Double.parseDouble(priceOfferProperty.getValue());
+			if (titleTextProperty.getValue().isBlank() || priceOfferProperty.getValue().isBlank()
+							|| endTimeProperty.getValue().isBlank()) {
 				errorLabelProperty.setValue("Please fill out all required fields!");
 			} else {
-				salesman.createItem(titleTextProperty.toString(), descriptionTextProperty.toString(),
-								tagsTextProperty.toString(), saleType, priceOfferProperty.doubleValue(), endTimeProperty.toString());
+				salesman.createItem(titleTextProperty.getValue(), descriptionTextProperty.getValue(),
+								tagsTextProperty.getValue(), saleType, offer, endTimeProperty.getValue());
 			}
 		} catch (NumberFormatException | NullPointerException e) {
 			errorLabelProperty.setValue("Please type in a valid number in price/starter bid!");
