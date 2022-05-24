@@ -2,6 +2,7 @@ package server.view;
 
 import server.MakeItemForSale;
 import server.MakeItemForSaleImpl;
+import shared.SaleStrategyType;
 import shared.network.server.SalesmanServer;
 
 import java.rmi.RemoteException;
@@ -16,7 +17,7 @@ public class SalesmanServerImpl extends UnicastRemoteObject implements SalesmanS
 	}
 
 	@Override
-	public void createItem() throws RemoteException {
-
+	public void createItem(String title, String description, String tags, SaleStrategyType saleType, String username, double offer, String endtime) throws RemoteException {
+		makeItemForSale.makeItem(title, description, tags, saleType, username, offer, endtime);
 	}
 }

@@ -159,15 +159,14 @@ public class SQLStatements {
 	}
 
 
-	public String insert(Table auction, double offerAmount, Temporal endTimestamp, String strategyType) {
+	public String insert(Table auction, double offerAmount, Temporal endTimestamp, String strategyType, String title, String tags, String description, String salesManUsername) {
 		return "INSERT INTO " + auction.getSchema()+"." + auction.getTableName() + " VALUES " +
-						"(DEFAULT," + offerAmount + "," + "null,TIMESTAMP(0) '" + endTimestamp + "'," + strategyType + ")";
+						"(DEFAULT," + offerAmount + "," + "null,TIMESTAMP(0) '" + endTimestamp + "','" + strategyType + "','"+title+"','"+tags+"','"+description+"','"+salesManUsername +"')";
 
-						//Default ItemID Skal nok ændres senere for at være sikker på at ændre i den rigtige item, som matcher det item i item table
 	}
 
-	public String insert(Table buyout, double offerAmount, String strategyType) {
+	public String insert(Table buyout, double offerAmount, String strategyType, String title, String tags, String description, String salesManUsername) {
 	return "INSERT INTO " + buyout.getSchema()+buyout.getTableName() + " VALUES " +
-					"(DEFAULT," + offerAmount+",null,"+ strategyType+")";
+					"(DEFAULT," + offerAmount+",null,"+ strategyType+",'"+title+"','"+tags+"','"+description+"','"+salesManUsername+"')";
 	}
 }
