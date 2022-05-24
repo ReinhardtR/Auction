@@ -1,12 +1,13 @@
 package server.model.item.SaleStrategy;
 
 import server.model.item.Cart;
-import server.model.item.Item;
-import shared.EventType;
 import shared.SaleStrategyType;
+import shared.network.model.Item;
 
 import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.Temporal;
 
 public class AuctionStrategy implements SaleStrategy {
@@ -22,13 +23,12 @@ public class AuctionStrategy implements SaleStrategy {
 
 	@Override
 	public void offer(Item item, double amount, String username) {
-		currentBid = amount;
-		currentBidder = username;
-
 		try {
-			item.getUpdateBroadcaster().broadcastEventForItem(EventType.NEW_BID.toString(), item.getItemID());
 			Cart.getInstance().updateItemOffer(item);
-		} catch (RemoteException e) {
+
+			currentBid = amount;
+			currentBidder = username;
+		} catch (SQLException | RemoteException e) {
 			e.printStackTrace();
 		}
 	}
@@ -36,6 +36,11 @@ public class AuctionStrategy implements SaleStrategy {
 	@Override
 	public String getBuyer() {
 		return currentBidder;
+	}
+
+	@Override
+	public boolean getIsSold() {
+		return endTimestamp.until(LocalDateTime.now(), ChronoUnit.SECONDS) <= 0;
 	}
 
 	@Override

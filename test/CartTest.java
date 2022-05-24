@@ -1,4 +1,4 @@
-import server.model.item.Item;
+import shared.network.model.Item;
 
 public class CartTest {
 	private static Item item;

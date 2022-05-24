@@ -4,7 +4,7 @@ package server.view;
 import server.model.broadcaster.UpdateBroadcaster;
 import server.model.broadcaster.UpdateBroadcasterImpl;
 import server.model.item.Cart;
-import server.model.item.Item;
+import shared.network.model.Item;
 import shared.network.server.CustomerServer;
 
 import java.beans.PropertyChangeEvent;

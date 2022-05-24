@@ -1,12 +1,8 @@
 package client.model;
 
-import client.network.ClientImpl;
 import client.network.LocalClient;
-import server.model.broadcaster.UpdateBroadcaster;
-import server.model.item.Item;
-import shared.EventType;
 import shared.SaleStrategyType;
-import shared.network.model.GenerelItems;
+import shared.network.model.Item;
 import shared.utils.PropertyChangeSubject;
 
 import java.beans.PropertyChangeEvent;
@@ -32,13 +28,18 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 		endDateTime = item.getEndTimestamp();
 
 		if (client != null) {
-			client.addListener(EventType.NEW_BID.toString() + itemID, this);
+			client.addListener(this);
 		}
 	}
 
 	@Override
 	public String getItemID() {
 		return itemID;
+	}
+
+	@Override
+	public boolean getIsSold() throws RemoteException {
+		return item.getIsSold();
 	}
 
 	@Override
@@ -60,7 +61,6 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 		return strategyType;
 	}
 
-
 	@Override
 	public double getOfferAmount() {
 		try {
@@ -78,7 +78,22 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 	}
 
 	public void propertyChange(PropertyChangeEvent event) {
-		support.firePropertyChange(event.getPropertyName(), null, null);
+		// Only care about its own updates.
+		System.out.println("Receive" + itemID + " " + event.getNewValue());
+		if (!event.getNewValue().equals(itemID)) return;
+
+		System.out.println("Send");
+		support.firePropertyChange(event.getPropertyName(), null, itemID);
+	}
+
+	@Override
+	public void addListener(PropertyChangeListener listener) {
+		support.addPropertyChangeListener(listener);
+	}
+
+	@Override
+	public void removeListener(PropertyChangeListener listener) {
+		support.removePropertyChangeListener(listener);
 	}
 
 	@Override
@@ -89,10 +104,5 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 	@Override
 	public void removeListener(String eventName, PropertyChangeListener listener) {
 		support.addPropertyChangeListener(eventName, listener);
-	}
-
-	@Override
-	public UpdateBroadcaster getUpdateBroadcaster() throws RemoteException {
-		return item.getUpdateBroadcaster();
 	}
 }

@@ -1,6 +1,5 @@
 package client.core;
 
-import client.network.ClientImpl;
 import client.utils.ViewEnum;
 import client.views.ViewController;
 import javafx.application.Platform;
@@ -22,16 +21,11 @@ public class ViewFactory {
 		stage = theStage;
 		startNewScene(viewLogin);
 
-
-		stage.setOnCloseRequest(event -> {
+		stage.setOnCloseRequest(windowEvent -> {
 			try {
-
-				//DIS OK??????
-				ClientImpl client = (ClientImpl) ClientFactory.getInstance().getClient();
-				client.unregisterClient();
-				ModelFactory.getInstance().getObservableItemList().getCurrentlyViewedItem().getUpdateBroadcaster().unregisterClient(client);
+				ClientFactory.getInstance().getClient().unregisterClient();
 			} catch (RemoteException e) {
-				throw new RuntimeException(e);
+				e.printStackTrace();
 			}
 
 			Platform.exit();

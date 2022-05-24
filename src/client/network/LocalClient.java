@@ -1,6 +1,6 @@
 package client.network;
 
-import server.model.item.Item;
+import shared.network.model.Item;
 import shared.utils.PropertyChangeSubject;
 
 import java.rmi.RemoteException;
