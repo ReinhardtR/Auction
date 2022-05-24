@@ -2,6 +2,7 @@ package client.views.buyout;
 
 import client.core.ViewHandler;
 import client.model.ObservableItem;
+import client.model.User;
 import client.utils.SystemNotifcation;
 import client.utils.ViewEnum;
 import javafx.beans.property.*;
@@ -11,36 +12,36 @@ import java.beans.PropertyChangeEvent;
 import java.rmi.RemoteException;
 
 public class BuyoutViewModelImpl implements BuyoutViewModel {
+	private final User customer;
 	private final ObservableItem item;
 
-	// Brug samme naming convention i begge viewmodels
-	private final BooleanProperty isSoldProperty;
-	private final DoubleProperty priceProperty;
-	private final StringProperty itemNameProperty;
-	private final StringProperty errorProperty;
+	private final StringProperty itemName;
+	private final BooleanProperty isSold;
+	private final DoubleProperty price;
+	private final StringProperty errorText;
 
-	public BuyoutViewModelImpl(ObservableItem item) {
+	public BuyoutViewModelImpl(User customer, ObservableItem item) {
+		this.customer = customer;
 		this.item = item;
+
 		item.addListener(EventType.ITEM_SOLD.toString(), this::onItemSold);
 
-		isSoldProperty = new SimpleBooleanProperty();
-		priceProperty = new SimpleDoubleProperty();
-		itemNameProperty = new SimpleStringProperty();
-		errorProperty = new SimpleStringProperty();
+		itemName = new SimpleStringProperty();
+		isSold = new SimpleBooleanProperty();
+		price = new SimpleDoubleProperty();
+		errorText = new SimpleStringProperty();
 
-		itemNameProperty.setValue(item.getItemID());
-		priceProperty.setValue(item.getOfferAmount());
+		itemName.setValue(item.getItemID());
+		price.setValue(item.getOfferAmount());
 	}
 
 	@Override
-	public void onBuy(double amount, String username) {
+	public void buyItem() {
 		try {
-			boolean isSold = item.getIsSold();
-			System.out.println(isSold);
-			if (isSold) {
-				errorProperty.setValue("Item is already sold!");
+			if (item.getIsSold()) {
+				errorText.setValue("Item is already sold!");
 			} else {
-				item.userSaleStrategy(amount, username);
+				customer.makeOfferOnItem(price.getValue(), item);
 			}
 		} catch (RemoteException e) {
 			e.printStackTrace();
@@ -48,28 +49,28 @@ public class BuyoutViewModelImpl implements BuyoutViewModel {
 	}
 
 	@Override
-	public DoubleProperty getPriceProperty() {
-		return priceProperty;
+	public DoubleProperty propertyPrice() {
+		return price;
 	}
 
 	@Override
-	public StringProperty getItemNameProperty() {
-		return itemNameProperty;
+	public StringProperty propertyItemName() {
+		return itemName;
 	}
 
 	@Override
-	public StringProperty getErrorProperty() {
-		return errorProperty;
+	public StringProperty propertyErrorText() {
+		return errorText;
 	}
 
 	@Override
-	public BooleanProperty getIsSoldProperty() {
-		return isSoldProperty;
+	public BooleanProperty propertyIsSold() {
+		return isSold;
 	}
 
 	private void onItemSold(PropertyChangeEvent event) {
 		System.out.println("ITEM SOLD BUYOUT");
-		isSoldProperty.setValue(true);
+		isSold.setValue(true);
 
 		String caption = "Item sold: " + item.getItemID();
 		String message = "The item: " + item.getItemID() + ", that you were watching has been sold.";

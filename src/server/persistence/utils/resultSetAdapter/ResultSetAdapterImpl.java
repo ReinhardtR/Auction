@@ -70,7 +70,8 @@ public class ResultSetAdapterImpl implements ResultSetAdapter {
 
 		try {
 			itemToReturn = new ItemImpl(
-							itemResultSet.getString("itemID"),
+							itemResultSet.getString("itemid"),
+							itemResultSet.getString("salesmanusername"),
 							itemResultSet.getString("title"),
 							itemResultSet.getString("description"),
 							itemResultSet.getString("tags"),
@@ -83,7 +84,11 @@ public class ResultSetAdapterImpl implements ResultSetAdapter {
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
-
+		try {
+			System.out.println(itemToReturn.getItemID()+"<- itemid "+itemToReturn.getTitle()+ itemToReturn.getTags()+itemToReturn.getDescription()+itemToReturn.getSalesManUsername());
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 		return itemToReturn;
 	}
 }

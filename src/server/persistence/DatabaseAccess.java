@@ -26,7 +26,6 @@ public class DatabaseAccess implements CustomerDatabaseMethods, SalesManDatabase
 		ONE_HOUR_IN_MILLI = 3600000;
 		resultSetAdapter = new ResultSetAdapterImpl();
 		adderToDatabase = new AdderToDatabase();
-
 		SQL.constructDatabaseTables(createConnection());
 		//checkAuctionTimers();
 	}
@@ -79,14 +78,12 @@ public class DatabaseAccess implements CustomerDatabaseMethods, SalesManDatabase
 	@Override
 	public synchronized Item getItem(String itemID) throws SQLException {
 
-		//itemSelector.fetchItem(createConnection(), itemID);
 		return resultSetAdapter.fetchItem(createConnection(), itemID);
 	}
 
 	@Override
 	public List<Item> getAmountOfItems(int amount, String ascOrDesc) throws SQLException {
 
-		//itemSelector.fetchAmountOfItems(createConnection(), amount, ascOrDesc);
 		return resultSetAdapter.fetchAmountOfItems(createConnection(), amount, ascOrDesc);
 	}
 
