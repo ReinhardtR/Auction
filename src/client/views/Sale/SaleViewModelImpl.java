@@ -1,7 +1,7 @@
 package client.views.Sale;
 
 import client.core.ViewHandler;
-import client.model.UsernameModel;
+import client.model.User;
 import client.utils.ViewEnum;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -13,7 +13,7 @@ import java.time.chrono.Chronology;
 
 public class SaleViewModelImpl implements SaleViewModel {
 
-	private final UsernameModel usernameModel;
+	private final User user;
 	private final StringProperty titleTextProperty;
 	private final StringProperty descriptionTextProperty;
 	private final StringProperty tagsTextProperty;
@@ -23,8 +23,8 @@ public class SaleViewModelImpl implements SaleViewModel {
 
 	private Chronology endDateProperty;
 
-	public SaleViewModelImpl(UsernameModel userNameModel) {
-		this.usernameModel = userNameModel;
+	public SaleViewModelImpl(User userNameModel) {
+		this.user = userNameModel;
 
 		titleTextProperty = new SimpleStringProperty();
 		descriptionTextProperty = new SimpleStringProperty();
@@ -67,7 +67,7 @@ public class SaleViewModelImpl implements SaleViewModel {
 							|| endTimeProperty.toString().isEmpty()) {
 				errorLabelProperty.setValue("Please fill out all required fields!");
 			} else {
-				usernameModel.createItem();
+				user.createItem();
 			}
 		} catch (NumberFormatException | NullPointerException e) {
 			errorLabelProperty.setValue("Please type in a valid number in price/starter bid!");

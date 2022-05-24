@@ -9,16 +9,15 @@ import java.beans.PropertyChangeListener;
 
 public interface BuyoutViewModel {
 
-	void onBuy(double amount, String username);
+	void buyItem();
 
-	// brug samme naming convention i begge viewmodels (kan godt lide den i auction)
-	DoubleProperty getPriceProperty();
+	DoubleProperty propertyPrice();
 
-	StringProperty getItemNameProperty();
+	StringProperty propertyItemName();
 
-	StringProperty getErrorProperty();
+	StringProperty propertyErrorText();
 
-	BooleanProperty getIsSoldProperty();
+	BooleanProperty propertyIsSold();
 
 	void returnToItemListView();
 }

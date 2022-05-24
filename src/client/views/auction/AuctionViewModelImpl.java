@@ -3,6 +3,7 @@ package client.views.auction;
 import client.core.ViewHandler;
 import client.model.ItemCalculations;
 import client.model.ObservableItem;
+import client.model.User;
 import client.utils.SystemNotifcation;
 import client.utils.ViewEnum;
 import javafx.application.Platform;
@@ -16,25 +17,29 @@ import java.time.LocalDateTime;
 import java.time.temporal.Temporal;
 
 public class AuctionViewModelImpl implements AuctionViewModel {
-	private final StringProperty itemText;
+	private final User customer;
+	private final ObservableItem item;
+
+	private final StringProperty itemName;
 	private final BooleanProperty isSold;
 	private final DoubleProperty currentHighestBid;
 	private final StringProperty timeLeft;
 	private final StringProperty errorText;
-	private final ObservableItem item;
 
-	public AuctionViewModelImpl(ObservableItem item) {
-		itemText = new SimpleStringProperty();
+	public AuctionViewModelImpl(User customer, ObservableItem item) {
+		this.customer = customer;
+		this.item = item;
+
+		item.addListener(EventType.NEW_BID.toString(), this::onNewBid);
+		item.addListener(EventType.ITEM_SOLD.toString(), this::onItemSold);
+
+		itemName = new SimpleStringProperty();
 		isSold = new SimpleBooleanProperty();
 		currentHighestBid = new SimpleDoubleProperty();
 		timeLeft = new SimpleStringProperty();
 		errorText = new SimpleStringProperty();
 
-		this.item = item;
-		item.addListener(EventType.NEW_BID.toString(), this::onNewBid);
-		item.addListener(EventType.ITEM_SOLD.toString(), this::onItemSold);
-
-		itemText.setValue(item.getItemID());
+		itemName.setValue(item.getItemID());
 		currentHighestBid.setValue(item.getOfferAmount());
 
 		runTimeSimulation(item.getEndTimestamp());
@@ -43,11 +48,11 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 	@Override
 	public void bidOnItem(String offerInputText) {
 		try {
-			double offer = Double.parseDouble(offerInputText);
+			double offerAmount = Double.parseDouble(offerInputText);
 
-			if (ItemCalculations.isNewBidHigher(offer, item)) {
+			if (ItemCalculations.isNewBidHigher(offerAmount, item)) {
 				errorText.setValue(null);
-				item.userSaleStrategy(offer, "Reinhardt");
+				customer.makeOfferOnItem(offerAmount, item);
 			} else {
 				errorText.setValue("You need to bid higher than the current bid.");
 			}
@@ -57,8 +62,8 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 	}
 
 	@Override
-	public StringProperty propertyItemLabel() {
-		return itemText;
+	public StringProperty propertyItemName() {
+		return itemName;
 	}
 
 	@Override
@@ -88,10 +93,8 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 	}
 
 	private void onNewBid(PropertyChangeEvent event) {
-		System.out.println("change!");
 		Platform.runLater(() -> {
 			String itemID = (String) event.getOldValue();
-			System.out.println(event.getNewValue());
 			double offerAmount = (double) event.getNewValue();
 
 			currentHighestBid.setValue(offerAmount);
@@ -105,7 +108,6 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 
 	@Override
 	public void returnToItemListView() {
-
 		ViewHandler.getInstance().openView(ViewEnum.ItemList.toString());
 	}
 

@@ -9,7 +9,7 @@ public interface AuctionViewModel {
 
 	void returnToItemListView();
 
-	StringProperty propertyItemLabel();
+	StringProperty propertyItemName();
 
 	DoubleProperty propertyCurrentBid();
 

@@ -2,11 +2,11 @@ package client.model;
 
 import client.network.LocalClient;
 
-public class UsernameModelImpl implements UsernameModel {
+public class UserImpl implements User {
 	private final LocalClient client;
 	private String username;
 
-	public UsernameModelImpl(LocalClient client) {
+	public UserImpl(LocalClient client) {
 		this.client = client;
 	}
 
@@ -23,5 +23,10 @@ public class UsernameModelImpl implements UsernameModel {
 	@Override
 	public void createItem() {
 		client.createItem();
+	}
+
+	@Override
+	public void makeOfferOnItem(double offerAmount, ObservableItem item) {
+		item.userSaleStrategy(offerAmount, username);
 	}
 }

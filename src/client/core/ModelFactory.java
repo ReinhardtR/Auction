@@ -2,13 +2,13 @@ package client.core;
 
 import client.model.ItemList;
 import client.model.ItemListImpl;
-import client.model.UsernameModel;
-import client.model.UsernameModelImpl;
+import client.model.User;
+import client.model.UserImpl;
 
 public class ModelFactory {
 	private static final ModelFactory instance = new ModelFactory();
-	private ItemListImpl itemList;
-	private UsernameModelImpl usernameModel;
+	private ItemList itemList;
+	private User user;
 
 	private ModelFactory() {
 	}
@@ -25,10 +25,11 @@ public class ModelFactory {
 		return itemList;
 	}
 
-	public UsernameModel getUserNameModel() {
-		if (usernameModel == null) {
-			usernameModel = new UsernameModelImpl(ClientFactory.getInstance().getClient());
+	public User getUser() {
+		if (user == null) {
+			user = new UserImpl(ClientFactory.getInstance().getClient());
 		}
-		return usernameModel;
+
+		return user;
 	}
 }

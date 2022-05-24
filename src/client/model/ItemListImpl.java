@@ -19,6 +19,8 @@ public class ItemListImpl implements ItemList {
 	private String currentlyViewedItemID;
 
 	public ItemListImpl(LocalClient client) {
+		this.client = client;
+
 		support = new PropertyChangeSupport(this);
 		items = new HashMap<>();
 
@@ -30,7 +32,6 @@ public class ItemListImpl implements ItemList {
 			e.printStackTrace();
 		}
 
-		this.client = client;
 		client.addListener(EventType.ITEM_SOLD.toString(), this::onItemSold);
 	}
 
@@ -54,21 +55,6 @@ public class ItemListImpl implements ItemList {
 	@Override
 	public void setCurrentlyViewedItemID(String itemID) {
 		currentlyViewedItemID = itemID;
-	}
-
-	private ItemCacheProxy getItem(String itemID) {
-		ItemCacheProxy item = items.get(itemID);
-
-		if (item == null) {
-			try {
-				item = client.getItem(itemID);
-				items.put(itemID, item);
-			} catch (RemoteException e) {
-				e.printStackTrace();
-			}
-		}
-
-		return item;
 	}
 
 	@Override
