@@ -1,5 +1,6 @@
 package server.model.item.SaleStrategy;
 
+import javafx.util.Callback;
 import server.model.item.Cart;
 import shared.SaleStrategyType;
 import shared.network.model.Item;
@@ -23,11 +24,13 @@ public class AuctionStrategy implements SaleStrategy {
 
 	@Override
 	public void offer(Item item, double amount, String username) {
+		// todo: add offer validation
 		try {
-			Cart.getInstance().updateItemOffer(item);
-
-			currentBid = amount;
-			currentBidder = username;
+			// Pas callback func to make sure the DB is updated before updating state
+			Cart.getInstance().updateItemOffer(item, () -> {
+				currentBid = amount;
+				currentBidder = username;
+			});
 		} catch (SQLException | RemoteException e) {
 			e.printStackTrace();
 		}

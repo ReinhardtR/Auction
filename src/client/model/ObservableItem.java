@@ -13,19 +13,11 @@ import java.time.temporal.Temporal;
 
 public class ObservableItem implements PropertyChangeListener, PropertyChangeSubject, Item {
 	private final PropertyChangeSupport support;
-	private final Item item;
-	private final String itemID;
-	private final Temporal endDateTime;
-	private final SaleStrategyType strategyType;
+	private final ItemCacheProxy item;
 
-	public ObservableItem(LocalClient client, Item item) throws RemoteException {
+	public ObservableItem(LocalClient client, ItemCacheProxy item) throws RemoteException {
 		support = new PropertyChangeSupport(this);
 		this.item = item;
-
-		// Cache
-		itemID = item.getItemID();
-		strategyType = item.getStrategyType();
-		endDateTime = item.getEndTimestamp();
 
 		if (client != null) {
 			client.addListener(this);
@@ -34,7 +26,7 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 
 	@Override
 	public String getItemID() {
-		return itemID;
+		return item.getItemID();
 	}
 
 	@Override
@@ -44,7 +36,7 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 
 	@Override
 	public Temporal getEndTimestamp() {
-		return endDateTime;
+		return item.getEndTimestamp();
 	}
 
 	@Override
@@ -58,7 +50,7 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 
 	@Override
 	public SaleStrategyType getStrategyType() {
-		return strategyType;
+		return item.getStrategyType();
 	}
 
 	@Override
@@ -72,6 +64,7 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 		return -1;
 	}
 
+	// TODO
 	@Override
 	public String getBuyerUsername() throws RemoteException {
 		return null;
@@ -79,11 +72,11 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 
 	public void propertyChange(PropertyChangeEvent event) {
 		// Only care about its own updates.
-		System.out.println("Receive" + itemID + " " + event.getNewValue());
-		if (!event.getNewValue().equals(itemID)) return;
+		System.out.println("Receive " + getItemID() + " " + event.getNewValue());
+		if (!event.getOldValue().equals(getItemID())) return;
 
 		System.out.println("Send");
-		support.firePropertyChange(event.getPropertyName(), null, itemID);
+		support.firePropertyChange(event);
 	}
 
 	@Override

@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface ItemList extends PropertyChangeSubject {
 
-	List<ObservableItem> getItemList();
+	List<ItemCacheProxy> getItemList();
 
 	ObservableItem getCurrentlyViewedItem();
 
-	void setCurrentlyViewedItem(String itemID);
+	void setCurrentlyViewedItemID(String itemID);
 }
