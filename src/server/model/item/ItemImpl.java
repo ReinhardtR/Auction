@@ -81,6 +81,11 @@ public class ItemImpl extends UnicastRemoteObject implements Item {
 	}
 
 	@Override
+	public String getSalesManUsername() throws RemoteException {
+		return "TemporarySalesman";
+	}
+
+	@Override
 	public SaleStrategyType getStrategyType() throws RemoteException {
 		return strategy.strategyType();
 	}

@@ -109,13 +109,4 @@ public class DatabaseAccess implements CustomerDatabaseMethods, SalesManDatabase
 	public void AlterItemOnDatabsae(String itemIDToAlter, String columnToAlter, String newValue) throws SQLException {
 
 	}
-
-
-	public static void main(String[] args) {
-
-
-		DatabaseAccess access = new DatabaseAccess();
-		SQL.constructDatabaseTables(access.createConnection());
-		SQL.addAuctionItem(0, LocalDateTime.now(), SaleStrategyType.AUCTION);
-	}
 }
