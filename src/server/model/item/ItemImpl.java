@@ -84,7 +84,11 @@ public class ItemImpl extends UnicastRemoteObject implements Item {
 	@Override
 	public String toString() {
 		return "ItemImpl{" +
-						", itemID='" + itemID + '\'' +
+						"itemID='" + itemID + '\'' +
+						", salesmanUsername='" + salesmanUsername + '\'' +
+						", title='" + title + '\'' +
+						", description='" + description + '\'' +
+						", tags='" + tags + '\'' +
 						", strategy=" + strategy +
 						'}';
 	}
