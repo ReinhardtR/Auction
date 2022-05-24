@@ -166,7 +166,7 @@ public class SQLStatements {
 	}
 
 	public String insert(Table buyout, double offerAmount, String strategyType, String title, String tags, String description, String salesManUsername) {
-	return "INSERT INTO " + buyout.getSchema()+buyout.getTableName() + " VALUES " +
+	return "INSERT INTO " + buyout.getSchema()+"."+buyout.getTableName() + " VALUES " +
 					"(DEFAULT," + offerAmount+",null,"+ strategyType+",'"+title+"','"+tags+"','"+description+"','"+salesManUsername+"')";
 	}
 }
