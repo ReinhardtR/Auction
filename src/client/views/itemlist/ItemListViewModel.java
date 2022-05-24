@@ -9,5 +9,7 @@ public interface ItemListViewModel {
 
 	ObservableList<ItemCacheProxy> getObservableItemList();
 
+	void openSaleView();
+
 	void openViewForItem(ItemCacheProxy item);
 }

@@ -27,7 +27,12 @@ public class ItemListViewModelImpl implements ItemListViewModel {
 	}
 
 	@Override
-	public ObservableList<ItemCacheProxy> getObservableItemList() {
+	public void openSaleView() {
+		ViewHandler.getInstance().openView(ViewEnum.Sale.toString());
+	}
+
+	@Override
+  public ObservableList<ItemCacheProxy> getObservableItemList() {
 		return observableList;
 	}
 

@@ -19,7 +19,9 @@
                 <TableColumn fx:id="typeCol" prefWidth="75.0" text="Type"/>
             </columns>
         </TableView>
-        <Label fx:id="errorLabel" alignment="CENTER" layoutX="184.0" layoutY="369.0" prefHeight="17.0" prefWidth="240.0"
+        <Label fx:id="errorLabel" alignment="CENTER" layoutX="165.0" layoutY="328.0" prefHeight="17.0" prefWidth="240.0"
                text="Label" textFill="#bc1e1e"/>
+        <Button layoutX="225.0" layoutY="367.0" mnemonicParsing="false" text="Put item up for sale"
+                onAction="#openSaleView"/>
     </children>
 </AnchorPane>

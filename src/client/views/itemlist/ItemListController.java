@@ -20,7 +20,7 @@ public class ItemListController implements ViewController {
 
 	@FXML
 	private Label errorLabel;
-	
+
 	@FXML
 	private TableColumn<ItemCacheProxy, String> idCol;
 
@@ -50,5 +50,9 @@ public class ItemListController implements ViewController {
 			itemListViewModel.openViewForItem(item);
 			errorLabel.setText("");
 		}
+	}
+
+	public void openSaleView() {
+		itemListViewModel.openSaleView();
 	}
 }
