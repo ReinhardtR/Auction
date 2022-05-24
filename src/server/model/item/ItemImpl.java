@@ -9,16 +9,22 @@ import java.rmi.server.UnicastRemoteObject;
 import java.time.temporal.Temporal;
 
 public class ItemImpl extends UnicastRemoteObject implements Item {
-	private final String itemID;
 	private final String title;
 	private final String description;
 	private final String tags;
-
 	//Enum
 	private final SaleStrategy strategy;
+	private String itemID;
 
 	public ItemImpl(String itemID, String title, String description, String tags, SaleStrategy strategy) throws RemoteException {
 		this.itemID = itemID;
+		this.title = title;
+		this.description = description;
+		this.tags = tags;
+		this.strategy = strategy;
+	}
+
+	public ItemImpl(String title, String description, String tags, SaleStrategy strategy) throws RemoteException {
 		this.title = title;
 		this.description = description;
 		this.tags = tags;

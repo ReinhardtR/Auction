@@ -8,6 +8,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
+import shared.SaleStrategyType;
 
 import java.time.chrono.Chronology;
 
@@ -61,13 +62,14 @@ public class SaleViewModelImpl implements SaleViewModel {
 	}
 
 	@Override
-	public void setItemUpForSale() {
+	public void setItemUpForSale(SaleStrategyType saleType) {
 		try {
 			if (titleTextProperty.toString().isEmpty() || priceOfferProperty.toString().isEmpty()
 							|| endTimeProperty.toString().isEmpty()) {
 				errorLabelProperty.setValue("Please fill out all required fields!");
 			} else {
-				usernameModel.createItem();
+				usernameModel.createItem(titleTextProperty.toString(), descriptionTextProperty.toString(),
+								tagsTextProperty.toString(), saleType, priceOfferProperty.doubleValue(), endTimeProperty.toString());
 			}
 		} catch (NumberFormatException | NullPointerException e) {
 			errorLabelProperty.setValue("Please type in a valid number in price/starter bid!");

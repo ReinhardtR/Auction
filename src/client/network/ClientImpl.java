@@ -2,6 +2,7 @@ package client.network;
 
 import client.model.ItemCacheProxy;
 import client.model.ItemCacheProxyImpl;
+import shared.SaleStrategyType;
 import shared.network.client.SharedClient;
 import shared.network.server.MainServer;
 
@@ -70,8 +71,8 @@ public class ClientImpl extends UnicastRemoteObject implements SharedClient, Loc
 	}
 
 	@Override
-	public void createItem() throws RemoteException {
-		server.getSalesmanServer().createItem();
+	public void createItem(String title, String description, String tags, SaleStrategyType saleType, String username, double offer, String endtime) throws RemoteException {
+		server.getSalesmanServer().createItem(title, description, tags, saleType, username, offer, endtime);
 	}
 
 	@Override
