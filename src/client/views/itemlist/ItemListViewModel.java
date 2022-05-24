@@ -1,11 +1,15 @@
 package client.views.itemlist;
 
+import client.model.ItemCacheProxy;
 import client.model.ObservableItem;
 import javafx.collections.ObservableList;
+import shared.network.model.Item;
 
 public interface ItemListViewModel {
 
-	ObservableList<ObservableItem> getObservableItemList();
+	ObservableList<ItemCacheProxy> getObservableItemList();
 
-	void openViewForItem(ObservableItem observableItem);
+	void openSaleView();
+
+	void openViewForItem(ItemCacheProxy item);
 }

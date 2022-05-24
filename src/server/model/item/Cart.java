@@ -60,8 +60,7 @@ public class Cart {
 	public void itemBought(Item item) throws RemoteException, SQLException {
 		database.buyoutItemBought(item);
 		items.remove(item.getItemID());
-
-		support.firePropertyChange(EventType.ITEM_SOLD.toString(), null, item.getItemID());
+		support.firePropertyChange(EventType.ITEM_SOLD.toString(), item.getItemID(), null);
 		System.out.println("SOLD TO THE MAN IN BLUe");
 	}
 
@@ -69,10 +68,13 @@ public class Cart {
 		items.clear();
 	} //Midlertidig
 
-	public void updateItemOffer(Item item) throws SQLException, RemoteException {
+	public void updateItemOffer(Item item, Runnable callback) throws SQLException, RemoteException {
 		database.updateAuctionOffer(item);
 
-		support.firePropertyChange(EventType.NEW_BID.toString(), null, item.getItemID());
+		callback.run();
+
+		support.firePropertyChange(EventType.NEW_BID.toString(), item.getItemID(), item.getOfferAmount());
+		System.out.println("Bid went through");
 	}
 
 	//TIL LAV ITEM USECASE

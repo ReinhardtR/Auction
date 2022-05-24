@@ -2,6 +2,8 @@ package client.core;
 
 import client.views.Login.LoginViewModel;
 import client.views.Login.LoginViewModelImpl;
+import client.views.Sale.SaleViewModel;
+import client.views.Sale.SaleViewModelImpl;
 import client.views.auction.AuctionViewModel;
 import client.views.auction.AuctionViewModelImpl;
 import client.views.buyout.BuyoutViewModel;
@@ -16,6 +18,7 @@ public class ViewModelFactory {
 	private AuctionViewModel auctionViewModel;
 	private BuyoutViewModel buyoutViewModel;
 	private LoginViewModel loginViewModel;
+	private SaleViewModel saleViewModel;
 
 	private ViewModelFactory() {
 	}
@@ -40,7 +43,12 @@ public class ViewModelFactory {
 	}
 
 	public LoginViewModel getLoginViewModel() {
-		loginViewModel = new LoginViewModelImpl();
+		loginViewModel = new LoginViewModelImpl(ModelFactory.getInstance().getUserNameModel());
 		return loginViewModel;
+	}
+
+	public SaleViewModel getSaleViewModel() {
+		saleViewModel = new SaleViewModelImpl(ModelFactory.getInstance().getUserNameModel());
+		return saleViewModel;
 	}
 }

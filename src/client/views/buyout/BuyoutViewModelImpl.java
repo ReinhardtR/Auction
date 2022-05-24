@@ -19,7 +19,6 @@ public class BuyoutViewModelImpl implements BuyoutViewModel {
 	private final StringProperty itemNameProperty;
 	private final StringProperty errorProperty;
 
-
 	public BuyoutViewModelImpl(ObservableItem item) {
 		this.item = item;
 		item.addListener(EventType.ITEM_SOLD.toString(), this::onItemSold);
