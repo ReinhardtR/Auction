@@ -10,6 +10,7 @@ public class ItemCacheProxyImpl implements ItemCacheProxy {
 	private final Item item;
 
 	private final String itemID;
+	private final String sellerUsername;
 	private final String title;
 	private final String description;
 	private final String tags;
@@ -21,6 +22,7 @@ public class ItemCacheProxyImpl implements ItemCacheProxy {
 
 		// Cache
 		itemID = item.getItemID();
+		sellerUsername = item.getSellerUsername();
 		title = item.getTitle();
 		description = item.getDescription();
 		tags = item.getTags();
@@ -31,6 +33,11 @@ public class ItemCacheProxyImpl implements ItemCacheProxy {
 	@Override
 	public String getItemID() {
 		return itemID;
+	}
+
+	@Override
+	public String getSellerUsername() {
+		return sellerUsername;
 	}
 
 	@Override
