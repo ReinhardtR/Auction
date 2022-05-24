@@ -10,6 +10,8 @@ public interface Item extends Remote {
 
 	String getItemID() throws RemoteException;
 
+	String getSellerUsername() throws RemoteException;
+
 	String getTitle() throws RemoteException;
 
 	String getDescription() throws RemoteException;

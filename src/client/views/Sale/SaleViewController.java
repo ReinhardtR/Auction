@@ -15,6 +15,8 @@ public class SaleViewController implements ViewController {
 
 
 	@FXML
+	private Label errorCreateLabel;
+	@FXML
 	private TextField title;
 	@FXML
 	private TextArea description;
@@ -51,6 +53,10 @@ public class SaleViewController implements ViewController {
 		description.textProperty().bind(saleViewModel.descriptionTextProperty());
 		tags.textProperty().bind(saleViewModel.tagsTextProperty());
 		price_BidTextField.textProperty().bind(saleViewModel.priceBidTextProperty().asString());
+		endTimeTextField.textProperty().bind(saleViewModel.endTimeTextProperty());
+		endDatePicker.chronologyProperty().bind(saleViewModel.endDateChronologyProperty());
+
+		errorCreateLabel.textProperty().bind(saleViewModel.errorLabelProperty());
 
 
 	}
@@ -90,7 +96,7 @@ public class SaleViewController implements ViewController {
 	}
 
 	public void setItemUpForSale(ActionEvent actionEvent) {
-		saleViewModel.setItemUpForSale();
+		saleViewModel.setItemUpForSale(saleType);
 	}
 
 	public void returnToItemList(ActionEvent actionEvent) {
