@@ -71,7 +71,10 @@ public class ResultSetAdapterImpl implements ResultSetAdapter {
 		try {
 			itemToReturn = new ItemImpl(
 							itemResultSet.getString("itemID"),
-							title, description, tags, saleStrategySelector.fetchStrategy(
+							itemResultSet.getString("title"),
+							itemResultSet.getString("description"),
+							itemResultSet.getString("tags"),
+							saleStrategySelector.fetchStrategy(
 											c,
 											itemResultSet.getString("itemID"),
 											itemResultSet.getString("saleStrategy")
