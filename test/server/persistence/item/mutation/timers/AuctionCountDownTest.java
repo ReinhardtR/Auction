@@ -1,16 +1,6 @@
 package server.persistence.item.mutation.timers;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 import server.model.item.ItemImpl;
-import server.model.item.sale_strategy.AuctionStrategy;
-
-import java.beans.PropertyChangeEvent;
-import java.rmi.RemoteException;
-import java.time.LocalDateTime;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class AuctionCountDownTest {
 
@@ -21,7 +11,7 @@ class AuctionCountDownTest {
 	//Used by listener
 	int counter = 1;
 	private boolean listenerMethodCalled = false;
-
+/*
 	@BeforeAll
 	static void setUp() {
 		try {
@@ -86,6 +76,6 @@ class AuctionCountDownTest {
 		listenerMethodCalled = true;
 
 	}
-
+*/
 
 }

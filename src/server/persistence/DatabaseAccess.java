@@ -98,12 +98,12 @@ public class DatabaseAccess implements CustomerDatabaseMethods, SalesmanDatabase
 	}
 
 	@Override
-	public void addItemToDatabase(Item itemToAdd) throws SQLException {
+	public synchronized void addItemToDatabase(Item itemToAdd) throws SQLException {
 		itemInserter.addItemToDatabase(createConnection(), (ItemImpl) itemToAdd);
 	}
 
 	@Override
-	public void AlterItemOnDatabsae(String itemIDToAlter, String columnToAlter, String newValue) throws SQLException {
+	public synchronized void AlterItemOnDatabsae(String itemIDToAlter, String columnToAlter, String newValue) throws SQLException {
 
 	}
 }

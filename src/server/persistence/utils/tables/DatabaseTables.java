@@ -28,6 +28,7 @@ public class DatabaseTables {
 			}
 			currentTable.addColumn(tableSet.getString("column_name"));
 		}
+		c.close();
 	}
 
 	public Table getTable(String tableName) throws TableNonExistent {
