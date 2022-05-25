@@ -9,9 +9,7 @@ import server.persistence.utils.tables.Table;
 import shared.SaleStrategyType;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.time.temporal.Temporal;
 
 
@@ -134,21 +132,21 @@ public class SQL {
 	//Nu begynder salesman metoderne
 
 
-	public static String addAuctionItem(double offerAmount, Temporal endTimestamp, SaleStrategyType strategyType){
+	public static String addAuctionItem(double offerAmount, Temporal endTimestamp, SaleStrategyType strategyType) {
 		Table auction = null;
 
 		try {
 
 			//I Denne metode skal der addes nogle values ind i Item table, herefter skal der addes dens salesstrategy pris ind i
-			// auction table, Disse 2 tuples i forskellige tables skal have den samme itemID
+			// auction table, Disse 2 tables i forskellige tables skal have den samme
 			auction = tables.getTable("auction");
 
 
 		} catch (TableNonExistent e) {
 			e.printStackTrace();
 		}
-		System.out.println(statements.insert(auction,offerAmount,endTimestamp,strategyType.toString()));
-		return statements.insert(auction,offerAmount,endTimestamp,strategyType.toString());
+		System.out.println(statements.insert(auction, offerAmount, endTimestamp, strategyType.toString()));
+		return statements.insert(auction, offerAmount, endTimestamp, strategyType.toString());
 	}
 
 	public static String addBuyoutItem(double offerAmount, SaleStrategyType strategyType) {
@@ -161,7 +159,7 @@ public class SQL {
 			e.printStackTrace();
 		}
 
-		return statements.insert(buyout,offerAmount,strategyType.toString());
+		return statements.insert(buyout, offerAmount, strategyType.toString());
 
 	}
 
