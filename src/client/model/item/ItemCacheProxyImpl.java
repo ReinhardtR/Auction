@@ -40,17 +40,17 @@ public class ItemCacheProxyImpl implements ItemCacheProxy {
 	}
 
 	@Override
-	public String getTitle() throws RemoteException {
+	public String getTitle() {
 		return title;
 	}
 
 	@Override
-	public String getDescription() throws RemoteException {
+	public String getDescription() {
 		return description;
 	}
 
 	@Override
-	public String getTags() throws RemoteException {
+	public String getTags() {
 		return tags;
 	}
 

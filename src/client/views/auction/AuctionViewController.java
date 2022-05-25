@@ -15,6 +15,14 @@ import java.util.regex.Pattern;
 public class AuctionViewController implements ViewController {
 
 	@FXML
+	private Label seller;
+	@FXML
+	private Label highestBidderText;
+	@FXML
+	private Label descriptionText;
+	@FXML
+	private Label tagsText;
+	@FXML
 	private Label itemLabel;
 
 	@FXML

@@ -20,6 +20,11 @@ public class BuyoutViewModelImpl implements BuyoutViewModel {
 	private final DoubleProperty price;
 	private final StringProperty errorText;
 
+	private final StringProperty sellerUser;
+	private final StringProperty description;
+	private final StringProperty tags;
+	private final StringProperty buyer;
+
 	public BuyoutViewModelImpl(User customer, ObservableItem item) {
 		this.customer = customer;
 		this.item = item;
@@ -30,9 +35,16 @@ public class BuyoutViewModelImpl implements BuyoutViewModel {
 		isSold = new SimpleBooleanProperty();
 		price = new SimpleDoubleProperty();
 		errorText = new SimpleStringProperty();
+		sellerUser = new SimpleStringProperty();
+		description = new SimpleStringProperty();
+		tags = new SimpleStringProperty();
+		buyer = new SimpleStringProperty();
 
-		itemName.setValue(item.getItemID());
+		itemName.setValue(item.getTitle());
 		price.setValue(item.getOfferAmount());
+		sellerUser.setValue(item.getSalesmanUsername());
+		description.setValue(item.getDescription());
+		tags.setValue(item.getTags());
 	}
 
 	@Override
@@ -80,5 +92,25 @@ public class BuyoutViewModelImpl implements BuyoutViewModel {
 	@Override
 	public void returnToItemListView() {
 		ViewHandler.getInstance().openView(ViewEnum.ItemList.toString());
+	}
+
+	@Override
+	public StringProperty propertySellerUser() {
+		return sellerUser;
+	}
+
+	@Override
+	public StringProperty propertyDescriptionText() {
+		return description;
+	}
+
+	@Override
+	public StringProperty propertyTagsText() {
+		return tags;
+	}
+
+	@Override
+	public StringProperty propertyBuyerText() {
+		return buyer;
 	}
 }

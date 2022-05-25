@@ -36,17 +36,17 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 
 	@Override
 	public String getTitle() {
-		return null;
+		return item.getTitle();
 	}
 
 	@Override
 	public String getDescription() {
-		return null;
+		return item.getDescription();
 	}
 
 	@Override
 	public String getTags() {
-		return null;
+		return item.getTags();
 	}
 
 	@Override
@@ -88,10 +88,6 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 	@Override
 	public String getBuyerUsername() throws RemoteException {
 		return null;
-	}
-
-	public String getSalesManUsername() {
-		return item.getSalesmanUsername();
 	}
 
 	public void propertyChange(PropertyChangeEvent event) {

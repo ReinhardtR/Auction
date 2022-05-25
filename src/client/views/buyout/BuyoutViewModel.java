@@ -4,9 +4,6 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.StringProperty;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 public interface BuyoutViewModel {
 
 	void buyItem();
@@ -20,4 +17,12 @@ public interface BuyoutViewModel {
 	BooleanProperty propertyIsSold();
 
 	void returnToItemListView();
+
+	StringProperty propertySellerUser();
+
+	StringProperty propertyDescriptionText();
+
+	StringProperty propertyTagsText();
+
+	StringProperty propertyBuyerText();
 }
