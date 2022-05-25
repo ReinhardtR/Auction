@@ -4,6 +4,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.StringProperty;
 
+
 public interface BuyoutViewModel {
 
 	void buyItem();
@@ -25,4 +26,5 @@ public interface BuyoutViewModel {
 	StringProperty propertyTagsText();
 
 	StringProperty propertyBuyerText();
+
 }

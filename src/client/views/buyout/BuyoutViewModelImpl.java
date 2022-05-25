@@ -40,7 +40,6 @@ public class BuyoutViewModelImpl implements BuyoutViewModel {
 		tags = new SimpleStringProperty();
 		buyer = new SimpleStringProperty();
 
-		itemName.setValue(item.getTitle());
 		price.setValue(item.getOfferAmount());
 		sellerUser.setValue(item.getSalesmanUsername());
 		description.setValue(item.getDescription());
@@ -110,4 +109,5 @@ public class BuyoutViewModelImpl implements BuyoutViewModel {
 	public StringProperty propertyBuyerText() {
 		return buyer;
 	}
+
 }

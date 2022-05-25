@@ -38,7 +38,7 @@ public class AuctionViewController implements ViewController {
 	private TextField bidInput;
 
 	@FXML
-	private Label errorLabel;
+	private Label eventLabel;
 
 	private AuctionViewModel auctionViewModel;
 
@@ -49,8 +49,17 @@ public class AuctionViewController implements ViewController {
 		itemLabel.textProperty().bind(auctionViewModel.propertyItemName());
 		currentBid.textProperty().bind(auctionViewModel.propertyCurrentBid().asString());
 		timeLeftOnAuction.textProperty().bind(auctionViewModel.propertyTimeLeft());
-		errorLabel.textProperty().bind(auctionViewModel.propertyErrorText());
+
+		eventLabel.textProperty().bind(auctionViewModel.propertyEventText());
+		eventLabel.textFillProperty().bind(auctionViewModel.propertyEventColor());
+
 		bidButton.disableProperty().bind(auctionViewModel.propertyIsSold());
+
+		seller.textProperty().bind(auctionViewModel.propertySeller());
+		highestBidderText.textProperty().bind(auctionViewModel.propertyHighestBidder());
+		descriptionText.textProperty().bind(auctionViewModel.propertyDescription());
+		tagsText.textProperty().bind(auctionViewModel.propertyTags());
+
 
 		// TODO: rethink this
 		Pattern pattern = Pattern.compile(".{0,20}");
