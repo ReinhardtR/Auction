@@ -13,25 +13,30 @@ import shared.SaleStrategyType;
 
 public class SaleViewController implements ViewController {
 
-
 	@FXML
 	private Label eventCreateLabel;
+
 	@FXML
 	private TextField title;
+
 	@FXML
 	private TextArea description;
+
 	@FXML
 	private TextField tags;
 
-
 	@FXML
 	private Label price_offerLabel;
+
 	@FXML
 	private TextField price_BidTextField;
+
 	@FXML
 	private Label endDateLabel;
+
 	@FXML
 	private TextField endTimeTextField;
+
 	@FXML
 	private DatePicker endDatePicker;
 
@@ -56,13 +61,11 @@ public class SaleViewController implements ViewController {
 		endTimeTextField.textProperty().bindBidirectional(saleViewModel.endTimeTextProperty());
 
 		eventCreateLabel.textProperty().bindBidirectional(saleViewModel.errorLabelProperty());
-
-
 	}
 
 	public void auctionSaleTypeConfig(ActionEvent actionEvent) {
-
 		price_offerLabel.setText("Starting Bid");
+
 		if (!(price_offerLabel.isVisible())) {
 			price_offerLabel.setVisible(true);
 			price_BidTextField.setVisible(true);
@@ -74,12 +77,12 @@ public class SaleViewController implements ViewController {
 			endDatePicker.setVisible(true);
 		}
 
-
 		saleType = SaleStrategyType.AUCTION;
 	}
 
 	public void buyoutSaleTypeConfig(ActionEvent actionEvent) {
 		price_offerLabel.setText("Price");
+
 		if (!(price_offerLabel.isVisible())) {
 			price_offerLabel.setVisible(true);
 			price_BidTextField.setVisible(true);
@@ -94,11 +97,13 @@ public class SaleViewController implements ViewController {
 		saleType = SaleStrategyType.BUYOUT;
 	}
 
-	public void setItemUpForSale(ActionEvent actionEvent) {
+	@FXML
+	protected void setItemUpForSale(ActionEvent actionEvent) {
 		saleViewModel.setItemUpForSale(saleType);
 	}
 
-	public void returnToItemList(ActionEvent actionEvent) {
+	@FXML
+	protected void returnToItemList(ActionEvent actionEvent) {
 		saleViewModel.returnToItemList();
 	}
 }

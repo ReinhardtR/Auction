@@ -12,17 +12,17 @@ import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
 public class LoginViewController implements ViewController {
+
 	@FXML
 	private Label errorLoginLabel;
+
 	@FXML
 	private TextField userNameField;
-
 
 	private LoginViewModel loginViewModel;
 
 	@Override
 	public void init(ViewHandler viewHandler, ViewModelFactory viewModelFactory) {
-
 		loginViewModel = viewModelFactory.getLoginViewModel();
 
 		errorLoginLabel.textProperty().bind(loginViewModel.getErrorTextProperty());
@@ -34,10 +34,9 @@ public class LoginViewController implements ViewController {
 
 		userNameField.setTextFormatter(formatter);
 	}
-
-
+	
 	@FXML
-	public void onLogin() {
+	protected void onLogin() {
 		loginViewModel.login(userNameField.getText());
 	}
 }
