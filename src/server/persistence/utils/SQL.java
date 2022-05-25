@@ -2,8 +2,8 @@ package server.persistence.utils;
 
 import server.persistence.utils.exceptions.SQLUtilsException;
 import server.persistence.utils.exceptions.TableNonExistent;
-import server.persistence.utils.sqlcode.SQLOperation;
-import server.persistence.utils.sqlcode.SQLStatements;
+import server.persistence.utils.sql_code.SQLOperation;
+import server.persistence.utils.sql_code.SQLStatements;
 import server.persistence.utils.tables.DatabaseTables;
 import server.persistence.utils.tables.Table;
 import shared.SaleStrategyType;
@@ -132,24 +132,21 @@ public class SQL {
 	//Nu begynder salesman metoderne
 
 
-	public static String addAuctionItem(double offerAmount, Temporal endTimestamp, SaleStrategyType strategyType) {
+	public static String addAuctionItem(double offerAmount, Temporal endTimestamp, SaleStrategyType strategyType, String title, String tags, String description, String salesManUsername) {
 		Table auction = null;
 
 		try {
-
-			//I Denne metode skal der addes nogle values ind i Item table, herefter skal der addes dens salesstrategy pris ind i
-			// auction table, Disse 2 tables i forskellige tables skal have den samme
 			auction = tables.getTable("auction");
 
 
 		} catch (TableNonExistent e) {
 			e.printStackTrace();
 		}
-		System.out.println(statements.insert(auction, offerAmount, endTimestamp, strategyType.toString()));
-		return statements.insert(auction, offerAmount, endTimestamp, strategyType.toString());
+		System.out.println(statements.insert(auction, offerAmount, endTimestamp, strategyType.toString(), title, tags, description, salesManUsername));
+		return statements.insert(auction, offerAmount, endTimestamp, strategyType.toString(), title, tags, description, salesManUsername);
 	}
 
-	public static String addBuyoutItem(double offerAmount, SaleStrategyType strategyType) {
+	public static String addBuyoutItem(double offerAmount, SaleStrategyType strategyType, String title, String tags, String description, String salesManUsername) {
 		Table buyout = null;
 
 
@@ -159,7 +156,8 @@ public class SQL {
 			e.printStackTrace();
 		}
 
-		return statements.insert(buyout, offerAmount, strategyType.toString());
+		System.out.println(statements.insert(buyout, offerAmount, strategyType.toString(), title, tags, description, salesManUsername));
+		return statements.insert(buyout, offerAmount, strategyType.toString(), title, tags, description, salesManUsername);
 
 	}
 

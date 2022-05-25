@@ -1,33 +1,32 @@
 package server.persistence;
 
 import server.model.item.ItemImpl;
-import server.persistence.item.adderToDatabase.AdderToDatabase;
+import server.persistence.item.inserter.ItemInserter;
 import server.persistence.item.mutation.BuyingMutator;
 import server.persistence.utils.SQL;
-import server.persistence.utils.resultSetAdapter.ResultSetAdapter;
-import server.persistence.utils.resultSetAdapter.ResultSetAdapterImpl;
-import shared.SaleStrategyType;
+import server.persistence.utils.resultset_adapter.ResultSetAdapter;
+import server.persistence.utils.resultset_adapter.ResultSetAdapterImpl;
 import shared.network.model.Item;
 
 import java.beans.PropertyChangeEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.List;
 
-public class DatabaseAccess implements CustomerDatabaseMethods, SalesManDatabaseMethods {
+public class DatabaseAccess implements CustomerDatabaseMethods, SalesmanDatabaseMethods {
 	private final BuyingMutator buyingMutator;
 	private final long ONE_HOUR_IN_MILLI;
 	private final ResultSetAdapter resultSetAdapter;
-	private final AdderToDatabase adderToDatabase;
+	private final ItemInserter itemInserter;
 
 
 	public DatabaseAccess() {
 		buyingMutator = new BuyingMutator();
 		ONE_HOUR_IN_MILLI = 3600000;
 		resultSetAdapter = new ResultSetAdapterImpl();
-		adderToDatabase = new AdderToDatabase();
+		itemInserter = new ItemInserter();
+		SQL.constructDatabaseTables(createConnection());
 		//checkAuctionTimers();
 	}
 
@@ -79,14 +78,12 @@ public class DatabaseAccess implements CustomerDatabaseMethods, SalesManDatabase
 	@Override
 	public synchronized Item getItem(String itemID) throws SQLException {
 
-		//itemSelector.fetchItem(createConnection(), itemID);
 		return resultSetAdapter.fetchItem(createConnection(), itemID);
 	}
 
 	@Override
 	public List<Item> getAmountOfItems(int amount, String ascOrDesc) throws SQLException {
 
-		//itemSelector.fetchAmountOfItems(createConnection(), amount, ascOrDesc);
 		return resultSetAdapter.fetchAmountOfItems(createConnection(), amount, ascOrDesc);
 	}
 
@@ -102,20 +99,11 @@ public class DatabaseAccess implements CustomerDatabaseMethods, SalesManDatabase
 
 	@Override
 	public void addItemToDatabase(Item itemToAdd) throws SQLException {
-		adderToDatabase.addItemToDatabase(createConnection(),(ItemImpl) itemToAdd);
+		itemInserter.addItemToDatabase(createConnection(), (ItemImpl) itemToAdd);
 	}
 
 	@Override
 	public void AlterItemOnDatabsae(String itemIDToAlter, String columnToAlter, String newValue) throws SQLException {
 
-	}
-
-
-	public static void main(String[] args) {
-
-
-		DatabaseAccess access = new DatabaseAccess();
-		SQL.constructDatabaseTables(access.createConnection());
-		SQL.addAuctionItem(0, LocalDateTime.now(), SaleStrategyType.AUCTION);
 	}
 }

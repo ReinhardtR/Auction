@@ -9,7 +9,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,13 +20,8 @@ public class ViewFactory {
 		stage = theStage;
 		startNewScene(viewLogin);
 
+		// Close GUI and exit system process on close.
 		stage.setOnCloseRequest(windowEvent -> {
-			try {
-				ClientFactory.getInstance().getClient().unregisterClient();
-			} catch (RemoteException e) {
-				e.printStackTrace();
-			}
-
 			Platform.exit();
 			System.exit(0);
 		});

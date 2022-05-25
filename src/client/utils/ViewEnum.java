@@ -5,6 +5,5 @@ public enum ViewEnum {
 	Auction,
 	Buyout,
 	Login,
-
 	Sale
 }

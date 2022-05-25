@@ -2,7 +2,7 @@ package client.views.itemlist;
 
 import client.core.ViewHandler;
 import client.core.ViewModelFactory;
-import client.model.ItemCacheProxy;
+import client.model.item.ItemCacheProxy;
 import client.model.ObservableItem;
 import client.views.ViewController;
 import javafx.fxml.FXML;
@@ -11,15 +11,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import shared.SaleStrategyType;
-import shared.network.model.Item;
 
 public class ItemListController implements ViewController {
 
 	@FXML
 	private TableColumn<ObservableItem, SaleStrategyType> typeCol;
-
-	@FXML
-	private Label errorLabel;
 
 	@FXML
 	private TableColumn<ItemCacheProxy, String> idCol;
@@ -38,8 +34,6 @@ public class ItemListController implements ViewController {
 		itemsTableView.setItems(viewModelFactory.getItemListViewModel().getObservableItemList());
 
 		itemListViewModel = viewModelFactory.getItemListViewModel();
-
-		errorLabel.setText("");
 	}
 
 	@FXML
@@ -48,7 +42,6 @@ public class ItemListController implements ViewController {
 
 		if (item != null) {
 			itemListViewModel.openViewForItem(item);
-			errorLabel.setText("");
 		}
 	}
 

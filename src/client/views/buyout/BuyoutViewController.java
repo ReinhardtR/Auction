@@ -9,37 +9,49 @@ import javafx.scene.control.Label;
 
 public class BuyoutViewController implements ViewController {
 
-	// brug samme naming convention i begge view controllers
 	@FXML
-	private Button buyButton;
+	private Label seller;
 	@FXML
-	private Label timeLeftOnBid;
+	private Label descriptionText;
 	@FXML
-	private Label price;
+	private Label tagsText;
+	@FXML
+	private Label buyer;
 	@FXML
 	private Label itemLabel;
+
+	@FXML
+	private Button buyButton;
+
+	@FXML
+	private Label price;
+
 	@FXML
 	private Label errorLabel;
 
-	private BuyoutViewModel viewModel;
+	private BuyoutViewModel buyoutViewModel;
 
 	@Override
 	public void init(ViewHandler viewHandler, ViewModelFactory viewModelFactory) {
-		// brug samme naming convention i begge viewmodels
-		viewModel = viewModelFactory.getBuyoutViewModel();
+		buyoutViewModel = viewModelFactory.getBuyoutViewModel();
 
-		buyButton.disableProperty().bind(viewModel.getIsSoldProperty());
-		itemLabel.textProperty().bind(viewModel.getItemNameProperty());
-		price.textProperty().bind(viewModel.getPriceProperty().asString());
-		errorLabel.textProperty().bind(viewModel.getErrorProperty());
+		buyButton.disableProperty().bind(buyoutViewModel.propertyIsSold());
+		itemLabel.textProperty().bind(buyoutViewModel.propertyItemName());
+		price.textProperty().bind(buyoutViewModel.propertyPrice().asString());
+		errorLabel.textProperty().bind(buyoutViewModel.propertyErrorText());
+		seller.textProperty().bind(buyoutViewModel.propertySellerUser());
+		descriptionText.textProperty().bind(buyoutViewModel.propertyDescriptionText());
+		tagsText.textProperty().bind(buyoutViewModel.propertyTagsText());
+		buyer.textProperty().bind(buyoutViewModel.propertyBuyerText());
 	}
 
 	@FXML
 	protected void onBuy() {
-		viewModel.onBuy(Double.parseDouble(price.getText()), "Jens");
+		buyoutViewModel.buyItem();
 	}
 
-	public void returnToList() {
-		viewModel.returnToItemListView();
+	@FXML
+	protected void returnToList() {
+		buyoutViewModel.returnToItemListView();
 	}
 }

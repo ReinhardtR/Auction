@@ -1,24 +1,18 @@
 package client.core;
 
-import client.views.Login.LoginViewModel;
-import client.views.Login.LoginViewModelImpl;
-import client.views.Sale.SaleViewModel;
-import client.views.Sale.SaleViewModelImpl;
 import client.views.auction.AuctionViewModel;
 import client.views.auction.AuctionViewModelImpl;
 import client.views.buyout.BuyoutViewModel;
 import client.views.buyout.BuyoutViewModelImpl;
 import client.views.itemlist.ItemListViewModel;
 import client.views.itemlist.ItemListViewModelImpl;
+import client.views.login.LoginViewModel;
+import client.views.login.LoginViewModelImpl;
+import client.views.sale.SaleViewModel;
+import client.views.sale.SaleViewModelImpl;
 
 public class ViewModelFactory {
 	private static final ViewModelFactory instance = new ViewModelFactory();
-
-	private ItemListViewModel itemListViewModel;
-	private AuctionViewModel auctionViewModel;
-	private BuyoutViewModel buyoutViewModel;
-	private LoginViewModel loginViewModel;
-	private SaleViewModel saleViewModel;
 
 	private ViewModelFactory() {
 	}
@@ -28,27 +22,28 @@ public class ViewModelFactory {
 	}
 
 	public ItemListViewModel getItemListViewModel() {
-		itemListViewModel = new ItemListViewModelImpl(ModelFactory.getInstance().getObservableItemList());
-		return itemListViewModel;
+		return new ItemListViewModelImpl(ModelFactory.getInstance().getObservableItemList());
 	}
 
 	public AuctionViewModel getAuctionViewModel() {
-		auctionViewModel = new AuctionViewModelImpl(ModelFactory.getInstance().getObservableItemList().getCurrentlyViewedItem());
-		return auctionViewModel;
+		return new AuctionViewModelImpl(
+						ModelFactory.getInstance().getUser(),
+						ModelFactory.getInstance().getObservableItemList().getCurrentlyViewedItem()
+		);
 	}
 
 	public BuyoutViewModel getBuyoutViewModel() {
-		buyoutViewModel = new BuyoutViewModelImpl(ModelFactory.getInstance().getObservableItemList().getCurrentlyViewedItem());
-		return buyoutViewModel;
+		return new BuyoutViewModelImpl(
+						ModelFactory.getInstance().getUser(),
+						ModelFactory.getInstance().getObservableItemList().getCurrentlyViewedItem()
+		);
 	}
 
 	public LoginViewModel getLoginViewModel() {
-		loginViewModel = new LoginViewModelImpl(ModelFactory.getInstance().getUserNameModel());
-		return loginViewModel;
+		return new LoginViewModelImpl(ModelFactory.getInstance().getUser());
 	}
 
 	public SaleViewModel getSaleViewModel() {
-		saleViewModel = new SaleViewModelImpl(ModelFactory.getInstance().getUserNameModel());
-		return saleViewModel;
+		return new SaleViewModelImpl(ModelFactory.getInstance().getUser());
 	}
 }

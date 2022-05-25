@@ -1,6 +1,6 @@
 package server.model.item;
 
-import server.model.item.SaleStrategy.SaleStrategy;
+import server.model.item.sale_strategy.SaleStrategy;
 import shared.SaleStrategyType;
 import shared.network.model.Item;
 
@@ -10,18 +10,44 @@ import java.time.temporal.Temporal;
 
 public class ItemImpl extends UnicastRemoteObject implements Item {
 	private final String itemID;
-
-	//Enum
+	private final String salesmanUsername;
+	private final String title;
+	private final String description;
+	private final String tags;
 	private final SaleStrategy strategy;
 
-	public ItemImpl(String itemID, SaleStrategy strategy) throws RemoteException {
+	public ItemImpl(String itemID, String salesmanUsername, String title, String description, String tags, SaleStrategy strategy) throws RemoteException {
 		this.itemID = itemID;
+		this.salesmanUsername = salesmanUsername;
+		this.title = title;
+		this.description = description;
+		this.tags = tags;
 		this.strategy = strategy;
 	}
 
 	@Override
 	public String getItemID() throws RemoteException {
 		return itemID;
+	}
+
+	@Override
+	public String getSalesmanUsername() throws RemoteException {
+		return salesmanUsername;
+	}
+
+	@Override
+	public String getTitle() throws RemoteException {
+		return title;
+	}
+
+	@Override
+	public String getDescription() throws RemoteException {
+		return description;
+	}
+
+	@Override
+	public String getTags() throws RemoteException {
+		return tags;
 	}
 
 	@Override
@@ -42,7 +68,7 @@ public class ItemImpl extends UnicastRemoteObject implements Item {
 
 	@Override
 	public String getBuyerUsername() throws RemoteException {
-		return null;
+		return strategy.getBuyer();
 	}
 
 	@Override
@@ -58,7 +84,11 @@ public class ItemImpl extends UnicastRemoteObject implements Item {
 	@Override
 	public String toString() {
 		return "ItemImpl{" +
-						", itemID='" + itemID + '\'' +
+						"itemID='" + itemID + '\'' +
+						", salesmanUsername='" + salesmanUsername + '\'' +
+						", title='" + title + '\'' +
+						", description='" + description + '\'' +
+						", tags='" + tags + '\'' +
 						", strategy=" + strategy +
 						'}';
 	}

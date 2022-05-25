@@ -4,21 +4,27 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.StringProperty;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 public interface BuyoutViewModel {
 
-	void onBuy(double amount, String username);
+	void buyItem();
 
-	// brug samme naming convention i begge viewmodels (kan godt lide den i auction)
-	DoubleProperty getPriceProperty();
+	DoubleProperty propertyPrice();
 
-	StringProperty getItemNameProperty();
+	StringProperty propertyItemName();
 
-	StringProperty getErrorProperty();
+	StringProperty propertyErrorText();
 
-	BooleanProperty getIsSoldProperty();
+	BooleanProperty propertyIsSold();
 
 	void returnToItemListView();
+
+	StringProperty propertySellerUser();
+
+	StringProperty propertyDescriptionText();
+
+	StringProperty propertyTagsText();
+
+	StringProperty propertyBuyerText();
+
 }

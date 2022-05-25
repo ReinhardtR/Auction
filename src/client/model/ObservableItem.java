@@ -1,8 +1,8 @@
 package client.model;
 
+import client.model.item.ItemCacheProxy;
 import client.network.LocalClient;
 import shared.SaleStrategyType;
-import shared.network.model.Item;
 import shared.utils.PropertyChangeSubject;
 
 import java.beans.PropertyChangeEvent;
@@ -11,7 +11,7 @@ import java.beans.PropertyChangeSupport;
 import java.rmi.RemoteException;
 import java.time.temporal.Temporal;
 
-public class ObservableItem implements PropertyChangeListener, PropertyChangeSubject, Item {
+public class ObservableItem implements PropertyChangeListener, PropertyChangeSubject, ItemCacheProxy {
 	private final PropertyChangeSupport support;
 	private final ItemCacheProxy item;
 
@@ -27,6 +27,26 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 	@Override
 	public String getItemID() {
 		return item.getItemID();
+	}
+
+	@Override
+	public String getSalesmanUsername() {
+		return item.getSalesmanUsername();
+	}
+
+	@Override
+	public String getTitle() {
+		return item.getTitle();
+	}
+
+	@Override
+	public String getDescription() {
+		return item.getDescription();
+	}
+
+	@Override
+	public String getTags() {
+		return item.getTags();
 	}
 
 	@Override
@@ -66,8 +86,8 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 
 	// TODO
 	@Override
-	public String getBuyerUsername() throws RemoteException {
-		return null;
+	public String getBuyerUsername() {
+		return item.getBuyerUsername();
 	}
 
 	public void propertyChange(PropertyChangeEvent event) {

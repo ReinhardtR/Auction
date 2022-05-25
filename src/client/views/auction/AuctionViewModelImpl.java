@@ -3,10 +3,13 @@ package client.views.auction;
 import client.core.ViewHandler;
 import client.model.ItemCalculations;
 import client.model.ObservableItem;
+import client.model.User;
 import client.utils.SystemNotifcation;
 import client.utils.ViewEnum;
 import javafx.application.Platform;
 import javafx.beans.property.*;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import shared.EventType;
 import shared.utils.TimedTask;
 
@@ -16,26 +19,44 @@ import java.time.LocalDateTime;
 import java.time.temporal.Temporal;
 
 public class AuctionViewModelImpl implements AuctionViewModel {
-	private final StringProperty itemText;
+	private final User customer;
+	private final ObservableItem item;
+
+	private final StringProperty itemName;
 	private final BooleanProperty isSold;
 	private final DoubleProperty currentHighestBid;
 	private final StringProperty timeLeft;
-	private final StringProperty errorText;
-	private final ObservableItem item;
+	private final StringProperty eventText;
+	private final StringProperty seller;
+	private final StringProperty description;
+	private final StringProperty tags;
+	private final StringProperty highestBidder;
+	private final ObjectProperty<Paint> eventColor;
 
-	public AuctionViewModelImpl(ObservableItem item) {
-		itemText = new SimpleStringProperty();
-		isSold = new SimpleBooleanProperty();
-		currentHighestBid = new SimpleDoubleProperty();
-		timeLeft = new SimpleStringProperty();
-		errorText = new SimpleStringProperty();
-
+	public AuctionViewModelImpl(User customer, ObservableItem item) {
+		this.customer = customer;
 		this.item = item;
+
 		item.addListener(EventType.NEW_BID.toString(), this::onNewBid);
 		item.addListener(EventType.ITEM_SOLD.toString(), this::onItemSold);
 
-		itemText.setValue(item.getItemID());
+		itemName = new SimpleStringProperty();
+		isSold = new SimpleBooleanProperty();
+		currentHighestBid = new SimpleDoubleProperty();
+		timeLeft = new SimpleStringProperty();
+		eventText = new SimpleStringProperty();
+		seller = new SimpleStringProperty();
+		description = new SimpleStringProperty();
+		tags = new SimpleStringProperty();
+		highestBidder = new SimpleStringProperty();
+		eventColor = new SimpleObjectProperty<>();
+
+		itemName.setValue(item.getTitle());
 		currentHighestBid.setValue(item.getOfferAmount());
+		seller.setValue(item.getSalesmanUsername());
+		description.setValue(item.getDescription());
+		highestBidder.setValue(item.getBuyerUsername());
+		tags.setValue(item.getTags());
 
 		runTimeSimulation(item.getEndTimestamp());
 	}
@@ -43,22 +64,26 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 	@Override
 	public void bidOnItem(String offerInputText) {
 		try {
-			double offer = Double.parseDouble(offerInputText);
+			double offerAmount = Double.parseDouble(offerInputText);
 
-			if (ItemCalculations.isNewBidHigher(offer, item)) {
-				errorText.setValue(null);
-				item.userSaleStrategy(offer, "Reinhardt");
+			if (ItemCalculations.isNewBidHigher(offerAmount, item)) {
+				eventText.setValue(null);
+				customer.makeOfferOnItem(offerAmount, item);
+				highestBidder.setValue(item.getBuyerUsername());
+				eventColor.setValue(Color.GREEN);
 			} else {
-				errorText.setValue("You need to bid higher than the current bid.");
+				eventText.setValue("You need to bid higher than the current bid.");
+				eventColor.setValue(Color.RED);
 			}
 		} catch (NumberFormatException | NullPointerException e) {
-			errorText.setValue("Please type a valid number as your bid.");
+			eventText.setValue("Please type a valid number as your bid.");
+			eventColor.setValue(Color.RED);
 		}
 	}
 
 	@Override
-	public StringProperty propertyItemLabel() {
-		return itemText;
+	public StringProperty propertyItemName() {
+		return itemName;
 	}
 
 	@Override
@@ -72,13 +97,38 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 	}
 
 	@Override
-	public StringProperty propertyErrorText() {
-		return errorText;
+	public StringProperty propertyEventText() {
+		return eventText;
 	}
 
 	@Override
 	public BooleanProperty propertyIsSold() {
 		return isSold;
+	}
+
+	@Override
+	public StringProperty propertySeller() {
+		return seller;
+	}
+
+	@Override
+	public StringProperty propertyHighestBidder() {
+		return highestBidder;
+	}
+
+	@Override
+	public StringProperty propertyDescription() {
+		return description;
+	}
+
+	@Override
+	public StringProperty propertyTags() {
+		return tags;
+	}
+
+	@Override
+	public ObjectProperty<Paint> propertyEventColor() {
+		return eventColor;
 	}
 
 	private void onItemSold(PropertyChangeEvent event) {
@@ -88,10 +138,8 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 	}
 
 	private void onNewBid(PropertyChangeEvent event) {
-		System.out.println("change!");
 		Platform.runLater(() -> {
 			String itemID = (String) event.getOldValue();
-			System.out.println(event.getNewValue());
 			double offerAmount = (double) event.getNewValue();
 
 			currentHighestBid.setValue(offerAmount);
@@ -105,7 +153,6 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 
 	@Override
 	public void returnToItemListView() {
-
 		ViewHandler.getInstance().openView(ViewEnum.ItemList.toString());
 	}
 

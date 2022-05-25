@@ -1,6 +1,7 @@
 package client.network;
 
-import client.model.ItemCacheProxy;
+import client.model.item.ItemCacheProxy;
+import shared.SaleStrategyType;
 import shared.utils.PropertyChangeSubject;
 
 import java.rmi.RemoteException;
@@ -12,4 +13,6 @@ public interface LocalClient extends PropertyChangeSubject {
 	List<ItemCacheProxy> getAllItems() throws RemoteException;
 
 	void unregisterClient() throws RemoteException;
+
+	void createItem(String title, String description, String tags, SaleStrategyType saleType, String username, double offer, String endtime) throws RemoteException;
 }

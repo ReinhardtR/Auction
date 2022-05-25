@@ -1,9 +1,7 @@
 package client.views.itemlist;
 
-import client.model.ItemCacheProxy;
-import client.model.ObservableItem;
+import client.model.item.ItemCacheProxy;
 import javafx.collections.ObservableList;
-import shared.network.model.Item;
 
 public interface ItemListViewModel {
 

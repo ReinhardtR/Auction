@@ -1,9 +1,9 @@
 package server.view;
 
 
-import server.model.broadcaster.UpdateBroadcaster;
-import server.model.broadcaster.UpdateBroadcasterImpl;
-import server.model.item.Cart;
+import server.service.broadcaster.UpdateBroadcaster;
+import server.service.broadcaster.UpdateBroadcasterImpl;
+import server.service.customer.CustomerItemService;
 import shared.network.model.Item;
 import shared.network.server.CustomerServer;
 
@@ -19,18 +19,19 @@ public class CustomerServerImpl extends UnicastRemoteObject implements CustomerS
 
 	public CustomerServerImpl() throws RemoteException {
 		broadcaster = new UpdateBroadcasterImpl();
-		Cart.getInstance().addListenerToAllEvents(this);
-		Cart.getInstance().getManyItems();
+
+		CustomerItemService.getInstance().addListenerToAllEvents(this);
+		CustomerItemService.getInstance().getManyItems();
 	}
 
 	@Override
 	public Item getItem(String itemID) throws RemoteException {
-		return Cart.getInstance().getItem(itemID);
+		return CustomerItemService.getInstance().getItem(itemID);
 	}
 
 	@Override
 	public List<Item> getAllItemsInCart() throws RemoteException {
-		return Cart.getInstance().returnAllItemsInCart();
+		return CustomerItemService.getInstance().returnAllItemsInCart();
 	}
 
 	@Override
