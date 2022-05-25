@@ -102,8 +102,5 @@ public class DatabaseAccess implements CustomerDatabaseMethods, SalesmanDatabase
 		itemInserter.addItemToDatabase(createConnection(), (ItemImpl) itemToAdd);
 	}
 
-	@Override
-	public synchronized void AlterItemOnDatabsae(String itemIDToAlter, String columnToAlter, String newValue) throws SQLException {
 
-	}
 }
