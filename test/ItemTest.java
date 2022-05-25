@@ -1,10 +1,10 @@
-import client.model.item.ItemCacheProxyImpl;
 import client.model.ObservableItem;
+import client.model.item.ItemCacheProxyImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import server.model.item.ItemImpl;
-import server.model.item.SaleStrategy.AuctionStrategy;
+import server.model.item.sale_strategy.AuctionStrategy;
 import shared.SaleStrategyType;
 import shared.network.model.Item;
 

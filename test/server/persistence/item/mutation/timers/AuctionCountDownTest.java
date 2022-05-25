@@ -3,7 +3,7 @@ package server.persistence.item.mutation.timers;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import server.model.item.ItemImpl;
-import server.model.item.SaleStrategy.AuctionStrategy;
+import server.model.item.sale_strategy.AuctionStrategy;
 
 import java.beans.PropertyChangeEvent;
 import java.rmi.RemoteException;

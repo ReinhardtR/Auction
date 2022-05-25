@@ -1,7 +1,6 @@
 package server.persistence.item.select.salestrategy;
 
-import server.model.item.SaleStrategy.SaleStrategy;
-import server.persistence.utils.SQL;
+import server.model.item.sale_strategy.SaleStrategy;
 
 import java.sql.Connection;
 import java.sql.SQLException;

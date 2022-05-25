@@ -1,8 +1,8 @@
 package server.persistence.item.select.salestrategy;
 
-import server.model.item.SaleStrategy.AuctionStrategy;
-import server.model.item.SaleStrategy.BuyoutStrategy;
-import server.model.item.SaleStrategy.SaleStrategy;
+import server.model.item.sale_strategy.AuctionStrategy;
+import server.model.item.sale_strategy.BuyoutStrategy;
+import server.model.item.sale_strategy.SaleStrategy;
 import server.persistence.utils.SQL;
 import shared.SaleStrategyType;
 
@@ -11,7 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class SaleStrategySelectorImpl implements SaleStrategySelector{
+public class SaleStrategySelectorImpl implements SaleStrategySelector {
 	public SaleStrategy fetchStrategy(Connection c, String itemID, String saleStrategy) throws SQLException {
 
 		PreparedStatement saleStrategyStatement = c.prepareStatement(SQL.selectSaleStrategy(itemID, saleStrategy));

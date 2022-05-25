@@ -1,15 +1,15 @@
 package client.core;
 
-import client.views.Login.LoginViewModel;
-import client.views.Login.LoginViewModelImpl;
-import client.views.Sale.SaleViewModel;
-import client.views.Sale.SaleViewModelImpl;
 import client.views.auction.AuctionViewModel;
 import client.views.auction.AuctionViewModelImpl;
 import client.views.buyout.BuyoutViewModel;
 import client.views.buyout.BuyoutViewModelImpl;
 import client.views.itemlist.ItemListViewModel;
 import client.views.itemlist.ItemListViewModelImpl;
+import client.views.login.LoginViewModel;
+import client.views.login.LoginViewModelImpl;
+import client.views.sale.SaleViewModel;
+import client.views.sale.SaleViewModelImpl;
 
 public class ViewModelFactory {
 	private static final ViewModelFactory instance = new ViewModelFactory();

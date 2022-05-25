@@ -2,8 +2,8 @@ package server.persistence.utils;
 
 import server.persistence.utils.exceptions.SQLUtilsException;
 import server.persistence.utils.exceptions.TableNonExistent;
-import server.persistence.utils.sqlcode.SQLOperation;
-import server.persistence.utils.sqlcode.SQLStatements;
+import server.persistence.utils.sql_code.SQLOperation;
+import server.persistence.utils.sql_code.SQLStatements;
 import server.persistence.utils.tables.DatabaseTables;
 import server.persistence.utils.tables.Table;
 import shared.SaleStrategyType;
@@ -133,7 +133,7 @@ public class SQL {
 	//Nu begynder salesman metoderne
 
 
-	public static String addAuctionItem(double offerAmount, Temporal endTimestamp, SaleStrategyType strategyType, String title, String tags, String description, String salesManUsername){
+	public static String addAuctionItem(double offerAmount, Temporal endTimestamp, SaleStrategyType strategyType, String title, String tags, String description, String salesManUsername) {
 		Table auction = null;
 
 		try {
@@ -145,8 +145,8 @@ public class SQL {
 		} catch (TableNonExistent e) {
 			e.printStackTrace();
 		}
-		System.out.println(statements.insert(auction,offerAmount,endTimestamp,strategyType.toString(),title,tags,description,salesManUsername));
-		return statements.insert(auction,offerAmount,endTimestamp,strategyType.toString(),title,tags,description,salesManUsername);
+		System.out.println(statements.insert(auction, offerAmount, endTimestamp, strategyType.toString(), title, tags, description, salesManUsername));
+		return statements.insert(auction, offerAmount, endTimestamp, strategyType.toString(), title, tags, description, salesManUsername);
 	}
 
 	public static String addBuyoutItem(double offerAmount, SaleStrategyType strategyType, String title, String tags, String description, String salesManUsername) {
@@ -159,8 +159,8 @@ public class SQL {
 			e.printStackTrace();
 		}
 
-		System.out.println(statements.insert(buyout,offerAmount,strategyType.toString(),title,tags,description,salesManUsername));
-		return statements.insert(buyout,offerAmount,strategyType.toString(),title,tags,description,salesManUsername);
+		System.out.println(statements.insert(buyout, offerAmount, strategyType.toString(), title, tags, description, salesManUsername));
+		return statements.insert(buyout, offerAmount, strategyType.toString(), title, tags, description, salesManUsername);
 
 	}
 

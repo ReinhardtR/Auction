@@ -1,6 +1,6 @@
 package shared.network.server;
 
-import server.model.broadcaster.UpdateBroadcaster;
+import server.service.broadcaster.UpdateBroadcaster;
 import shared.network.model.Item;
 
 import java.rmi.Remote;

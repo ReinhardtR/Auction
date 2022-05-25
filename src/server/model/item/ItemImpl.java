@@ -1,6 +1,6 @@
 package server.model.item;
 
-import server.model.item.SaleStrategy.SaleStrategy;
+import server.model.item.sale_strategy.SaleStrategy;
 import shared.SaleStrategyType;
 import shared.network.model.Item;
 
