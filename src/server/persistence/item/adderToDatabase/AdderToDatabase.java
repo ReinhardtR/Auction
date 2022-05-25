@@ -15,6 +15,7 @@ public class AdderToDatabase {
 
 
 		try {
+			// brug enum ikke strings
 			if (itemToAdd.getStrategyType().toString().equalsIgnoreCase("auction"))
 			{
 				connection.prepareStatement(SQL.addAuctionItem(itemToAdd.getOfferAmount(),itemToAdd.getEndTimestamp(),itemToAdd.getStrategyType()
