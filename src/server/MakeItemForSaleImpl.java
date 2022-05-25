@@ -24,7 +24,6 @@ public class MakeItemForSaleImpl implements MakeItemForSale {
 	public void makeItem(String title, String description, String tags, SaleStrategyType saleType, String username, double offer, String endtime) {
 
 		System.out.println("item getting made");
-		System.out.println(title);
 		try {
 			Item item = null;
 			if (saleType == SaleStrategyType.AUCTION) {

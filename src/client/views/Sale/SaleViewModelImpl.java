@@ -18,7 +18,7 @@ public class SaleViewModelImpl implements SaleViewModel {
 	private final StringProperty tagsTextProperty;
 	private final StringProperty priceOfferProperty;
 	private final StringProperty endTimeProperty;
-	private final StringProperty errorLabelProperty;
+	private final StringProperty eventLabelProperty;
 
 	private Chronology endDateProperty;
 
@@ -30,7 +30,7 @@ public class SaleViewModelImpl implements SaleViewModel {
 		tagsTextProperty = new SimpleStringProperty();
 		priceOfferProperty = new SimpleStringProperty();
 		endTimeProperty = new SimpleStringProperty();
-		errorLabelProperty = new SimpleStringProperty();
+		eventLabelProperty = new SimpleStringProperty();
 	}
 
 	@Override
@@ -69,19 +69,20 @@ public class SaleViewModelImpl implements SaleViewModel {
 							(titleTextProperty.getValue() == null || priceOfferProperty.getValue() == null) &&
 											saleType == SaleStrategyType.BUYOUT) {
 
-				errorLabelProperty.setValue("Please fill out all required fields!");
+				eventLabelProperty.setValue("Please fill out all required fields!");
 			} else {
 				salesman.createItem(titleTextProperty.getValue(), descriptionTextProperty.getValue(),
 								tagsTextProperty.getValue(), saleType, offer, endTimeProperty.getValue());
+				eventLabelProperty.setValue("Item was successfully put up for sale!");
 			}
 		} catch (NumberFormatException e) {
-			errorLabelProperty.setValue("Please type in a valid number in price/starter bid!");
+			eventLabelProperty.setValue("Please type in a valid number in price/starter bid!");
 		}
 	}
 
 	@Override
 	public StringProperty errorLabelProperty() {
-		return errorLabelProperty;
+		return eventLabelProperty;
 	}
 
 	@Override

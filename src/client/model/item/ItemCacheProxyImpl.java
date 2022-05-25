@@ -8,7 +8,6 @@ import java.time.temporal.Temporal;
 
 public class ItemCacheProxyImpl implements ItemCacheProxy {
 	private final Item item;
-
 	private final String itemID;
 	private final String salesmanUsername;
 	private final String title;

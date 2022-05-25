@@ -23,7 +23,6 @@ public class Cart {
 	private final CustomerDatabaseMethods database;
 
 	private Cart() {
-		System.out.println("make");
 		support = new PropertyChangeSupport(this);
 		database = new DatabaseAccess();
 	}
