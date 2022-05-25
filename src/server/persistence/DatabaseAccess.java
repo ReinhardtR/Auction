@@ -67,7 +67,7 @@ public class DatabaseAccess implements CustomerDatabaseMethods, SalesmanDatabase
 		auctionItemBought((String) propertyChangeEvent.getNewValue());
 	}
 
-	private void auctionItemBought(String itemID) {
+	private synchronized void auctionItemBought(String itemID) {
 		try {
 			buyingMutator.auctionBought(createConnection(), itemID);
 		} catch (SQLException e) {
@@ -98,12 +98,9 @@ public class DatabaseAccess implements CustomerDatabaseMethods, SalesmanDatabase
 	}
 
 	@Override
-	public void addItemToDatabase(Item itemToAdd) throws SQLException {
+	public synchronized void addItemToDatabase(Item itemToAdd) throws SQLException {
 		itemInserter.addItemToDatabase(createConnection(), (ItemImpl) itemToAdd);
 	}
 
-	@Override
-	public void AlterItemOnDatabsae(String itemIDToAlter, String columnToAlter, String newValue) throws SQLException {
 
-	}
 }

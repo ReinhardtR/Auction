@@ -5,11 +5,11 @@ import client.model.ObservableItem;
 import client.model.User;
 import client.utils.SystemNotifcation;
 import client.utils.ViewEnum;
+import javafx.application.Platform;
 import javafx.beans.property.*;
 import shared.EventType;
 
 import java.beans.PropertyChangeEvent;
-import java.rmi.RemoteException;
 
 public class BuyoutViewModelImpl implements BuyoutViewModel {
 	private final User customer;
@@ -40,7 +40,6 @@ public class BuyoutViewModelImpl implements BuyoutViewModel {
 		tags = new SimpleStringProperty();
 		buyer = new SimpleStringProperty();
 
-		itemName.setValue(item.getTitle());
 		price.setValue(item.getOfferAmount());
 		sellerUser.setValue(item.getSalesmanUsername());
 		description.setValue(item.getDescription());
@@ -49,15 +48,7 @@ public class BuyoutViewModelImpl implements BuyoutViewModel {
 
 	@Override
 	public void buyItem() {
-		try {
-			if (item.getIsSold()) {
-				errorText.setValue("Item is already sold!");
-			} else {
-				customer.makeOfferOnItem(price.getValue(), item);
-			}
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
+		customer.makeOfferOnItem(price.getValue(), item);
 	}
 
 	@Override
@@ -82,11 +73,16 @@ public class BuyoutViewModelImpl implements BuyoutViewModel {
 
 	private void onItemSold(PropertyChangeEvent event) {
 		System.out.println("ITEM SOLD BUYOUT");
-		isSold.setValue(true);
 
 		String caption = "Item sold: " + item.getItemID();
 		String message = "The item: " + item.getItemID() + ", that you were watching has been sold.";
 		SystemNotifcation.getInstance().send(caption, message);
+
+		Platform.runLater(() -> {
+			isSold.setValue(true);
+			buyer.setValue(item.getBuyerUsername());
+			errorText.setValue("Item is sold!");
+		});
 	}
 
 	@Override
@@ -113,4 +109,5 @@ public class BuyoutViewModelImpl implements BuyoutViewModel {
 	public StringProperty propertyBuyerText() {
 		return buyer;
 	}
+
 }
