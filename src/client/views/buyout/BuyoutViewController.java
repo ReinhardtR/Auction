@@ -10,6 +10,14 @@ import javafx.scene.control.Label;
 public class BuyoutViewController implements ViewController {
 
 	@FXML
+	private Label seller;
+	@FXML
+	private Label descriptionText;
+	@FXML
+	private Label tagsText;
+	@FXML
+	private Label buyer;
+	@FXML
 	private Label itemLabel;
 
 	@FXML
@@ -31,6 +39,10 @@ public class BuyoutViewController implements ViewController {
 		itemLabel.textProperty().bind(buyoutViewModel.propertyItemName());
 		price.textProperty().bind(buyoutViewModel.propertyPrice().asString());
 		errorLabel.textProperty().bind(buyoutViewModel.propertyErrorText());
+		seller.textProperty().bind(buyoutViewModel.propertySellerUser());
+		descriptionText.textProperty().bind(buyoutViewModel.propertyDescriptionText());
+		tagsText.textProperty().bind(buyoutViewModel.propertyTagsText());
+		buyer.textProperty().bind(buyoutViewModel.propertyBuyerText());
 	}
 
 	@FXML

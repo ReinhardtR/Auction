@@ -1,31 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Polyline?>
 <?import javafx.scene.text.Font?>
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.views.buyout.BuyoutViewController">
-    <Label layoutX="199.0" layoutY="274.0" text="Price" />
-    <Polyline fill="CHARTREUSE" layoutX="75.0" layoutY="150.0" points="415.5999755859375, -86.19999694824219, 415.5999755859375, 97.19999694824219, 33.0, 97.19999694824219, 33.0, -86.19999694824219" strokeType="INSIDE" />
-    <Label layoutX="226.0" layoutY="30.0" prefHeight="35.0" prefWidth="149.0" text="BIG JUNGERS">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity"
+            prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18"
+            fx:controller="client.views.buyout.BuyoutViewController">
+    <Label alignment="CENTER_RIGHT" layoutX="344.0" layoutY="161.0" prefHeight="18.0" prefWidth="46.0" text="Price:"/>
+    <Label alignment="CENTER" layoutX="211.0" layoutY="23.0" prefHeight="35.0" prefWidth="149.0" text="BUYOUT">
         <font>
-            <Font size="24.0" />
+            <Font size="24.0"/>
         </font>
     </Label>
-    <ImageView fitHeight="217.0" fitWidth="288.0" layoutX="191.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
-        <image>
-            <Image url="@569_f2.png" />
-        </image>
-    </ImageView>
-    <Label layoutX="19.0" layoutY="87.0" prefHeight="18.0" prefWidth="50.0" text="Time left" />
-    <Label fx:id="timeLeftOnBid" layoutX="30.0" layoutY="105.0" text="TIME" />
-    <Label fx:id="price" layoutX="246.0" layoutY="274.0" prefHeight="17.0" prefWidth="149.0" text="0" />
-    <Button fx:id="buyButton" layoutX="208.0" layoutY="311.0" mnemonicParsing="false" onAction="#onBuy" text="Buy" />
-    <Label fx:id="itemLabel" layoutX="295.0" layoutY="274.0" text="THE ITEM" />
-   <Button layoutX="18.0" layoutY="348.0" mnemonicParsing="false" onAction="#returnToList" text="Return" />
-   <Label layoutX="286.0" layoutY="340.0" text="Error" textFill="#d02424" fx:id="errorLabel" />
+    <Label fx:id="price" layoutX="417.0" layoutY="161.0" prefHeight="17.0" prefWidth="149.0" text="0"/>
+    <Button fx:id="buyButton" layoutX="417.0" layoutY="186.0" mnemonicParsing="false" onAction="#onBuy"
+            prefHeight="26.0" prefWidth="61.0" text="Buy"/>
+    <Label fx:id="itemLabel" alignment="CENTER" layoutX="227.0" layoutY="77.0" prefHeight="27.0" prefWidth="117.0"
+           text="THE ITEM">
+        <font>
+            <Font size="18.0"/>
+        </font>
+    </Label>
+    <Button layoutX="476.0" layoutY="295.0" mnemonicParsing="false" onAction="#returnToList" prefHeight="26.0"
+            prefWidth="62.0" text="Return"/>
+    <Label fx:id="errorLabel" layoutX="434.0" layoutY="220.0" text="Error" textFill="#d02424"/>
+    <Label layoutX="266.0" layoutY="105.0" text="Seller" fx:id="seller">
+        <font>
+            <Font name="System Italic" size="16.0"/>
+        </font>
+    </Label>
+    <Label layoutX="71.0" layoutY="220.0" text="Description"/>
+    <Label layoutX="71.0" layoutY="136.0" prefHeight="18.0" prefWidth="82.0" text="Tags"/>
+    <Polyline fill="WHITE" layoutX="121.0" layoutY="280.0"
+              points="130.2000274658203, -33.199981689453125, 130.2000274658203, 41.20001220703125, -49.99998474121094, 41.20001220703125, -49.99998474121094, -33.199981689453125"
+              strokeType="INSIDE"/>
+    <Line endX="79.20002746582031" endY="-0.199981689453125" layoutX="172.0" layoutY="247.0" startX="-100.0"/>
+    <Label alignment="TOP_LEFT" layoutX="73.0" layoutY="248.0" prefHeight="74.0" prefWidth="180.0"
+           text="DescriptionText" fx:id="descriptionText"/>
+    <Polyline fill="WHITE" layoutX="120.0" layoutY="189.0"
+              points="130.2000274658203, -33.199981689453125, 130.2000274658203, 17.800003051757812, -49.99998474121094, 17.800003051757812, -49.99998474121094, -33.199981689453125"
+              strokeType="INSIDE"/>
+    <Line endX="79.20002746582031" endY="-0.199981689453125" layoutX="171.0" layoutY="156.0" startX="-100.0"/>
+    <Label alignment="TOP_LEFT" layoutX="72.0" layoutY="157.0" prefHeight="51.0" prefWidth="180.0" text="TagsText"
+           fx:id="tagsText"/>
+    <Label layoutX="310.0" layoutY="145.0" text="Highest bidder:"/>
+    <Label layoutX="417.0" layoutY="145.0" prefHeight="18.0" prefWidth="161.0" text="usernameHighestBidder"
+           fx:id="buyer">
+        <font>
+            <Font name="System Italic" size="12.0"/>
+        </font>
+    </Label>
 </AnchorPane>
