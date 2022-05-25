@@ -124,7 +124,7 @@ public class SQL {
 
 	public static void constructDatabaseTables(Connection c) {
 		try {
-			tables.reconstructDatabaceTableLayout(c);
+			tables.reconstructDatabaseTableLayout(c);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
