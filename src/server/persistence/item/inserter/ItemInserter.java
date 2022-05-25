@@ -11,7 +11,7 @@ public class ItemInserter {
 
 
 	//Grim metode, re-think ud fra tanken om at vi ikke ville lave if-else statements.
-	public void addItemToDatabase(Connection connection, ItemImpl itemToAdd) {
+	public void addItemToDatabase(Connection connection, ItemImpl itemToAdd) throws SQLException {
 
 
 		try {
@@ -25,6 +25,8 @@ public class ItemInserter {
 			}
 		} catch (RemoteException | SQLException e) {
 			e.printStackTrace();
+		} finally {
+			connection.close();
 		}
 		//Lave metode som bliver kaldt på database ud fra de informationer som ligger hos itemToAdd
 	}

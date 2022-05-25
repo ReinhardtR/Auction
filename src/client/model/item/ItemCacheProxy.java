@@ -19,4 +19,6 @@ public interface ItemCacheProxy extends Item {
 	String getDescription();
 
 	String getTags();
+
+	String getBuyerUsername();
 }
