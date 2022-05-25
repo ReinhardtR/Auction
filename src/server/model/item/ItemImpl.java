@@ -68,7 +68,7 @@ public class ItemImpl extends UnicastRemoteObject implements Item {
 
 	@Override
 	public String getBuyerUsername() throws RemoteException {
-		return null;
+		return strategy.getBuyer();
 	}
 
 	@Override

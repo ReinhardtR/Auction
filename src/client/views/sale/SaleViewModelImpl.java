@@ -3,9 +3,13 @@ package client.views.sale;
 import client.core.ViewHandler;
 import client.model.User;
 import client.utils.ViewEnum;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import shared.SaleStrategyType;
 
 import java.time.chrono.Chronology;
@@ -18,7 +22,8 @@ public class SaleViewModelImpl implements SaleViewModel {
 	private final StringProperty tagsTextProperty;
 	private final StringProperty priceOfferProperty;
 	private final StringProperty endTimeProperty;
-	private final StringProperty eventLabelProperty;
+	private final StringProperty eventLabelTextProperty;
+	private final ObjectProperty<Paint> eventLabelColorProperty;
 
 	private Chronology endDateProperty;
 
@@ -30,7 +35,8 @@ public class SaleViewModelImpl implements SaleViewModel {
 		tagsTextProperty = new SimpleStringProperty();
 		priceOfferProperty = new SimpleStringProperty();
 		endTimeProperty = new SimpleStringProperty();
-		eventLabelProperty = new SimpleStringProperty();
+		eventLabelTextProperty = new SimpleStringProperty();
+		eventLabelColorProperty = new SimpleObjectProperty<>();
 	}
 
 	@Override
@@ -69,20 +75,23 @@ public class SaleViewModelImpl implements SaleViewModel {
 							(titleTextProperty.getValue() == null || priceOfferProperty.getValue() == null) &&
 											saleType == SaleStrategyType.BUYOUT) {
 
-				eventLabelProperty.setValue("Please fill out all required fields!");
+				eventLabelTextProperty.setValue("Please fill out all required fields!");
+				eventLabelColorProperty.setValue(Color.RED);
 			} else {
 				salesman.createItem(titleTextProperty.getValue(), descriptionTextProperty.getValue(),
 								tagsTextProperty.getValue(), saleType, offer, endTimeProperty.getValue());
-				eventLabelProperty.setValue("Item was successfully put up for sale!");
+				eventLabelTextProperty.setValue("Item was successfully put up for sale!");
+				eventLabelColorProperty.setValue(Color.GREEN);
 			}
-		} catch (NumberFormatException e) {
-			eventLabelProperty.setValue("Please type in a valid number in price/starter bid!");
+		} catch (NumberFormatException | NullPointerException e) {
+			eventLabelTextProperty.setValue("Please type in a valid number in price/starter bid!");
+			eventLabelColorProperty.setValue(Color.RED);
 		}
 	}
 
 	@Override
-	public StringProperty errorLabelProperty() {
-		return eventLabelProperty;
+	public StringProperty eventLabelTextProperty() {
+		return eventLabelTextProperty;
 	}
 
 	@Override
@@ -93,5 +102,10 @@ public class SaleViewModelImpl implements SaleViewModel {
 	@Override
 	public ObservableValue<? extends Chronology> endDateChronologyProperty() {
 		return null;
+	}
+
+	@Override
+	public ObjectProperty<Paint> eventLabelPaintProperty() {
+		return eventLabelColorProperty;
 	}
 }

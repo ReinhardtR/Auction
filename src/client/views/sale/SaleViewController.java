@@ -60,7 +60,8 @@ public class SaleViewController implements ViewController {
 		price_BidTextField.textProperty().bindBidirectional(saleViewModel.priceBidTextProperty());
 		endTimeTextField.textProperty().bindBidirectional(saleViewModel.endTimeTextProperty());
 
-		eventCreateLabel.textProperty().bindBidirectional(saleViewModel.errorLabelProperty());
+		eventCreateLabel.textProperty().bindBidirectional(saleViewModel.eventLabelTextProperty());
+		eventCreateLabel.textFillProperty().bind(saleViewModel.eventLabelPaintProperty());
 	}
 
 	public void auctionSaleTypeConfig(ActionEvent actionEvent) {

@@ -8,6 +8,8 @@ import client.utils.SystemNotifcation;
 import client.utils.ViewEnum;
 import javafx.application.Platform;
 import javafx.beans.property.*;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import shared.EventType;
 import shared.utils.TimedTask;
 
@@ -24,7 +26,12 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 	private final BooleanProperty isSold;
 	private final DoubleProperty currentHighestBid;
 	private final StringProperty timeLeft;
-	private final StringProperty errorText;
+	private final StringProperty eventText;
+	private final StringProperty seller;
+	private final StringProperty description;
+	private final StringProperty tags;
+	private final StringProperty highestBidder;
+	private final ObjectProperty<Paint> eventColor;
 
 	public AuctionViewModelImpl(User customer, ObservableItem item) {
 		this.customer = customer;
@@ -37,10 +44,19 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 		isSold = new SimpleBooleanProperty();
 		currentHighestBid = new SimpleDoubleProperty();
 		timeLeft = new SimpleStringProperty();
-		errorText = new SimpleStringProperty();
+		eventText = new SimpleStringProperty();
+		seller = new SimpleStringProperty();
+		description = new SimpleStringProperty();
+		tags = new SimpleStringProperty();
+		highestBidder = new SimpleStringProperty();
+		eventColor = new SimpleObjectProperty<>();
 
-		itemName.setValue(item.getItemID());
+		itemName.setValue(item.getTitle());
 		currentHighestBid.setValue(item.getOfferAmount());
+		seller.setValue(item.getSalesmanUsername());
+		description.setValue(item.getDescription());
+		highestBidder.setValue(item.getBuyerUsername());
+		tags.setValue(item.getTags());
 
 		runTimeSimulation(item.getEndTimestamp());
 	}
@@ -51,13 +67,17 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 			double offerAmount = Double.parseDouble(offerInputText);
 
 			if (ItemCalculations.isNewBidHigher(offerAmount, item)) {
-				errorText.setValue(null);
+				eventText.setValue(null);
 				customer.makeOfferOnItem(offerAmount, item);
+				highestBidder.setValue(item.getBuyerUsername());
+				eventColor.setValue(Color.GREEN);
 			} else {
-				errorText.setValue("You need to bid higher than the current bid.");
+				eventText.setValue("You need to bid higher than the current bid.");
+				eventColor.setValue(Color.RED);
 			}
 		} catch (NumberFormatException | NullPointerException e) {
-			errorText.setValue("Please type a valid number as your bid.");
+			eventText.setValue("Please type a valid number as your bid.");
+			eventColor.setValue(Color.RED);
 		}
 	}
 
@@ -77,13 +97,38 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 	}
 
 	@Override
-	public StringProperty propertyErrorText() {
-		return errorText;
+	public StringProperty propertyEventText() {
+		return eventText;
 	}
 
 	@Override
 	public BooleanProperty propertyIsSold() {
 		return isSold;
+	}
+
+	@Override
+	public StringProperty propertySeller() {
+		return seller;
+	}
+
+	@Override
+	public StringProperty propertyHighestBidder() {
+		return highestBidder;
+	}
+
+	@Override
+	public StringProperty propertyDescription() {
+		return description;
+	}
+
+	@Override
+	public StringProperty propertyTags() {
+		return tags;
+	}
+
+	@Override
+	public ObjectProperty<Paint> propertyEventColor() {
+		return eventColor;
 	}
 
 	private void onItemSold(PropertyChangeEvent event) {
