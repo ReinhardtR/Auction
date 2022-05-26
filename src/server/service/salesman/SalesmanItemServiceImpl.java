@@ -26,7 +26,7 @@ public class SalesmanItemServiceImpl implements SalesmanItemService {
 		try {
 			Item item = null;
 			if (saleType == SaleStrategyType.AUCTION) {
-				item = new ItemImpl(null, username, title, description, tags, new AuctionStrategy(offer, null, LocalDateTime.now()));
+				item = new ItemImpl(null, username, title, description, tags, new AuctionStrategy(offer, null, LocalDateTime.of(2022, 5, 26, 18, 0, 0)));
 			} else if (saleType == SaleStrategyType.BUYOUT) {
 				item = new ItemImpl(null, username, title, description, tags, new BuyoutStrategy(offer));
 			}

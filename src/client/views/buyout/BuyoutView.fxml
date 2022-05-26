@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Polyline?>
 <?import javafx.scene.text.Font?>
@@ -16,11 +17,6 @@
     <Label alignment="CENTER" layoutX="211.0" layoutY="23.0" prefHeight="35.0" prefWidth="149.0" text="BUYOUT">
         <font>
             <Font size="24.0" />
-        </font>
-    </Label>
-    <Label fx:id="price" layoutX="344.0" layoutY="170.0" prefHeight="17.0" prefWidth="149.0" text="0">
-        <font>
-            <Font size="14.0" />
         </font>
     </Label>
     <Button fx:id="buyButton" layoutX="300.0" layoutY="195.0" mnemonicParsing="false" onAction="#onBuy" prefHeight="26.0" prefWidth="61.0" text="Buy" />
@@ -64,4 +60,18 @@
             <Font name="System Italic" size="16.0" />
         </font>
     </Label>
+   <HBox layoutX="343.0" layoutY="171.0" prefHeight="20.0" prefWidth="150.0">
+      <children>
+          <Label fx:id="price" prefHeight="20.0" text="0">
+              <font>
+                  <Font size="14.0" />
+              </font>
+          </Label>
+         <Label text="Kr.">
+            <font>
+               <Font size="14.0" />
+            </font>
+         </Label>
+      </children>
+   </HBox>
 </AnchorPane>
