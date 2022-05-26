@@ -133,10 +133,12 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 
 	private void onNewBid(PropertyChangeEvent event) {
 		Platform.runLater(() -> {
-			String itemID = (String) event.getOldValue();
-			double offerAmount = (double) event.getNewValue();
+			String itemID = item.getItemID();
+			double offerAmount = item.getOfferAmount();
+			String highestBidderName = item.getBuyerUsername();
 
 			currentHighestBid.setValue(offerAmount);
+			highestBidder.setValue(highestBidderName);
 
 			// Display notification
 			String caption = "New bid on: " + itemID;
@@ -151,15 +153,20 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 	}
 
 	private void runTimeSimulation(Temporal endDateTime) {
+		System.out.println(item.getBuyerUsername());
 		TimedTask.runTask((timer) -> {
-			Duration durationBetween = Duration.between(LocalDateTime.now(), endDateTime);
+			Duration currentDurationBetween = Duration.between(LocalDateTime.now(), endDateTime);
 
-			if (durationBetween.isNegative()) {
+			if (currentDurationBetween.isNegative()) {
 				Platform.runLater(() -> {
 					System.out.println("running time simulator");
 					isSold.setValue(true);
 					timeLeft.setValue("SOLD");
 				});
+
+				if (customer.getUsername().equals(highestBidder.getValue())) {
+					SystemNotifcation.getInstance().send("You won the item!", "Congratulations, you have won the auction with a bid of: " + currentHighestBid.getValue());
+				}
 
 				timer.cancel();
 				return;
@@ -167,9 +174,9 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 
 			String formattedTime = String.format(
 							"%02d:%02d:%02d",
-							durationBetween.toHours(),
-							durationBetween.toMinutesPart(),
-							durationBetween.toSecondsPart()
+							currentDurationBetween.toHours(),
+							currentDurationBetween.toMinutesPart(),
+							currentDurationBetween.toSecondsPart()
 			);
 
 			Platform.runLater(() -> {
