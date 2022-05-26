@@ -42,7 +42,7 @@ public class AuctionStrategy implements SaleStrategy {
 
 	@Override
 	public boolean getIsSold() {
-		return endTimestamp.until(LocalDateTime.now(), ChronoUnit.SECONDS) <= 0;
+		return LocalDateTime.now().until(endTimestamp, ChronoUnit.SECONDS) <= 0;
 	}
 
 	@Override

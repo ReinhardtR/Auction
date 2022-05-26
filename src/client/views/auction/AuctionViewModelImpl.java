@@ -156,6 +156,7 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 
 			if (durationBetween.isNegative()) {
 				Platform.runLater(() -> {
+					System.out.println("running time simulator");
 					isSold.setValue(true);
 					timeLeft.setValue("SOLD");
 				});
