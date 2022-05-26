@@ -2,8 +2,6 @@ package server.persistence.utils.sql_code;
 
 import server.persistence.utils.tables.Table;
 
-import java.time.temporal.Temporal;
-
 public class SQLStatements {
 	public String select() {
 		return "SELECT ";
@@ -109,14 +107,37 @@ public class SQLStatements {
 		return "DELETE" + from(tableInUse) + where(conditions);
 	}
 
+	public String from() {
+		return " FROM ";
+	}
+
 	public String from(Table tableInUse) {
-		return " FROM \"" + tableInUse.getSchema() + "\"." + tableInUse.getTableName();
+		return from() + tableLocationAndName(tableInUse);
 	}
 
 	public String set(String condition) {
 		return " SET " + condition;
 	}
 
+	public String values() {
+		return " VALUES ";
+	}
+
+	public String values(String values) {
+		return values() + " (" + values + ")";
+	}
+
+	public String insert() {
+		return "INSERT INTO ";
+	}
+
+	public String insert(Table tableInUse) {
+		return insert() + tableLocationAndName(tableInUse);
+	}
+
+	public String insert(Table tableInUse, String values) {
+		return insert(tableInUse) + values(values);
+	}
 
 	public String columns(String[] columns) {
 		if (columns.length < 1)
@@ -146,6 +167,10 @@ public class SQLStatements {
 		return columnsToReturn.toString();
 	}
 
+	public String tableLocationAndName(Table tableInUse) {
+		return "\"" + tableInUse.getSchema() + "\"." + tableInUse.getTableName();
+	}
+
 
 	public String orderBy(String column, String ascOrDesc) {
 		if ("asc".equalsIgnoreCase(ascOrDesc.strip()) || "desc".equalsIgnoreCase(ascOrDesc.strip()))
@@ -155,17 +180,5 @@ public class SQLStatements {
 
 	public String fetchRows(int amount) {
 		return " FETCH FIRST " + amount + " ROWS ONLY";
-	}
-
-
-	public String insert(Table auction, double offerAmount, Temporal endTimestamp, String strategyType, String title, String tags, String description, String salesManUsername) {
-		return "INSERT INTO " + auction.getSchema() + "." + auction.getTableName() + " VALUES " +
-						"(DEFAULT," + offerAmount + "," + "null,TIMESTAMP(0) '" + endTimestamp + "','" + strategyType + "','" + title + "','" + tags + "','" + description + "','" + salesManUsername + "')";
-
-	}
-
-	public String insert(Table buyout, double offerAmount, String strategyType, String title, String tags, String description, String salesManUsername) {
-		return "INSERT INTO " + buyout.getSchema() + "." + buyout.getTableName() + " VALUES " +
-						"(DEFAULT," + offerAmount + ",null,'" + strategyType + "','" + description + "','" + tags + "','" + title + "','" + salesManUsername + "')";
 	}
 }

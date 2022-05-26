@@ -129,36 +129,44 @@ public class SQL {
 		}
 	}
 
-	//Nu begynder salesman metoderne
-
-
 	public static String addAuctionItem(double offerAmount, Temporal endTimestamp, SaleStrategyType strategyType, String title, String tags, String description, String salesManUsername) {
-		Table auction = null;
-
 		try {
-			auction = tables.getTable("auction");
-
-
+			Table auction = tables.getTable("auction");
+			return statements.insert(auction, auctionValueCheck(offerAmount, endTimestamp, strategyType, title, tags, description, salesManUsername));
 		} catch (TableNonExistent e) {
 			e.printStackTrace();
+			return null;
 		}
-		System.out.println(statements.insert(auction, offerAmount, endTimestamp, strategyType.toString(), title, tags, description, salesManUsername));
-		return statements.insert(auction, offerAmount, endTimestamp, strategyType.toString(), title, tags, description, salesManUsername);
+	}
+
+	private static String auctionValueCheck(double offerAmount, Temporal endTimestamp, SaleStrategyType strategyType, String title, String tags, String description, String salesManUsername) {
+		return "DEFAULT, " + offerAmount + ",null,TIMESTAMP(0) '" + endTimestamp + "','" + strategyType + "','" + title + "'," + checkIfStringsValueNull(new String[]{tags, description, salesManUsername});
 	}
 
 	public static String addBuyoutItem(double offerAmount, SaleStrategyType strategyType, String title, String tags, String description, String salesManUsername) {
-		Table buyout = null;
-
-
 		try {
-			buyout = tables.getTable("buyout");
+			Table buyout = tables.getTable("buyout");
+			return statements.insert(buyout, buyoutValueCheck(offerAmount, strategyType, title, tags, description, salesManUsername));
 		} catch (TableNonExistent e) {
 			e.printStackTrace();
+			return null;
 		}
-
-		System.out.println(statements.insert(buyout, offerAmount, strategyType.toString(), title, tags, description, salesManUsername));
-		return statements.insert(buyout, offerAmount, strategyType.toString(), title, tags, description, salesManUsername);
-
 	}
 
+	private static String buyoutValueCheck(double offerAmount, SaleStrategyType strategyType, String title, String tags, String description, String salesManUsername) {
+		return "DEFAULT, " + offerAmount + ",null,'" + strategyType + "','" + title + "'," + checkIfStringsValueNull(new String[]{tags, description, salesManUsername});
+	}
+
+	private static String checkIfStringsValueNull(String[] check) {
+		StringBuilder valuesToReturn = new StringBuilder();
+		for (int i = 0; i < check.length; i++) {
+			if (check[i] == null)
+				valuesToReturn.append("null");
+			else
+				valuesToReturn.append("'").append(check[i]).append("'");
+			if (!(i == check.length - 1))
+				valuesToReturn.append(",");
+		}
+		return valuesToReturn.toString();
+	}
 }
