@@ -39,6 +39,10 @@ class TableTest {
 	void getColumnsTest() {
 		String[] test1SupposedColumns = {"test"};
 		assertTrue(columnChecks(test1, test1SupposedColumns));
+		test1SupposedColumns = new String[]{"test", "test1", "test2"};
+		test1.addColumn("test1");
+		test1.addColumn("test2");
+		assertTrue(columnChecks(test1, test1SupposedColumns));
 	}
 
 	private boolean columnChecks(Table tableToCheck, String[] supposedColumns) {
@@ -46,10 +50,26 @@ class TableTest {
 			try {
 				tableToCheck.getColumn(column);
 			} catch (ColumnNonExistent e) {
-				e.printStackTrace();
 				return false;
 			}
 		}
 		return true;
+	}
+
+	@Test
+	void getCommonColumnsTest() throws ColumnNonExistent {
+		assertEquals("test", test1.getCommonColumns(test2)[0]);
+		test1.addColumn("test1");
+		test2.addColumn("test2");
+		assertEquals(1, test1.getCommonColumns(test2).length);
+		test2.addColumn("test1");
+		assertEquals(2, test1.getCommonColumns(test2).length);
+	}
+
+	@Test
+	void getCommonColumnsThrowsTest() {
+		Table noCommonColumns = new Table(null, null);
+		noCommonColumns.addColumn("notSameCollumn");
+		assertThrows(ColumnNonExistent.class, () -> test1.getCommonColumns(noCommonColumns), "Should throw since column is non existent");
 	}
 }

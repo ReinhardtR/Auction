@@ -41,9 +41,11 @@ public class Table {
 		return columns.toArray(new String[0]);
 	}
 
-	public String[] getCummonColumns(Table tableToCompare) {
+	public String[] getCommonColumns(Table tableToCompare) throws ColumnNonExistent {
 		HashSet<String> toReturn = tableToCompare.getHashSet();
 		toReturn.retainAll(columns);
+		if (toReturn.isEmpty())
+			throw new ColumnNonExistent("Table " + tableToCompare.getTableName() + " has no cummonColumns with " + tableName);
 		return toReturn.toArray(new String[0]);
 	}
 
