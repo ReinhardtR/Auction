@@ -1,7 +1,6 @@
 package client.views.auction;
 
 import client.core.ViewHandler;
-import client.model.ItemCalculations;
 import client.model.ObservableItem;
 import client.model.User;
 import client.utils.SystemNotifcation;
@@ -60,7 +59,7 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 		try {
 			double offerAmount = Double.parseDouble(offerInputText);
 
-			if (ItemCalculations.isNewBidHigher(offerAmount, item)) {
+			if (offerAmount > item.getOfferAmount()) {
 				eventText.setValue(null);
 				customer.makeOfferOnItem(offerAmount, item);
 				highestBidder.setValue(item.getBuyerUsername());

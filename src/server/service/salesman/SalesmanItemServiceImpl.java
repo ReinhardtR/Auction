@@ -13,38 +13,40 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 public class SalesmanItemServiceImpl implements SalesmanItemService {
-	private final SalesmanDatabaseMethods salesManDatabaseMethods;
+	private final SalesmanDatabaseMethods salesmanDatabaseMethods;
 
 	public SalesmanItemServiceImpl() {
-		salesManDatabaseMethods = new DatabaseAccess();
+		salesmanDatabaseMethods = new DatabaseAccess();
 	}
 
 	@Override
-	public void makeItem(String title, String description, String tags, SaleStrategyType saleType, String username, double offer, String endtime) {
+	public void createAndSendItemToDB(String title, String description, String tags, SaleStrategyType saleType, String username, double offer, String endtime) {
+		Item item = constructItem(title, description, tags, saleType, username, offer, endtime);
+		sendItemToDatabase(item);
+	}
 
-		System.out.println("item getting made");
+	private Item constructItem(String title, String description, String tags, SaleStrategyType saleType, String username, double offer, String endtime) {
+		Item item = null;
+
 		try {
-			Item item = null;
 			if (saleType == SaleStrategyType.AUCTION) {
 				item = new ItemImpl(null, username, title, description, tags, new AuctionStrategy(offer, null, LocalDateTime.now()));
 			} else if (saleType == SaleStrategyType.BUYOUT) {
 				item = new ItemImpl(null, username, title, description, tags, new BuyoutStrategy(offer));
 			}
-			sendItemToDatabase(item);
 		} catch (RemoteException e) {
-			throw new RuntimeException();
+			e.printStackTrace();
 		}
 
+		return item;
 	}
 
 	private void sendItemToDatabase(Item item) {
 		try {
-			salesManDatabaseMethods.addItemToDatabase(item);
+			salesmanDatabaseMethods.addItemToDatabase(item);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 	}
-
-
 }
 

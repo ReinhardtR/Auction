@@ -20,7 +20,7 @@ public class CustomerServerImpl extends UnicastRemoteObject implements CustomerS
 	public CustomerServerImpl() throws RemoteException {
 		broadcaster = new UpdateBroadcasterImpl();
 
-		CustomerItemService.getInstance().addListenerToAllEvents(this);
+		CustomerItemService.getInstance().addListener(this);
 		CustomerItemService.getInstance().getManyItems();
 	}
 
@@ -31,7 +31,7 @@ public class CustomerServerImpl extends UnicastRemoteObject implements CustomerS
 
 	@Override
 	public List<Item> getAllItemsInCart() throws RemoteException {
-		return CustomerItemService.getInstance().returnAllItemsInCart();
+		return CustomerItemService.getInstance().getAllStoredItems();
 	}
 
 	@Override

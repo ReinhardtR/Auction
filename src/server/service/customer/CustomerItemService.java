@@ -4,6 +4,7 @@ import server.persistence.CustomerDatabaseMethods;
 import server.persistence.DatabaseAccess;
 import shared.EventType;
 import shared.network.model.Item;
+import shared.utils.PropertyChangeSubject;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class CustomerItemService {
+public class CustomerItemService implements PropertyChangeSubject {
 	private static final Lock lock = new ReentrantLock();
 	private static CustomerItemService instance;
 	private final PropertyChangeSupport support;
@@ -38,7 +39,7 @@ public class CustomerItemService {
 		return instance;
 	}
 
-	public List<Item> returnAllItemsInCart() {
+	public List<Item> getAllStoredItems() {
 		List<Item> itemsInCart = new ArrayList<>();
 
 		items.forEach((itemID, item) -> {
@@ -57,7 +58,7 @@ public class CustomerItemService {
 		return items.get(itemId);
 	}
 
-	public void itemBought(Item item) throws RemoteException, SQLException {
+	public void setItemAsBought(Item item) throws RemoteException, SQLException {
 		database.buyoutItemBought(item);
 		items.remove(item.getItemID());
 		support.firePropertyChange(EventType.ITEM_SOLD.toString(), item.getItemID(), null);
@@ -66,7 +67,7 @@ public class CustomerItemService {
 
 	public void clearAllItems() {
 		items.clear();
-	} //Midlertidig
+	}
 
 	public void updateItemOffer(Item item, Runnable callback) throws SQLException, RemoteException {
 		database.updateAuctionOffer(item);
@@ -77,13 +78,8 @@ public class CustomerItemService {
 		System.out.println("Bid went through");
 	}
 
-	//TIL LAV ITEM USECASE
-	public void addItem() throws RemoteException {
-
-		//manuelt for testing
-
-		//FØR DATABASE MERGE
-		//items.put(item.getItemID(), item);
+	public void addItem(Item item) throws RemoteException {
+		items.put(item.getItemID(), item);
 	}
 
 	public void getManyItems() throws RemoteException {
@@ -96,7 +92,22 @@ public class CustomerItemService {
 		}
 	}
 
-	public void addListenerToAllEvents(PropertyChangeListener listener) {
+	public void addListener(PropertyChangeListener listener) {
 		support.addPropertyChangeListener(listener);
+	}
+
+	@Override
+	public void removeListener(PropertyChangeListener listener) {
+		support.removePropertyChangeListener(listener);
+	}
+
+	@Override
+	public void addListener(String eventName, PropertyChangeListener listener) {
+		support.addPropertyChangeListener(eventName, listener);
+	}
+
+	@Override
+	public void removeListener(String eventName, PropertyChangeListener listener) {
+		support.removePropertyChangeListener(eventName, listener);
 	}
 }

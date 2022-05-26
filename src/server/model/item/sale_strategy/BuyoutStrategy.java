@@ -19,7 +19,7 @@ public class BuyoutStrategy implements SaleStrategy {
 	@Override
 	public void offer(Item item, double amount, String username) {
 		try {
-			CustomerItemService.getInstance().itemBought(item);
+			CustomerItemService.getInstance().setItemAsBought(item);
 
 			price = amount;
 			buyer = username;

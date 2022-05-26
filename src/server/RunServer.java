@@ -15,7 +15,6 @@ public class RunServer {
 	public static void main(String[] args) throws RemoteException, AlreadyBoundException {
 		MainServer mainServer = new MainServerImpl(new CustomerServerImpl(), new SalesmanServerImpl());
 
-
 		Registry registry = LocateRegistry.createRegistry(1099);
 		registry.bind("Server", mainServer);
 

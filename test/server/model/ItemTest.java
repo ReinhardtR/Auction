@@ -1,3 +1,5 @@
+package server.model;
+
 import client.model.ObservableItem;
 import client.model.item.ItemCacheProxyImpl;
 import org.junit.jupiter.api.BeforeEach;

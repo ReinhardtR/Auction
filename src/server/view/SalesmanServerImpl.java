@@ -18,6 +18,6 @@ public class SalesmanServerImpl extends UnicastRemoteObject implements SalesmanS
 
 	@Override
 	public void createItem(String title, String description, String tags, SaleStrategyType saleType, String username, double offer, String endtime) throws RemoteException {
-		salesmanItemService.makeItem(title, description, tags, saleType, username, offer, endtime);
+		salesmanItemService.createAndSendItemToDB(title, description, tags, saleType, username, offer, endtime);
 	}
 }
