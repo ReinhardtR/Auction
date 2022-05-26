@@ -1,7 +1,6 @@
 package server.persistence.utils;
 
 import server.persistence.utils.exceptions.SQLUtilsException;
-import server.persistence.utils.exceptions.TableNonExistent;
 import server.persistence.utils.sql_code.SQLOperation;
 import server.persistence.utils.sql_code.SQLStatements;
 import server.persistence.utils.tables.DatabaseTables;
@@ -41,7 +40,7 @@ public class SQL {
 		try {
 			Table auc = tables.getTable("auction"),
 							buy = tables.getTable("buyout");
-			String[] commonColumns = auc.getCummonColumns(buy);
+			String[] commonColumns = auc.getCommonColumns(buy);
 			String conditionOnBothTables = operation.make(new String[][]{{"itemid", "=", itemID}});
 			return statements.union(new Table[]{auc, buy}, commonColumns, conditionOnBothTables);
 		} catch (SQLUtilsException e) {
@@ -54,8 +53,8 @@ public class SQL {
 		try {
 			Table auc = tables.getTable("auction"),
 							buy = tables.getTable("buyout");
-			return statements.selectCoalesce(new Table[]{auc, buy}, auc.getCummonColumns(buy), "itemid", ascOrDesc, amount);
-		} catch (TableNonExistent e) {
+			return statements.selectCoalesce(new Table[]{auc, buy}, auc.getCommonColumns(buy), "itemid", ascOrDesc, amount);
+		} catch (SQLUtilsException e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -133,7 +132,7 @@ public class SQL {
 		try {
 			Table auction = tables.getTable("auction");
 			return statements.insert(auction, auctionValueCheck(offerAmount, endTimestamp, strategyType, title, tags, description, salesManUsername));
-		} catch (TableNonExistent e) {
+		} catch (SQLUtilsException e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -147,7 +146,7 @@ public class SQL {
 		try {
 			Table buyout = tables.getTable("buyout");
 			return statements.insert(buyout, buyoutValueCheck(offerAmount, strategyType, title, tags, description, salesManUsername));
-		} catch (TableNonExistent e) {
+		} catch (SQLUtilsException e) {
 			e.printStackTrace();
 			return null;
 		}

@@ -57,7 +57,6 @@ class SQLTest {
 	@Test
 	void auctionBoughtTest() {
 		assertNotNull(SQL.auctionBought("1"));
-		System.out.println(SQL.auctionBought("1"));
 	}
 
 	@Test

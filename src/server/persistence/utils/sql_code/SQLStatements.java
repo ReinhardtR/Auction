@@ -100,7 +100,7 @@ public class SQLStatements {
 	}
 
 	public String update(Table tableInUse, String columnsToSet, String conditions) {
-		return "UPDATE \"" + tableInUse.getSchema() + "\"." + tableInUse.getTableName() + set(columnsToSet) + where(conditions);
+		return "UPDATE " + tableLocationAndName(tableInUse) + set(columnsToSet) + where(conditions);
 	}
 
 	public String delete(Table tableInUse, String conditions) {
@@ -124,7 +124,7 @@ public class SQLStatements {
 	}
 
 	public String values(String values) {
-		return values() + " (" + values + ")";
+		return values() + "(" + values + ")";
 	}
 
 	public String insert() {
