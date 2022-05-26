@@ -54,7 +54,6 @@ public class SQL {
 		try {
 			Table auc = tables.getTable("auction"),
 							buy = tables.getTable("buyout");
-			System.out.println(statements.selectCoalesce(new Table[]{auc, buy}, auc.getCummonColumns(buy), "itemid", ascOrDesc, amount));
 			return statements.selectCoalesce(new Table[]{auc, buy}, auc.getCummonColumns(buy), "itemid", ascOrDesc, amount);
 		} catch (TableNonExistent e) {
 			e.printStackTrace();
@@ -102,7 +101,7 @@ public class SQL {
 		try {
 			Table auc = tables.getTable("auction");
 			String[] columns = new String[]{auc.getColumn("itemid"), auc.getColumn("auctionenddate")};
-			String conditions = operation.make(new String[][]{{columns[1], "<", wantedTime}});
+			String conditions = operation.make(new String[][]{{columns[1], "<", "'" + wantedTime + "'"}});
 			return statements.select(auc, columns, conditions);
 		} catch (SQLUtilsException e) {
 			e.printStackTrace();
@@ -124,7 +123,7 @@ public class SQL {
 
 	public static void constructDatabaseTables(Connection c) {
 		try {
-			tables.reconstructDatabaceTableLayout(c);
+			tables.reconstructDatabaseTableLayout(c);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -137,8 +136,6 @@ public class SQL {
 		Table auction = null;
 
 		try {
-
-
 			auction = tables.getTable("auction");
 
 

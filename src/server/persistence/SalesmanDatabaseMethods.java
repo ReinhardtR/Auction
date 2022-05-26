@@ -9,7 +9,6 @@ public interface SalesmanDatabaseMethods {
 	void addItemToDatabase(Item itemToAdd) throws SQLException;
 
 
-	void AlterItemOnDatabsae(String itemIDToAlter, String columnToAlter, String newValue) throws SQLException;
 
 
 }

@@ -16,7 +16,7 @@ public class DatabaseTables {
 		fetchTableStatement = "SELECT table_schema, table_name, column_name FROM information_schema.columns WHERE table_schema != 'pg_catalog' AND table_schema != 'information_schema' AND table_name != 'pg_stat_statements' ORDER BY table_name";
 	}
 
-	public void reconstructDatabaceTableLayout(Connection c) throws SQLException {
+	public void reconstructDatabaseTableLayout(Connection c) throws SQLException {
 		ResultSet tableSet = c.prepareStatement(fetchTableStatement).executeQuery();
 		String currentTableName = "";
 		Table currentTable = null;
@@ -28,6 +28,7 @@ public class DatabaseTables {
 			}
 			currentTable.addColumn(tableSet.getString("column_name"));
 		}
+		c.close();
 	}
 
 	public Table getTable(String tableName) throws TableNonExistent {

@@ -91,11 +91,8 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 	}
 
 	public void propertyChange(PropertyChangeEvent event) {
-		// Only care about its own updates.
-		System.out.println("Receive " + getItemID() + " " + event.getNewValue());
+		// Guard: Only handle the item's own events.
 		if (!event.getOldValue().equals(getItemID())) return;
-
-		System.out.println("Send");
 		support.firePropertyChange(event);
 	}
 

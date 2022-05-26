@@ -29,6 +29,16 @@ public class ItemTest {
 		brokenObservableItem = new ObservableItem(null, new ItemCacheProxyImpl(brokenTestItem));
 	}
 
+	/*
+		@BeforeEach
+		void createTestItem() throws RemoteException {
+			testItem = new ItemImpl("123", "title", "description", "tags", new AuctionStrategy(0, "tis", LocalDateTime.of(2022, 5, 16, 11, 20)));
+			observableTestItem = new ObservableItem(null, new ItemCacheProxyImpl(testItem));
+
+			brokenTestItem = new ItemImpl(null, "title", "description", "tags", null);
+			brokenObservableItem = new ObservableItem(null, new ItemCacheProxyImpl(brokenTestItem));
+		}
+	*/
 	//UserSale Strategy ZOMBIES
 	@Test
 	@DisplayName("Testing currentBid increases with higher offers")

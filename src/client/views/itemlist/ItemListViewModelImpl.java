@@ -1,8 +1,8 @@
 package client.views.itemlist;
 
 import client.core.ViewHandler;
-import client.model.item.ItemCacheProxy;
 import client.model.ItemList;
+import client.model.item.ItemCacheProxy;
 import client.utils.ViewEnum;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,12 +13,12 @@ import java.beans.PropertyChangeEvent;
 
 public class ItemListViewModelImpl implements ItemListViewModel {
 	private final ItemList itemList;
-	private final ObservableList<ItemCacheProxy> observableList;
+	private final ObservableList<ItemCacheProxy> observableItemList;
 
 	public ItemListViewModelImpl(ItemList itemList) {
 		this.itemList = itemList;
 
-		observableList = FXCollections.observableList(itemList.getItemList());
+		observableItemList = FXCollections.observableList(itemList.getItemList());
 
 		itemList.addListener(EventType.ITEM_SOLD.toString(), this::onItemSold);
 	}
@@ -29,8 +29,8 @@ public class ItemListViewModelImpl implements ItemListViewModel {
 	}
 
 	@Override
-  public ObservableList<ItemCacheProxy> getObservableItemList() {
-		return observableList;
+	public ObservableList<ItemCacheProxy> getObservableItemList() {
+		return observableItemList;
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class ItemListViewModelImpl implements ItemListViewModel {
 	}
 
 	private void onItemSold(PropertyChangeEvent event) {
-		System.out.println("EVENT: LIST SIZE: " + observableList.size());
-		observableList.removeIf((item) -> item.getItemID().equals(event.getNewValue()));
+		System.out.println("EVENT: LIST SIZE: " + observableItemList.size());
+		observableItemList.removeIf((item) -> item.getItemID().equals(event.getNewValue()));
 	}
 }
