@@ -27,7 +27,7 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 	private final DoubleProperty currentHighestBid;
 	private final StringProperty timeLeft;
 	private final StringProperty eventText;
-	private final StringProperty seller;
+	private final StringProperty salesmanUsername;
 	private final StringProperty description;
 	private final StringProperty tags;
 	private final StringProperty highestBidder;
@@ -40,23 +40,17 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 		item.addListener(EventType.NEW_BID.toString(), this::onNewBid);
 		item.addListener(EventType.ITEM_SOLD.toString(), this::onItemSold);
 
-		itemName = new SimpleStringProperty();
-		isSold = new SimpleBooleanProperty();
-		currentHighestBid = new SimpleDoubleProperty();
+		itemName = new SimpleStringProperty(item.getTitle());
+		currentHighestBid = new SimpleDoubleProperty(item.getOfferAmount());
+		isSold = new SimpleBooleanProperty(item.getIsSold());
+		salesmanUsername = new SimpleStringProperty(item.getSalesmanUsername());
+		description = new SimpleStringProperty(item.getDescription());
+		tags = new SimpleStringProperty(item.getTags());
+		highestBidder = new SimpleStringProperty(item.getBuyerUsername());
+
 		timeLeft = new SimpleStringProperty();
 		eventText = new SimpleStringProperty();
-		seller = new SimpleStringProperty();
-		description = new SimpleStringProperty();
-		tags = new SimpleStringProperty();
-		highestBidder = new SimpleStringProperty();
 		eventColor = new SimpleObjectProperty<>();
-
-		itemName.setValue(item.getTitle());
-		currentHighestBid.setValue(item.getOfferAmount());
-		seller.setValue(item.getSalesmanUsername());
-		description.setValue(item.getDescription());
-		highestBidder.setValue(item.getBuyerUsername());
-		tags.setValue(item.getTags());
 
 		runTimeSimulation(item.getEndTimestamp());
 	}
@@ -107,8 +101,8 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 	}
 
 	@Override
-	public StringProperty propertySeller() {
-		return seller;
+	public StringProperty propertySalesmanUsername() {
+		return salesmanUsername;
 	}
 
 	@Override
@@ -162,6 +156,7 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 
 			if (durationBetween.isNegative()) {
 				Platform.runLater(() -> {
+					isSold.setValue(true);
 					timeLeft.setValue("SOLD");
 				});
 

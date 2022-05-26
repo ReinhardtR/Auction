@@ -50,8 +50,15 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 	}
 
 	@Override
-	public boolean getIsSold() throws RemoteException {
-		return item.getIsSold();
+	public boolean getIsSold() {
+		try {
+			return item.getIsSold();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+
+		// ?
+		return true;
 	}
 
 	@Override

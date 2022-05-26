@@ -20,7 +20,7 @@ public class BuyoutViewModelImpl implements BuyoutViewModel {
 	private final DoubleProperty price;
 	private final StringProperty errorText;
 
-	private final StringProperty sellerUser;
+	private final StringProperty salesmanUsername;
 	private final StringProperty description;
 	private final StringProperty tags;
 	private final StringProperty buyer;
@@ -31,19 +31,15 @@ public class BuyoutViewModelImpl implements BuyoutViewModel {
 
 		item.addListener(EventType.ITEM_SOLD.toString(), this::onItemSold);
 
-		itemName = new SimpleStringProperty();
-		isSold = new SimpleBooleanProperty();
-		price = new SimpleDoubleProperty();
-		errorText = new SimpleStringProperty();
-		sellerUser = new SimpleStringProperty();
-		description = new SimpleStringProperty();
-		tags = new SimpleStringProperty();
-		buyer = new SimpleStringProperty();
+		itemName = new SimpleStringProperty(item.getTitle());
+		price = new SimpleDoubleProperty(item.getOfferAmount());
+		salesmanUsername = new SimpleStringProperty(item.getSalesmanUsername());
+		description = new SimpleStringProperty(item.getDescription());
+		tags = new SimpleStringProperty(item.getTags());
+		buyer = new SimpleStringProperty(item.getBuyerUsername());
+		isSold = new SimpleBooleanProperty(item.getIsSold());
 
-		price.setValue(item.getOfferAmount());
-		sellerUser.setValue(item.getSalesmanUsername());
-		description.setValue(item.getDescription());
-		tags.setValue(item.getTags());
+		errorText = new SimpleStringProperty();
 	}
 
 	@Override
@@ -92,7 +88,7 @@ public class BuyoutViewModelImpl implements BuyoutViewModel {
 
 	@Override
 	public StringProperty propertySellerUser() {
-		return sellerUser;
+		return salesmanUsername;
 	}
 
 	@Override

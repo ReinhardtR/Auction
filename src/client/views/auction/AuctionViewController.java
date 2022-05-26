@@ -55,7 +55,7 @@ public class AuctionViewController implements ViewController {
 
 		bidButton.disableProperty().bind(auctionViewModel.propertyIsSold());
 
-		seller.textProperty().bind(auctionViewModel.propertySeller());
+		seller.textProperty().bind(auctionViewModel.propertySalesmanUsername());
 		highestBidderText.textProperty().bind(auctionViewModel.propertyHighestBidder());
 		descriptionText.textProperty().bind(auctionViewModel.propertyDescription());
 		tagsText.textProperty().bind(auctionViewModel.propertyTags());

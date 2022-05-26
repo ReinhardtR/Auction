@@ -21,7 +21,7 @@ public interface AuctionViewModel {
 
 	BooleanProperty propertyIsSold();
 
-	StringProperty propertySeller();
+	StringProperty propertySalesmanUsername();
 
 	StringProperty propertyHighestBidder();
 
