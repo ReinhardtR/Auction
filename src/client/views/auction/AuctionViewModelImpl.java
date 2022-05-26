@@ -132,7 +132,7 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 
 	private void onNewBid(PropertyChangeEvent event) {
 		Platform.runLater(() -> {
-			String itemID = item.getItemID();
+			String itemTitle = item.getTitle();
 			double offerAmount = item.getOfferAmount();
 			String highestBidderName = item.getBuyerUsername();
 
@@ -140,8 +140,8 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 			highestBidder.setValue(highestBidderName);
 
 			// Display notification
-			String caption = "New bid on: " + itemID;
-			String message = "A bid of: " + offerAmount + ", has been placed on item: " + itemID + ".";
+			String caption = "New bid on: " + itemTitle;
+			String message = "A bid of: " + offerAmount + ", has been placed on item: " + itemTitle + ".";
 			SystemNotifcation.getInstance().send(caption, message);
 		});
 	}

@@ -70,18 +70,20 @@ public class BuyoutViewModelImpl implements BuyoutViewModel {
 	private void onItemSold(PropertyChangeEvent event) {
 		System.out.println("ITEM SOLD BUYOUT");
 
-		String caption = "Item sold: " + item.getTitle();
-		if (buyer.getValue().equals(customer.getUsername())) {
-			caption += ". You won!";
-		}
-
-		String message = "The item: " + item.getTitle() + ", that you were watching has been sold.";
-		SystemNotifcation.getInstance().send(caption, message);
 
 		Platform.runLater(() -> {
 			isSold.setValue(true);
 			buyer.setValue(item.getBuyerUsername());
 			errorText.setValue("Item is sold!");
+
+			String caption = "Item sold: " + item.getTitle();
+			System.out.println(buyer.getValue());
+			if (customer.getUsername().equals(buyer.getValue())) {
+				caption += ". You won!";
+			}
+
+			String message = "The item: " + item.getTitle() + ", that you were watching has been sold.";
+			SystemNotifcation.getInstance().send(caption, message);
 		});
 	}
 
