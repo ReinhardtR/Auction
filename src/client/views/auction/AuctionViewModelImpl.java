@@ -1,8 +1,8 @@
 package client.views.auction;
 
 import client.core.ViewHandler;
-import client.model.ObservableItem;
 import client.model.User;
+import client.model.item.ObservableItem;
 import client.utils.SystemNotifcation;
 import client.utils.ViewEnum;
 import javafx.application.Platform;

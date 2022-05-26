@@ -1,5 +1,6 @@
 package client.model;
 
+import client.model.item.ObservableItem;
 import client.network.LocalClient;
 import shared.SaleStrategyType;
 

@@ -1,7 +1,7 @@
 package server.model;
 
-import client.model.ObservableItem;
 import client.model.item.ItemCacheProxyImpl;
+import client.model.item.ObservableItem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

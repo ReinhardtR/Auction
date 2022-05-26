@@ -1,6 +1,5 @@
-package client.model;
+package client.model.item;
 
-import client.model.item.ItemCacheProxy;
 import client.network.LocalClient;
 import shared.SaleStrategyType;
 import shared.utils.PropertyChangeSubject;

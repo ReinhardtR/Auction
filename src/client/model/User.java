@@ -1,5 +1,6 @@
 package client.model;
 
+import client.model.item.ObservableItem;
 import shared.SaleStrategyType;
 
 public interface User {
