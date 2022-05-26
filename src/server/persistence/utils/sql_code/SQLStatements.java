@@ -1,5 +1,6 @@
 package server.persistence.utils.sql_code;
 
+import server.persistence.utils.exceptions.SQLUtilsException;
 import server.persistence.utils.tables.Table;
 
 public class SQLStatements {
@@ -23,14 +24,13 @@ public class SQLStatements {
 		return "COALESCE";
 	}
 
-	public String coalesce(Table[] tables, String column) {
+	public String coalesce(Table[] tables, String column) throws SQLUtilsException {
+		if (tables.length < 2)
+			throw new SQLUtilsException("Min. Number of tables needed in coalesce is 2. Nr. of tables given: " + tables.length);
 		return coalesce() + "(" + columnWithTableName(tables, column) + ")" + " as " + column;
 	}
 
-	public String coalesce(Table[] tables, String[] columns) {
-		if (tables.length < 1)
-			return null;
-
+	public String coalesce(Table[] tables, String[] columns) throws SQLUtilsException {
 		StringBuilder columnsToCoalesce = new StringBuilder();
 		for (int i = 0; i < columns.length; i++) {
 			columnsToCoalesce.append(coalesce(tables, columns[i]));
@@ -40,11 +40,11 @@ public class SQLStatements {
 		return columnsToCoalesce.toString();
 	}
 
-	public String coalesce(Table[] tables, String[] columns, String onColumn) {
+	public String coalesce(Table[] tables, String[] columns, String onColumn) throws SQLUtilsException {
 		return coalesce(tables, columns) + fullJoin(tables, onColumn);
 	}
 
-	public String selectCoalesce(Table[] tables, String[] columns, String onColumn, String ascOrDesc, int nrOfRows) {
+	public String selectCoalesce(Table[] tables, String[] columns, String onColumn, String ascOrDesc, int nrOfRows) throws SQLUtilsException {
 		return select() + coalesce(tables, columns, onColumn) + orderBy(onColumn, ascOrDesc) + fetchRows(nrOfRows);
 	}
 
@@ -75,9 +75,9 @@ public class SQLStatements {
 		return fullJoin(tableJoining) + on(tableJoining, onColumn, ontoTable);
 	}
 
-	public String fullJoin(Table[] tablesToJoin, String onColumn) {
+	public String fullJoin(Table[] tablesToJoin, String onColumn) throws SQLUtilsException {
 		if (tablesToJoin.length < 2)
-			return null;
+			throw new SQLUtilsException("Needs at min. of two tables to perform operation. Given nr. of tables: " + tablesToJoin.length);
 
 		StringBuilder fullJoinToReturn = new StringBuilder().append(from(tablesToJoin[0]));
 		for (int i = 1; i < tablesToJoin.length; i++) {
@@ -139,10 +139,17 @@ public class SQLStatements {
 		return insert(tableInUse) + values(values);
 	}
 
-	public String columns(String[] columns) {
-		if (columns.length < 1)
-			return null;
+	public String orderBy(String column, String ascOrDesc) throws SQLUtilsException {
+		if ("asc".equalsIgnoreCase(ascOrDesc.strip()) || "desc".equalsIgnoreCase(ascOrDesc.strip()))
+			return " ORDER BY " + column + " " + ascOrDesc;
+		throw new SQLUtilsException("Cannot ODER BY " + ascOrDesc + ". Needs to be either asc or desc");
+	}
 
+	public String fetchRows(int amount) {
+		return " FETCH FIRST " + amount + " ROWS ONLY";
+	}
+
+	private String columns(String[] columns) {
 		StringBuilder columnsToReturn = new StringBuilder();
 		for (int i = 0; i < columns.length; i++) {
 			columnsToReturn.append(columns[i]);
@@ -153,11 +160,11 @@ public class SQLStatements {
 		return columnsToReturn.toString();
 	}
 
-	public String columnWithTableName(Table table, String column) {
+	private String columnWithTableName(Table table, String column) {
 		return table.getTableName() + "." + column;
 	}
 
-	public String columnWithTableName(Table[] tables, String column) {
+	private String columnWithTableName(Table[] tables, String column) {
 		StringBuilder columnsToReturn = new StringBuilder();
 		for (int i = 0; i < tables.length; i++) {
 			columnsToReturn.append(columnWithTableName(tables[i], column));
@@ -167,18 +174,7 @@ public class SQLStatements {
 		return columnsToReturn.toString();
 	}
 
-	public String tableLocationAndName(Table tableInUse) {
+	private String tableLocationAndName(Table tableInUse) {
 		return "\"" + tableInUse.getSchema() + "\"." + tableInUse.getTableName();
-	}
-
-
-	public String orderBy(String column, String ascOrDesc) {
-		if ("asc".equalsIgnoreCase(ascOrDesc.strip()) || "desc".equalsIgnoreCase(ascOrDesc.strip()))
-			return " ORDER BY " + column + " " + ascOrDesc;
-		return "";
-	}
-
-	public String fetchRows(int amount) {
-		return " FETCH FIRST " + amount + " ROWS ONLY";
 	}
 }

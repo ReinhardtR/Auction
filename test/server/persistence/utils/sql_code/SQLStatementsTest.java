@@ -1,9 +1,11 @@
 package server.persistence.utils.sql_code;
 
 import org.junit.jupiter.api.Test;
+import server.persistence.utils.exceptions.SQLUtilsException;
 import server.persistence.utils.tables.Table;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class SQLStatementsTest {
 	SQLStatements statements = new SQLStatements();
@@ -33,7 +35,7 @@ class SQLStatementsTest {
 	}
 
 	@Test
-	void coalesceTest() {
+	void selectCoalesceTest() throws SQLUtilsException {
 		assertEquals("SELECT COALESCE(test.test1, test.test1) as test1, " +
 										"COALESCE(test.test2, test.test2) as test2, " +
 										"COALESCE(test.test3, test.test3) as test3 " +
@@ -42,6 +44,21 @@ class SQLStatementsTest {
 										"ORDER BY test1 " +
 										"ASC FETCH FIRST 10 ROWS ONLY"
 						, statements.selectCoalesce(new Table[]{test, test}, new String[]{"test1", "test2", "test3"}, "test1", "ASC", 10));
+	}
+
+	@Test
+	void coalesceThrowsTest() {
+		assertThrows(SQLUtilsException.class, () -> statements.coalesce(new Table[]{test}, "test"));
+	}
+
+	@Test
+	void fullJoinThrowsTest() {
+		assertThrows(SQLUtilsException.class, () -> statements.fullJoin(new Table[]{test}, "test"));
+	}
+
+	@Test
+	void orderByThrowsTest() {
+		assertThrows(SQLUtilsException.class, () -> statements.orderBy("test", "test"));
 	}
 
 	@Test
