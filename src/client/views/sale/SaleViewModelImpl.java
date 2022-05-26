@@ -68,18 +68,13 @@ public class SaleViewModelImpl implements SaleViewModel {
 	public void setItemUpForSale(SaleStrategyType saleType) {
 		try {
 			double offer = Double.parseDouble(priceOfferProperty.getValue());
-			if ((titleTextProperty.getValue() == null || priceOfferProperty.getValue() == null
-							|| endTimeProperty.getValue() == null)
-							&& saleType == SaleStrategyType.AUCTION ||
-
-							(titleTextProperty.getValue() == null || priceOfferProperty.getValue() == null) &&
-											saleType == SaleStrategyType.BUYOUT) {
+			titleTextProperty.getValue();
+			if ((priceOfferProperty.getValue().isBlank() || endTimeProperty.getValue().isBlank()) && saleType == SaleStrategyType.AUCTION || (titleTextProperty.getValue().isBlank() || priceOfferProperty.getValue().isBlank()) && saleType == SaleStrategyType.BUYOUT) {
 
 				eventLabelTextProperty.setValue("Please fill out all required fields!");
 				eventLabelColorProperty.setValue(Color.RED);
 			} else {
-				salesman.createItem(titleTextProperty.getValue(), descriptionTextProperty.getValue(),
-								tagsTextProperty.getValue(), saleType, offer, endTimeProperty.getValue());
+				salesman.createItem(titleTextProperty.getValue(), descriptionTextProperty.getValue(), tagsTextProperty.getValue(), saleType, offer, endTimeProperty.getValue());
 				eventLabelTextProperty.setValue("Item was successfully put up for sale!");
 				eventLabelColorProperty.setValue(Color.GREEN);
 			}
