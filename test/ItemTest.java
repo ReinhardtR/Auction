@@ -1,5 +1,10 @@
+import client.model.ObservableItem;
+import client.model.item.ItemCacheProxyImpl;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import server.model.item.ItemImpl;
+import server.model.item.sale_strategy.AuctionStrategy;
 import shared.SaleStrategyType;
 import shared.network.model.Item;
 
@@ -14,6 +19,15 @@ public class ItemTest {
 	private Item brokenTestItem;
 	private Item observableTestItem;
 	private Item brokenObservableItem;
+
+	@BeforeEach
+	void createTestItem() throws RemoteException {
+		testItem = new ItemImpl("123", "tis", "title", "description", "tags", new AuctionStrategy(0, "tis", LocalDateTime.of(2022, 5, 16, 11, 20)));
+		observableTestItem = new ObservableItem(null, new ItemCacheProxyImpl(testItem));
+
+		brokenTestItem = new ItemImpl(null, "st", "title", "description", "tags", null);
+		brokenObservableItem = new ObservableItem(null, new ItemCacheProxyImpl(brokenTestItem));
+	}
 
 	/*
 		@BeforeEach
