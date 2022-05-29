@@ -60,14 +60,7 @@ public class AuctionViewController implements ViewController {
 		descriptionText.textProperty().bind(auctionViewModel.propertyDescription());
 		tagsText.textProperty().bind(auctionViewModel.propertyTags());
 
-
-		// TODO: rethink this
-		Pattern pattern = Pattern.compile(".{0,20}");
-		TextFormatter formatter = new TextFormatter((UnaryOperator<TextFormatter.Change>) change -> {
-			return pattern.matcher(change.getControlNewText()).matches() ? change : null;
-		});
-
-		bidInput.setTextFormatter(formatter);
+		format(bidInput,20);
 	}
 
 	@FXML
@@ -78,5 +71,15 @@ public class AuctionViewController implements ViewController {
 	@FXML
 	protected void returnToList() {
 		auctionViewModel.returnToItemListView();
+	}
+
+	private void format(TextField textField, int size)
+	{
+		Pattern pattern = Pattern.compile(".{0,"+size+"}");
+		TextFormatter formatter = new TextFormatter((UnaryOperator<TextFormatter.Change>) change -> {
+			return pattern.matcher(change.getControlNewText()).matches() ? change : null;
+		});
+
+		textField.setTextFormatter(formatter);
 	}
 }

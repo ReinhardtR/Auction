@@ -27,16 +27,22 @@ public class LoginViewController implements ViewController {
 
 		errorLoginLabel.textProperty().bind(loginViewModel.getErrorTextProperty());
 
-		Pattern pattern = Pattern.compile(".{0,30}");
-		TextFormatter formatter = new TextFormatter((UnaryOperator<TextFormatter.Change>) change -> {
-			return pattern.matcher(change.getControlNewText()).matches() ? change : null;
-		});
-
-		userNameField.setTextFormatter(formatter);
+		format(userNameField,20);
 	}
 
 	@FXML
 	protected void onLogin() {
 		loginViewModel.login(userNameField.getText());
 	}
+
+	private void format(TextField textField, int size)
+	{
+		Pattern pattern = Pattern.compile(".{0,"+size+"}");
+		TextFormatter formatter = new TextFormatter((UnaryOperator<TextFormatter.Change>) change -> {
+			return pattern.matcher(change.getControlNewText()).matches() ? change : null;
+		});
+
+		textField.setTextFormatter(formatter);
+	}
+
 }

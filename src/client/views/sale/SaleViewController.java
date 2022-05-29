@@ -5,14 +5,16 @@ import client.core.ViewModelFactory;
 import client.views.ViewController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import shared.SaleStrategyType;
+
+import java.util.function.UnaryOperator;
+import java.util.regex.Pattern;
 
 public class SaleViewController implements ViewController {
 
+	@FXML
+	private Label endTimeLabel;
 	@FXML
 	private Label eventCreateLabel;
 
@@ -53,6 +55,7 @@ public class SaleViewController implements ViewController {
 		endDateLabel.setVisible(false);
 		endTimeTextField.setVisible(false);
 		endDatePicker.setVisible(false);
+		endTimeLabel.setVisible(false);
 
 		title.textProperty().bindBidirectional(saleViewModel.titleTextProperty());
 		description.textProperty().bindBidirectional(saleViewModel.descriptionTextProperty());
@@ -62,6 +65,12 @@ public class SaleViewController implements ViewController {
 
 		eventCreateLabel.textProperty().bindBidirectional(saleViewModel.eventLabelTextProperty());
 		eventCreateLabel.textFillProperty().bind(saleViewModel.eventLabelPaintProperty());
+
+		format(title,20);
+		format(tags,30);
+		format(price_BidTextField,20);
+		format(description, 300);
+
 	}
 
 	public void auctionSaleTypeConfig(ActionEvent actionEvent) {
@@ -76,6 +85,7 @@ public class SaleViewController implements ViewController {
 			endDateLabel.setVisible(true);
 			endTimeTextField.setVisible(true);
 			endDatePicker.setVisible(true);
+			endTimeLabel.setVisible(true);
 		}
 
 		saleType = SaleStrategyType.AUCTION;
@@ -93,6 +103,7 @@ public class SaleViewController implements ViewController {
 			endDateLabel.setVisible(false);
 			endTimeTextField.setVisible(false);
 			endDatePicker.setVisible(false);
+			endTimeLabel.setVisible(false);
 		}
 
 		saleType = SaleStrategyType.BUYOUT;
@@ -100,11 +111,30 @@ public class SaleViewController implements ViewController {
 
 	@FXML
 	protected void setItemUpForSale(ActionEvent actionEvent) {
-		saleViewModel.setItemUpForSale(saleType);
+		saleViewModel.setItemUpForSale(saleType, endDatePicker.getValue());
 	}
 
 	@FXML
 	protected void returnToItemList(ActionEvent actionEvent) {
 		saleViewModel.returnToItemList();
+	}
+
+	private void format(TextField textField, int size)
+	{
+		Pattern pattern = Pattern.compile(".{0,"+size+"}");
+		TextFormatter formatter = new TextFormatter((UnaryOperator<TextFormatter.Change>) change -> {
+			return pattern.matcher(change.getControlNewText()).matches() ? change : null;
+		});
+
+		textField.setTextFormatter(formatter);
+	}
+	private void format(TextArea textArea, int size)
+	{
+		Pattern pattern = Pattern.compile(".{0,"+size+"}");
+		TextFormatter formatter = new TextFormatter((UnaryOperator<TextFormatter.Change>) change -> {
+			return pattern.matcher(change.getControlNewText()).matches() ? change : null;
+		});
+
+		textArea.setTextFormatter(formatter);
 	}
 }

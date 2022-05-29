@@ -5,6 +5,8 @@ import client.network.LocalClient;
 import shared.SaleStrategyType;
 
 import java.rmi.RemoteException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class UserImpl implements User {
 	private final LocalClient client;
@@ -25,9 +27,9 @@ public class UserImpl implements User {
 	}
 
 	@Override
-	public void createItem(String title, String description, String tags, SaleStrategyType saleType, double offer, String endtime) {
+	public void createItem(String title, String description, String tags, SaleStrategyType saleType, double offer, LocalTime endtime, LocalDate endDate) {
 		try {
-			client.createItem(title, description, tags, saleType, username, offer, endtime);
+			client.createItem(title, description, tags, saleType, username, offer, endtime,endDate);
 		} catch (RemoteException e) {
 			throw new RuntimeException(e);
 		}

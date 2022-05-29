@@ -16,10 +16,12 @@ public class SalesmanServiceImplTest {
 	private static final String tags = "Tags";
 	private static final String endTime = "123000";
 
+	private static final String endDate = "101010";
+
 	@Test
 	@DisplayName("Test the construction of an Item through the SalesmanServiceImpl class")
 	void testItemConstruction() {
-		assertDoesNotThrow(() -> salesmanItemService.createAndSendItemToDB(title, description, tags, SaleStrategyType.AUCTION, salesmanUsername, 0, endTime));
-		assertDoesNotThrow(() -> salesmanItemService.createAndSendItemToDB(title, description, tags, SaleStrategyType.BUYOUT, salesmanUsername, 0, endTime));
+		assertDoesNotThrow(() -> salesmanItemService.createAndSendItemToDB(title, description, tags, SaleStrategyType.AUCTION, salesmanUsername, 0, endTime, endDate));
+		assertDoesNotThrow(() -> salesmanItemService.createAndSendItemToDB(title, description, tags, SaleStrategyType.BUYOUT, salesmanUsername, 0, endTime, endDate));
 	}
 }

@@ -25,8 +25,6 @@ public class LoginViewModelImpl implements LoginViewModel {
 	public void login(String username) {
 		if (username.isBlank()) {
 			errorTextProperty.setValue("Please type in a username!");
-		} else if (username.length() > 20) {
-			errorTextProperty.setValue("Please type in a shorter username");
 		} else {
 			user.setUsername(username);
 			ViewHandler.getInstance().openView(ViewEnum.ItemList.toString());

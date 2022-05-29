@@ -14,11 +14,13 @@ import shared.SaleStrategyType;
 public class ItemListController implements ViewController {
 
 	@FXML
-	private TableColumn<ObservableItem, SaleStrategyType> typeCol;
-
+	private TableColumn<ItemCacheProxy, String> titleCol;
 	@FXML
-	private TableColumn<ItemCacheProxy, String> idCol;
-
+	private TableColumn<ObservableItem, SaleStrategyType> typeCol;
+	@FXML
+	private TableColumn<ItemCacheProxy, String> tagsCol;
+	@FXML
+	private TableColumn<ItemCacheProxy, String> sellerCol;
 	@FXML
 	private TableView<ItemCacheProxy> itemsTableView;
 
@@ -26,8 +28,10 @@ public class ItemListController implements ViewController {
 	private ItemListViewModel itemListViewModel;
 
 	public void init(ViewHandler viewHandler, ViewModelFactory viewModelFactory) {
-		idCol.setCellValueFactory(new PropertyValueFactory<>("itemID"));
+		titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+		tagsCol.setCellValueFactory(new PropertyValueFactory<>("tags"));
 		typeCol.setCellValueFactory(new PropertyValueFactory<>("strategyType"));
+		sellerCol.setCellValueFactory(new PropertyValueFactory<>("salesmanUsername"));
 
 		System.out.println("kalder her");
 		itemsTableView.setItems(viewModelFactory.getItemListViewModel().getObservableItemList());

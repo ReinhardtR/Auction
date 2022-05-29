@@ -7,12 +7,20 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.util.converter.LocalDateStringConverter;
 import shared.SaleStrategyType;
 
+import java.sql.Time;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.chrono.Chronology;
+import java.time.format.FormatStyle;
+import java.time.temporal.Temporal;
+import java.util.Date;
+import java.util.Locale;
 
 public class SaleViewModelImpl implements SaleViewModel {
 
@@ -25,7 +33,6 @@ public class SaleViewModelImpl implements SaleViewModel {
 	private final StringProperty eventLabelTextProperty;
 	private final ObjectProperty<Paint> eventLabelColorProperty;
 
-	private Chronology endDateProperty;
 
 	public SaleViewModelImpl(User salesman) {
 		this.salesman = salesman;
@@ -65,24 +72,78 @@ public class SaleViewModelImpl implements SaleViewModel {
 	}
 
 	@Override
-	public void setItemUpForSale(SaleStrategyType saleType) {
+	public void setItemUpForSale(SaleStrategyType saleType, LocalDate localDate) {
 		try {
 			double offer = Double.parseDouble(priceOfferProperty.getValue());
-			titleTextProperty.getValue();
-			if ((priceOfferProperty.getValue().isBlank() || endTimeProperty.getValue().isBlank()) && saleType == SaleStrategyType.AUCTION || (titleTextProperty.getValue().isBlank() || priceOfferProperty.getValue().isBlank()) && saleType == SaleStrategyType.BUYOUT) {
 
-				eventLabelTextProperty.setValue("Please fill out all required fields!");
+			if (offer <= 0)
+			{
+				eventLabelTextProperty.setValue("Please type in a price/starter bid higher than 0!");
 				eventLabelColorProperty.setValue(Color.RED);
-			} else {
-				salesman.createItem(titleTextProperty.getValue(), descriptionTextProperty.getValue(), tagsTextProperty.getValue(), saleType, offer, endTimeProperty.getValue());
-				eventLabelTextProperty.setValue("Item was successfully put up for sale!");
-				eventLabelColorProperty.setValue(Color.GREEN);
 			}
-		} catch (NumberFormatException | NullPointerException e) {
+			else if(!(titleTextProperty.getValue().isBlank()) && saleType == SaleStrategyType.BUYOUT)
+			{
+				createSale(saleType,offer,LocalTime.now(),LocalDate.now());
+			}
+			else if(!(endTimeProperty.getValue().isBlank()) && dateChecker(localDate) && saleType == SaleStrategyType.AUCTION)
+			{
+				LocalTime endTime = inputToTimeConverter();
+				if (endTime != null) {
+					createSale(saleType,offer,endTime,localDate);
+				}
+			}
+
+		} catch (NumberFormatException e) {
 			eventLabelTextProperty.setValue("Please type in a valid number in price/starter bid!");
 			eventLabelColorProperty.setValue(Color.RED);
 		}
+		catch (NullPointerException e){
+			eventLabelTextProperty.setValue("Please fill out all required fields!");
+			eventLabelColorProperty.setValue(Color.RED);
+		}
 	}
+
+	private LocalTime inputToTimeConverter() {
+		try
+		{
+			String[] time = endTimeProperty.getValue().split("/");
+			return LocalTime.of(Integer.parseInt(time[0]),Integer.parseInt(time[1]),Integer.parseInt(time[2]));
+		}
+		catch (Exception e)
+		{
+			eventLabelTextProperty.setValue("Please type in end time as instructed!");
+			eventLabelColorProperty.setValue(Color.RED);
+		}
+		return null;
+	}
+	private boolean dateChecker(LocalDate date)
+	{
+		if (date == null)
+		{
+			eventLabelTextProperty.setValue("Please choose an end date!");
+			eventLabelColorProperty.setValue(Color.RED);
+			return false;
+		}
+		else if(LocalDate.now().isEqual(date) || LocalDate.now().isBefore(date))
+		{
+			return true;
+		}
+		else
+		{
+			eventLabelTextProperty.setValue("Please choose an end day from today and forward!");
+			eventLabelColorProperty.setValue(Color.RED);
+			return false;
+		}
+	}
+
+	private void createSale(SaleStrategyType saleType, double offer, LocalTime time, LocalDate date)
+	{
+
+		salesman.createItem(titleTextProperty.getValue(), descriptionTextProperty.getValue(), tagsTextProperty.getValue(), saleType, offer, time,date);
+		eventLabelTextProperty.setValue("Item was successfully put up for sale!");
+		eventLabelColorProperty.setValue(Color.GREEN);
+	}
+
 
 	@Override
 	public StringProperty eventLabelTextProperty() {
@@ -94,10 +155,7 @@ public class SaleViewModelImpl implements SaleViewModel {
 		return endTimeProperty;
 	}
 
-	@Override
-	public ObservableValue<? extends Chronology> endDateChronologyProperty() {
-		return null;
-	}
+
 
 	@Override
 	public ObjectProperty<Paint> eventLabelPaintProperty() {

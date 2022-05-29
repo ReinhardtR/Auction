@@ -15,8 +15,10 @@
         <TableView fx:id="itemsTableView" layoutX="36.0" layoutY="120.0" onMouseClicked="#getNewViewForItem"
                    prefHeight="200.0" prefWidth="485.0">
             <columns>
-                <TableColumn fx:id="idCol" prefWidth="75.0" text="ID"/>
+                <TableColumn fx:id="titleCol" prefWidth="75.0" text="Title"/>
+                <TableColumn fx:id="tagsCol" prefWidth="150.0" text="Tags"/>
                 <TableColumn fx:id="typeCol" prefWidth="75.0" text="Type"/>
+                <TableColumn fx:id="sellerCol" prefWidth="150.0" text="Seller"/>
             </columns>
         </TableView>
         <Button layoutX="225.0" layoutY="367.0" mnemonicParsing="false" text="Put item up for sale"
