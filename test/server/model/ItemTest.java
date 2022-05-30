@@ -24,7 +24,7 @@ public class ItemTest {
 
 	@BeforeEach
 	void createTestItem() throws RemoteException {
-		testItem = new ItemImpl("123", "tis", "title", "description", "tags", new AuctionStrategy(0, "tis", LocalDateTime.of(2022, 5, 16, 11, 20)));
+		testItem = new ItemImpl("123", "tis", "title", "description", "tags", new AuctionStrategy(0, "tis", LocalDateTime.of(2022, 7, 7, 11, 20)));
 		observableTestItem = new ObservableItem(null, new ItemCacheProxyImpl(testItem));
 
 		brokenTestItem = new ItemImpl(null, "st", "title", "description", "tags", null);
