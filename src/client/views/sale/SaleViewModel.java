@@ -20,7 +20,7 @@ public interface SaleViewModel {
 
 	void returnToItemList();
 
-	void setItemUpForSale(SaleStrategyType saleType, LocalDate date);
+	void setItemUpForSale(SaleStrategyType saleType);
 
 	StringProperty eventLabelTextProperty();
 

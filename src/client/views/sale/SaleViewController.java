@@ -111,7 +111,7 @@ public class SaleViewController implements ViewController {
 
 	@FXML
 	protected void setItemUpForSale(ActionEvent actionEvent) {
-		saleViewModel.setItemUpForSale(saleType, endDatePicker.getValue());
+		saleViewModel.setItemUpForSale(saleType);
 	}
 
 	@FXML

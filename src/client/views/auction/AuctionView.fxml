@@ -15,7 +15,7 @@
             <Font size="14.0" />
         </font>
     </Label>
-    <TextField fx:id="bidInput" layoutX="321.0" layoutY="230.0" />
+    <TextField fx:id="bidInput" layoutX="321.0" layoutY="230.0" promptText="Format: 0.00" />
     <Label layoutX="297.0" layoutY="234.0" text="BID:" />
     <Label alignment="CENTER" contentDisplay="CENTER" layoutX="216.0" layoutY="14.0" prefHeight="35.0" prefWidth="149.0" text="AUCTION">
         <font>

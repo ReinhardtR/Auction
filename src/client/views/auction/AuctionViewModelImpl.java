@@ -13,6 +13,8 @@ import shared.EventType;
 import shared.utils.TimedTask;
 
 import java.beans.PropertyChangeEvent;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.Temporal;
@@ -31,6 +33,8 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 	private final StringProperty tags;
 	private final StringProperty highestBidder;
 	private final ObjectProperty<Paint> eventColor;
+
+	private final DecimalFormat decimalFormat;
 
 	public AuctionViewModelImpl(User customer, ObservableItem item) {
 		this.customer = customer;
@@ -51,6 +55,9 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 		eventText = new SimpleStringProperty();
 		eventColor = new SimpleObjectProperty<>();
 
+		decimalFormat = new DecimalFormat("0.00");
+		decimalFormat.setRoundingMode(RoundingMode.DOWN);
+
 		runTimeSimulation(item.getEndTimestamp());
 	}
 
@@ -58,6 +65,7 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 	public void bidOnItem(String offerInputText) {
 		try {
 			double offerAmount = Double.parseDouble(offerInputText);
+			decimalFormat.format(offerAmount);
 
 			if (offerAmount > item.getOfferAmount()) {
 				eventText.setValue(null);

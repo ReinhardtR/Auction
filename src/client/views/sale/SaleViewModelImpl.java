@@ -30,7 +30,6 @@ public class SaleViewModelImpl implements SaleViewModel {
 		this.salesman = salesman;
 
 		endDateProperty = new SimpleObjectProperty<>();
-
 		titleTextProperty = new SimpleStringProperty();
 		descriptionTextProperty = new SimpleStringProperty();
 		tagsTextProperty = new SimpleStringProperty();
@@ -40,30 +39,6 @@ public class SaleViewModelImpl implements SaleViewModel {
 		eventLabelColorProperty = new SimpleObjectProperty<>();
 	}
 
-	@Override
-	public ObjectProperty<LocalDate> endDateProperty() {
-		return endDateProperty;
-	}
-
-	@Override
-	public StringProperty titleTextProperty() {
-		return titleTextProperty;
-	}
-
-	@Override
-	public StringProperty descriptionTextProperty() {
-		return descriptionTextProperty;
-	}
-
-	@Override
-	public StringProperty tagsTextProperty() {
-		return tagsTextProperty;
-	}
-
-	@Override
-	public StringProperty priceBidTextProperty() {
-		return priceOfferProperty;
-	}
 
 	@Override
 	public void returnToItemList() {
@@ -71,7 +46,7 @@ public class SaleViewModelImpl implements SaleViewModel {
 	}
 
 	@Override
-	public void setItemUpForSale(SaleStrategyType saleType, LocalDate localDate) {
+	public void setItemUpForSale(SaleStrategyType saleType) {
 		try {
 			double offer = Double.parseDouble(priceOfferProperty.getValue());
 
@@ -80,10 +55,10 @@ public class SaleViewModelImpl implements SaleViewModel {
 				eventLabelColorProperty.setValue(Color.RED);
 			} else if (!(titleTextProperty.getValue().isBlank()) && saleType == SaleStrategyType.BUYOUT) {
 				createSale(saleType, offer, LocalTime.now(), LocalDate.now());
-			} else if (!(endTimeProperty.getValue().isBlank()) && dateChecker(localDate) && saleType == SaleStrategyType.AUCTION) {
+			} else if (!(endTimeProperty.getValue().isBlank()) && dateChecker(endDateProperty.getValue()) && saleType == SaleStrategyType.AUCTION) {
 				LocalTime endTime = inputToTimeConverter();
 				if (endTime != null) {
-					createSale(saleType, offer, endTime, localDate);
+					createSale(saleType, offer, endTime, endDateProperty.getValue());
 				}
 			}
 
@@ -128,6 +103,31 @@ public class SaleViewModelImpl implements SaleViewModel {
 		eventLabelColorProperty.setValue(Color.GREEN);
 	}
 
+
+	@Override
+	public ObjectProperty<LocalDate> endDateProperty() {
+		return endDateProperty;
+	}
+
+	@Override
+	public StringProperty titleTextProperty() {
+		return titleTextProperty;
+	}
+
+	@Override
+	public StringProperty descriptionTextProperty() {
+		return descriptionTextProperty;
+	}
+
+	@Override
+	public StringProperty tagsTextProperty() {
+		return tagsTextProperty;
+	}
+
+	@Override
+	public StringProperty priceBidTextProperty() {
+		return priceOfferProperty;
+	}
 
 	@Override
 	public StringProperty eventLabelTextProperty() {
