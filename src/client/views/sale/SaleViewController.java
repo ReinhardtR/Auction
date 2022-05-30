@@ -62,15 +62,15 @@ public class SaleViewController implements ViewController {
 		tags.textProperty().bindBidirectional(saleViewModel.tagsTextProperty());
 		price_BidTextField.textProperty().bindBidirectional(saleViewModel.priceBidTextProperty());
 		endTimeTextField.textProperty().bindBidirectional(saleViewModel.endTimeTextProperty());
+		endDatePicker.valueProperty().bindBidirectional(saleViewModel.endDateProperty());
 
 		eventCreateLabel.textProperty().bindBidirectional(saleViewModel.eventLabelTextProperty());
 		eventCreateLabel.textFillProperty().bind(saleViewModel.eventLabelPaintProperty());
 
-		format(title,20);
-		format(tags,30);
-		format(price_BidTextField,20);
+		format(title, 20);
+		format(tags, 30);
+		format(price_BidTextField, 20);
 		format(description, 300);
-
 	}
 
 	public void auctionSaleTypeConfig(ActionEvent actionEvent) {
@@ -119,18 +119,17 @@ public class SaleViewController implements ViewController {
 		saleViewModel.returnToItemList();
 	}
 
-	private void format(TextField textField, int size)
-	{
-		Pattern pattern = Pattern.compile(".{0,"+size+"}");
+	private void format(TextField textField, int size) {
+		Pattern pattern = Pattern.compile(".{0," + size + "}");
 		TextFormatter formatter = new TextFormatter((UnaryOperator<TextFormatter.Change>) change -> {
 			return pattern.matcher(change.getControlNewText()).matches() ? change : null;
 		});
 
 		textField.setTextFormatter(formatter);
 	}
-	private void format(TextArea textArea, int size)
-	{
-		Pattern pattern = Pattern.compile(".{0,"+size+"}");
+
+	private void format(TextArea textArea, int size) {
+		Pattern pattern = Pattern.compile(".{0," + size + "}");
 		TextFormatter formatter = new TextFormatter((UnaryOperator<TextFormatter.Change>) change -> {
 			return pattern.matcher(change.getControlNewText()).matches() ? change : null;
 		});

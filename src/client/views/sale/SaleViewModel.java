@@ -6,9 +6,10 @@ import javafx.scene.paint.Paint;
 import shared.SaleStrategyType;
 
 import java.time.LocalDate;
-import java.time.chrono.Chronology;
 
 public interface SaleViewModel {
+	ObjectProperty<LocalDate> endDateProperty();
+
 	StringProperty titleTextProperty();
 
 	StringProperty descriptionTextProperty();
