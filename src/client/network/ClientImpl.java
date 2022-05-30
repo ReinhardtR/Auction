@@ -42,7 +42,6 @@ public class ClientImpl extends UnicastRemoteObject implements SharedClient, Loc
 
 	@Override
 	public void onServerEvent(String eventName, String itemID, Serializable newValue) throws RemoteException {
-		System.out.println(eventName + " " + itemID);
 		support.firePropertyChange(eventName, itemID, newValue);
 	}
 
@@ -74,7 +73,7 @@ public class ClientImpl extends UnicastRemoteObject implements SharedClient, Loc
 
 	@Override
 	public void createItem(String title, String description, String tags, SaleStrategyType saleType, String username, double offer, LocalTime endtime, LocalDate endDate) throws RemoteException {
-		server.getSalesmanServer().createItem(title, description, tags, saleType, username, offer, endtime,endDate);
+		server.getSalesmanServer().createItem(title, description, tags, saleType, username, offer, endtime, endDate);
 	}
 
 	@Override

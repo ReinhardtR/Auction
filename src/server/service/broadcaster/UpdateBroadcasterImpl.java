@@ -20,10 +20,8 @@ public class UpdateBroadcasterImpl extends UnicastRemoteObject implements Update
 	public void broadcastEventForItem(String eventName, String itemID, Serializable newValue) throws RemoteException {
 		listeners.forEach((listener) -> {
 			try {
-				System.out.println("BROADCAST NEW VALUE: " + newValue);
 				listener.onServerEvent(eventName, itemID, newValue);
 			} catch (ConnectException e) {
-				System.out.println("Connection failed, removed listener.");
 				listeners.remove(listener);
 			} catch (RemoteException e) {
 				e.printStackTrace();
