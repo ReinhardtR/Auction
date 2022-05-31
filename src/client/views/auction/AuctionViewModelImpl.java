@@ -68,7 +68,7 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 			decimalFormat.format(offerAmount);
 
 			if (offerAmount > item.getOfferAmount()) {
-				eventText.setValue(null);
+				eventText.setValue("Your bid went through!");
 				customer.makeOfferOnItem(offerAmount, item);
 				highestBidder.setValue(item.getBuyerUsername());
 				eventColor.setValue(Color.GREEN);
