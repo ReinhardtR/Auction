@@ -74,7 +74,6 @@ public class CustomerItemService implements PropertyChangeSubject {
 		callback.run();
 
 		support.firePropertyChange(EventType.NEW_BID.toString(), item.getItemID(), item.getOfferAmount());
-		System.out.println("Bid went through");
 	}
 
 	public void addItem(Item item) throws RemoteException {
