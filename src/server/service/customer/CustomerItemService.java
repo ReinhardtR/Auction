@@ -62,7 +62,6 @@ public class CustomerItemService implements PropertyChangeSubject {
 		database.buyoutItemBought(item);
 		items.remove(item.getItemID());
 		support.firePropertyChange(EventType.ITEM_SOLD.toString(), item.getItemID(), null);
-		System.out.println("SOLD TO THE MAN IN BLUe");
 	}
 
 	public void clearAllItems() {
