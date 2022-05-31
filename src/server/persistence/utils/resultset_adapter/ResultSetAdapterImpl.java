@@ -16,8 +16,8 @@ import java.util.List;
 
 public class ResultSetAdapterImpl implements ResultSetAdapter {
 
-	ItemSelector itemSelector;
-	SaleStrategySelector saleStrategySelector;
+	private final ItemSelector itemSelector;
+	private final SaleStrategySelector saleStrategySelector;
 
 
 	public ResultSetAdapterImpl() {

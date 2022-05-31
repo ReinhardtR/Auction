@@ -48,7 +48,8 @@ public class ItemListController implements ViewController {
 		}
 	}
 
-	public void openSaleView() {
+	@FXML
+	protected void openSaleView() {
 		itemListViewModel.openSaleView();
 	}
 }
