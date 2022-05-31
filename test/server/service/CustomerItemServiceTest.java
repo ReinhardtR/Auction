@@ -73,14 +73,21 @@ public class CustomerItemServiceTest {
 		assertEquals(1, CustomerItemService.getInstance().getAllStoredItems().size(), "The list should contain 1 item, which was just added");
 
 		// Many
-		CustomerItemService.getInstance().addItem(item);
-		CustomerItemService.getInstance().addItem(item);
-		CustomerItemService.getInstance().addItem(item);
-		CustomerItemService.getInstance().addItem(item);
+		for (int i =0;i<4;i++)
+		{
+			item = new ItemImpl(i+"", "salesman", "title", "description",
+							"tags", new AuctionStrategy(10, "Lars", LocalDateTime.now().plusHours(1)));
+			CustomerItemService.getInstance().addItem(item);
+		}
 		assertEquals(5, CustomerItemService.getInstance().getAllStoredItems().size(), "The list should contain 5 item, which was just added");
+
 
 		// B
 		CustomerItemService.getInstance().clearAllItems();
-		assertEquals(0, CustomerItemService.getInstance().getAllStoredItems().size(), "The list should be empty, as the newly added item has been bought and removed");
+		CustomerItemService.getInstance().addItem(item);
+		CustomerItemService.getInstance().addItem(item);
+		CustomerItemService.getInstance().addItem(item);
+		CustomerItemService.getInstance().addItem(item);
+		assertEquals(1, CustomerItemService.getInstance().getAllStoredItems().size(), "The list should have 1 item, as the the items that has been added had the same ItemID");
 	}
 }
