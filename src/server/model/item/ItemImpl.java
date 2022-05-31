@@ -60,7 +60,6 @@ public class ItemImpl extends UnicastRemoteObject implements Item {
 		return strategy.getOfferAmount();
 	}
 
-	// Synchronized?
 	@Override
 	public boolean getIsSold() throws RemoteException {
 		return strategy.getIsSold();

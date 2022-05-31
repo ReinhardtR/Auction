@@ -36,6 +36,7 @@ public class SQL {
 		return "UkY3C9sbYugpjto58d8FAk9M54JiLanr";
 	}
 
+	// Returns a SQL statement that select an item witht he given itemID.
 	public static String selectItem(String itemID) {
 		try {
 			Table auc = tables.getTable("auction"),
@@ -49,6 +50,8 @@ public class SQL {
 		}
 	}
 
+	// Returns a SQL statement that select a given amount of items
+	// in ascending or descending order.
 	public static String selectAmountOfItems(int amount, String ascOrDesc) {
 		try {
 			Table auc = tables.getTable("auction"),
@@ -60,6 +63,7 @@ public class SQL {
 		}
 	}
 
+	// Returns a SQL-statement that selects the sale strategy of the given item.
 	public static String selectSaleStrategy(String itemID, String saleStrategy) {
 		try {
 			Table style = tables.getTable(saleStrategy);
@@ -71,6 +75,7 @@ public class SQL {
 		}
 	}
 
+	// Returns a SQL-statement that deletes the given item.
 	public static String auctionBought(String itemID) {
 		try {
 			Table auc = tables.getTable("auction");
@@ -82,6 +87,7 @@ public class SQL {
 		}
 	}
 
+	// Returns a SQL-statement that updates the bid of the given item.
 	public static String auctionNewBid(String itemID, Double newOffer, String newBidder) {
 		try {
 			Table auc = tables.getTable("auction");
@@ -96,6 +102,7 @@ public class SQL {
 		}
 	}
 
+	// Returns a SQL-statement that selects the auctions that are soon to end.
 	public static String auctionsSoonToFinish(String wantedTime) {
 		try {
 			Table auc = tables.getTable("auction");
@@ -108,6 +115,7 @@ public class SQL {
 		}
 	}
 
+	// Returns a SQL-statement that sets the buyer of the given item.
 	public static String buyoutBought(String itemID, String buyerUsername) {
 		try {
 			Table buy = tables.getTable("buyout");

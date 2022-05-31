@@ -138,6 +138,7 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 		});
 	}
 
+	// Update bid and bidder properties, and send system notification.
 	private void onNewBid(PropertyChangeEvent event) {
 		Platform.runLater(() -> {
 			String itemTitle = item.getTitle();
@@ -159,6 +160,8 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 		ViewHandler.getInstance().openView(ViewEnum.ItemList.toString());
 	}
 
+	// Runs a method every second, that updates the time StringProperty
+	// and marks the item as sold, if the time is over.
 	private void runTimeSimulation(Temporal endDateTime) {
 		System.out.println(item.getBuyerUsername());
 		TimedTask.runTask((timer) -> {
@@ -166,7 +169,6 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 
 			if (currentDurationBetween.isNegative()) {
 				Platform.runLater(() -> {
-					System.out.println("running time simulator");
 					isSold.setValue(true);
 					timeLeft.setValue("SOLD");
 				});

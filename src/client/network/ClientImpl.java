@@ -45,12 +45,12 @@ public class ClientImpl extends UnicastRemoteObject implements SharedClient, Loc
 		support.firePropertyChange(eventName, itemID, newValue);
 	}
 
-	// Not used?
 	@Override
 	public ItemCacheProxy getItem(String itemID) throws RemoteException {
 		return new ItemCacheProxyImpl(server.getCustomerServer().getItem(itemID));
 	}
 
+	// Get all Items from the server and returns a list of Items with cache.
 	@Override
 	public List<ItemCacheProxy> getAllItems() throws RemoteException {
 		List<ItemCacheProxy> items = new ArrayList<>();

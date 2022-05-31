@@ -56,7 +56,7 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 			e.printStackTrace();
 		}
 
-		// ?
+		// Rather return true than false.
 		return true;
 	}
 

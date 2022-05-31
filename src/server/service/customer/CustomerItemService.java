@@ -62,7 +62,6 @@ public class CustomerItemService implements PropertyChangeSubject {
 		database.buyoutItemBought(item);
 		items.remove(item.getItemID());
 		support.firePropertyChange(EventType.ITEM_SOLD.toString(), item.getItemID(), null);
-		System.out.println("SOLD TO THE MAN IN BLUe");
 	}
 
 	public void clearAllItems() {
@@ -81,6 +80,8 @@ public class CustomerItemService implements PropertyChangeSubject {
 		items.put(item.getItemID(), item);
 	}
 
+	// Gets a set amount of items from the database,
+	// in ascending or descending order.
 	public void getManyItems() throws RemoteException {
 		try {
 			for (Item item : database.getAmountOfItems(10, "asc")) {
