@@ -26,7 +26,6 @@ public class AuctionCountDown implements Runnable {
 	public void run() {
 		Duration duration = Duration.between(localTimeNow, endTime);
 
-
 		if (!(duration.isNegative())) {
 			try {
 				Thread.sleep(duration.toMillis());
