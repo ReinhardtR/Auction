@@ -25,7 +25,6 @@ public class BuyingMutator {
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
-		//Indtil videre sætter den kun den købte data, herefter skal værdien endten fjernes eller flyttes
 		if (itemBoughtThruBuyout == null) throw new SQLException("itemBoughtThruBuyout was null");
 		itemBoughtThruBuyout.execute();
 		itemBoughtThruBuyout.close();
