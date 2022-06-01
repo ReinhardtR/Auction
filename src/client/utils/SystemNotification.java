@@ -8,7 +8,6 @@ public class SystemNotification {
 
 	private TrayIcon trayIcon;
 
-	private SystemNotification() {
 public class SystemNotifcation {
 	private static SystemNotifcation instance;
 	private final TrayIcon trayIcon;

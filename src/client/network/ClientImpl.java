@@ -44,7 +44,7 @@ public class ClientImpl extends UnicastRemoteObject implements SharedClient, Loc
 	public void onServerEvent(String eventName, String itemID, Serializable newValue) throws RemoteException {
 		support.firePropertyChange(eventName, itemID, newValue);
 	}
-	
+
 
 	// Get all Items from the server and returns a list of Items with cache.
 	@Override
