@@ -69,9 +69,8 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 
 			if (offerAmount > item.getOfferAmount()) {
 				eventText.setValue(null);
-				customer.makeOfferOnItem(offerAmount, item);
-				highestBidder.setValue(item.getBuyerUsername());
 				eventColor.setValue(Color.GREEN);
+				customer.makeOfferOnItem(offerAmount, item);
 			} else {
 				eventText.setValue("You need to bid higher than the current bid.");
 				eventColor.setValue(Color.RED);

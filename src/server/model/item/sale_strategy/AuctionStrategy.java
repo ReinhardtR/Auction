@@ -23,7 +23,6 @@ public class AuctionStrategy implements SaleStrategy {
 
 	@Override
 	public void offer(Item item, double amount, String username) {
-		// todo: add offer validation
 		try {
 			// Pass callback function to make sure the DB is updated before updating state
 			CustomerItemService.getInstance().updateItemOffer(item, () -> {
