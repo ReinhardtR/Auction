@@ -5,16 +5,11 @@ import java.awt.*;
 
 public class SystemNotification {
 	private static SystemNotification instance;
-
-	private TrayIcon trayIcon;
-
-public class SystemNotifcation {
-	private static SystemNotifcation instance;
 	private final TrayIcon trayIcon;
 
 	// Initialize necessary classes, with options,
 	// that allows the program to send system notifications.
-	private SystemNotifcation() {
+	private SystemNotification() {
 		SystemTray tray = SystemTray.getSystemTray();
 		Image image = Toolkit.getDefaultToolkit().createImage(getClass().getResource("/resources/a-logo.png"));
 
