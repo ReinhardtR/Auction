@@ -61,12 +61,12 @@ public class DatabaseAccess implements CustomerDatabaseMethods, SalesmanDatabase
 		}).start();
 	}
 
-
 	private void auctionTimeIsUp(PropertyChangeEvent propertyChangeEvent) {
 		System.out.println("inside auctiontimeisUp");
 		auctionItemBought((String) propertyChangeEvent.getNewValue());
 	}
 
+	// Deletes the auction item.
 	private synchronized void auctionItemBought(String itemID) {
 		try {
 			buyingMutator.auctionBought(createConnection(), itemID);
@@ -81,12 +81,15 @@ public class DatabaseAccess implements CustomerDatabaseMethods, SalesmanDatabase
 		return resultSetAdapter.fetchItem(createConnection(), itemID);
 	}
 
+	// Returns a given amount of items in a list from the database,
+	// in ascending or descending order.
 	@Override
 	public List<Item> getAmountOfItems(int amount, String ascOrDesc) throws SQLException {
 
 		return resultSetAdapter.fetchAmountOfItems(createConnection(), amount, ascOrDesc);
 	}
 
+	// Sets the buyer of the item.
 	@Override
 	public synchronized void buyoutItemBought(Item item) throws SQLException {
 		buyingMutator.buyoutBought(createConnection(), (ItemImpl) item);
@@ -101,6 +104,4 @@ public class DatabaseAccess implements CustomerDatabaseMethods, SalesmanDatabase
 	public synchronized void addItemToDatabase(Item itemToAdd) throws SQLException {
 		itemInserter.addItemToDatabase(createConnection(), (ItemImpl) itemToAdd);
 	}
-
-
 }

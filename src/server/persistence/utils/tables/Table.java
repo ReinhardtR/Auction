@@ -41,6 +41,8 @@ public class Table {
 		return columns.toArray(new String[0]);
 	}
 
+	// Return a String[] that contains the column names of the columns
+	// that both the given table and local table contains.
 	public String[] getCommonColumns(Table tableToCompare) throws ColumnNonExistent {
 		HashSet<String> toReturn = tableToCompare.getHashSet();
 		toReturn.retainAll(columns);

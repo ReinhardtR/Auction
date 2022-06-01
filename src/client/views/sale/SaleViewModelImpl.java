@@ -45,6 +45,8 @@ public class SaleViewModelImpl implements SaleViewModel {
 		ViewHandler.getInstance().openView(ViewEnum.ItemList.toString());
 	}
 
+	// Validate user input (set error messages on exceptions)
+	// Create sale and show success message on successful input.
 	@Override
 	public void setItemUpForSale(SaleStrategyType saleType) {
 		try {
@@ -71,6 +73,7 @@ public class SaleViewModelImpl implements SaleViewModel {
 		}
 	}
 
+	// Convert the string time input, to a LocalTime object.
 	private LocalTime inputToTimeConverter() {
 		try {
 			String[] time = endTimeProperty.getValue().split("/");
@@ -79,9 +82,11 @@ public class SaleViewModelImpl implements SaleViewModel {
 			eventLabelTextProperty.setValue("Please type in end time as instructed!");
 			eventLabelColorProperty.setValue(Color.RED);
 		}
+
 		return null;
 	}
 
+	// Validate that the date is not null and is not in the past.
 	private boolean dateChecker(LocalDate date) {
 		if (date == null) {
 			eventLabelTextProperty.setValue("Please choose an end date!");
@@ -97,12 +102,10 @@ public class SaleViewModelImpl implements SaleViewModel {
 	}
 
 	private void createSale(SaleStrategyType saleType, double offer, LocalTime time, LocalDate date) {
-
 		salesman.createItem(titleTextProperty.getValue(), descriptionTextProperty.getValue(), tagsTextProperty.getValue(), saleType, offer, time, date);
 		eventLabelTextProperty.setValue("Item was successfully put up for sale!");
 		eventLabelColorProperty.setValue(Color.GREEN);
 	}
-
 
 	@Override
 	public ObjectProperty<LocalDate> endDateProperty() {
@@ -138,7 +141,6 @@ public class SaleViewModelImpl implements SaleViewModel {
 	public StringProperty endTimeTextProperty() {
 		return endTimeProperty;
 	}
-
 
 	@Override
 	public ObjectProperty<Paint> eventLabelPaintProperty() {

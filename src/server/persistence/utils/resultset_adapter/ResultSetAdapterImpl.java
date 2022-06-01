@@ -16,8 +16,8 @@ import java.util.List;
 
 public class ResultSetAdapterImpl implements ResultSetAdapter {
 
-	ItemSelector itemSelector;
-	SaleStrategySelector saleStrategySelector;
+	private final ItemSelector itemSelector;
+	private final SaleStrategySelector saleStrategySelector;
 
 
 	public ResultSetAdapterImpl() {
@@ -25,16 +25,19 @@ public class ResultSetAdapterImpl implements ResultSetAdapter {
 		saleStrategySelector = new SaleStrategySelectorImpl();
 	}
 
+	// Returns the item in the db with the given itemID. (if it exists)
 	@Override
 	public Item fetchItem(Connection c, String itemID) {
 		Item itemToReturn = null;
 
 		try {
 			ResultSet itemResultSet = itemSelector.fetchItem(c, itemID);
+
 			if (itemResultSet != null) {
 				itemResultSet.next();
 				itemToReturn = itemCreation(c, itemResultSet);
 			}
+
 			c.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -43,6 +46,7 @@ public class ResultSetAdapterImpl implements ResultSetAdapter {
 		return itemToReturn;
 	}
 
+	// Returns list of a given amount of items in ascending or descending order.
 	@Override
 	public List<Item> fetchAmountOfItems(Connection c, int amount, String ascOrDesc) {
 		List<Item> itemsToReturn = new ArrayList<>();
@@ -64,7 +68,7 @@ public class ResultSetAdapterImpl implements ResultSetAdapter {
 		return itemsToReturn;
 	}
 
-
+	// Takes a resultset and uses the values to construct an instance of ItemImpl.
 	private Item itemCreation(Connection c, ResultSet itemResultSet) throws SQLException {
 		Item itemToReturn = null;
 

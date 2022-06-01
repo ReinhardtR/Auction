@@ -25,6 +25,7 @@ public class ItemListImpl implements ItemList {
 		support = new PropertyChangeSupport(this);
 		items = new HashMap<>();
 
+		// Initialize with items from the server
 		try {
 			for (ItemCacheProxy item : client.getAllItems()) {
 				items.put(item.getItemID(), item);
@@ -44,13 +45,12 @@ public class ItemListImpl implements ItemList {
 	@Override
 	public ObservableItem getCurrentlyViewedItem() {
 		try {
-			// Laver proxy af Item
 			return new ObservableItem(client, items.get(currentlyViewedItemID));
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
 
-		return null; // TODO: throw exception?
+		return null;
 	}
 
 	@Override
@@ -79,7 +79,6 @@ public class ItemListImpl implements ItemList {
 	}
 
 	private void onItemSold(PropertyChangeEvent event) {
-		System.out.println(event.getPropertyName());
 		String itemID = (String) event.getOldValue();
 		items.remove(itemID);
 		support.firePropertyChange(EventType.ITEM_SOLD.toString(), null, itemID);

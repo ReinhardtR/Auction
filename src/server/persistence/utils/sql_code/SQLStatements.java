@@ -4,6 +4,8 @@ import server.persistence.utils.exceptions.SQLUtilsException;
 import server.persistence.utils.tables.Table;
 
 public class SQLStatements {
+	// Overloaded "select" methods to create SQL-statements for selection of columns and where clauses.
+	// e.g.: SELECT itemID WHERE itemID = "123"
 	public String select() {
 		return "SELECT ";
 	}
@@ -20,6 +22,7 @@ public class SQLStatements {
 		return select(tableInUse, columns) + where(condition);
 	}
 
+	// Overloaded "coalesce" methods to create SQL-statements for the COALESCE keyword.
 	public String coalesce() {
 		return "COALESCE";
 	}
@@ -48,6 +51,7 @@ public class SQLStatements {
 		return select() + coalesce(tables, columns, onColumn) + orderBy(onColumn, ascOrDesc) + fetchRows(nrOfRows);
 	}
 
+	// Overloaded "union" methods to create SQL-statements for the UNION keyword.
 	public String union() {
 		return " UNION ";
 	}
@@ -63,6 +67,7 @@ public class SQLStatements {
 		return unionToReturn.toString();
 	}
 
+	// Overloaded "fullJoin" methods to create SQL-statements for the FULL JOIN keyword.
 	public String fullJoin() {
 		return " FULL JOIN ";
 	}
@@ -86,6 +91,7 @@ public class SQLStatements {
 		return fullJoinToReturn.toString();
 	}
 
+	// Overloaded "on" methods to create SQL-statements for the ON keyword.
 	public String on() {
 		return " on ";
 	}
@@ -94,19 +100,22 @@ public class SQLStatements {
 		return on() + columnWithTableName(ontoTable, onColumn) + " = " + columnWithTableName(tableJoining, onColumn);
 	}
 
-
+	// Method to create SQL-statements for the WHERE keyword.
 	public String where(String condition) {
 		return " WHERE " + condition;
 	}
 
+	// Method to create SQL-statements for the UPDATE keyword.
 	public String update(Table tableInUse, String columnsToSet, String conditions) {
 		return "UPDATE " + tableLocationAndName(tableInUse) + set(columnsToSet) + where(conditions);
 	}
 
+	// Method to create SQL-statements for the DELETE keyword.
 	public String delete(Table tableInUse, String conditions) {
 		return "DELETE" + from(tableInUse) + where(conditions);
 	}
 
+	// Overloaded "from" methods to create SQL-statements for the FROM keyword.
 	public String from() {
 		return " FROM ";
 	}
@@ -115,10 +124,12 @@ public class SQLStatements {
 		return from() + tableLocationAndName(tableInUse);
 	}
 
+	// Method to create SQL-statements for the SET keyword.
 	public String set(String condition) {
 		return " SET " + condition;
 	}
 
+	// Overloaded "values" methods to create SQL-statements for the VALUES keyword.
 	public String values() {
 		return " VALUES ";
 	}
@@ -127,6 +138,7 @@ public class SQLStatements {
 		return values() + "(" + values + ")";
 	}
 
+	// Overloaded "insert" methods to create SQL-statements for the INSERT INTO keyword.
 	public String insert() {
 		return "INSERT INTO ";
 	}
@@ -139,16 +151,19 @@ public class SQLStatements {
 		return insert(tableInUse) + values(values);
 	}
 
+	// Method to create SQL-statements for the ORDER BY keyword.
 	public String orderBy(String column, String ascOrDesc) throws SQLUtilsException {
 		if ("asc".equalsIgnoreCase(ascOrDesc.strip()) || "desc".equalsIgnoreCase(ascOrDesc.strip()))
 			return " ORDER BY " + column + " " + ascOrDesc;
 		throw new SQLUtilsException("Cannot ODER BY " + ascOrDesc + ". Needs to be either asc or desc");
 	}
 
+	// Method create SQL-statements for the FETCH FIRST x ROWS ONLY statement.
 	public String fetchRows(int amount) {
 		return " FETCH FIRST " + amount + " ROWS ONLY";
 	}
 
+	// Helper method to create a SQL-statement for selecting multiple columns.
 	private String columns(String[] columns) {
 		StringBuilder columnsToReturn = new StringBuilder();
 		for (int i = 0; i < columns.length; i++) {

@@ -16,6 +16,7 @@ public class DatabaseTables {
 		fetchTableStatement = "SELECT table_schema, table_name, column_name FROM information_schema.columns WHERE table_schema != 'pg_catalog' AND table_schema != 'information_schema' AND table_name != 'pg_stat_statements' ORDER BY table_name";
 	}
 
+	// Fetches all the tables on the database, and puts them into a hashmap for later use.
 	public void reconstructDatabaseTableLayout(Connection c) throws SQLException {
 		ResultSet tableSet = c.prepareStatement(fetchTableStatement).executeQuery();
 		String currentTableName = "";

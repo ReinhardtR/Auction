@@ -16,6 +16,7 @@ public class UpdateBroadcasterImpl extends UnicastRemoteObject implements Update
 		listeners = new ArrayList<>();
 	}
 
+	// Loop through listeners and call the RMI Callback function exposed by the client.
 	@Override
 	public void broadcastEventForItem(String eventName, String itemID, Serializable newValue) throws RemoteException {
 		listeners.forEach((listener) -> {

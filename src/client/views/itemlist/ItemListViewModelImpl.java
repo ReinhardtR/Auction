@@ -46,8 +46,8 @@ public class ItemListViewModelImpl implements ItemListViewModel {
 		}
 	}
 
+	// Remove item from table
 	private void onItemSold(PropertyChangeEvent event) {
-		System.out.println("EVENT: LIST SIZE: " + observableItemList.size());
 		observableItemList.removeIf((item) -> item.getItemID().equals(event.getNewValue()));
 	}
 }
