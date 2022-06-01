@@ -4,7 +4,7 @@ import client.model.item.ItemCacheProxy;
 import client.model.item.ItemCacheProxyImpl;
 import shared.SaleStrategyType;
 import shared.network.client.SharedClient;
-import shared.network.server.MainServer;
+import shared.network.server.UserServer;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -21,13 +21,13 @@ import java.util.List;
 
 public class ClientImpl extends UnicastRemoteObject implements SharedClient, LocalClient {
 	private final PropertyChangeSupport support;
-	private final MainServer server;
+	private final UserServer server;
 
 	public ClientImpl() throws RemoteException, NotBoundException {
 		support = new PropertyChangeSupport(this);
 
 		Registry registry = LocateRegistry.getRegistry("localhost", 1099);
-		server = (MainServer) registry.lookup("Server");
+		server = (UserServer) registry.lookup("Server");
 		server.getCustomerServer().getBroadcaster().registerClient(this);
 
 		// Unregister as listener if program shuts down.
@@ -44,7 +44,9 @@ public class ClientImpl extends UnicastRemoteObject implements SharedClient, Loc
 	public void onServerEvent(String eventName, String itemID, Serializable newValue) throws RemoteException {
 		support.firePropertyChange(eventName, itemID, newValue);
 	}
+	
 
+	// Get all Items from the server and returns a list of Items with cache.
 	@Override
 	public List<ItemCacheProxy> getAllItems() throws RemoteException {
 		List<ItemCacheProxy> items = new ArrayList<>();

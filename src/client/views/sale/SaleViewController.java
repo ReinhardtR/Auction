@@ -73,6 +73,8 @@ public class SaleViewController implements ViewController {
 		format(description, 300);
 	}
 
+	// Show the input fields for an auction.
+	// And hide the input fields for a buyout.
 	public void auctionSaleTypeConfig(ActionEvent actionEvent) {
 		price_offerLabel.setText("Starting Bid");
 
@@ -91,6 +93,8 @@ public class SaleViewController implements ViewController {
 		saleType = SaleStrategyType.AUCTION;
 	}
 
+	// Show the input fields for a buyout.
+	// And hide the input fields for an auction.
 	public void buyoutSaleTypeConfig(ActionEvent actionEvent) {
 		price_offerLabel.setText("Price");
 
@@ -119,6 +123,7 @@ public class SaleViewController implements ViewController {
 		saleViewModel.returnToItemList();
 	}
 
+	// Set a format the the given TextField has to follow.
 	private void format(TextField textField, int size) {
 		Pattern pattern = Pattern.compile(".{0," + size + "}");
 		TextFormatter formatter = new TextFormatter((UnaryOperator<TextFormatter.Change>) change -> {
@@ -128,6 +133,7 @@ public class SaleViewController implements ViewController {
 		textField.setTextFormatter(formatter);
 	}
 
+	// Set a format the the given TextArea has to follow.
 	private void format(TextArea textArea, int size) {
 		Pattern pattern = Pattern.compile(".{0," + size + "}");
 		TextFormatter formatter = new TextFormatter((UnaryOperator<TextFormatter.Change>) change -> {

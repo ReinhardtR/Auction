@@ -9,6 +9,13 @@ public class SystemNotification {
 	private TrayIcon trayIcon;
 
 	private SystemNotification() {
+public class SystemNotifcation {
+	private static SystemNotifcation instance;
+	private final TrayIcon trayIcon;
+
+	// Initialize necessary classes, with options,
+	// that allows the program to send system notifications.
+	private SystemNotifcation() {
 		SystemTray tray = SystemTray.getSystemTray();
 		Image image = Toolkit.getDefaultToolkit().createImage(getClass().getResource("/resources/a-logo.png"));
 

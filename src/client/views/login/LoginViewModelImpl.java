@@ -21,6 +21,7 @@ public class LoginViewModelImpl implements LoginViewModel {
 		return errorTextProperty;
 	}
 
+	// Validate and set username for user.
 	@Override
 	public void login(String username) {
 		if (username.isBlank()) {
