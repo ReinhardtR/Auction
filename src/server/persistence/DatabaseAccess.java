@@ -27,7 +27,7 @@ public class DatabaseAccess implements CustomerDatabaseMethods, SalesmanDatabase
 		resultSetAdapter = new ResultSetAdapterImpl();
 		itemInserter = new ItemInserter();
 		SQL.constructDatabaseTables(createConnection());
-		//checkAuctionTimers();
+		checkAuctionTimers();
 	}
 
 	private Connection createConnection() {

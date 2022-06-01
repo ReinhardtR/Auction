@@ -3,12 +3,12 @@ package client.utils;
 
 import java.awt.*;
 
-public class SystemNotifcation {
-	private static SystemNotifcation instance;
+public class SystemNotification {
+	private static SystemNotification instance;
 
 	private TrayIcon trayIcon;
 
-	private SystemNotifcation() {
+	private SystemNotification() {
 		SystemTray tray = SystemTray.getSystemTray();
 		Image image = Toolkit.getDefaultToolkit().createImage(getClass().getResource("/resources/a-logo.png"));
 
@@ -22,9 +22,9 @@ public class SystemNotifcation {
 		}
 	}
 
-	public static SystemNotifcation getInstance() {
+	public static SystemNotification getInstance() {
 		if (instance == null) {
-			instance = new SystemNotifcation();
+			instance = new SystemNotification();
 		}
 
 		return instance;

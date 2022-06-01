@@ -3,7 +3,7 @@ package client.views.buyout;
 import client.core.ViewHandler;
 import client.model.User;
 import client.model.item.ObservableItem;
-import client.utils.SystemNotifcation;
+import client.utils.SystemNotification;
 import client.utils.ViewEnum;
 import javafx.application.Platform;
 import javafx.beans.property.*;
@@ -83,7 +83,7 @@ public class BuyoutViewModelImpl implements BuyoutViewModel {
 			}
 
 			String message = "The item: " + item.getTitle() + ", that you were watching has been sold.";
-			SystemNotifcation.getInstance().send(caption, message);
+			SystemNotification.getInstance().send(caption, message);
 		});
 	}
 

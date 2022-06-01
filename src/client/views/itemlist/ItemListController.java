@@ -13,6 +13,7 @@ import shared.SaleStrategyType;
 
 public class ItemListController implements ViewController {
 
+	private ItemListViewModel itemListViewModel;
 	@FXML
 	private TableColumn<ItemCacheProxy, String> titleCol;
 	@FXML
@@ -23,9 +24,6 @@ public class ItemListController implements ViewController {
 	private TableColumn<ItemCacheProxy, String> sellerCol;
 	@FXML
 	private TableView<ItemCacheProxy> itemsTableView;
-
-	@FXML
-	private ItemListViewModel itemListViewModel;
 
 	public void init(ViewHandler viewHandler, ViewModelFactory viewModelFactory) {
 		titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));

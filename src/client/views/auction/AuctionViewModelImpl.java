@@ -3,7 +3,7 @@ package client.views.auction;
 import client.core.ViewHandler;
 import client.model.User;
 import client.model.item.ObservableItem;
-import client.utils.SystemNotifcation;
+import client.utils.SystemNotification;
 import client.utils.ViewEnum;
 import javafx.application.Platform;
 import javafx.beans.property.*;
@@ -150,7 +150,7 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 			// Display notification
 			String caption = "New bid on: " + itemTitle;
 			String message = "A bid of: " + offerAmount + ", has been placed on item: " + itemTitle + ".";
-			SystemNotifcation.getInstance().send(caption, message);
+			SystemNotification.getInstance().send(caption, message);
 		});
 	}
 
@@ -172,7 +172,7 @@ public class AuctionViewModelImpl implements AuctionViewModel {
 				});
 
 				if (customer.getUsername().equals(highestBidder.getValue())) {
-					SystemNotifcation.getInstance().send("You won the item!", "Congratulations, you have won the auction with a bid of: " + currentHighestBid.getValue());
+					SystemNotification.getInstance().send("You won the item!", "Congratulations, you have won the auction with a bid of: " + currentHighestBid.getValue());
 				}
 
 				timer.cancel();
