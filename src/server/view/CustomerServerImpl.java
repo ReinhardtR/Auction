@@ -20,7 +20,6 @@ public class CustomerServerImpl extends UnicastRemoteObject implements CustomerS
 	public CustomerServerImpl() throws RemoteException {
 		broadcaster = new UpdateBroadcasterImpl();
 
-		//Siden søgning efter items ikke er implementeret får brugeren bare de første 10 items fra serveren med denne metode
 		CustomerItemService.getInstance().addListener(this);
 		CustomerItemService.getInstance().getManyItems();
 	}
@@ -43,7 +42,6 @@ public class CustomerServerImpl extends UnicastRemoteObject implements CustomerS
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
 		try {
-			System.out.println("EVENT FROM: " + event.getSource().getClass().getName());
 			broadcaster.broadcastEventForItem(event.getPropertyName(), (String) event.getOldValue(), (Serializable) event.getNewValue());
 		} catch (RemoteException e) {
 			e.printStackTrace();

@@ -73,8 +73,8 @@ public class AuctionViewController implements ViewController {
 		auctionViewModel.returnToItemListView();
 	}
 
-	private void format(TextField textField, int size)
-	{
+	// Set a format that the given TextField must follow.
+	private void format(TextField textField, int size) {
 		Pattern pattern = Pattern.compile(".{0,"+size+"}");
 		TextFormatter formatter = new TextFormatter((UnaryOperator<TextFormatter.Change>) change -> {
 			return pattern.matcher(change.getControlNewText()).matches() ? change : null;

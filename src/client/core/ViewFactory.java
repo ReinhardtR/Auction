@@ -59,6 +59,7 @@ public class ViewFactory {
 		if (scenes.containsKey(viewEnum + itemID)) {
 			return scenes.get(viewEnum + itemID);
 		}
+
 		scenes.put(viewEnum + itemID, createScene(viewEnum.toString()));
 		return scenes.get(viewEnum + itemID);
 	}
@@ -67,6 +68,7 @@ public class ViewFactory {
 		if (scenes.containsKey(sceneName)) {
 			return scenes.get(sceneName);
 		}
+
 		scenes.put(sceneName, createScene(sceneName));
 		return scenes.get(sceneName);
 	}

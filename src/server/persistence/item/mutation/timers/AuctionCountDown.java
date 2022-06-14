@@ -21,7 +21,7 @@ public class AuctionCountDown implements Runnable {
 		support.addPropertyChangeListener(listener);
 	}
 
-
+	// A thread that sleeps until an auction is over, then announces the auctions ending.
 	@Override
 	public void run() {
 		Duration duration = Duration.between(localTimeNow, endTime);

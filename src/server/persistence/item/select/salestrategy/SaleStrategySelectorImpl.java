@@ -12,6 +12,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class SaleStrategySelectorImpl implements SaleStrategySelector {
+	// Creates an instance of a SaleStrategy based on the given SaleStrategyType.
+	// Constructs a SQL-statement that fetches the needed values to create the SaleStrategy.
+	// Uses the two helper methods below to construct the SaleStrategy and the returns it.
 	public SaleStrategy fetchStrategy(Connection c, String itemID, String saleStrategy) throws SQLException {
 
 		PreparedStatement saleStrategyStatement = c.prepareStatement(SQL.selectSaleStrategy(itemID, saleStrategy));

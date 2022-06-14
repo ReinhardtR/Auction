@@ -10,7 +10,6 @@ import java.time.LocalTime;
 import java.util.List;
 
 public interface LocalClient extends PropertyChangeSubject {
-	ItemCacheProxy getItem(String itemID) throws RemoteException;
 
 	List<ItemCacheProxy> getAllItems() throws RemoteException;
 

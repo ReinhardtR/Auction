@@ -21,9 +21,10 @@ public class AuctionStrategy implements SaleStrategy {
 		this.endTimestamp = endTimestamp;
 	}
 
+	// Request a database update through CustomerItemService
+	// Update local state on success
 	@Override
 	public void offer(Item item, double amount, String username) {
-		// todo: add offer validation
 		try {
 			// Pass callback function to make sure the DB is updated before updating state
 			CustomerItemService.getInstance().updateItemOffer(item, () -> {

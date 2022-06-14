@@ -56,7 +56,7 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 			e.printStackTrace();
 		}
 
-		// ?
+		// Rather return true than false.
 		return true;
 	}
 
@@ -96,6 +96,7 @@ public class ObservableItem implements PropertyChangeListener, PropertyChangeSub
 		return item.getBuyerUsername();
 	}
 
+	@Override
 	public void propertyChange(PropertyChangeEvent event) {
 		// Guard: Only handle the item's own events.
 		if (!event.getOldValue().equals(getItemID())) return;

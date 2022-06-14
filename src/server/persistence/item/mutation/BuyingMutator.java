@@ -15,6 +15,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class BuyingMutator {
+	// Use SQL helper class to construct a SQL-statement that sets a buyout item as bought.
+	// Runs the SQL statement, then closes connection.
 	public void buyoutBought(Connection c, ItemImpl item) throws SQLException {
 		PreparedStatement itemBoughtThruBuyout = null;
 		try {
@@ -31,6 +33,8 @@ public class BuyingMutator {
 		c.close();
 	}
 
+	// Use SQL helper class to construct a SQL-statement that sets an auction item as bought.
+	// Runs the SQL statement, then closes connection.
 	public void auctionBought(Connection c, String itemID) throws SQLException {
 		PreparedStatement pstmt = c.prepareStatement(SQL.auctionBought(itemID));
 		pstmt.execute();
@@ -39,7 +43,9 @@ public class BuyingMutator {
 		c.close();
 	}
 
-
+	//  Use SQL helper class to construct a SQL-statement that
+	//  updates a bid of the given item on the database.
+	// Runs the SQL statement, then closes connection.
 	public void newBid(Connection c, ItemImpl item) throws SQLException {
 		PreparedStatement itemNewBidTruAuction = null;
 
@@ -58,6 +64,7 @@ public class BuyingMutator {
 		c.close();
 	}
 
+	//  Starts an instance of "AuctionCountDown" for all auctions that finish within the next hour.
 	public void auctionTimers(Connection c, PropertyChangeListener listener) throws SQLException {
 		LocalDateTime localTimeNow = LocalDateTime.now();
 		String localTimeInWantedStringFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(localTimeNow.plusHours(1));
@@ -72,6 +79,8 @@ public class BuyingMutator {
 		c.close();
 	}
 
+	// Used by auctionTimers method.
+	// Creates a thread and runs the AuctionCountDown.
 	private void auctionTimeSetter(ResultSet auctions, PropertyChangeListener listener, LocalDateTime localTimeNow) throws SQLException {
 		while (auctions.next()) {
 			new Thread(
